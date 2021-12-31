@@ -144,70 +144,64 @@
         <div class="blankline"></div>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<p>D is a general-purpose systems programming language with a C-like syntax that compiles to native code.
-It is statically typed and supports both automatic (garbage collected) and manual memory management.
-D programs are structured as modules that can be compiled separately and linked with external libraries
-to create native libraries or executables.</p>
+<p>Dは、汎用システムプログラミング言語で、ネイティブコードにコンパイルされます。
+Cライクな構文を持ち、静的に型付けされます。(ガベージコレクション)による自動メモリ管理をサポートします。
+手動でのメモリ管理にも対応しています。
+D言語のプログラムは、ネイティブライブラリや実行可能ファイルを作成するために、
+個別にコンパイルし外部ライブラリとリンク可能なモジュールとして構成されます。</p>
 <div class="blankline"></div>
-<p>This document is the reference manual for the D Programming Language. For more information and
-other documents, see <a href="https://dlang.org/">The D Language Website</a>.</p>
+<p>このドキュメントは、プログラミング言語Dのリファレンスマニュアルです。 詳細な情報やその他のドキュメントについては
+, <a href="https://dlang.org/">D言語のWebサイト</a>を参照してください。</p>
 <div class="blankline"></div>
-<h2>Phases of Compilation</h2>
+<h2>コンパイルのフェーズ</h2>
 <div class="blankline"></div>
-<p>The process of compiling is divided into multiple phases. Each phase is
-independent of subsequent phases. For example, the scanner is not affected by
-the semantic analyzer. This separation of passes makes language tools like
-syntax-directed editors relatively easy to create.</p>
+<p>コンパイルのプロセスは複数のフェーズに分かれています。各フェーズは、後続のフェーズから独立しています。
+たとえば、構文解析スキャナーは意味解析の影響を受けません。パスの分離により、構文解析を行うエディターなどのツールを比較的簡単に作成できます。</p>
 <div class="blankline"></div>
-<ol>        <li><b>source character set</b><br>
+<ol>        <li><b>ソースの文字セット</b><br>
 <div class="blankline"></div>
-        The source file is checked to determine its encoding
-        and the appropriate scanner is loaded. 7-bit ASCII and UTF
-        encodings are accepted.
+        ソースファイルをチェックすることでエンコーディングが決定され、適切な解析スキャナーがロードされます。
+        7ビットのASCIIおよびUTFエンコーディングに対応しています。
         </li>
 <div class="blankline"></div>
-        <li><b>script line</b> <br>
+        <li><b>スクリプト行</b> <br>
 <div class="blankline"></div>
-        If the first line starts with "#!", then that line
-        is ignored.
+        最初の行が "#!" で始まる場合、その行はスクリプト行として無視されます。
         </li>
 <div class="blankline"></div>
-        <li><b>lexical analysis</b><br>
+        <li><b>字句解析</b><br>
 <div class="blankline"></div>
-        The source file is divided into a sequence of tokens.
-        <a href="../spec/lex.html#specialtokens">Special tokens</a>
-        are replaced with other tokens.
-        <a href="../spec/lex.html#SpecialTokenSequence"><i>SpecialTokenSequence</i></a>s
-        are processed and removed.
+        ソースファイルは一連のトークンに分割されます。
+        <a href="../spec/lex.html#specialtokens">スペシャルトークン(Special tokens)</a>
+        は、他のトークンに置き換えられます。
+        <a href="../spec/lex.html#スペシャルトークンシーケンス(SpecialTokenSequence)"><i>スペシャルトークンシーケンス(SpecialTokenSequence)</i></a>
+        は、処理後に削除されます。
         </li>
 <div class="blankline"></div>
-        <li><b>syntax analysis</b><br>
+        <li><b>構文解析</b><br>
 <div class="blankline"></div>
-        The sequence of tokens is parsed to form syntax trees.
+        トークンのシーケンスが解析されて、構文ツリーが形成されます。
         </li>
 <div class="blankline"></div>
-        <li><b>semantic analysis</b><br>
+        <li><b>意味解析</b><br>
 <div class="blankline"></div>
-        The syntax trees are traversed to declare variables, load symbol tables, assign
-        types, and determine the meaning of the program.
+        構文ツリーをもとに、変数の宣言、シンボルテーブルのロード、タイプの割り当て、およびプログラムの意味を決定します。
         </li>
 <div class="blankline"></div>
-        <li><b>optimization</b><br>
+        <li><b>最適化</b><br>
 <div class="blankline"></div>
-        Optimization is an optional pass that attempts to rewrite the program
-        in a semantically equivalent, more performant, version.
+        最適化は、意味的に同等でパフォーマンスが高くなるプログラムに書き換えるためのオプションパスです。
         </li>
 <div class="blankline"></div>
-        <li><b>code generation</b><br>
+        <li><b>コード生成</b><br>
 <div class="blankline"></div>
-        Instructions are selected from the target architecture to implement
-        the semantics of the program. The typical result will be
-        an object file suitable for input to a linker.
+        プログラムを実装するために、ターゲットアーキテクチャから命令が選択されます。
+        典型的な結果として、リンカへの入力に適したオブジェクトファイルになります。
         </li>
 </ol>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a href="memory-model">Memory Model</a></h2>
+<h2><a href="memory-model">メモリモデル</a></h2>
 <div class="blankline"></div>
     <p>The <i>byte</i> is the fundamental unit of storage. Each byte has 8 bits and is stored at
     a unique address. A <i>memory location</i> is a sequence of one or more bytes of the exact size
@@ -255,7 +249,7 @@ syntax-directed editors relatively easy to create.</p>
     location during the operation.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="object-model" href="#object-model">Object Model</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="object-model" href="#object-model">オブジェクトモデル</a></h2>
 <div class="blankline"></div>
     <p>An <i>object</i> is created in the following circumstances:
     </p>
@@ -285,7 +279,7 @@ syntax-directed editors relatively easy to create.</p>
     object is nested within the other.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="arithmetic" href="#arithmetic">Arithmetic</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="arithmetic" href="#arithmetic">四則演算</a></h2>
 <div class="blankline"></div>
     <h3>Integer Arithmetic</h3>
 <div class="blankline"></div>
@@ -306,7 +300,7 @@ syntax-directed editors relatively easy to create.</p>
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2021 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Fri Dec 31 08:23:08 2021
+<a href="../spec/ddoc.html">Ddoc</a> on Fri Dec 31 10:46:22 2021
 </div>
     </div>
 </div>
