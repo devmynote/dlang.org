@@ -1,8 +1,8 @@
 
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="ja-JP">
 <!--
-    Copyright (c) 1999-2021 by the D Language Foundation
+    Copyright (c) 1999-2022 by the D Language Foundation
     All Rights Reserved.
     https://dlang.org/foundation_overview.html
   -->
@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>core.sys.windows.lmcons - D Programming Language</title>
+<title>core.sys.windows.lmcons - D言語 日本語非公式</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -24,50 +24,50 @@
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
     
-<div id="cssmenu"><ul>    <li><a href='https://tour.dlang.org'><span>Learn</span></a></li>
-    <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>Documentation</span></a>
+<div id="cssmenu"><ul>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'><span>学ぶ</span></a></li>
+    <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
-<ul class='expand-content'>    <li><a href='../spec/spec.html'>Language Reference</a></li>
-    <li><a href='../phobos/index.html'>Library Reference</a></li>
-    <li><a href='../dmd.html'>Command-line Reference</a></li>
-    <li class="menu-divider"><a href='../comparison.html'>Feature Overview</a></li>
-    <li><a href='../articles.html'>Articles</a></li>
+<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語リファレンス</a></li>
+    <li><a href='../phobos/index.html'>ライブラリ</a></li>
+    <li><a href='../dmd.html'>コマンドライン</a></li>
+    <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
+    <li><a href='../articles/index.html'>記事</a></li>
  </ul></li>
-    <li><a href='../download.html'><span>Downloads</span></a></li>
+    <li><a href='../download.html'><span>ダウンロード</span></a></li>
     <li><a href='https://code.dlang.org'><span>Packages</span></a></li>
-    <li class='expand-container'><a class='expand-toggle' href='../community.html'><span>Community</span></a>
+    <li class='expand-container'><a class='expand-toggle' href='../community.html'><span>コミュニティ</span></a>
       
-<ul class='expand-content'>    <li><a href='https://dlang.org/blog'>Blog</a></li>
-    <li><a href='../orgs-using-d.html'>Orgs using D</a></li>
+<ul class='expand-content'>    <li><a href='https://dlang.org/blog'>ブログ</a></li>
+    <li><a href='../orgs-using-d.html'>利用実績</a></li>
     <li><a href='https://twitter.com/search?q=%23dlang'>Twitter</a></li>
-    <li><a href='../calendar.html'>Calendar</a></li>
-    <li class="menu-divider"><a href='https://forum.dlang.org'>Forums</a></li>
+    <li><a href='../calendar.html'>カレンダー</a></li>
+    <li class="menu-divider"><a href='https://forum.dlang.org'>フォーラム</a></li>
     <li><a href='irc://irc.libera.chat/d'>IRC</a></li>
-    <li><a href='https://discord.gg/bMZk9Q4'>Community Discord</a></li>
+    <li><a href='https://discord.gg/bMZk9Q4'>Discord</a></li>
     <li><a href='https://wiki.dlang.org'>Wiki</a></li>
     <li class="menu-divider"><a href='https://github.com/dlang'>GitHub</a></li>
     <li><a href='../bugstats.html'>Issues</a></li>
-    <li><a href='https://wiki.dlang.org/Get_involved'>Get involved</a></li>
-    <li class="menu-divider"><a href='../foundation/contributors.html'>Contributors</a></li>
-    <li><a href='../foundation/index.html'>Foundation</a></li>
-    <li><a href='..//security.html'>Security Team</a></li>
-    <li><a href='../foundation/donate.html'>Donate</a></li>
-    <li><a href='../foundation/sponsors.html'>Sponsors</a></li>
+    <li><a href='https://wiki.dlang.org/Get_involved'>参加する</a></li>
+    <li class="menu-divider"><a href='../foundation/contributors.html'>貢献者</a></li>
+    <li><a href='../foundation/index.html'>D言語財団</a></li>
+    <li><a href='../security.html'>セキュリティ</a></li>
+    <li><a href='../foundation/donate.html'>寄付</a></li>
+    <li><a href='../foundation/sponsors.html'>スポンサー</a></li>
  </ul></li>
-    <li class='expand-container'><a class='expand-toggle' href='../resources.html'><span>Resources</span></a>
+    <li class='expand-container'><a class='expand-toggle' href='../resources.html'><span>リソース</span></a>
       
-<ul class='expand-content'>    <li><a href='https://tour.dlang.org'>Tour</a></li>
-    <li><a href='https://wiki.dlang.org/Books'>Books</a></li>
-    <li><a href='https://wiki.dlang.org/Tutorials'>Tutorials</a></li>
-    <li class="menu-divider"><a href='https://wiki.dlang.org/Development_tools'>Tools</a></li>
-    <li><a href='https://wiki.dlang.org/Editors'>Editors</a></li>
-    <li><a href='https://wiki.dlang.org/IDEs'>IDEs</a></li>
+<ul class='expand-content'>    <li><a href='https://tour.dlang.org'>ツアー</a></li>
+    <li><a href='https://wiki.dlang.org/Books'>書籍</a></li>
+    <li><a href='https://wiki.dlang.org/Tutorials'>チュートリアル</a></li>
+    <li class="menu-divider"><a href='https://wiki.dlang.org/Development_tools'>ツール</a></li>
+    <li><a href='https://wiki.dlang.org/Editors'>エディタ</a></li>
+    <li><a href='https://wiki.dlang.org/IDEs'>IDE</a></li>
     <li><a href='https://run.dlang.io'>run.dlang.io</a></li>
     <li><a href='http://rainers.github.io/visuald/visuald/StartPage.html'>Visual D</a></li>
-    <li class="menu-divider"><a href='../acknowledgements.html'>Acknowledgments</a></li>
-    <li><a href='../dstyle.html'>D Style</a></li>
-    <li><a href='../glossary.html'>Glossary</a></li>
-    <li><a href='../sitemap.html'>Sitemap</a></li>
+    <li class="menu-divider"><a href='../acknowledgements.html'>謝辞</a></li>
+    <li><a href='../dstyle.html'>Dスタイル</a></li>
+    <li><a href='../glossary.html'>用語集</a></li>
+    <li><a href='../sitemap.html'>サイトマップ</a></li>
  </ul></li>
 </ul></div>
     <div class="search-container expand-container">        <a href="../search.html" class="expand-toggle" title="Search"><span>Search</span></a>
@@ -183,8 +183,8 @@
 <a href="https://github.com/dlang/druntime/blob/master/src/core/sys/windows/lmcons.d">core/sys/windows/lmcons.d</a></p></div>
 
 
-        <div class="smallprint" id="copyright">Copyright &copy; 1999-2021 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Fri Dec 31 15:23:36 2021
+        <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
+<a href="../spec/ddoc.html">Ddoc</a> on Sun Jan  2 08:32:41 2022
 </div>
     </div>
 </div>
