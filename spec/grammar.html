@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>D Grammar - D言語 非公式日本語</title>
+<title>文法 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='D Grammar' class='doc'>
+<body id='文法' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -27,7 +27,7 @@
 <div id="cssmenu"><ul>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'><span>学ぶ</span></a></li>
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
-<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語リファレンス</a></li>
+<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
     <li><a href='../phobos/index.html'>ライブラリ</a></li>
     <li><a href='../dmd.html'>コマンドライン</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
@@ -47,8 +47,8 @@
     <li><a href='https://wiki.dlang.org'>Wiki</a></li>
     <li class="menu-divider"><a href='https://github.com/dlang'>GitHub</a></li>
     <li><a href='https://dlang.org/bugstats.html'>Issues</a></li>
-    <li><a href='https://wiki.dlang.org/Get_involved'>参加する</a></li>
-    <li class="menu-divider"><a href='https://dlang.org/foundation/contributors.html'>貢献者</a></li>
+    <li><a href='https://wiki.dlang.org/Get_involved'>参加するには</a></li>
+    <li class="menu-divider"><a href='https://dlang.org/foundation/contributors.html'>貢献している方々</a></li>
     <li><a href='../foundation/index.html'>D言語財団</a></li>
     <li><a href='../security.html'>セキュリティ</a></li>
     <li><a href='../foundation/donate.html'>寄付での貢献</a></li>
@@ -56,7 +56,7 @@
  </ul></li>
     <li class='expand-container'><a class='expand-toggle' href='../resources.html'><span>リソース</span></a>
       
-<ul class='expand-content'>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'>ツアー</a></li>
+<ul class='expand-content'>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'>D言語ツアー</a></li>
     <li><a href='https://wiki.dlang.org/Books'>書籍</a></li>
     <li><a href='https://wiki.dlang.org/Tutorials'>チュートリアル</a></li>
     <li class="menu-divider"><a href='https://wiki.dlang.org/Development_tools'>ツール</a></li>
@@ -90,12 +90,12 @@
 
 <div class="container">    
 <div class="subnav-helper"></div> <div class="subnav">    <div class="head"><h5>Language Reference</h5> <p class="subnav-duplicate"><a href="../spec/spec.html">table of contents</a></p></div>
-    <ul>        <li><a href='            ../spec/intro.html'>はじめに(Introduction)</a></li><li><a href='            ../spec/lex.html'>字句の構成(Lexical)</a></li><li><a href='            ../spec/grammar.html'>文法(Grammar)</a></li><li><a href='            ../spec/module.html'>モジュール(Modules)</a></li><li><a href='            ../spec/declaration.html'>宣言(Declarations)</a></li><li><a href='            ../spec/type.html'>型(Types)</a></li><li><a href='            ../spec/property.html'>プロパティ(Properties)</a></li><li><a href='            ../spec/attribute.html'>属性(Attributes)</a></li><li><a href='            ../spec/pragma.html'>プラグマ(Pragmas)</a></li><li><a href='            ../spec/expression.html'>式(Expressions)</a></li><li><a href='            ../spec/statement.html'>文(Statements)</a></li><li><a href='            ../spec/arrays.html'>配列(Arrays)</a></li><li><a href='            ../spec/hash-map.html'>連想配列(Associative Arrays)</a></li><li><a href='            ../spec/struct.html'>構造体と共用体</a></li><li><a href='            ../spec/class.html'>クラス(Classes)</a></li><li><a href='            ../spec/interface.html'>インターフェース(Interfaces)</a></li><li><a href='            ../spec/enum.html'>列挙型(Enums)</a></li><li><a href='            ../spec/const3.html'>型修飾子(Type Qualifiers)</a></li><li><a href='            ../spec/function.html'>関数(Functions)</a></li><li><a href='            ../spec/operatoroverloading.html'>演算子オーバーロード</a></li><li><a href='            ../spec/template.html'>テンプレート(Templates)</a></li><li><a href='            ../spec/template-mixin.html'>ミックスイン(Template Mixins)</a></li><li><a href='            ../spec/contracts.html'>契約(Contract Programming)</a></li><li><a href='            ../spec/version.html'>条件コンパイル</a></li><li><a href='            ../spec/traits.html'>特性(Traits)</a></li><li><a href='            ../spec/errors.html'>エラー処理(Error Handling)</a></li><li><a href='            ../spec/unittest.html'>単体テスト(Unit Tests)</a></li><li><a href='            ../spec/garbage.html'>ガベージコレクション</a></li><li><a href='            ../spec/float.html'>浮動小数点数(Floating Point)</a></li><li><a href='            ../spec/iasm.html'>インラインアセンブラ</a></li><li><a href='            ../spec/ddoc.html'>ドキュメント生成</a></li><li><a href='            ../spec/interfaceToC.html'>Cとの連携(Interfacing to C)</a></li><li><a href='            ../spec/cpp_interface.html'>C++との連携(Interfacing to C++)</a></li><li><a href='            ../spec/objc_interface.html'>Objective-Cとの連携</a></li><li><a href='            ../spec/portability.html'>移植性(Portability Guide)</a></li><li><a href='            ../spec/entity.html'>名前付き文字</a></li><li><a href='            ../spec/memory-safe-d.html'>メモリ安全性(Memory Safety)</a></li><li><a href='            ../spec/abi.html'>ABI(Application Binary Interface)</a></li><li><a href='            ../spec/simd.html'>ベクトル拡張(Vector Extensions)</a></li><li><a href='            ../spec/betterc.html'>Better C</a></li><li><a href='            ../spec/importc.html'>Cのインポート(Import C)</a></li><li><a href='            ../spec/ob.html'>@live(Live Functions)
+    <ul>        <li><a href='            ../spec/intro.html'>はじめに[Introduction]</a></li><li><a href='            ../spec/lex.html'>字句の構成[Lexical]</a></li><li><a href='            ../spec/grammar.html'>文法[Grammar]</a></li><li><a href='            ../spec/module.html'>モジュール[Modules]</a></li><li><a href='            ../spec/declaration.html'>宣言[Declarations]</a></li><li><a href='            ../spec/type.html'>型[Types]</a></li><li><a href='            ../spec/property.html'>プロパティ[Properties]</a></li><li><a href='            ../spec/attribute.html'>属性[Attributes]</a></li><li><a href='            ../spec/pragma.html'>プラグマ[Pragmas]</a></li><li><a href='            ../spec/expression.html'>式[Expressions]</a></li><li><a href='            ../spec/statement.html'>文[Statements]</a></li><li><a href='            ../spec/arrays.html'>配列[Arrays]</a></li><li><a href='            ../spec/hash-map.html'>連想配列[Associative Arrays]</a></li><li><a href='            ../spec/struct.html'>構造体と共用体</a></li><li><a href='            ../spec/class.html'>クラス[Classes]</a></li><li><a href='            ../spec/interface.html'>インターフェース[Interfaces]</a></li><li><a href='            ../spec/enum.html'>列挙型[Enums]</a></li><li><a href='            ../spec/const3.html'>型修飾子[Type Qualifiers]</a></li><li><a href='            ../spec/function.html'>関数[Functions]</a></li><li><a href='            ../spec/operatoroverloading.html'>演算子オーバーロード</a></li><li><a href='            ../spec/template.html'>テンプレート[Templates]</a></li><li><a href='            ../spec/template-mixin.html'>ミックスイン[Template Mixins]</a></li><li><a href='            ../spec/contracts.html'>契約[Contract Programming]</a></li><li><a href='            ../spec/version.html'>条件コンパイル</a></li><li><a href='            ../spec/traits.html'>特性[Traits]</a></li><li><a href='            ../spec/errors.html'>エラー処理[Error Handling]</a></li><li><a href='            ../spec/unittest.html'>単体テスト[Unit Tests]</a></li><li><a href='            ../spec/garbage.html'>ガベージコレクション</a></li><li><a href='            ../spec/float.html'>浮動小数点数[Floating Point]</a></li><li><a href='            ../spec/iasm.html'>インラインアセンブラ</a></li><li><a href='            ../spec/ddoc.html'>ドキュメント生成</a></li><li><a href='            ../spec/interfaceToC.html'>Cとの連携[Interfacing to C]</a></li><li><a href='            ../spec/cpp_interface.html'>C++との連携[Interfacing to C++]</a></li><li><a href='            ../spec/objc_interface.html'>Objective-Cとの連携</a></li><li><a href='            ../spec/portability.html'>移植性[Portability Guide]</a></li><li><a href='            ../spec/entity.html'>名前付き文字</a></li><li><a href='            ../spec/memory-safe-d.html'>メモリ安全性[Memory Safety]</a></li><li><a href='            ../spec/abi.html'>ABI[Application Binary Interface]</a></li><li><a href='            ../spec/simd.html'>ベクトル拡張[Vector Extensions]</a></li><li><a href='            ../spec/betterc.html'>Better C</a></li><li><a href='            ../spec/importc.html'>Cのインポート[Import C]</a></li><li><a href='            ../spec/ob.html'>@live[Live Functions]
         </a></li>
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BD Grammar%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5B文法%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>D Grammar</h1>
+        <h1>文法</h1>
         
 <style>    body { counter-reset: h1 3; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,34 +146,34 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#モジュール<!--UNDEFINED MACRO: "lparen"-->modules<!--UNDEFINED MACRO: "rparen"-->">モジュール(Modules)</a></li>
-    <li><a href="#宣言<!--UNDEFINED MACRO: "lparen"-->declarations<!--UNDEFINED MACRO: "rparen"-->">宣言(Declarations)</a></li>
-    <li><a href="#型<!--UNDEFINED MACRO: "lparen"-->types<!--UNDEFINED MACRO: "rparen"-->">型(Types)</a></li>
-    <li><a href="#属性<!--UNDEFINED MACRO: "lparen"-->attributes<!--UNDEFINED MACRO: "rparen"-->">属性(Attributes)</a></li>
-    <li><a href="#プラグマ<!--UNDEFINED MACRO: "lparen"-->pragmas<!--UNDEFINED MACRO: "rparen"-->">プラグマ(Pragmas)</a></li>
-    <li><a href="#式<!--UNDEFINED MACRO: "lparen"-->expressions<!--UNDEFINED MACRO: "rparen"-->">式(Expressions)</a></li>
-    <li><a href="#文<!--UNDEFINED MACRO: "lparen"-->statements<!--UNDEFINED MACRO: "rparen"-->">文(Statements)</a></li>
+    <ol>    <li><a href="#モジュール[modules]">モジュール[Modules]</a></li>
+    <li><a href="#宣言[declarations]">宣言[Declarations]</a></li>
+    <li><a href="#型[types]">型[Types]</a></li>
+    <li><a href="#属性[attributes]">属性[Attributes]</a></li>
+    <li><a href="#プラグマ[pragmas]">プラグマ[Pragmas]</a></li>
+    <li><a href="#式[expressions]">式[Expressions]</a></li>
+    <li><a href="#文[statements]">文[Statements]</a></li>
     <li><a href="#構造体と共用体">構造体と共用体</a></li>
-    <li><a href="#クラス<!--UNDEFINED MACRO: "lparen"-->classes<!--UNDEFINED MACRO: "rparen"-->">クラス(Classes)</a></li>
-    <li><a href="#インターフェース<!--UNDEFINED MACRO: "lparen"-->interfaces<!--UNDEFINED MACRO: "rparen"-->">インターフェース(Interfaces)</a></li>
-    <li><a href="#列挙型<!--UNDEFINED MACRO: "lparen"-->enums<!--UNDEFINED MACRO: "rparen"-->">列挙型(Enums)</a></li>
-    <li><a href="#関数<!--UNDEFINED MACRO: "lparen"-->functions<!--UNDEFINED MACRO: "rparen"-->">関数(Functions)</a></li>
-    <li><a href="#テンプレート<!--UNDEFINED MACRO: "lparen"-->templates<!--UNDEFINED MACRO: "rparen"-->">テンプレート(Templates)</a></li>
-    <li><a href="#ミックスイン<!--UNDEFINED MACRO: "lparen"-->template mixins<!--UNDEFINED MACRO: "rparen"-->">ミックスイン(Template Mixins)</a></li>
+    <li><a href="#クラス[classes]">クラス[Classes]</a></li>
+    <li><a href="#インターフェース[interfaces]">インターフェース[Interfaces]</a></li>
+    <li><a href="#列挙型[enums]">列挙型[Enums]</a></li>
+    <li><a href="#関数[functions]">関数[Functions]</a></li>
+    <li><a href="#テンプレート[templates]">テンプレート[Templates]</a></li>
+    <li><a href="#ミックスイン[template mixins]">ミックスイン[Template Mixins]</a></li>
     <li><a href="#条件コンパイル">条件コンパイル</a></li>
-    <li><a href="#特性<!--UNDEFINED MACRO: "lparen"-->traits<!--UNDEFINED MACRO: "rparen"-->">特性(Traits)</a></li>
-    <li><a href="#単体テスト<!--UNDEFINED MACRO: "lparen"-->unit tests<!--UNDEFINED MACRO: "rparen"-->">単体テスト(Unit Tests)</a></li>
+    <li><a href="#特性[traits]">特性[Traits]</a></li>
+    <li><a href="#単体テスト[unit tests]">単体テスト[Unit Tests]</a></li>
     <li><a href="#インラインアセンブラ">インラインアセンブラ</a></li>
     <li><a href="#名前付き文字">名前付き文字</a></li>
-    <li><a href="#abi<!--UNDEFINED MACRO: "lparen"-->application binary interface<!--UNDEFINED MACRO: "rparen"-->">ABI(Application Binary Interface)</a></li>
+    <li><a href="#abi[application binary interface]">ABI[Application Binary Interface]</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
-<h2>Lexical Syntax</h2>
+<h2>字句構文</h2>
 <div class="blankline"></div>
-    <p>Refer to the page for <a href="lex.html">lexical syntax</a>.</p>
+    <p><a href="lex.html">字句の構成</a> のページを参照してください。</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="モジュール<!--UNDEFINED MACRO: "lparen"-->modules<!--UNDEFINED MACRO: "rparen"-->" href="#モジュール<!--UNDEFINED MACRO: "lparen"-->modules<!--UNDEFINED MACRO: "rparen"-->">モジュール(Modules)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="モジュール[modules]" href="#モジュール[modules]">モジュール[Modules]</a></h2>
 <pre class="bnf notranslate"><a id="Module"><span class="gname">Module</span></a>:
     <a href="#ModuleDeclaration"><i>ModuleDeclaration</i></a>
     <a href="#ModuleDeclaration"><i>ModuleDeclaration</i></a> <a href="#DeclDefs"><i>DeclDefs</i></a>
@@ -266,7 +266,7 @@
 <pre class="bnf notranslate"><a id="MixinDeclaration"><span class="gname">MixinDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">mixin</span> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#ArgumentList"><i>ArgumentList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span> <span class="d_inlinecode donthyphenate notranslate">;</span>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="宣言<!--UNDEFINED MACRO: "lparen"-->declarations<!--UNDEFINED MACRO: "rparen"-->" href="#宣言<!--UNDEFINED MACRO: "lparen"-->declarations<!--UNDEFINED MACRO: "rparen"-->">宣言(Declarations)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="宣言[declarations]" href="#宣言[declarations]">宣言[Declarations]</a></h2>
 <pre class="bnf notranslate"><a id="Declaration"><span class="gname">Declaration</span></a>:
     <a href="#FuncDeclaration"><i>FuncDeclaration</i></a>
     <a href="#VarDeclarations"><i>VarDeclarations</i></a>
@@ -440,7 +440,7 @@
 <pre class="bnf notranslate"><a id="VoidInitializer"><span class="gname">VoidInitializer</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">void</span>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="型<!--UNDEFINED MACRO: "lparen"-->types<!--UNDEFINED MACRO: "rparen"-->" href="#型<!--UNDEFINED MACRO: "lparen"-->types<!--UNDEFINED MACRO: "rparen"-->">型(Types)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="型[types]" href="#型[types]">型[Types]</a></h2>
 <pre class="bnf notranslate"><a id="Type"><span class="gname">Type</span></a>:
     <a href="#TypeCtors"><i>TypeCtors</i></a><sub>opt</sub> <a href="#BasicType"><i>BasicType</i></a> <a href="#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub>
 <div class="blankline"></div>
@@ -524,7 +524,7 @@
 <pre class="bnf notranslate"><a id="MixinType"><span class="gname">MixinType</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">mixin (</span> <a href="#ArgumentList"><i>ArgumentList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="属性<!--UNDEFINED MACRO: "lparen"-->attributes<!--UNDEFINED MACRO: "rparen"-->" href="#属性<!--UNDEFINED MACRO: "lparen"-->attributes<!--UNDEFINED MACRO: "rparen"-->">属性(Attributes)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="属性[attributes]" href="#属性[attributes]">属性[Attributes]</a></h2>
 <pre class="bnf notranslate"><a id="AttributeSpecifier"><span class="gname">AttributeSpecifier</span></a>:
     <a href="#Attribute"><i>Attribute</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span>
     <a href="#Attribute"><i>Attribute</i></a> <a href="#DeclarationBlock"><i>DeclarationBlock</i></a>
@@ -616,7 +616,7 @@
     <span class="d_inlinecode donthyphenate notranslate">@</span> <a href="#TemplateInstance"><i>TemplateInstance</i></a>
     <span class="d_inlinecode donthyphenate notranslate">@</span> <a href="#TemplateInstance"><i>TemplateInstance</i></a> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="プラグマ<!--UNDEFINED MACRO: "lparen"-->pragmas<!--UNDEFINED MACRO: "rparen"-->" href="#プラグマ<!--UNDEFINED MACRO: "lparen"-->pragmas<!--UNDEFINED MACRO: "rparen"-->">プラグマ(Pragmas)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="プラグマ[pragmas]" href="#プラグマ[pragmas]">プラグマ[Pragmas]</a></h2>
 <pre class="bnf notranslate"><a id="PragmaDeclaration"><span class="gname">PragmaDeclaration</span></a>:
     <a href="#Pragma"><i>Pragma</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
     <a href="#Pragma"><i>Pragma</i></a> <a href="#DeclarationBlock"><i>DeclarationBlock</i></a>
@@ -629,7 +629,7 @@
     <span class="d_inlinecode donthyphenate notranslate">pragma</span> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
     <span class="d_inlinecode donthyphenate notranslate">pragma</span> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="#ArgumentList"><i>ArgumentList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="式<!--UNDEFINED MACRO: "lparen"-->expressions<!--UNDEFINED MACRO: "rparen"-->" href="#式<!--UNDEFINED MACRO: "lparen"-->expressions<!--UNDEFINED MACRO: "rparen"-->">式(Expressions)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="式[expressions]" href="#式[expressions]">式[Expressions]</a></h2>
 <pre class="bnf notranslate"><a id="Expression"><span class="gname">Expression</span></a>:
     <a href="#CommaExpression"><i>CommaExpression</i></a>
 <div class="blankline"></div>
@@ -923,7 +923,7 @@
     <a href="#specialkeywords"><span class="d_inlinecode donthyphenate notranslate">__FUNCTION__</span></a>
     <a href="#specialkeywords"><span class="d_inlinecode donthyphenate notranslate">__PRETTY_FUNCTION__</span></a>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="文<!--UNDEFINED MACRO: "lparen"-->statements<!--UNDEFINED MACRO: "rparen"-->" href="#文<!--UNDEFINED MACRO: "lparen"-->statements<!--UNDEFINED MACRO: "rparen"-->">文(Statements)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="文[statements]" href="#文[statements]">文[Statements]</a></h2>
 <pre class="bnf notranslate"><a id="Statement"><span class="gname">Statement</span></a>:
     <a href="#EmptyStatement"><i>EmptyStatement</i></a>
     <a href="#NonEmptyStatement"><i>NonEmptyStatement</i></a>
@@ -1216,7 +1216,7 @@
     <span class="d_inlinecode donthyphenate notranslate">invariant</span> <a href="#BlockStatement"><i>BlockStatement</i></a>
     <span class="d_inlinecode donthyphenate notranslate">invariant (</span> <a href="#AssertArguments"><i>AssertArguments</i></a> <span class="d_inlinecode donthyphenate notranslate">) ;</span>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="クラス<!--UNDEFINED MACRO: "lparen"-->classes<!--UNDEFINED MACRO: "rparen"-->" href="#クラス<!--UNDEFINED MACRO: "lparen"-->classes<!--UNDEFINED MACRO: "rparen"-->">クラス(Classes)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="クラス[classes]" href="#クラス[classes]">クラス[Classes]</a></h2>
 <pre class="bnf notranslate"><a id="ClassDeclaration"><span class="gname">ClassDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">class</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
     <span class="d_inlinecode donthyphenate notranslate">class</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#BaseClassList"><i>BaseClassList</i></a><sub>opt</sub> <a href="#AggregateBody"><i>AggregateBody</i></a>
@@ -1280,7 +1280,7 @@
 // ...
 <span class="d_inlinecode donthyphenate notranslate">new</span> <i>AllocatorArguments</i> <i>Identifier</i> <i>ConstructorArgs</i>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="インターフェース<!--UNDEFINED MACRO: "lparen"-->interfaces<!--UNDEFINED MACRO: "rparen"-->" href="#インターフェース<!--UNDEFINED MACRO: "lparen"-->interfaces<!--UNDEFINED MACRO: "rparen"-->">インターフェース(Interfaces)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="インターフェース[interfaces]" href="#インターフェース[interfaces]">インターフェース[Interfaces]</a></h2>
 <pre class="bnf notranslate"><a id="InterfaceDeclaration"><span class="gname">InterfaceDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">interface</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
     <span class="d_inlinecode donthyphenate notranslate">interface</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#BaseInterfaceList"><i>BaseInterfaceList</i></a><sub>opt</sub> <a href="#AggregateBody"><i>AggregateBody</i></a>
@@ -1289,7 +1289,7 @@
 <a id="BaseInterfaceList"><span class="gname">BaseInterfaceList</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="#Interfaces"><i>Interfaces</i></a>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="列挙型<!--UNDEFINED MACRO: "lparen"-->enums<!--UNDEFINED MACRO: "rparen"-->" href="#列挙型<!--UNDEFINED MACRO: "lparen"-->enums<!--UNDEFINED MACRO: "rparen"-->">列挙型(Enums)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="列挙型[enums]" href="#列挙型[enums]">列挙型[Enums]</a></h2>
 <pre class="bnf notranslate"><a id="EnumDeclaration"><span class="gname">EnumDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">enum</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#EnumBody"><i>EnumBody</i></a>
     <span class="d_inlinecode donthyphenate notranslate">enum</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="#EnumBaseType"><i>EnumBaseType</i></a> <a href="#EnumBody"><i>EnumBody</i></a>
@@ -1334,7 +1334,7 @@
     <a href="#EnumMember"><i>EnumMember</i></a>
     <a href="#Type"><i>Type</i></a> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="#AssignExpression"><i>AssignExpression</i></a>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="関数<!--UNDEFINED MACRO: "lparen"-->functions<!--UNDEFINED MACRO: "rparen"-->" href="#関数<!--UNDEFINED MACRO: "lparen"-->functions<!--UNDEFINED MACRO: "rparen"-->">関数(Functions)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="関数[functions]" href="#関数[functions]">関数[Functions]</a></h2>
 <pre class="bnf notranslate"><a id="FuncDeclaration"><span class="gname">FuncDeclaration</span></a>:
     <a href="#StorageClasses"><i>StorageClasses</i></a><sub>opt</sub> <a href="#BasicType"><i>BasicType</i></a> <a href="#FuncDeclarator"><i>FuncDeclarator</i></a> <a href="#FunctionBody"><i>FunctionBody</i></a>
     <a href="#AutoFuncDeclaration"><i>AutoFuncDeclaration</i></a>
@@ -1467,7 +1467,7 @@
     <span class="d_inlinecode donthyphenate notranslate">out</span> <a href="#BlockStatement"><i>BlockStatement</i></a>
     <span class="d_inlinecode donthyphenate notranslate">out</span> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#BlockStatement"><i>BlockStatement</i></a>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="テンプレート<!--UNDEFINED MACRO: "lparen"-->templates<!--UNDEFINED MACRO: "rparen"-->" href="#テンプレート<!--UNDEFINED MACRO: "lparen"-->templates<!--UNDEFINED MACRO: "rparen"-->">テンプレート(Templates)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="テンプレート[templates]" href="#テンプレート[templates]">テンプレート[Templates]</a></h2>
 <pre class="bnf notranslate"><a id="TemplateDeclaration"><span class="gname">TemplateDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">template</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateParameters"><i>TemplateParameters</i></a> <a href="#Constraint"><i>Constraint</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">{</span> <a href="#DeclDefs"><i>DeclDefs</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">}</span>
 <div class="blankline"></div>
@@ -1594,7 +1594,7 @@
 <pre class="bnf notranslate"><a id="Constraint"><span class="gname">Constraint</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">if</span> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#Expression"><i>Expression</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="ミックスイン<!--UNDEFINED MACRO: "lparen"-->template mixins<!--UNDEFINED MACRO: "rparen"-->" href="#ミックスイン<!--UNDEFINED MACRO: "lparen"-->template mixins<!--UNDEFINED MACRO: "rparen"-->">ミックスイン(Template Mixins)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="ミックスイン[template mixins]" href="#ミックスイン[template mixins]">ミックスイン[Template Mixins]</a></h2>
 <pre class="bnf notranslate"><a id="TemplateMixinDeclaration"><span class="gname">TemplateMixinDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">mixin</span> <span class="d_inlinecode donthyphenate notranslate">template</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateParameters"><i>TemplateParameters</i></a> <a href="#Constraint"><i>Constraint</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">{</span> <a href="#DeclDefs"><i>DeclDefs</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">}</span>
 <div class="blankline"></div>
@@ -1663,7 +1663,7 @@
 <pre class="bnf notranslate"><a id="StaticAssert"><span class="gname">StaticAssert</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">static assert (</span> <a href="#AssertArguments"><i>AssertArguments</i></a> <span class="d_inlinecode donthyphenate notranslate">) ;</span>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="特性<!--UNDEFINED MACRO: "lparen"-->traits<!--UNDEFINED MACRO: "rparen"-->" href="#特性<!--UNDEFINED MACRO: "lparen"-->traits<!--UNDEFINED MACRO: "rparen"-->">特性(Traits)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="特性[traits]" href="#特性[traits]">特性[Traits]</a></h2>
 <pre class="bnf notranslate"><a id="TraitsExpression"><span class="gname">TraitsExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">__traits</span> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#TraitsKeyword"><i>TraitsKeyword</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="#TraitsArguments"><i>TraitsArguments</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
 <div class="blankline"></div>
@@ -1737,7 +1737,7 @@
     <a href="#AssignExpression"><i>AssignExpression</i></a>
     <a href="#Type"><i>Type</i></a>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="単体テスト<!--UNDEFINED MACRO: "lparen"-->unit tests<!--UNDEFINED MACRO: "rparen"-->" href="#単体テスト<!--UNDEFINED MACRO: "lparen"-->unit tests<!--UNDEFINED MACRO: "rparen"-->">単体テスト(Unit Tests)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="単体テスト[unit tests]" href="#単体テスト[unit tests]">単体テスト[Unit Tests]</a></h2>
 <pre class="bnf notranslate"><a id="UnitTest"><span class="gname">UnitTest</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">unittest</span> <a href="#BlockStatement"><i>BlockStatement</i></a>
 </pre>
@@ -2093,7 +2093,7 @@
 <pre class="bnf notranslate"><a id="NamedCharacterEntity"><span class="gname">NamedCharacterEntity</span></a>:
     <b>&amp;</b> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <b>;</b>
 </pre>
-<h2><a class="anchor" title="Permalink to this section" id="abi<!--UNDEFINED MACRO: "lparen"-->application binary interface<!--UNDEFINED MACRO: "rparen"-->" href="#abi<!--UNDEFINED MACRO: "lparen"-->application binary interface<!--UNDEFINED MACRO: "rparen"-->">ABI(Application Binary Interface)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="abi[application binary interface]" href="#abi[application binary interface]">ABI[Application Binary Interface]</a></h2>
 <pre class="bnf notranslate"><a id="MangledName"><span class="gname">MangledName</span></a>:
     <b>_D</b> <a href="#QualifiedName"><i>QualifiedName</i></a> <a href="#Type"><i>Type</i></a>
     <b>_D</b> <a href="#QualifiedName"><i>QualifiedName</i></a> <b>Z</b>        <span class="green">// Internal</span>
@@ -2488,14 +2488,14 @@
 
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/lex.html">Lexical</a></div>
-<div style="float: right"><a href="../spec/module.html">Modules</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/lex.html">字句の構成[Lexical]</a></div>
+<div style="float: right"><a href="../spec/module.html">モジュール[Modules]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 04:00:11 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 10:15:20 2022
 </div>
     </div>
 </div>

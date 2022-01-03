@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Types - D言語 非公式日本語</title>
+<title>型 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Types' class='doc'>
+<body id='型' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -27,7 +27,7 @@
 <div id="cssmenu"><ul>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'><span>学ぶ</span></a></li>
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
-<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語リファレンス</a></li>
+<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
     <li><a href='../phobos/index.html'>ライブラリ</a></li>
     <li><a href='../dmd.html'>コマンドライン</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
@@ -47,8 +47,8 @@
     <li><a href='https://wiki.dlang.org'>Wiki</a></li>
     <li class="menu-divider"><a href='https://github.com/dlang'>GitHub</a></li>
     <li><a href='https://dlang.org/bugstats.html'>Issues</a></li>
-    <li><a href='https://wiki.dlang.org/Get_involved'>参加する</a></li>
-    <li class="menu-divider"><a href='https://dlang.org/foundation/contributors.html'>貢献者</a></li>
+    <li><a href='https://wiki.dlang.org/Get_involved'>参加するには</a></li>
+    <li class="menu-divider"><a href='https://dlang.org/foundation/contributors.html'>貢献している方々</a></li>
     <li><a href='../foundation/index.html'>D言語財団</a></li>
     <li><a href='../security.html'>セキュリティ</a></li>
     <li><a href='../foundation/donate.html'>寄付での貢献</a></li>
@@ -56,7 +56,7 @@
  </ul></li>
     <li class='expand-container'><a class='expand-toggle' href='../resources.html'><span>リソース</span></a>
       
-<ul class='expand-content'>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'>ツアー</a></li>
+<ul class='expand-content'>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'>D言語ツアー</a></li>
     <li><a href='https://wiki.dlang.org/Books'>書籍</a></li>
     <li><a href='https://wiki.dlang.org/Tutorials'>チュートリアル</a></li>
     <li class="menu-divider"><a href='https://wiki.dlang.org/Development_tools'>ツール</a></li>
@@ -90,12 +90,12 @@
 
 <div class="container">    
 <div class="subnav-helper"></div> <div class="subnav">    <div class="head"><h5>Language Reference</h5> <p class="subnav-duplicate"><a href="../spec/spec.html">table of contents</a></p></div>
-    <ul>        <li><a href='            ../spec/intro.html'>はじめに(Introduction)</a></li><li><a href='            ../spec/lex.html'>字句の構成(Lexical)</a></li><li><a href='            ../spec/grammar.html'>文法(Grammar)</a></li><li><a href='            ../spec/module.html'>モジュール(Modules)</a></li><li><a href='            ../spec/declaration.html'>宣言(Declarations)</a></li><li><a href='            ../spec/type.html'>型(Types)</a></li><li><a href='            ../spec/property.html'>プロパティ(Properties)</a></li><li><a href='            ../spec/attribute.html'>属性(Attributes)</a></li><li><a href='            ../spec/pragma.html'>プラグマ(Pragmas)</a></li><li><a href='            ../spec/expression.html'>式(Expressions)</a></li><li><a href='            ../spec/statement.html'>文(Statements)</a></li><li><a href='            ../spec/arrays.html'>配列(Arrays)</a></li><li><a href='            ../spec/hash-map.html'>連想配列(Associative Arrays)</a></li><li><a href='            ../spec/struct.html'>構造体と共用体</a></li><li><a href='            ../spec/class.html'>クラス(Classes)</a></li><li><a href='            ../spec/interface.html'>インターフェース(Interfaces)</a></li><li><a href='            ../spec/enum.html'>列挙型(Enums)</a></li><li><a href='            ../spec/const3.html'>型修飾子(Type Qualifiers)</a></li><li><a href='            ../spec/function.html'>関数(Functions)</a></li><li><a href='            ../spec/operatoroverloading.html'>演算子オーバーロード</a></li><li><a href='            ../spec/template.html'>テンプレート(Templates)</a></li><li><a href='            ../spec/template-mixin.html'>ミックスイン(Template Mixins)</a></li><li><a href='            ../spec/contracts.html'>契約(Contract Programming)</a></li><li><a href='            ../spec/version.html'>条件コンパイル</a></li><li><a href='            ../spec/traits.html'>特性(Traits)</a></li><li><a href='            ../spec/errors.html'>エラー処理(Error Handling)</a></li><li><a href='            ../spec/unittest.html'>単体テスト(Unit Tests)</a></li><li><a href='            ../spec/garbage.html'>ガベージコレクション</a></li><li><a href='            ../spec/float.html'>浮動小数点数(Floating Point)</a></li><li><a href='            ../spec/iasm.html'>インラインアセンブラ</a></li><li><a href='            ../spec/ddoc.html'>ドキュメント生成</a></li><li><a href='            ../spec/interfaceToC.html'>Cとの連携(Interfacing to C)</a></li><li><a href='            ../spec/cpp_interface.html'>C++との連携(Interfacing to C++)</a></li><li><a href='            ../spec/objc_interface.html'>Objective-Cとの連携</a></li><li><a href='            ../spec/portability.html'>移植性(Portability Guide)</a></li><li><a href='            ../spec/entity.html'>名前付き文字</a></li><li><a href='            ../spec/memory-safe-d.html'>メモリ安全性(Memory Safety)</a></li><li><a href='            ../spec/abi.html'>ABI(Application Binary Interface)</a></li><li><a href='            ../spec/simd.html'>ベクトル拡張(Vector Extensions)</a></li><li><a href='            ../spec/betterc.html'>Better C</a></li><li><a href='            ../spec/importc.html'>Cのインポート(Import C)</a></li><li><a href='            ../spec/ob.html'>@live(Live Functions)
+    <ul>        <li><a href='            ../spec/intro.html'>はじめに[Introduction]</a></li><li><a href='            ../spec/lex.html'>字句の構成[Lexical]</a></li><li><a href='            ../spec/grammar.html'>文法[Grammar]</a></li><li><a href='            ../spec/module.html'>モジュール[Modules]</a></li><li><a href='            ../spec/declaration.html'>宣言[Declarations]</a></li><li><a href='            ../spec/type.html'>型[Types]</a></li><li><a href='            ../spec/property.html'>プロパティ[Properties]</a></li><li><a href='            ../spec/attribute.html'>属性[Attributes]</a></li><li><a href='            ../spec/pragma.html'>プラグマ[Pragmas]</a></li><li><a href='            ../spec/expression.html'>式[Expressions]</a></li><li><a href='            ../spec/statement.html'>文[Statements]</a></li><li><a href='            ../spec/arrays.html'>配列[Arrays]</a></li><li><a href='            ../spec/hash-map.html'>連想配列[Associative Arrays]</a></li><li><a href='            ../spec/struct.html'>構造体と共用体</a></li><li><a href='            ../spec/class.html'>クラス[Classes]</a></li><li><a href='            ../spec/interface.html'>インターフェース[Interfaces]</a></li><li><a href='            ../spec/enum.html'>列挙型[Enums]</a></li><li><a href='            ../spec/const3.html'>型修飾子[Type Qualifiers]</a></li><li><a href='            ../spec/function.html'>関数[Functions]</a></li><li><a href='            ../spec/operatoroverloading.html'>演算子オーバーロード</a></li><li><a href='            ../spec/template.html'>テンプレート[Templates]</a></li><li><a href='            ../spec/template-mixin.html'>ミックスイン[Template Mixins]</a></li><li><a href='            ../spec/contracts.html'>契約[Contract Programming]</a></li><li><a href='            ../spec/version.html'>条件コンパイル</a></li><li><a href='            ../spec/traits.html'>特性[Traits]</a></li><li><a href='            ../spec/errors.html'>エラー処理[Error Handling]</a></li><li><a href='            ../spec/unittest.html'>単体テスト[Unit Tests]</a></li><li><a href='            ../spec/garbage.html'>ガベージコレクション</a></li><li><a href='            ../spec/float.html'>浮動小数点数[Floating Point]</a></li><li><a href='            ../spec/iasm.html'>インラインアセンブラ</a></li><li><a href='            ../spec/ddoc.html'>ドキュメント生成</a></li><li><a href='            ../spec/interfaceToC.html'>Cとの連携[Interfacing to C]</a></li><li><a href='            ../spec/cpp_interface.html'>C++との連携[Interfacing to C++]</a></li><li><a href='            ../spec/objc_interface.html'>Objective-Cとの連携</a></li><li><a href='            ../spec/portability.html'>移植性[Portability Guide]</a></li><li><a href='            ../spec/entity.html'>名前付き文字</a></li><li><a href='            ../spec/memory-safe-d.html'>メモリ安全性[Memory Safety]</a></li><li><a href='            ../spec/abi.html'>ABI[Application Binary Interface]</a></li><li><a href='            ../spec/simd.html'>ベクトル拡張[Vector Extensions]</a></li><li><a href='            ../spec/betterc.html'>Better C</a></li><li><a href='            ../spec/importc.html'>Cのインポート[Import C]</a></li><li><a href='            ../spec/ob.html'>@live[Live Functions]
         </a></li>
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BTypes%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5B型%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Types</h1>
+        <h1>型</h1>
         
 <style>    body { counter-reset: h1 6; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,19 +146,19 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#basic-data-types">Basic Data Types</a></li>
-    <li><a href="#derived-data-types">Derived Data Types</a></li>
-    <li><a href="#user-defined-types">User-Defined Types</a></li>
-    <li><a href="#type-conversions">Type Conversions</a><ol>        <li><a href="#pointer-conversions">Pointer Conversions</a></li>
+    <ol>    <li><a href="#basic-data-types">基本的なデータ型</a></li>
+    <li><a href="#derived-data-types">派生データ型</a></li>
+    <li><a href="#user-defined-types">ユーザー定義型</a></li>
+    <li><a href="#type-conversions">型変換</a><ol>        <li><a href="#pointer-conversions">Pointer Conversions</a></li>
         <li><a href="#implicit-conversions">Implicit Conversions</a></li>
         <li><a href="#integer-promotions">Integer Promotions</a></li>
         <li><a href="#usual-arithmetic-conversions">Usual Arithmetic Conversions</a></li>
     </ol></li>
     <li><a href="#bool"><span class="d_inlinecode donthyphenate notranslate">bool</span></a></li>
-    <li><a href="#delegates">Delegates</a></li>
+    <li><a href="#delegates">デリゲート</a></li>
     <li><a href="#typeof"><span class="d_inlinecode donthyphenate notranslate">typeof</span></a></li>
-    <li><a href="#mixin_types">Mixin Types</a></li>
-    <li><a href="#aliased-types">Aliased Types</a><ol>        <li><a href="#size_t"><span class="d_inlinecode donthyphenate notranslate">size_t</span></a></li>
+    <li><a href="#mixin_types">Mixin型</a></li>
+    <li><a href="#aliased-types">Aliase型</a><ol>        <li><a href="#size_t"><span class="d_inlinecode donthyphenate notranslate">size_t</span></a></li>
         <li><a href="#ptrdiff_t"><span class="d_inlinecode donthyphenate notranslate">ptrdiff_t</span></a></li>
         <li><a href="#string"><span class="d_inlinecode donthyphenate notranslate">string</span></a></li>
     </ol></li>
@@ -252,7 +252,7 @@
     <a href="#user-defined-types">User-Defined Types</a> are aggregates of basic and derived types.
     </p>
 <div class="blankline"></div>
-<h2><span id="Basic Data Types"><a class="anchor" title="Permalink to this section" id="basic-data-types" href="#basic-data-types">Basic Data Types</a></span></h2>
+<h2><span id="Basic Data Types"><a class="anchor" title="Permalink to this section" id="basic-data-types" href="#basic-data-types">基本的なデータ型</a></span></h2>
 <div class="blankline"></div>
     <center><table><caption>Basic Data Types</caption>    <tr><th class="donthyphenate"><b>Keyword</b></th><th class="donthyphenate"><b>Default Initializer (<span class="d_inlinecode donthyphenate notranslate">.init</span>)</b></th><th class="donthyphenate"><b>Description</b></th></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">void</span></td><td>no default initializer</td><td><span class="d_inlinecode donthyphenate notranslate">void</span> has no value</td></tr>
@@ -291,7 +291,7 @@
     <p>NOTE: Complex and imaginary types <span class="d_inlinecode donthyphenate notranslate">ifloat</span>, <span class="d_inlinecode donthyphenate notranslate">idouble</span>, <span class="d_inlinecode donthyphenate notranslate">ireal</span>, <span class="d_inlinecode donthyphenate notranslate">cfloat</span>, <span class="d_inlinecode donthyphenate notranslate">cdouble</span>,
     and <span class="d_inlinecode donthyphenate notranslate">creal</span> have been deprecated in favor of <span class="d_inlinecode donthyphenate notranslate">std.complex.Complex</span>.</p>
 <div class="blankline"></div>
-<h2><span id="Derived Data Types"><a class="anchor" title="Permalink to this section" id="derived-data-types" href="#derived-data-types">Derived Data Types</a></span></h2>
+<h2><span id="Derived Data Types"><a class="anchor" title="Permalink to this section" id="derived-data-types" href="#derived-data-types">派生データ型</a></span></h2>
 <div class="blankline"></div>
     <ul>    <li><a href="../arrays.html#pointers">Pointer</a></li>
     <li><a href="../arrays.html#static-arrays">Static Array</a></li>
@@ -302,7 +302,7 @@
     </ul>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><span id="User Defined Types"><a class="anchor" title="Permalink to this section" id="user-defined-types" href="#user-defined-types">User-Defined Types</a></span></h2>
+<h2><span id="User Defined Types"><a class="anchor" title="Permalink to this section" id="user-defined-types" href="#user-defined-types">ユーザー定義型</a></span></h2>
 <div class="blankline"></div>
     <ul>    <li><a href="../spec/enum.html">Enums</a></li>
     <li><a href="../spec/struct.html">Structs and Unions</a></li>
@@ -310,7 +310,7 @@
     <li><a href="../spec/interface.html">Interfaces</a></li>
     </ul>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="type-conversions" href="#type-conversions">Type Conversions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="type-conversions" href="#type-conversions">型変換</a></h2>
 <div class="blankline"></div>
     See also: <a href="../spec/expression.html#CastExpression"><i>CastExpression</i></a>.
 <div class="blankline"></div>
@@ -501,7 +501,7 @@ values <span class="d_inlinecode donthyphenate notranslate">false</span> and <sp
 testing for <span class="d_inlinecode donthyphenate notranslate">0</span> or <span class="d_inlinecode donthyphenate notranslate">!=0</span> for arithmetic types, and <span class="d_inlinecode donthyphenate notranslate">null</span> or <span class="d_inlinecode donthyphenate notranslate">!=null</span> for
 pointers or references.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="delegates" href="#delegates">Delegates</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="delegates" href="#delegates">デリゲート</a></h2>
 <div class="blankline"></div>
 <p>Delegates are an aggregate of two pieces of data: an
 object reference and a pointer to a non-static member function, or a pointer to
@@ -648,7 +648,7 @@ dg = &amp;o.member; <span class="d_comment">// dg is a delegate to object o and
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="mixin_types" href="#mixin_types">Mixin Types</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="mixin_types" href="#mixin_types">Mixin型</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="MixinType"><span class="gname">MixinType</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">mixin (</span> <a href="../spec/expression.html#ArgumentList"><i>ArgumentList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
@@ -669,7 +669,7 @@ dg = &amp;o.member; <span class="d_comment">// dg is a delegate to object o and
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="aliased-types" href="#aliased-types">Aliased Types</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="aliased-types" href="#aliased-types">Aliase型</a></h2>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="size_t" href="#size_t"><span class="d_inlinecode donthyphenate notranslate">size_t</span></a></h3>
 <div class="blankline"></div>
@@ -685,14 +685,14 @@ dg = &amp;o.member; <span class="d_comment">// dg is a delegate to object o and
     <p>A <a href="../spec/arrays.html#strings"><i>string</i> is a special case of an array.</a></p>
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/declaration.html">Declarations</a></div>
-<div style="float: right"><a href="../spec/property.html">Properties</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/declaration.html">宣言[Declarations]</a></div>
+<div style="float: right"><a href="../spec/property.html">プロパティ[Properties]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 04:00:11 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 10:15:20 2022
 </div>
     </div>
 </div>

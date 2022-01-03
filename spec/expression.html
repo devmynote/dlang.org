@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Expressions - D言語 非公式日本語</title>
+<title>式 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Expressions' class='doc'>
+<body id='式' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -27,7 +27,7 @@
 <div id="cssmenu"><ul>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'><span>学ぶ</span></a></li>
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
-<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語リファレンス</a></li>
+<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
     <li><a href='../phobos/index.html'>ライブラリ</a></li>
     <li><a href='../dmd.html'>コマンドライン</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
@@ -47,8 +47,8 @@
     <li><a href='https://wiki.dlang.org'>Wiki</a></li>
     <li class="menu-divider"><a href='https://github.com/dlang'>GitHub</a></li>
     <li><a href='https://dlang.org/bugstats.html'>Issues</a></li>
-    <li><a href='https://wiki.dlang.org/Get_involved'>参加する</a></li>
-    <li class="menu-divider"><a href='https://dlang.org/foundation/contributors.html'>貢献者</a></li>
+    <li><a href='https://wiki.dlang.org/Get_involved'>参加するには</a></li>
+    <li class="menu-divider"><a href='https://dlang.org/foundation/contributors.html'>貢献している方々</a></li>
     <li><a href='../foundation/index.html'>D言語財団</a></li>
     <li><a href='../security.html'>セキュリティ</a></li>
     <li><a href='../foundation/donate.html'>寄付での貢献</a></li>
@@ -56,7 +56,7 @@
  </ul></li>
     <li class='expand-container'><a class='expand-toggle' href='../resources.html'><span>リソース</span></a>
       
-<ul class='expand-content'>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'>ツアー</a></li>
+<ul class='expand-content'>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'>D言語ツアー</a></li>
     <li><a href='https://wiki.dlang.org/Books'>書籍</a></li>
     <li><a href='https://wiki.dlang.org/Tutorials'>チュートリアル</a></li>
     <li class="menu-divider"><a href='https://wiki.dlang.org/Development_tools'>ツール</a></li>
@@ -90,12 +90,12 @@
 
 <div class="container">    
 <div class="subnav-helper"></div> <div class="subnav">    <div class="head"><h5>Language Reference</h5> <p class="subnav-duplicate"><a href="../spec/spec.html">table of contents</a></p></div>
-    <ul>        <li><a href='            ../spec/intro.html'>はじめに(Introduction)</a></li><li><a href='            ../spec/lex.html'>字句の構成(Lexical)</a></li><li><a href='            ../spec/grammar.html'>文法(Grammar)</a></li><li><a href='            ../spec/module.html'>モジュール(Modules)</a></li><li><a href='            ../spec/declaration.html'>宣言(Declarations)</a></li><li><a href='            ../spec/type.html'>型(Types)</a></li><li><a href='            ../spec/property.html'>プロパティ(Properties)</a></li><li><a href='            ../spec/attribute.html'>属性(Attributes)</a></li><li><a href='            ../spec/pragma.html'>プラグマ(Pragmas)</a></li><li><a href='            ../spec/expression.html'>式(Expressions)</a></li><li><a href='            ../spec/statement.html'>文(Statements)</a></li><li><a href='            ../spec/arrays.html'>配列(Arrays)</a></li><li><a href='            ../spec/hash-map.html'>連想配列(Associative Arrays)</a></li><li><a href='            ../spec/struct.html'>構造体と共用体</a></li><li><a href='            ../spec/class.html'>クラス(Classes)</a></li><li><a href='            ../spec/interface.html'>インターフェース(Interfaces)</a></li><li><a href='            ../spec/enum.html'>列挙型(Enums)</a></li><li><a href='            ../spec/const3.html'>型修飾子(Type Qualifiers)</a></li><li><a href='            ../spec/function.html'>関数(Functions)</a></li><li><a href='            ../spec/operatoroverloading.html'>演算子オーバーロード</a></li><li><a href='            ../spec/template.html'>テンプレート(Templates)</a></li><li><a href='            ../spec/template-mixin.html'>ミックスイン(Template Mixins)</a></li><li><a href='            ../spec/contracts.html'>契約(Contract Programming)</a></li><li><a href='            ../spec/version.html'>条件コンパイル</a></li><li><a href='            ../spec/traits.html'>特性(Traits)</a></li><li><a href='            ../spec/errors.html'>エラー処理(Error Handling)</a></li><li><a href='            ../spec/unittest.html'>単体テスト(Unit Tests)</a></li><li><a href='            ../spec/garbage.html'>ガベージコレクション</a></li><li><a href='            ../spec/float.html'>浮動小数点数(Floating Point)</a></li><li><a href='            ../spec/iasm.html'>インラインアセンブラ</a></li><li><a href='            ../spec/ddoc.html'>ドキュメント生成</a></li><li><a href='            ../spec/interfaceToC.html'>Cとの連携(Interfacing to C)</a></li><li><a href='            ../spec/cpp_interface.html'>C++との連携(Interfacing to C++)</a></li><li><a href='            ../spec/objc_interface.html'>Objective-Cとの連携</a></li><li><a href='            ../spec/portability.html'>移植性(Portability Guide)</a></li><li><a href='            ../spec/entity.html'>名前付き文字</a></li><li><a href='            ../spec/memory-safe-d.html'>メモリ安全性(Memory Safety)</a></li><li><a href='            ../spec/abi.html'>ABI(Application Binary Interface)</a></li><li><a href='            ../spec/simd.html'>ベクトル拡張(Vector Extensions)</a></li><li><a href='            ../spec/betterc.html'>Better C</a></li><li><a href='            ../spec/importc.html'>Cのインポート(Import C)</a></li><li><a href='            ../spec/ob.html'>@live(Live Functions)
+    <ul>        <li><a href='            ../spec/intro.html'>はじめに[Introduction]</a></li><li><a href='            ../spec/lex.html'>字句の構成[Lexical]</a></li><li><a href='            ../spec/grammar.html'>文法[Grammar]</a></li><li><a href='            ../spec/module.html'>モジュール[Modules]</a></li><li><a href='            ../spec/declaration.html'>宣言[Declarations]</a></li><li><a href='            ../spec/type.html'>型[Types]</a></li><li><a href='            ../spec/property.html'>プロパティ[Properties]</a></li><li><a href='            ../spec/attribute.html'>属性[Attributes]</a></li><li><a href='            ../spec/pragma.html'>プラグマ[Pragmas]</a></li><li><a href='            ../spec/expression.html'>式[Expressions]</a></li><li><a href='            ../spec/statement.html'>文[Statements]</a></li><li><a href='            ../spec/arrays.html'>配列[Arrays]</a></li><li><a href='            ../spec/hash-map.html'>連想配列[Associative Arrays]</a></li><li><a href='            ../spec/struct.html'>構造体と共用体</a></li><li><a href='            ../spec/class.html'>クラス[Classes]</a></li><li><a href='            ../spec/interface.html'>インターフェース[Interfaces]</a></li><li><a href='            ../spec/enum.html'>列挙型[Enums]</a></li><li><a href='            ../spec/const3.html'>型修飾子[Type Qualifiers]</a></li><li><a href='            ../spec/function.html'>関数[Functions]</a></li><li><a href='            ../spec/operatoroverloading.html'>演算子オーバーロード</a></li><li><a href='            ../spec/template.html'>テンプレート[Templates]</a></li><li><a href='            ../spec/template-mixin.html'>ミックスイン[Template Mixins]</a></li><li><a href='            ../spec/contracts.html'>契約[Contract Programming]</a></li><li><a href='            ../spec/version.html'>条件コンパイル</a></li><li><a href='            ../spec/traits.html'>特性[Traits]</a></li><li><a href='            ../spec/errors.html'>エラー処理[Error Handling]</a></li><li><a href='            ../spec/unittest.html'>単体テスト[Unit Tests]</a></li><li><a href='            ../spec/garbage.html'>ガベージコレクション</a></li><li><a href='            ../spec/float.html'>浮動小数点数[Floating Point]</a></li><li><a href='            ../spec/iasm.html'>インラインアセンブラ</a></li><li><a href='            ../spec/ddoc.html'>ドキュメント生成</a></li><li><a href='            ../spec/interfaceToC.html'>Cとの連携[Interfacing to C]</a></li><li><a href='            ../spec/cpp_interface.html'>C++との連携[Interfacing to C++]</a></li><li><a href='            ../spec/objc_interface.html'>Objective-Cとの連携</a></li><li><a href='            ../spec/portability.html'>移植性[Portability Guide]</a></li><li><a href='            ../spec/entity.html'>名前付き文字</a></li><li><a href='            ../spec/memory-safe-d.html'>メモリ安全性[Memory Safety]</a></li><li><a href='            ../spec/abi.html'>ABI[Application Binary Interface]</a></li><li><a href='            ../spec/simd.html'>ベクトル拡張[Vector Extensions]</a></li><li><a href='            ../spec/betterc.html'>Better C</a></li><li><a href='            ../spec/importc.html'>Cのインポート[Import C]</a></li><li><a href='            ../spec/ob.html'>@live[Live Functions]
         </a></li>
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BExpressions%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5B式%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Expressions</h1>
+        <h1>式</h1>
         
 <style>    body { counter-reset: h1 10; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,42 +146,42 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#definitions-and-terms">Definitions and Terms</a></li>
-    <li><a href="#order-of-evaluation">Order Of Evaluation</a></li>
-    <li><a href="#temporary-lifetime">Lifetime of Temporaries</a></li>
-    <li><a href="#expression">Expressions</a></li>
-    <li><a href="#assign_expressions">Assign Expressions</a><ol>        <li><a href="#simple_assignment_expressions">Simple Assignment Expression</a></li>
+    <ol>    <li><a href="#definitions-and-terms">定義と用語</a></li>
+    <li><a href="#order-of-evaluation">評価の順序</a></li>
+    <li><a href="#temporary-lifetime">テンポラリのライフタイム</a></li>
+    <li><a href="#expression">式</a></li>
+    <li><a href="#assign_expressions">代入式</a><ol>        <li><a href="#simple_assignment_expressions">Simple Assignment Expression</a></li>
         <li><a href="#assignment_operator_expressions">Assignment Operator Expressions</a></li>
     </ol></li>
-    <li><a href="#conditional_expressions">Conditional Expressions</a></li>
-    <li><a href="#oror_expressions">OrOr Expressions</a></li>
-    <li><a href="#andand_expressions">AndAnd Expressions</a></li>
-    <li><a href="#bitwise_expressions">Bitwise Expressions</a><ol>        <li><a href="#or_expressions">Or Expressions</a></li>
+    <li><a href="#conditional_expressions">条件式</a></li>
+    <li><a href="#oror_expressions">OrOr 式</a></li>
+    <li><a href="#andand_expressions">AndAnd 式</a></li>
+    <li><a href="#bitwise_expressions">ビット単位の式</a><ol>        <li><a href="#or_expressions">Or Expressions</a></li>
         <li><a href="#xor_expressions">Xor Expressions</a></li>
         <li><a href="#and_expressions">And Expressions</a></li>
     </ol></li>
-    <li><a href="#compare_expressions">Compare Expressions</a></li>
-    <li><a href="#equality_expressions">Equality Expressions</a><ol>        <li><a href="#identity_expressions">Identity Expressions</a></li>
+    <li><a href="#compare_expressions">比較式</a></li>
+    <li><a href="#equality_expressions">等式</a><ol>        <li><a href="#identity_expressions">Identity Expressions</a></li>
     </ol></li>
-    <li><a href="#relation_expressions">Relational Expressions</a><ol>        <li><a href="#integer_comparisons">Integer comparisons</a></li>
+    <li><a href="#relation_expressions">関係式</a><ol>        <li><a href="#integer_comparisons">Integer comparisons</a></li>
         <li><a href="#floating-point-comparisons">Floating point comparisons</a></li>
         <li><a href="#class-comparisons">Class comparisons</a></li>
     </ol></li>
-    <li><a href="#in_expressions">In Expressions</a></li>
-    <li><a href="#shift_expressions">Shift Expressions</a></li>
-    <li><a href="#add_expressions">Add Expressions</a></li>
-    <li><a href="#cat_expressions">Cat Expressions</a></li>
-    <li><a href="#mul_expressions">Mul Expressions</a></li>
-    <li><a href="#unary-expression">Unary Expressions</a><ol>        <li><a href="#complement_expressions">Complement Expressions</a></li>
+    <li><a href="#in_expressions">In 式</a></li>
+    <li><a href="#shift_expressions">Shift 式</a></li>
+    <li><a href="#add_expressions">Add 式</a></li>
+    <li><a href="#cat_expressions">Cat 式</a></li>
+    <li><a href="#mul_expressions">Mul 式</a></li>
+    <li><a href="#unary-expression">単項式</a><ol>        <li><a href="#complement_expressions">Complement Expressions</a></li>
         <li><a href="#new_expressions">New Expressions</a></li>
         <li><a href="#delete_expressions">Delete Expressions</a></li>
         <li><a href="#cast_expressions">Cast Expressions</a></li>
     </ol></li>
-    <li><a href="#pow_expressions">Pow Expressions</a></li>
-    <li><a href="#postfix_expressions">Postfix Expressions</a></li>
-    <li><a href="#index_expressions">Index Expressions</a></li>
-    <li><a href="#slice_expressions">Slice Expressions</a></li>
-    <li><a href="#primary_expressions">Primary Expressions</a><ol>        <li><a href="#identifier">.Identifier</a></li>
+    <li><a href="#pow_expressions">Pow 式</a></li>
+    <li><a href="#postfix_expressions">後置演算式</a></li>
+    <li><a href="#index_expressions">Index 式</a></li>
+    <li><a href="#slice_expressions">Slice 式</a></li>
+    <li><a href="#primary_expressions">一次式</a><ol>        <li><a href="#identifier">.Identifier</a></li>
         <li><a href="#this">this</a></li>
         <li><a href="#super">super</a></li>
         <li><a href="#null">null</a></li>
@@ -198,8 +198,8 @@
         <li><a href="#typeid_expressions">Typeid Expressions</a></li>
         <li><a href="#is_expression">IsExpression</a></li>
     </ol></li>
-    <li><a href="#specialkeywords">Special Keywords</a></li>
-    <li><a href="#associativity">Associativity and Commutativity</a></li>
+    <li><a href="#specialkeywords">スペシャルキーワード</a></li>
+    <li><a href="#associativity">結合性と可換性</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -211,7 +211,7 @@ The syntax, order of evaluation, and semantics of expressions are as follows.</p
         tested, or ignored. Expressions can also have side effects.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="definitions-and-terms" href="#definitions-and-terms">Definitions and Terms</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="definitions-and-terms" href="#definitions-and-terms">定義と用語</a></h2>
 <div class="blankline"></div>
 <span class="def-anchor" id=".define-full-expression"></span><div class="quickindex" id="quickindex.define-full-expression"></div><p><b>Definition</b> (&ldquo;Full expression&rdquo;): For any expression
 <i>expr</i>, the full expression of <i>expr</i> is defined as follows. If <i>expr</i> parses as a
@@ -269,7 +269,7 @@ Example: in the expression <span class="d_inlinecode donthyphenate notranslate">
 of the subexpression <span class="d_inlinecode donthyphenate notranslate">f() * 2</span> is <span class="d_inlinecode donthyphenate notranslate">f() * 2 &amp;&amp; g()</span>. In the expression <span class="d_inlinecode donthyphenate notranslate">(f() &amp;&amp; g()) + h()</span>, the
 subexpression <span class="d_inlinecode donthyphenate notranslate">h()</span> has no smallest short-circuit expression.
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="order-of-evaluation" href="#order-of-evaluation">Order Of Evaluation</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="order-of-evaluation" href="#order-of-evaluation">評価の順序</a></h2>
 <div class="blankline"></div>
 <p>Built-in prefix unary expressions <span class="d_inlinecode donthyphenate notranslate">++</span> and <span class="d_inlinecode donthyphenate notranslate">--</span> are evaluated as if lowered (rewritten) to
 assignments as follows: <span class="d_inlinecode donthyphenate notranslate">++expr</span> becomes <span class="d_inlinecode donthyphenate notranslate">((expr) += 1)</span>, and <span class="d_inlinecode donthyphenate notranslate">--expr</span> becomes <span class="d_inlinecode donthyphenate notranslate">((expr) -= 1)</span>.
@@ -337,7 +337,7 @@ arguments are evaluated left to right. Finally, transfer is passed to the functi
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="temporary-lifetime" href="#temporary-lifetime">Lifetime of Temporaries</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="temporary-lifetime" href="#temporary-lifetime">テンポラリのライフタイム</a></h2>
 <div class="blankline"></div>
 <p>Expressions and statements may create and/or consume rvalues. Such values are called
 <i>temporaries</i> and do not have a name or a visible scope. Their lifetime is managed automatically
@@ -414,7 +414,7 @@ Following their destruction, <span class="d_inlinecode donthyphenate notranslate
 destroyed at the end of the full expression, but right at the end of the <span class="d_inlinecode donthyphenate notranslate">&amp;&amp;</span> expression.
 Consequently, the destruction of <span class="d_inlinecode donthyphenate notranslate">S(6)</span> and <span class="d_inlinecode donthyphenate notranslate">S(5)</span> is carried before that of <span class="d_inlinecode donthyphenate notranslate">S(2)</span> and <span class="d_inlinecode donthyphenate notranslate">S(1)</span>.
 <div class="blankline"></div>
-<h2><span id="Expression"><a class="anchor" title="Permalink to this section" id="expression" href="#expression">Expressions</a></span></h2>
+<h2><span id="Expression"><a class="anchor" title="Permalink to this section" id="expression" href="#expression">式</a></span></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Expression"><span class="gname">Expression</span></a>:
     <a href="#CommaExpression"><i>CommaExpression</i></a>
@@ -430,7 +430,7 @@ Consequently, the destruction of <span class="d_inlinecode donthyphenate notrans
         Using the result of comma expressions isn't allowed.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="assign_expressions" href="#assign_expressions">Assign Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="assign_expressions" href="#assign_expressions">代入式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="AssignExpression"><span class="gname">AssignExpression</span></a>:
     <a href="#ConditionalExpression"><i>ConditionalExpression</i></a>
@@ -517,7 +517,7 @@ Consequently, the destruction of <span class="d_inlinecode donthyphenate notrans
         the binary operator. Still the left operand must be an lvalue.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="conditional_expressions" href="#conditional_expressions">Conditional Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="conditional_expressions" href="#conditional_expressions">条件式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="ConditionalExpression"><span class="gname">ConditionalExpression</span></a>:
     <a href="#OrOrExpression"><i>OrOrExpression</i></a>
@@ -559,7 +559,7 @@ test ? a = b : c = 2;   <span class="d_comment">// Deprecated
 <pre class="d_code notranslate">test ? a = b : (c = 2);
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="oror_expressions" href="#oror_expressions">OrOr Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="oror_expressions" href="#oror_expressions">OrOr 式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="OrOrExpression"><span class="gname">OrOrExpression</span></a>:
     <a href="#AndAndExpression"><i>AndAndExpression</i></a>
@@ -586,7 +586,7 @@ test ? a = b : c = 2;   <span class="d_comment">// Deprecated
         expression is the right operand converted to type <span class="d_inlinecode donthyphenate notranslate">bool</span>.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="andand_expressions" href="#andand_expressions">AndAnd Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="andand_expressions" href="#andand_expressions">AndAnd 式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="AndAndExpression"><span class="gname">AndAndExpression</span></a>:
     <a href="#OrExpression"><i>OrExpression</i></a>
@@ -613,7 +613,7 @@ test ? a = b : c = 2;   <span class="d_comment">// Deprecated
         expression is the right operand converted to type <span class="d_inlinecode donthyphenate notranslate">bool</span>.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="bitwise_expressions" href="#bitwise_expressions">Bitwise Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="bitwise_expressions" href="#bitwise_expressions">ビット単位の式</a></h2>
 <div class="blankline"></div>
     <p>Bit wise expressions perform a bitwise operation on their operands.
         Their operands must be integral types.
@@ -648,7 +648,7 @@ test ? a = b : c = 2;   <span class="d_comment">// Deprecated
 <div class="blankline"></div>
     <p>The operands are AND'd together.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="compare_expressions" href="#compare_expressions">Compare Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="compare_expressions" href="#compare_expressions">比較式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="CmpExpression"><span class="gname">CmpExpression</span></a>:
     <a href="#ShiftExpression"><i>ShiftExpression</i></a>
@@ -658,7 +658,7 @@ test ? a = b : c = 2;   <span class="d_comment">// Deprecated
     <a href="#InExpression"><i>InExpression</i></a>
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="equality_expressions" href="#equality_expressions">Equality Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="equality_expressions" href="#equality_expressions">等式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="EqualExpression"><span class="gname">EqualExpression</span></a>:
     <a href="#ShiftExpression"><i>ShiftExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">==</span> <a href="#ShiftExpression"><i>ShiftExpression</i></a>
@@ -780,7 +780,7 @@ C c;
     <p>The identity operator <span class="d_inlinecode donthyphenate notranslate">is</span> cannot be overloaded.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="relation_expressions" href="#relation_expressions">Relational Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="relation_expressions" href="#relation_expressions">関係式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="RelExpression"><span class="gname">RelExpression</span></a>:
     <a href="#ShiftExpression"><i>ShiftExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">&lt;</span> <a href="#ShiftExpression"><i>ShiftExpression</i></a>
@@ -862,7 +862,7 @@ C c;
 </span>    ...
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="in_expressions" href="#in_expressions">In Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="in_expressions" href="#in_expressions">In 式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="InExpression"><span class="gname">InExpression</span></a>:
     <a href="#ShiftExpression"><i>ShiftExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">in</span> <a href="#ShiftExpression"><i>ShiftExpression</i></a>
@@ -889,7 +889,7 @@ C c;
         operation.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="shift_expressions" href="#shift_expressions">Shift Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="shift_expressions" href="#shift_expressions">Shift 式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="ShiftExpression"><span class="gname">ShiftExpression</span></a>:
     <a href="#AddExpression"><i>AddExpression</i></a>
@@ -916,7 +916,7 @@ C c;
 <span class="d_keyword">auto</span> x = c &lt;&lt; 33;        <span class="d_comment">// error
 </span></pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="add_expressions" href="#add_expressions">Add Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="add_expressions" href="#add_expressions">Add 式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="AddExpression"><span class="gname">AddExpression</span></a>:
     <a href="#MulExpression"><i>MulExpression</i></a>
@@ -969,7 +969,7 @@ C c;
     <p>Add expressions for floating point operands are not associative.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="cat_expressions" href="#cat_expressions">Cat Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="cat_expressions" href="#cat_expressions">Cat 式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="CatExpression"><span class="gname">CatExpression</span></a>:
     <a href="#AddExpression"><i>AddExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">~</span> <a href="#MulExpression"><i>MulExpression</i></a>
@@ -983,7 +983,7 @@ C c;
         and then the concatenation is performed.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="mul_expressions" href="#mul_expressions">Mul Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="mul_expressions" href="#mul_expressions">Mul 式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="MulExpression"><span class="gname">MulExpression</span></a>:
     <a href="#UnaryExpression"><i>UnaryExpression</i></a>
@@ -1032,7 +1032,7 @@ C c;
     <p>Mul expressions for floating point operands are not associative.
     </p>
 <div class="blankline"></div>
-<h2><span id="UnaryExpression"><a class="anchor" title="Permalink to this section" id="unary-expression" href="#unary-expression">Unary Expressions</a></span></h2>
+<h2><span id="UnaryExpression"><a class="anchor" title="Permalink to this section" id="unary-expression" href="#unary-expression">単項式</a></span></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="UnaryExpression"><span class="gname">UnaryExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">&amp;</span> <i>UnaryExpression</i>
@@ -1350,7 +1350,7 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
 </span>}
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="pow_expressions" href="#pow_expressions">Pow Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="pow_expressions" href="#pow_expressions">Pow 式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="PowExpression"><span class="gname">PowExpression</span></a>:
     <a href="#PostfixExpression"><i>PostfixExpression</i></a>
@@ -1361,7 +1361,7 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
         right operand.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="postfix_expressions" href="#postfix_expressions">Postfix Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="postfix_expressions" href="#postfix_expressions">後置演算式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="PostfixExpression"><span class="gname">PostfixExpression</span></a>:
     <a href="#PrimaryExpression"><i>PrimaryExpression</i></a>
@@ -1376,7 +1376,7 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
     <a href="#SliceExpression"><i>SliceExpression</i></a>
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="index_expressions" href="#index_expressions">Index Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="index_expressions" href="#index_expressions">Index 式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="IndexExpression"><span class="gname">IndexExpression</span></a>:
     <a href="#PostfixExpression"><i>PostfixExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#ArgumentList"><i>ArgumentList</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
@@ -1397,7 +1397,7 @@ in the sequence. A new declaration scope is created for the evaluation of the
         It is an error if <i>n</i> is out of bounds of the <i>ValueSeq</i>.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="slice_expressions" href="#slice_expressions">Slice Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="slice_expressions" href="#slice_expressions">Slice 式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="SliceExpression"><span class="gname">SliceExpression</span></a>:
     <a href="#PostfixExpression"><i>PostfixExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">[ ]</span>
@@ -1499,7 +1499,7 @@ type:</p>
         bounds are out of range.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="primary_expressions" href="#primary_expressions">Primary Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="primary_expressions" href="#primary_expressions">一次式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="PrimaryExpression"><span class="gname">PrimaryExpression</span></a>:
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
@@ -2511,7 +2511,7 @@ type:</p>
 <div class="blankline"></div>
     </ol>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="specialkeywords" href="#specialkeywords">Special Keywords</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="specialkeywords" href="#specialkeywords">スペシャルキーワード</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="SpecialKeyword"><span class="gname">SpecialKeyword</span></a>:
     <a href="#specialkeywords"><span class="d_inlinecode donthyphenate notranslate">__FILE__</span></a>
@@ -2569,7 +2569,7 @@ function: 'test.main', pretty function: 'int test.main(string[] args)',
 file full path: '/example/test.d'
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="associativity" href="#associativity">Associativity and Commutativity</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="associativity" href="#associativity">結合性と可換性</a></h2>
 <div class="blankline"></div>
     <p>An implementation may rearrange the evaluation of expressions
         according to arithmetic associativity and commutativity rules
@@ -2581,14 +2581,14 @@ file full path: '/example/test.d'
         floating point expressions.
     </p>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/pragma.html">Pragmas</a></div>
-<div style="float: right"><a href="../spec/statement.html">Statements</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/pragma.html">プラグマ[Pragmas]</a></div>
+<div style="float: right"><a href="../spec/statement.html">文[Statements]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 04:00:11 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 10:15:20 2022
 </div>
     </div>
 </div>
