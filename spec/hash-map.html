@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Associative Arrays - D言語 非公式日本語</title>
+<title>連想配列 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Associative Arrays' class='doc'>
+<body id='連想配列' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -28,8 +28,8 @@
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
 <ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
-    <li><a href='../phobos/index.html'>ライブラリ</a></li>
-    <li><a href='../dmd.html'>コマンドライン</a></li>
+    <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
+    <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
     <li><a href='../articles/index.html'>記事</a></li>
  </ul></li>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BAssociative Arrays%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5B連想配列%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Associative Arrays</h1>
+        <h1>連想配列</h1>
         
 <style>    body { counter-reset: h1 13; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,18 +146,18 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#removing_keys">Removing Keys</a></li>
-    <li><a href="#testing_membership">Testing Membership</a></li>
-    <li><a href="#using_classes_as_key">Using Classes as the KeyType</a></li>
-    <li><a href="#using_struct_as_key">Using Structs or Unions as the KeyType</a></li>
-    <li><a href="#construction_assignment_entries">Construction or Assignment on Setting AA Entries</a></li>
-    <li><a href="#inserting_if_not_present">Inserting if not present</a></li>
-    <li><a href="#advanced_updating">Advanced updating</a></li>
-    <li><a href="#static_initialization">Static Initialization of AAs</a></li>
-    <li><a href="#runtime_initialization">Runtime Initialization of Immutable AAs</a></li>
-    <li><a href="#construction_and_ref_semantic">Construction and Reference Semantics</a></li>
-    <li><a href="#properties">Properties</a><ol>        <li><a href="#aa_example">Associative Array Example: word count</a></li>
-        <li><a href="#aa_example_iteration">Associative Array Example: counting Tuples</a></li>
+    <ol>    <li><a href="#removing_keys">キーの削除</a></li>
+    <li><a href="#testing_membership">キーが含まれるかの確認</a></li>
+    <li><a href="#using_classes_as_key">キーの型にクラスを使用する</a></li>
+    <li><a href="#using_struct_as_key">キーの型に構造体やユニオンを使用する</a></li>
+    <li><a href="#construction_assignment_entries">連想配列エントリの設定に関する構築、代入</a></li>
+    <li><a href="#inserting_if_not_present">存在しない場合は挿入</a></li>
+    <li><a href="#advanced_updating">高度な更新</a></li>
+    <li><a href="#static_initialization">連想配列の静的初期化</a></li>
+    <li><a href="#runtime_initialization">immutableな連想配列の実行時初期化</a></li>
+    <li><a href="#construction_and_ref_semantic">構築および参照の扱い</a></li>
+    <li><a href="#properties">プロパティ</a><ol>        <li><a href="#aa_example">連想配列の例: 単語のカウント</a></li>
+        <li><a href="#aa_example_iteration">連想配列の例: Tupleのカウント</a></li>
     </ol></li>
 </ol>
 </div>
@@ -188,7 +188,7 @@
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="removing_keys" href="#removing_keys">Removing Keys</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="removing_keys" href="#removing_keys">キーの削除</a></h2>
 <div class="blankline"></div>
         <p>Particular keys in an associative array can be removed with the
         <span class="d_inlinecode donthyphenate notranslate">remove</span> function:
@@ -204,7 +204,7 @@
 <div class="blankline"></div>
         <p>All keys can be removed by using the method <span class="d_inlinecode donthyphenate notranslate">clear</span>.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="testing_membership" href="#testing_membership">Testing Membership</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="testing_membership" href="#testing_membership">キーが含まれるかの確認</a></h2>
 <div class="blankline"></div>
         <p>The <a href="../spec/expression.html#InExpression"><i>InExpression</i></a> yields a pointer to the value
         if the key is in the associative array, or <span class="d_inlinecode donthyphenate notranslate">null</span> if not:
@@ -225,7 +225,7 @@ p = (<span class="d_string">"hello"</span> <b><i><span class="d_keyword">in</spa
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="using_classes_as_key" href="#using_classes_as_key">Using Classes as the KeyType</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="using_classes_as_key" href="#using_classes_as_key">キーの型にクラスを使用する</a></h2>
 <div class="blankline"></div>
         <p>Classes can be used as the <i>KeyType</i>. For this to work,
         the class definition must override the following member functions
@@ -277,7 +277,7 @@ p = (<span class="d_string">"hello"</span> <b><i><span class="d_keyword">in</spa
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="using_struct_as_key" href="#using_struct_as_key">Using Structs or Unions as the KeyType</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="using_struct_as_key" href="#using_struct_as_key">キーの型に構造体やユニオンを使用する</a></h2>
 <div class="blankline"></div>
         <p>If the <i>KeyType</i> is a struct or union type,
         a default mechanism is used
@@ -337,7 +337,7 @@ p = (<span class="d_string">"hello"</span> <b><i><span class="d_keyword">in</spa
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="construction_assignment_entries" href="#construction_assignment_entries">Construction or Assignment on Setting AA Entries</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="construction_assignment_entries" href="#construction_assignment_entries">連想配列エントリの設定に関する構築、代入</a></h2>
 <div class="blankline"></div>
     <p>When an AA indexing access appears on the left side of an assignment
     operator, it is specially handled for setting an AA entry associated with
@@ -415,7 +415,7 @@ aa[<span class="d_string">"a"</span>] = 10;   <span class="d_comment">// constru
 </span>aa[<span class="d_string">"a"</span>] = 20;   <span class="d_comment">// call aa["a"].opAssign(20)
 </span></pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="inserting_if_not_present" href="#inserting_if_not_present">Inserting if not present</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="inserting_if_not_present" href="#inserting_if_not_present">存在しない場合は挿入</a></h2>
 <div class="blankline"></div>
     <p>When AA access requires that there must be a value corresponding to the
         key, a value must be constructed and inserted if not present. The
@@ -448,7 +448,7 @@ C newc;
 <span class="d_keyword">assert</span>(b <span class="d_keyword">is</span> newc);
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="advanced_updating" href="#advanced_updating">Advanced updating</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="advanced_updating" href="#advanced_updating">高度な更新</a></h2>
 <div class="blankline"></div>
     <p>Typically updating a value in an associative array is simply done with
         an assign statement.</p>
@@ -483,7 +483,7 @@ aa.update(<span class="d_string">"a"</span>,
 });
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="static_initialization" href="#static_initialization">Static Initialization of AAs</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="static_initialization" href="#static_initialization">連想配列の静的初期化</a></h2>
 <div class="blankline"></div>
         NOTE: Not yet implemented.
 <div class="blankline"></div>
@@ -501,7 +501,7 @@ aa.update(<span class="d_string">"a"</span>,
 }
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="runtime_initialization" href="#runtime_initialization">Runtime Initialization of Immutable AAs</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="runtime_initialization" href="#runtime_initialization">immutableな連想配列の実行時初期化</a></h2>
 <div class="blankline"></div>
     <p>Immutable associative arrays are often desirable, but sometimes
         initialization must be done at runtime. This can be achieved with
@@ -533,7 +533,7 @@ aa.update(<span class="d_string">"a"</span>,
 }
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="construction_and_ref_semantic" href="#construction_and_ref_semantic">Construction and Reference Semantics</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="construction_and_ref_semantic" href="#construction_and_ref_semantic">構築および参照の扱い</a></h2>
 <div class="blankline"></div>
     <p>An Associative Array defaults to <span class="d_inlinecode donthyphenate notranslate">null</span>, and is constructed upon assigning the first key/value
         pair. However, once constructed, an associative array has <i>reference semantics</i>, meaning that
@@ -549,7 +549,7 @@ aa2[2] = 2;
 <span class="d_keyword">assert</span>(aa[2] == 2);      <span class="d_comment">// now both refer to the same instance
 </span></pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="properties" href="#properties">Properties</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="properties" href="#properties">プロパティ</a></h2>
 <div class="blankline"></div>
 <p>Properties for associative arrays are:</p>
 <div class="blankline"></div>
@@ -596,7 +596,7 @@ aa2[2] = 2;
     </table></center>
 <div class="blankline"></div>
 <hr>
-<h3><a class="anchor" title="Permalink to this section" id="aa_example" href="#aa_example">Associative Array Example: word count</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="aa_example" href="#aa_example">連想配列の例: 単語のカウント</a></h3>
 <div class="blankline"></div>
         <p>Let's consider the file is ASCII encoded with LF EOL.
         In general case we should use <i>dchar c</i> for iteration
@@ -676,7 +676,7 @@ aa2[2] = 2;
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="aa_example_iteration" href="#aa_example_iteration">Associative Array Example: counting Tuples</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="aa_example_iteration" href="#aa_example_iteration">連想配列の例: Tupleのカウント</a></h3>
 <div class="blankline"></div>
     <p>An Associative Array can be iterated in key/value fashion using a
         <a href="../spec/statement.html#ForeachStatement">foreach statement</a>. As
@@ -715,13 +715,13 @@ key: Tuple!(immutable(char), immutable(char))('T', 'A') [TA], value: 1
 
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/arrays.html">Arrays</a></div>
-<div style="float: right"><a href="../spec/struct.html">Structs and Unions</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/arrays.html">配列[Arrays]</a></div>
+<div style="float: right"><a href="../spec/struct.html">構造体と共用体[Structs and Unions]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 10:15:21 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:09 2022
 </div>
     </div>
 </div>

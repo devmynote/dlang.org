@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Enums - D言語 非公式日本語</title>
+<title>列挙型 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Enums' class='doc'>
+<body id='列挙型' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -28,8 +28,8 @@
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
 <ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
-    <li><a href='../phobos/index.html'>ライブラリ</a></li>
-    <li><a href='../dmd.html'>コマンドライン</a></li>
+    <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
+    <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
     <li><a href='../articles/index.html'>記事</a></li>
  </ul></li>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BEnums%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5B列挙型%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Enums</h1>
+        <h1>列挙型</h1>
         
 <style>    body { counter-reset: h1 17; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,11 +146,11 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#named_enums">Named Enums</a><ol>        <li><a href="#enum_default_initializer">Enum Default Initializer</a></li>
-        <li><a href="#enum_properties">Enum Properties</a></li>
+    <ol>    <li><a href="#named_enums">名前付き列挙型</a><ol>        <li><a href="#enum_default_initializer">列挙型のデフォルト初期化子</a></li>
+        <li><a href="#enum_properties">列挙型のプロパティ</a></li>
     </ol></li>
-    <li><a href="#anonymous_enums">Anonymous Enums</a></li>
-    <li><a href="#manifest_constants">Manifest Constants</a></li>
+    <li><a href="#anonymous_enums">無名の列挙型</a></li>
+    <li><a href="#manifest_constants">明らかな定数</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -202,7 +202,7 @@
         <p>Enum declarations are used to define a group of constants.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="named_enums" href="#named_enums">Named Enums</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="named_enums" href="#named_enums">名前付き列挙型</a></h2>
 <div class="blankline"></div>
         <p>        Named enums are used to declare related
         constants and group them by giving them a unique type.
@@ -271,7 +271,7 @@
         <p>An empty enum body (For example <span class="d_inlinecode donthyphenate notranslate">enum E;</span>) signifies an opaque
         enum - the enum members are unknown.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="enum_default_initializer" href="#enum_default_initializer">Enum Default Initializer</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="enum_default_initializer" href="#enum_default_initializer">列挙型のデフォルト初期化子</a></h3>
 <div class="blankline"></div>
         <p>The <span class="d_inlinecode donthyphenate notranslate">.init</span> property of an enum type is the value
         of the first member of that enum.
@@ -282,7 +282,7 @@
 X x;      <span class="d_comment">// x is initialized to 3
 </span></pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="enum_properties" href="#enum_properties">Enum Properties</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="enum_properties" href="#enum_properties">列挙型のプロパティ</a></h3>
 <div class="blankline"></div>
         <p>Enum properties only exist for named enums.
         </p>
@@ -308,7 +308,7 @@ X.init   <span class="d_comment">// is X.A
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="anonymous_enums" href="#anonymous_enums">Anonymous Enums</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="anonymous_enums" href="#anonymous_enums">無名の列挙型</a></h2>
 <div class="blankline"></div>
         <p>If the enum <i>Identifier</i> is not present, then the enum
         is an <i>anonymous enum</i>, and the <a href="#EnumMembers"><i>EnumMembers</i></a> are declared
@@ -382,7 +382,7 @@ X.init   <span class="d_comment">// is X.A
 </span>}
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="manifest_constants" href="#manifest_constants">Manifest Constants</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="manifest_constants" href="#manifest_constants">明らかな定数</a></h2>
 <div class="blankline"></div>
         <p>If there is only one member of an anonymous enum, the <span class="d_inlinecode donthyphenate notranslate">{ }</span> can
         be omitted. Gramatically speaking, this is an <a href="../spec/declaration.html#AutoDeclaration"><i>AutoDeclaration</i></a>.
@@ -422,14 +422,14 @@ X.init   <span class="d_comment">// is X.A
 <div class="blankline"></div>
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/interface.html">Interfaces</a></div>
-<div style="float: right"><a href="../spec/const3.html">Type Qualifiers</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/interface.html">インターフェース[Interfaces]</a></div>
+<div style="float: right"><a href="../spec/const3.html">型修飾子[Type Qualifiers]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 10:15:21 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:09 2022
 </div>
     </div>
 </div>

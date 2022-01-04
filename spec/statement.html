@@ -28,8 +28,8 @@
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
 <ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
-    <li><a href='../phobos/index.html'>ライブラリ</a></li>
-    <li><a href='../dmd.html'>コマンドライン</a></li>
+    <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
+    <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
     <li><a href='../articles/index.html'>記事</a></li>
  </ul></li>
@@ -156,17 +156,17 @@
     <li><a href="#while-statement">While 文</a></li>
     <li><a href="#do-statement">Do 文</a></li>
     <li><a href="#for-statement">For 文</a></li>
-    <li><a href="#foreach-statement">Foreach 文</a><ol>        <li><a href="#foreach_over_arrays">Foreach over Arrays</a></li>
-        <li><a href="#foreach_over_arrays_of_characters">Foreach over Arrays of Characters</a></li>
-        <li><a href="#foreach_over_associative_arrays">Foreach over Associative Arrays</a></li>
-        <li><a href="#foreach_over_struct_and_classes">Foreach over Structs and Classes with opApply</a></li>
-        <li><a href="#foreach-with-ranges">Foreach over Structs and Classes with Ranges</a></li>
-        <li><a href="#foreach_over_delegates">Foreach over Delegates</a></li>
-        <li><a href="#foreach_over_tuples">Foreach over Sequences</a></li>
-        <li><a href="#foreach_ref_parameters">Foreach Ref Parameters</a></li>
-        <li><a href="#foreach_restrictions">Foreach Restrictions</a></li>
+    <li><a href="#foreach-statement">Foreach 文</a><ol>        <li><a href="#foreach_over_arrays">配列に対する foreach</a></li>
+        <li><a href="#foreach_over_arrays_of_characters">文字配列に対する foreach</a></li>
+        <li><a href="#foreach_over_associative_arrays">連想配列に対する foreach</a></li>
+        <li><a href="#foreach_over_struct_and_classes">opApply を使った構造体、クラス 配列に対する foreach</a></li>
+        <li><a href="#foreach-with-ranges">Range を使った構造体、クラス 配列に対する foreach</a></li>
+        <li><a href="#foreach_over_delegates">デリゲートに対する foreach</a></li>
+        <li><a href="#foreach_over_tuples">シーケンスに対する foreach</a></li>
+        <li><a href="#foreach_ref_parameters">Ref 引数の Foreach</a></li>
+        <li><a href="#foreach_restrictions">Foreach の制限</a></li>
     </ol></li>
-    <li><a href="#foreach-range-statement">Foreach Range 文</a><ol>        <li><a href="#break_and_continue_out_of_foreach">Break and Continue out of Foreach</a></li>
+    <li><a href="#foreach-range-statement">Foreach Range 文</a><ol>        <li><a href="#break_and_continue_out_of_foreach">Foreach と Break, Continue</a></li>
     </ol></li>
     <li><a href="#switch-statement">Switch 文</a></li>
     <li><a href="#final-switch-statement">Final Switch 文</a></li>
@@ -178,7 +178,7 @@
     <li><a href="#synchronized-statement">Synchronized 文</a></li>
     <li><a href="#try-statement">Try 文</a></li>
     <li><a href="#throw-statement">Throw 文</a></li>
-    <li><a href="#scope-guard-statement">Scope ガード文</a><ol>        <li><a href="#catching_cpp_class_objects">Catching C++ Class Objects</a></li>
+    <li><a href="#scope-guard-statement">Scope ガード文</a><ol>        <li><a href="#catching_cpp_class_objects">C++ クラスオブジェクトの Catch</a></li>
     </ol></li>
     <li><a href="#asm">Asm 文</a></li>
     <li><a href="#pragma-statement">Pragma 文</a></li>
@@ -660,7 +660,7 @@ clauses.</p>
         in the <a href="#NoScopeNonEmptyStatement"><i>NoScopeNonEmptyStatement</i></a>.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="foreach_over_arrays" href="#foreach_over_arrays">Foreach over Arrays</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="foreach_over_arrays" href="#foreach_over_arrays">配列に対する foreach</a></h3>
 <div class="blankline"></div>
 <p>        If the aggregate is a static or dynamic array, there
         can be one or two variables declared. If one, then the variable
@@ -705,7 +705,7 @@ clauses.</p>
 </span>    writeln(n);
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="foreach_over_arrays_of_characters" href="#foreach_over_arrays_of_characters">Foreach over Arrays of Characters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="foreach_over_arrays_of_characters" href="#foreach_over_arrays_of_characters">文字配列に対する foreach</a></h3>
 <div class="blankline"></div>
         <p>If the aggregate expression is a static or dynamic array of
         <span class="d_inlinecode donthyphenate notranslate">char</span>s, <span class="d_inlinecode donthyphenate notranslate">wchar</span>s, or <span class="d_inlinecode donthyphenate notranslate">dchar</span>s, then the <i>Type</i> of
@@ -757,7 +757,7 @@ clauses.</p>
 'y'
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="foreach_over_associative_arrays" href="#foreach_over_associative_arrays">Foreach over Associative Arrays</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="foreach_over_associative_arrays" href="#foreach_over_associative_arrays">連想配列に対する foreach</a></h3>
 <div class="blankline"></div>
         <p>If the aggregate expression is an associative array, there
         can be one or two variables declared. If one, then the variable
@@ -782,7 +782,7 @@ clauses.</p>
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="foreach_over_struct_and_classes" href="#foreach_over_struct_and_classes">Foreach over Structs and Classes with opApply</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="foreach_over_struct_and_classes" href="#foreach_over_struct_and_classes">opApply を使った構造体、クラス 配列に対する foreach</a></h3>
 <div class="blankline"></div>
     <p>If the aggregate expression is a struct or class object,
         the <span class="d_inlinecode donthyphenate notranslate">foreach</span> is defined by the
@@ -899,7 +899,7 @@ clauses.</p>
         the <span class="d_inlinecode donthyphenate notranslate">foreach</span> body.
      </p>
 <div class="blankline"></div>
-<h3><span id="foreach_with_ranges"><a class="anchor" title="Permalink to this section" id="foreach-with-ranges" href="#foreach-with-ranges">Foreach over Structs and Classes with Ranges</a></span></h3>
+<h3><span id="foreach_with_ranges"><a class="anchor" title="Permalink to this section" id="foreach-with-ranges" href="#foreach-with-ranges">Range を使った構造体、クラス 配列に対する foreach</a></span></h3>
 <div class="blankline"></div>
     <p>If the aggregate expression is a struct or class object, but the
         <span class="d_inlinecode donthyphenate notranslate">opApply</span> for <span class="d_inlinecode donthyphenate notranslate">foreach</span>, or <span class="d_inlinecode donthyphenate notranslate">opApplyReverse</span> <span class="d_inlinecode donthyphenate notranslate">foreach_reverse</span> do not exist,
@@ -996,7 +996,7 @@ clauses.</p>
 </span>}
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="foreach_over_delegates" href="#foreach_over_delegates">Foreach over Delegates</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="foreach_over_delegates" href="#foreach_over_delegates">デリゲートに対する foreach</a></h3>
 <div class="blankline"></div>
         <p>If <i>ForeachAggregate</i> is a delegate, the type signature of
         the delegate is of the same as for <span class="d_inlinecode donthyphenate notranslate">opApply</span>. This enables
@@ -1038,7 +1038,7 @@ clauses.</p>
         that is confusing to read. Therefore, using <span class="d_inlinecode donthyphenate notranslate">foreach_reverse</span> with a
         delegate is now deprecated, and will be rejected in the future.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="foreach_over_tuples" href="#foreach_over_tuples">Foreach over Sequences</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="foreach_over_tuples" href="#foreach_over_tuples">シーケンスに対する foreach</a></h3>
 <div class="blankline"></div>
 <p>        If the aggregate expression is a sequence, there
         can be one or two iteration symbols declared. If one, then the symbol
@@ -1080,7 +1080,7 @@ main()
 <div class="blankline"></div>
         <p>See also: <a href="../spec/version.html#staticforeach">Static Foreach</a>.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="foreach_ref_parameters" href="#foreach_ref_parameters">Foreach Ref Parameters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="foreach_ref_parameters" href="#foreach_ref_parameters">Ref 引数の Foreach</a></h3>
 <div class="blankline"></div>
         <p><span class="d_inlinecode donthyphenate notranslate">ref</span> can be used to update the original elements:
         </p>
@@ -1112,7 +1112,7 @@ main()
         the type of the <i>ForeachAggregate</i>.
         </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="foreach_restrictions" href="#foreach_restrictions">Foreach Restrictions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="foreach_restrictions" href="#foreach_restrictions">Foreach の制限</a></h3>
 <div class="blankline"></div>
         <p>The aggregate itself must not be resized, reallocated, free'd,
         reassigned or destructed
@@ -1185,7 +1185,7 @@ prints:
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="break_and_continue_out_of_foreach" href="#break_and_continue_out_of_foreach">Break and Continue out of Foreach</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="break_and_continue_out_of_foreach" href="#break_and_continue_out_of_foreach">Foreach と Break, Continue</a></h3>
 <div class="blankline"></div>
 <div class="blankline"></div>
         <p>A <a href="#BreakStatement"><i>BreakStatement</i></a> in the body of the foreach will exit the
@@ -1926,7 +1926,7 @@ writeln();
         may not exit with a throw, goto, break, continue, or
         return; nor may it be entered with a goto.
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="catching_cpp_class_objects" href="#catching_cpp_class_objects">Catching C++ Class Objects</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="catching_cpp_class_objects" href="#catching_cpp_class_objects">C++ クラスオブジェクトの Catch</a></h3>
 <div class="blankline"></div>
         <p>        On many platforms, catching C++ class objects is supported.
         Catching C++ objects and D objects cannot both be done
@@ -2062,7 +2062,7 @@ be used to account for this:</p>
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 10:15:21 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:08 2022
 </div>
     </div>
 </div>

@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Interfaces - D言語 非公式日本語</title>
+<title>インターフェース - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Interfaces' class='doc'>
+<body id='インターフェース' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -28,8 +28,8 @@
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
 <ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
-    <li><a href='../phobos/index.html'>ライブラリ</a></li>
-    <li><a href='../dmd.html'>コマンドライン</a></li>
+    <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
+    <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
     <li><a href='../articles/index.html'>記事</a></li>
  </ul></li>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BInterfaces%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5Bインターフェース%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Interfaces</h1>
+        <h1>インターフェース</h1>
         
 <style>    body { counter-reset: h1 16; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,10 +146,10 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#interface-contracts">Interfaces with Contracts</a></li>
-    <li><a href="#const-interface">Const and Immutable Interfaces</a></li>
-    <li><a href="#com-interfaces">COM Interfaces</a></li>
-    <li><a href="#cpp-interfaces">C++ Interfaces</a></li>
+    <ol>    <li><a href="#interface-contracts">契約付きインターフェース</a></li>
+    <li><a href="#const-interface">Const, Immutable インターフェース</a></li>
+    <li><a href="#com-interfaces">COM インターフェース</a></li>
+    <li><a href="#cpp-interfaces">C++ インターフェース</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -347,7 +347,7 @@ d2.foo();           <span class="d_comment">// returns 2, even though it is A's 
 }       <span class="d_comment">// error, no foo() for interface D
 </span></pre>
 <div class="blankline"></div>
-<h2><span id="InterfaceContracts"><a class="anchor" title="Permalink to this section" id="interface-contracts" href="#interface-contracts">Interfaces with Contracts</a></span></h2><div class="blankline"></div>
+<h2><span id="InterfaceContracts"><a class="anchor" title="Permalink to this section" id="interface-contracts" href="#interface-contracts">契約付きインターフェース</a></span></h2><div class="blankline"></div>
     <p>Interface member functions can have contracts even though there
     is no body for the function. The contracts are inherited by any
     class member function that implements that interface member function.
@@ -364,7 +364,7 @@ d2.foo();           <span class="d_comment">// returns 2, even though it is A's 
 </pre>
 
 <div class="blankline"></div>
-<h2><span id="ConstInterface"><a class="anchor" title="Permalink to this section" id="const-interface" href="#const-interface">Const and Immutable Interfaces</a></span></h2>    <p>If an interface has <span class="d_inlinecode donthyphenate notranslate">const</span> or <span class="d_inlinecode donthyphenate notranslate">immutable</span> storage
+<h2><span id="ConstInterface"><a class="anchor" title="Permalink to this section" id="const-interface" href="#const-interface">Const, Immutable インターフェース</a></span></h2>    <p>If an interface has <span class="d_inlinecode donthyphenate notranslate">const</span> or <span class="d_inlinecode donthyphenate notranslate">immutable</span> storage
     class, then all members of the interface are
     <span class="d_inlinecode donthyphenate notranslate">const</span> or <span class="d_inlinecode donthyphenate notranslate">immutable</span>.
     This storage class is not inherited.
@@ -372,7 +372,7 @@ d2.foo();           <span class="d_comment">// returns 2, even though it is A's 
 
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><span id="COM-Interfaces"><a class="anchor" title="Permalink to this section" id="com-interfaces" href="#com-interfaces">COM Interfaces</a></span></h2><div class="blankline"></div>
+<h2><span id="COM-Interfaces"><a class="anchor" title="Permalink to this section" id="com-interfaces" href="#com-interfaces">COM インターフェース</a></span></h2><div class="blankline"></div>
     <p>A variant on interfaces is the COM interface. A COM interface is
     designed to map directly onto a Windows COM object. Any COM object
     can be represented by a COM interface, and any D object with
@@ -443,7 +443,7 @@ d2.foo();           <span class="d_comment">// returns 2, even though it is A's 
 <div class="blankline"></div>
 
 <div class="blankline"></div>
-<h2><span id="CPP-Interfaces"><a class="anchor" title="Permalink to this section" id="cpp-interfaces" href="#cpp-interfaces">C++ Interfaces</a></span></h2><div class="blankline"></div>
+<h2><span id="CPP-Interfaces"><a class="anchor" title="Permalink to this section" id="cpp-interfaces" href="#cpp-interfaces">C++ インターフェース</a></span></h2><div class="blankline"></div>
     <p>C++ interfaces are interfaces declared with C++ linkage:
     </p>
 <div class="blankline"></div>
@@ -480,14 +480,14 @@ which is meant to correspond with the following C++ declaration:
 <div class="blankline"></div>
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/class.html">Classes</a></div>
-<div style="float: right"><a href="../spec/enum.html">Enums</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/class.html">クラス[Classes]</a></div>
+<div style="float: right"><a href="../spec/enum.html">列挙型[Enums]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 10:15:21 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:09 2022
 </div>
     </div>
 </div>

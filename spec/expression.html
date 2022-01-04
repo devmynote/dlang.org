@@ -28,8 +28,8 @@
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
 <ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
-    <li><a href='../phobos/index.html'>ライブラリ</a></li>
-    <li><a href='../dmd.html'>コマンドライン</a></li>
+    <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
+    <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
     <li><a href='../articles/index.html'>記事</a></li>
  </ul></li>
@@ -150,55 +150,55 @@
     <li><a href="#order-of-evaluation">評価の順序</a></li>
     <li><a href="#temporary-lifetime">テンポラリのライフタイム</a></li>
     <li><a href="#expression">式</a></li>
-    <li><a href="#assign_expressions">代入式</a><ol>        <li><a href="#simple_assignment_expressions">Simple Assignment Expression</a></li>
-        <li><a href="#assignment_operator_expressions">Assignment Operator Expressions</a></li>
+    <li><a href="#assign_expressions">代入式</a><ol>        <li><a href="#simple_assignment_expressions">単純な代入式</a></li>
+        <li><a href="#assignment_operator_expressions">代入演算子の式</a></li>
     </ol></li>
     <li><a href="#conditional_expressions">条件式</a></li>
     <li><a href="#oror_expressions">OrOr 式</a></li>
     <li><a href="#andand_expressions">AndAnd 式</a></li>
-    <li><a href="#bitwise_expressions">ビット単位の式</a><ol>        <li><a href="#or_expressions">Or Expressions</a></li>
-        <li><a href="#xor_expressions">Xor Expressions</a></li>
-        <li><a href="#and_expressions">And Expressions</a></li>
+    <li><a href="#bitwise_expressions">ビット単位の式</a><ol>        <li><a href="#or_expressions">Or 式</a></li>
+        <li><a href="#xor_expressions">Xor 式</a></li>
+        <li><a href="#and_expressions">And 式</a></li>
     </ol></li>
     <li><a href="#compare_expressions">比較式</a></li>
-    <li><a href="#equality_expressions">等式</a><ol>        <li><a href="#identity_expressions">Identity Expressions</a></li>
+    <li><a href="#equality_expressions">等式</a><ol>        <li><a href="#identity_expressions">等式</a></li>
     </ol></li>
-    <li><a href="#relation_expressions">関係式</a><ol>        <li><a href="#integer_comparisons">Integer comparisons</a></li>
-        <li><a href="#floating-point-comparisons">Floating point comparisons</a></li>
-        <li><a href="#class-comparisons">Class comparisons</a></li>
+    <li><a href="#relation_expressions">関係式</a><ol>        <li><a href="#integer_comparisons">整数の比較</a></li>
+        <li><a href="#floating-point-comparisons">浮動小数点の比較</a></li>
+        <li><a href="#class-comparisons">クラスの比較</a></li>
     </ol></li>
     <li><a href="#in_expressions">In 式</a></li>
     <li><a href="#shift_expressions">Shift 式</a></li>
     <li><a href="#add_expressions">Add 式</a></li>
     <li><a href="#cat_expressions">Cat 式</a></li>
     <li><a href="#mul_expressions">Mul 式</a></li>
-    <li><a href="#unary-expression">単項式</a><ol>        <li><a href="#complement_expressions">Complement Expressions</a></li>
-        <li><a href="#new_expressions">New Expressions</a></li>
-        <li><a href="#delete_expressions">Delete Expressions</a></li>
-        <li><a href="#cast_expressions">Cast Expressions</a></li>
+    <li><a href="#unary-expression">単項式</a><ol>        <li><a href="#complement_expressions">補数式</a></li>
+        <li><a href="#new_expressions">New 式</a></li>
+        <li><a href="#delete_expressions">Delete 式</a></li>
+        <li><a href="#cast_expressions">キャスト式</a></li>
     </ol></li>
     <li><a href="#pow_expressions">Pow 式</a></li>
     <li><a href="#postfix_expressions">後置演算式</a></li>
     <li><a href="#index_expressions">Index 式</a></li>
     <li><a href="#slice_expressions">Slice 式</a></li>
-    <li><a href="#primary_expressions">一次式</a><ol>        <li><a href="#identifier">.Identifier</a></li>
+    <li><a href="#primary_expressions">一次式</a><ol>        <li><a href="#identifier">ドット(.)付き識別子</a></li>
         <li><a href="#this">this</a></li>
         <li><a href="#super">super</a></li>
         <li><a href="#null">null</a></li>
         <li><a href="#true_false">true, false</a></li>
-        <li><a href="#character-literal">Character Literals</a></li>
-        <li><a href="#string_literals">String Literals</a></li>
-        <li><a href="#array_literals">Array Literals</a></li>
-        <li><a href="#associative_array_literals">Associative Array Literals</a></li>
-        <li><a href="#function_literals">Function Literals</a></li>
-        <li><a href="#uniform_construction_syntax">Uniform construction syntax for built-in scalar types</a></li>
-        <li><a href="#assert_expressions">Assert Expressions</a></li>
-        <li><a href="#mixin_expressions">Mixin Expressions</a></li>
-        <li><a href="#import_expressions">Import Expressions</a></li>
+        <li><a href="#character-literal">文字リテラル</a></li>
+        <li><a href="#string_literals">文字列リテラル</a></li>
+        <li><a href="#array_literals">配列リテラル</a></li>
+        <li><a href="#associative_array_literals">連想配列リテラル</a></li>
+        <li><a href="#function_literals">関数リテラル</a></li>
+        <li><a href="#uniform_construction_syntax">スカラー型の統一された構築構文</a></li>
+        <li><a href="#assert_expressions">Assert 式</a></li>
+        <li><a href="#mixin_expressions">Mixin 式</a></li>
+        <li><a href="#import_expressions">Import 式</a></li>
         <li><a href="#typeid_expressions">Typeid Expressions</a></li>
-        <li><a href="#is_expression">IsExpression</a></li>
+        <li><a href="#is_expression">Is 式</a></li>
     </ol></li>
-    <li><a href="#specialkeywords">スペシャルキーワード</a></li>
+    <li><a href="#specialkeywords">特殊なキーワード</a></li>
     <li><a href="#associativity">結合性と可換性</a></li>
 </ol>
 </div>
@@ -470,7 +470,7 @@ Consequently, the destruction of <span class="d_inlinecode donthyphenate notrans
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="simple_assignment_expressions" href="#simple_assignment_expressions">Simple Assignment Expression</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="simple_assignment_expressions" href="#simple_assignment_expressions">単純な代入式</a></h3>
 <div class="blankline"></div>
     <p>If the operator is <span class="d_inlinecode donthyphenate notranslate">=</span> then it is simple assignment.
     The right operand is implicitly converted to the type of the
@@ -494,7 +494,7 @@ Consequently, the destruction of <span class="d_inlinecode donthyphenate notrans
     described in <a href="../spec/function.html#property-functions">Property Functions</a>.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="assignment_operator_expressions" href="#assignment_operator_expressions">Assignment Operator Expressions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="assignment_operator_expressions" href="#assignment_operator_expressions">代入演算子の式</a></h3>
 <div class="blankline"></div>
     <p>For arguments of built-in types, assignment operator expressions such as</p>
 <div class="blankline"></div>
@@ -621,7 +621,7 @@ test ? a = b : c = 2;   <span class="d_comment">// Deprecated
         operation is done.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="or_expressions" href="#or_expressions">Or Expressions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="or_expressions" href="#or_expressions">Or 式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="OrExpression"><span class="gname">OrExpression</span></a>:
     <a href="#XorExpression"><i>XorExpression</i></a>
@@ -630,7 +630,7 @@ test ? a = b : c = 2;   <span class="d_comment">// Deprecated
 <div class="blankline"></div>
     <p>The operands are OR'd together.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="xor_expressions" href="#xor_expressions">Xor Expressions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="xor_expressions" href="#xor_expressions">Xor 式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="XorExpression"><span class="gname">XorExpression</span></a>:
     <a href="#AndExpression"><i>AndExpression</i></a>
@@ -639,7 +639,7 @@ test ? a = b : c = 2;   <span class="d_comment">// Deprecated
 <div class="blankline"></div>
     <p>The operands are XOR'd together.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="and_expressions" href="#and_expressions">And Expressions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="and_expressions" href="#and_expressions">And 式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="AndExpression"><span class="gname">AndExpression</span></a>:
     <a href="#CmpExpression"><i>CmpExpression</i></a>
@@ -746,7 +746,7 @@ C c;
         matching, and all the elements are equal.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="identity_expressions" href="#identity_expressions">Identity Expressions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="identity_expressions" href="#identity_expressions">等式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="IdentityExpression"><span class="gname">IdentityExpression</span></a>:
     <a href="#ShiftExpression"><i>ShiftExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">is</span> <a href="#ShiftExpression"><i>ShiftExpression</i></a>
@@ -809,7 +809,7 @@ C c;
         longer array.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="integer_comparisons" href="#integer_comparisons">Integer comparisons</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="integer_comparisons" href="#integer_comparisons">整数の比較</a></h3>
 <div class="blankline"></div>
     <p>Integer comparisons happen when both operands are integral
         types.
@@ -830,7 +830,7 @@ C c;
         Use casts to make both operands signed or both operands unsigned.
     </p>
 <div class="blankline"></div>
-<h3><span id="floating_point_comparisons"><a class="anchor" title="Permalink to this section" id="floating-point-comparisons" href="#floating-point-comparisons">Floating point comparisons</a></span></h3>
+<h3><span id="floating_point_comparisons"><a class="anchor" title="Permalink to this section" id="floating-point-comparisons" href="#floating-point-comparisons">浮動小数点の比較</a></span></h3>
 <div class="blankline"></div>
     <p>If one or both operands are floating point, then a floating
         point comparison is performed.
@@ -849,7 +849,7 @@ C c;
         <tr><td><span class="d_inlinecode donthyphenate notranslate">!=</span></td><td>unordered, less, or greater</td><td><span class="d_inlinecode donthyphenate notranslate">true</span></td></tr>
         </table></center>
 <div class="blankline"></div>
-<h3><span id="class_comparisons"><a class="anchor" title="Permalink to this section" id="class-comparisons" href="#class-comparisons">Class comparisons</a></span></h3>
+<h3><span id="class_comparisons"><a class="anchor" title="Permalink to this section" id="class-comparisons" href="#class-comparisons">クラスの比較</a></span></h3>
 <div class="blankline"></div>
     <p>For class objects, the relational
         operators compare the
@@ -1048,7 +1048,7 @@ C c;
     <a href="#PowExpression"><i>PowExpression</i></a>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="complement_expressions" href="#complement_expressions">Complement Expressions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="complement_expressions" href="#complement_expressions">補数式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="ComplementExpression"><span class="gname">ComplementExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">~</span> <a href="#UnaryExpression"><i>UnaryExpression</i></a>
@@ -1062,7 +1062,7 @@ C c;
         prior to the complement operation.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="new_expressions" href="#new_expressions">New Expressions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="new_expressions" href="#new_expressions">New 式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="NewExpression"><span class="gname">NewExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="#AllocatorArguments"><i>AllocatorArguments</i></a><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a>
@@ -1129,7 +1129,7 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
         or using the class specific allocator.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="delete_expressions" href="#delete_expressions">Delete Expressions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="delete_expressions" href="#delete_expressions">Delete 式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="DeleteExpression"><span class="gname">DeleteExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">delete</span> <a href="#UnaryExpression"><i>UnaryExpression</i></a>
@@ -1175,7 +1175,7 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="cast_expressions" href="#cast_expressions">Cast Expressions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="cast_expressions" href="#cast_expressions">キャスト式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="CastExpression"><span class="gname">CastExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">cast (</span> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#UnaryExpression"><i>UnaryExpression</i></a>
@@ -1537,7 +1537,7 @@ type:</p>
     <a href="../spec/traits.html#TraitsExpression"><i>TraitsExpression</i></a>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="identifier" href="#identifier">.Identifier</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="identifier" href="#identifier">ドット(.)付き識別子</a></h3>
 <div class="blankline"></div>
     <p>See <a href="../spec/module.html#module_scope_operators">Module Scope
         Operator</a>.</p>
@@ -1609,7 +1609,7 @@ type:</p>
         respectively.
     </p>
 <div class="blankline"></div>
-<h3><span id="CharacterLiteral"><a class="anchor" title="Permalink to this section" id="character-literal" href="#character-literal">Character Literals</a></span></h3>
+<h3><span id="CharacterLiteral"><a class="anchor" title="Permalink to this section" id="character-literal" href="#character-literal">文字リテラル</a></span></h3>
 <div class="blankline"></div>
     <p>Character literals are single characters and resolve to one
         of type <span class="d_inlinecode donthyphenate notranslate">char</span>, <span class="d_inlinecode donthyphenate notranslate">wchar</span>, or <span class="d_inlinecode donthyphenate notranslate">dchar</span>.
@@ -1619,7 +1619,7 @@ type:</p>
         will fit into.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="string_literals" href="#string_literals">String Literals</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="string_literals" href="#string_literals">文字列リテラル</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="StringLiterals"><span class="gname">StringLiterals</span></a>:
     <a href="../spec/lex.html#StringLiteral"><i>StringLiteral</i></a>
@@ -1668,7 +1668,7 @@ type:</p>
         string literal.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="array_literals" href="#array_literals">Array Literals</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="array_literals" href="#array_literals">配列リテラル</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="ArrayLiteral"><span class="gname">ArrayLiteral</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">]</span>
@@ -1756,7 +1756,7 @@ type:</p>
 <div class="blankline"></div>
         In other words, casting literal expression will change the literal type.
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="associative_array_literals" href="#associative_array_literals">Associative Array Literals</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="associative_array_literals" href="#associative_array_literals">連想配列リテラル</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="AssocArrayLiteral"><span class="gname">AssocArrayLiteral</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#KeyValuePairs"><i>KeyValuePairs</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
@@ -1798,7 +1798,7 @@ type:</p>
         are inserted as arguments in place of the sequence.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="function_literals" href="#function_literals">Function Literals</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="function_literals" href="#function_literals">関数リテラル</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="FunctionLiteral"><span class="gname">FunctionLiteral</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">function</span> <span class="d_inlinecode donthyphenate notranslate">ref</span><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a><sub>opt</sub> <a href="#ParameterWithAttributes"><i>ParameterWithAttributes</i></a> <sub>opt</sub> <a href="#FunctionLiteralBody2"><i>FunctionLiteralBody2</i></a>
@@ -2013,7 +2013,7 @@ type:</p>
         function, a function literal cannot.
     </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="uniform_construction_syntax" href="#uniform_construction_syntax">Uniform construction syntax for built-in scalar types</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="uniform_construction_syntax" href="#uniform_construction_syntax">スカラー型の統一された構築構文</a></h3>
 <div class="blankline"></div>
     <p>The implicit conversions of built-in scalar types can be explicitly
         represented by using function call syntax. For example:</p>
@@ -2031,7 +2031,7 @@ type:</p>
 </span></pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="assert_expressions" href="#assert_expressions">Assert Expressions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="assert_expressions" href="#assert_expressions">Assert 式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="AssertExpression"><span class="gname">AssertExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">assert (</span> <a href="#AssertArguments"><i>AssertArguments</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
@@ -2119,7 +2119,7 @@ type:</p>
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="mixin_expressions" href="#mixin_expressions">Mixin Expressions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="mixin_expressions" href="#mixin_expressions">Mixin 式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="MixinExpression"><span class="gname">MixinExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">mixin (</span> <a href="#ArgumentList"><i>ArgumentList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
@@ -2138,7 +2138,7 @@ type:</p>
 </span>}
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="import_expressions" href="#import_expressions">Import Expressions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="import_expressions" href="#import_expressions">Import 式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="ImportExpression"><span class="gname">ImportExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">import (</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
@@ -2204,7 +2204,7 @@ type:</p>
 </span>}
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="is_expression" href="#is_expression">IsExpression</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="is_expression" href="#is_expression">Is 式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="IsExpression"><span class="gname">IsExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">is (</span> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
@@ -2511,7 +2511,7 @@ type:</p>
 <div class="blankline"></div>
     </ol>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="specialkeywords" href="#specialkeywords">スペシャルキーワード</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="specialkeywords" href="#specialkeywords">特殊なキーワード</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="SpecialKeyword"><span class="gname">SpecialKeyword</span></a>:
     <a href="#specialkeywords"><span class="d_inlinecode donthyphenate notranslate">__FILE__</span></a>
@@ -2588,7 +2588,7 @@ file full path: '/example/test.d'
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 10:15:20 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:08 2022
 </div>
     </div>
 </div>

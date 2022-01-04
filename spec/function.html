@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Functions - D言語 非公式日本語</title>
+<title>関数 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Functions' class='doc'>
+<body id='関数' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -28,8 +28,8 @@
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
 <ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
-    <li><a href='../phobos/index.html'>ライブラリ</a></li>
-    <li><a href='../dmd.html'>コマンドライン</a></li>
+    <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
+    <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
     <li><a href='../articles/index.html'>記事</a></li>
  </ul></li>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BFunctions%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5B関数%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Functions</h1>
+        <h1>関数</h1>
         
 <style>    body { counter-reset: h1 19; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,63 +146,63 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#grammar">Grammar</a></li>
-    <li><a href="#contracts">Function Contracts</a><ol>        <li><a href="#in_out_inheritance">In, Out and Inheritance</a></li>
+    <ol>    <li><a href="#grammar">文法</a></li>
+    <li><a href="#contracts">関数の契約</a><ol>        <li><a href="#in_out_inheritance">In, Out, 継承</a></li>
     </ol></li>
-    <li><a href="#function-return-values">Function Return Values</a></li>
-    <li><a href="#function-declarations">Functions Without Bodies</a></li>
-    <li><a href="#pure-functions">Pure Functions</a></li>
-    <li><a href="#nothrow-functions">Nothrow Functions</a></li>
-    <li><a href="#ref-functions">Ref Functions</a></li>
-    <li><a href="#auto-functions">Auto Functions</a></li>
-    <li><a href="#auto-ref-functions">Auto Ref Functions</a></li>
-    <li><a href="#inout-functions">Inout Functions</a><ol>        <li><a href="#matching-an-inout-parameter">Matching an <span class="d_inlinecode donthyphenate notranslate">inout</span> Parameter</a></li>
+    <li><a href="#function-return-values">関数の戻り値</a></li>
+    <li><a href="#function-declarations">本文無し関数</a></li>
+    <li><a href="#pure-functions">Pure 関数</a></li>
+    <li><a href="#nothrow-functions">Nothrow 関数</a></li>
+    <li><a href="#ref-functions">Ref 関数</a></li>
+    <li><a href="#auto-functions">Auto 関数</a></li>
+    <li><a href="#auto-ref-functions">Auto Ref 関数</a></li>
+    <li><a href="#inout-functions">Inout 関数</a><ol>        <li><a href="#matching-an-inout-parameter"><span class="d_inlinecode donthyphenate notranslate">inout</span> 引数の照合</a></li>
     </ol></li>
-    <li><a href="#optional-parenthesis">Optional Parentheses</a></li>
-    <li><a href="#property-functions">Property Functions</a></li>
-    <li><a href="#virtual-functions">Virtual Functions</a><ol>        <li><a href="#function-inheritance">Function Inheritance and Overriding</a></li>
+    <li><a href="#optional-parenthesis">括弧付けが任意の場合</a></li>
+    <li><a href="#property-functions">Property 関数</a></li>
+    <li><a href="#virtual-functions">Virtual 関数</a><ol>        <li><a href="#function-inheritance">関数の継承とオーバーライド</a></li>
     </ol></li>
-    <li><a href="#inline-functions">Inline Functions</a></li>
-    <li><a href="#function-overloading">Function Overloading</a><ol>        <li><a href="#overload-sets">Overload Sets</a></li>
+    <li><a href="#inline-functions">Inline 関数</a></li>
+    <li><a href="#function-overloading">関数オーバーロード</a><ol>        <li><a href="#overload-sets">オーバーロードのセット</a></li>
     </ol></li>
-    <li><a href="#parameters">Function Parameters</a><ol>        <li><a href="#param-storage">Parameter Storage Classes</a></li>
-        <li><a href="#in-params">In Parameters</a></li>
-        <li><a href="#ref-params">Ref and Out Parameters</a></li>
-        <li><a href="#lazy-params">Lazy Parameters</a></li>
-        <li><a href="#function-default-args">Function Default Arguments</a></li>
-        <li><a href="#return-ref-parameters">Return Ref Parameters</a></li>
-        <li><a href="#scope-parameters">Scope Parameters</a></li>
-        <li><a href="#return-scope-parameters">Return Scope Parameters</a></li>
-        <li><a href="#ref-return-scope-parameters">Ref Return Scope Parameters</a></li>
-        <li><a href="#udas-parameters">User-Defined Attributes for Parameters</a></li>
-        <li><a href="#variadic">Variadic Functions</a></li>
+    <li><a href="#parameters">関数の引数</a><ol>        <li><a href="#param-storage">引数のストレージクラス</a></li>
+        <li><a href="#in-params">In 引数</a></li>
+        <li><a href="#ref-params">Ref, Out 引数</a></li>
+        <li><a href="#lazy-params">Lazy 引数</a></li>
+        <li><a href="#function-default-args">関数のデフォルト引数</a></li>
+        <li><a href="#return-ref-parameters">Return Ref 引数</a></li>
+        <li><a href="#scope-parameters">Scope 引数</a></li>
+        <li><a href="#return-scope-parameters">Return Scope 引数</a></li>
+        <li><a href="#ref-return-scope-parameters">Ref Return Scope 引数</a></li>
+        <li><a href="#udas-parameters">引数のユーザー定義属性</a></li>
+        <li><a href="#variadic">可変長引数関数</a></li>
     </ol></li>
-    <li><a href="#local-variables">Local Variables</a><ol>        <li><a href="#local-static-variables">Local Static Variables</a></li>
+    <li><a href="#local-variables">ローカル変数</a><ol>        <li><a href="#local-static-variables">ローカル静的変数</a></li>
     </ol></li>
-    <li><a href="#nested">Nested Functions</a></li>
-    <li><a href="#closures">Delegates, Function Pointers, and Closures</a><ol>        <li><a href="#anonymous">Anonymous Functions and Anonymous Delegates</a></li>
+    <li><a href="#nested">関数のネスト</a></li>
+    <li><a href="#closures">デリゲート, 関数ポインタ, クロージャ</a><ol>        <li><a href="#anonymous">無名関数、無名デリゲート</a></li>
     </ol></li>
-    <li><a href="#main"><span class="d_inlinecode donthyphenate notranslate">main()</span> Function</a><ol>        <li><a href="#betterc-main">BetterC <span class="d_inlinecode donthyphenate notranslate">main()</span> Function</a></li>
+    <li><a href="#main"><span class="d_inlinecode donthyphenate notranslate">main()</span> 関数</a><ol>        <li><a href="#betterc-main">BetterC <span class="d_inlinecode donthyphenate notranslate">main()</span> 関数</a></li>
     </ol></li>
-    <li><a href="#function-templates">Function Templates</a></li>
-    <li><a href="#interpretation">Compile Time Function Execution (CTFE)</a><ol>        <li><a href="#string-mixins">String Mixins and Compile Time Function Execution</a></li>
+    <li><a href="#function-templates">関数テンプレート</a></li>
+    <li><a href="#interpretation">コンパイル時の関数実行 (CTFE)</a><ol>        <li><a href="#string-mixins">文字列ミックスインとコンパイル時関数実行</a></li>
     </ol></li>
-    <li><a href="#nogc-functions">No-GC Functions</a></li>
-    <li><a href="#function-safety">Function Safety</a><ol>        <li><a href="#safe-functions">Safe Functions</a></li>
-        <li><a href="#trusted-functions">Trusted Functions</a></li>
-        <li><a href="#system-functions">System Functions</a></li>
-        <li><a href="#safe-interfaces">Safe Interfaces</a></li>
-        <li><a href="#safe-values">Safe Values</a></li>
-        <li><a href="#safe-aliasing">Safe Aliasing</a></li>
+    <li><a href="#nogc-functions">No-GC 関数</a></li>
+    <li><a href="#function-safety">関数の安全性</a><ol>        <li><a href="#safe-functions">Safe 関数</a></li>
+        <li><a href="#trusted-functions">Trusted 関数</a></li>
+        <li><a href="#system-functions">System 関数</a></li>
+        <li><a href="#safe-interfaces">安全なインターフェース</a></li>
+        <li><a href="#safe-values">安全な値</a></li>
+        <li><a href="#safe-aliasing">安全なエイリアス</a></li>
     </ol></li>
-    <li><a href="#function-attribute-inference">Function Attribute Inference</a></li>
-    <li><a href="#pseudo-member">Uniform Function Call Syntax (UFCS)</a></li>
+    <li><a href="#function-attribute-inference">関数属性インターフェース</a></li>
+    <li><a href="#pseudo-member">統一された関数呼び出し構文 (UFCS)</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="grammar" href="#grammar">Grammar</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="grammar" href="#grammar">文法</a></h2>
 <div class="blankline"></div>
-<h3>Function declaration</h3>
+<h3>関数の宣言</h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="FuncDeclaration"><span class="gname">FuncDeclaration</span></a>:
     <a href="../spec/declaration.html#StorageClasses"><i>StorageClasses</i></a><sub>opt</sub> <a href="../spec/type.html#BasicType"><i>BasicType</i></a> <a href="#FuncDeclarator"><i>FuncDeclarator</i></a> <a href="#FunctionBody"><i>FunctionBody</i></a>
@@ -219,7 +219,7 @@
     <a href="../spec/template.html#TemplateParameters"><i>TemplateParameters</i></a> <a href="#Parameters"><i>Parameters</i></a> <a href="#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <a href="../spec/template.html#Constraint"><i>Constraint</i></a><sub>opt</sub>
 </pre>
 <div class="blankline"></div>
-<h3>Parameters</h3>
+<h3>引数</h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Parameters"><span class="gname">Parameters</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#ParameterList"><i>ParameterList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span>
@@ -267,7 +267,7 @@
     <span class="d_inlinecode donthyphenate notranslate">shared</span>
 </pre>
 <div class="blankline"></div>
-<h3>Function attributes</h3>
+<h3>関数の属性</h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="FunctionAttributes"><span class="gname">FunctionAttributes</span></a>:
     <a href="#FunctionAttribute"><i>FunctionAttribute</i></a>
@@ -292,7 +292,7 @@
     <a href="#FunctionAttribute"><i>FunctionAttribute</i></a>
 </pre>
 <div class="blankline"></div>
-<h3>Function body</h3>
+<h3>関数の本文</h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="FunctionBody"><span class="gname">FunctionBody</span></a>:
     <a href="#SpecifiedFunctionBody"><i>SpecifiedFunctionBody</i></a>
@@ -316,7 +316,7 @@
     <span class="d_inlinecode donthyphenate notranslate">=&gt;</span> <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
 </pre>
 <div class="blankline"></div>
-        <p>Examples:</p>
+        <p>例:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">int</span> hasSpecifiedBody() { <span class="d_keyword">return</span> 1; }
 <span class="d_keyword">int</span> hasMissingBody();
@@ -326,7 +326,7 @@
         <p><b>Note:</b> The <span class="d_inlinecode donthyphenate notranslate">ShortenedFunctionBody</span> form requires the <span class="d_inlinecode donthyphenate notranslate">-preview=shortenedMethods</span>
         command-line switch, which is available starting in v2.096.0.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="contracts" href="#contracts">Function Contracts</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="contracts" href="#contracts">関数の契約</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="FunctionContracts"><span class="gname">FunctionContracts</span></a>:
     <a href="#FunctionContract"><i>FunctionContract</i></a>
@@ -365,7 +365,7 @@
 <div class="blankline"></div>
         <p>Preconditions and postconditions do not affect the type of the function.</p>
 <div class="blankline"></div>
-    <h3>Preconditions</h3>
+    <h3>前提条件</h3>
 <div class="blankline"></div>
         <p>An <a href="#InContractExpression"><i>InContractExpression</i></a> is a precondition.</p>
 <div class="blankline"></div>
@@ -424,7 +424,7 @@
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-    <h3>Postconditions</h3>
+    <h3>事後条件</h3>
 <div class="blankline"></div>
         <p>An <a href="#OutContractExpression"><i>OutContractExpression</i></a> is a postcondition.</p>
 <div class="blankline"></div>
@@ -491,7 +491,7 @@
         <p>The optional identifier in either type of postcondition is set to the return value
         of the function, and can be accessed from within the postcondition.</p>
 <div class="blankline"></div>
-    <h3>Example</h3>
+    <h3>例</h3>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">int</span> fun(<span class="d_keyword">ref</span> <span class="d_keyword">int</span> a, <span class="d_keyword">int</span> b)
 <span class="d_keyword">in</span> (a &gt; 0)
@@ -522,7 +522,7 @@
 <div class="blankline"></div>
         <p>The two functions are identical semantically.</p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="in_out_inheritance" href="#in_out_inheritance">In, Out and Inheritance</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="in_out_inheritance" href="#in_out_inheritance">In, Out, 継承</a></h3>
 <div class="blankline"></div>
         <p>If a function in a derived class overrides a function from its
         super class, then only the preconditions of one of the
@@ -547,13 +547,13 @@
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="function-return-values" href="#function-return-values">Function Return Values</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="function-return-values" href="#function-return-values">関数の戻り値</a></h2>
 <div class="blankline"></div>
         <p>Function return values not marked as <span class="d_inlinecode donthyphenate notranslate">ref</span> are considered to be rvalues.
         This means they cannot be passed by reference to other functions.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="function-declarations" href="#function-declarations">Functions Without Bodies</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="function-declarations" href="#function-declarations">本文無し関数</a></h2>
 <div class="blankline"></div>
     <p>Functions without bodies:</p>
 <div class="blankline"></div>
@@ -566,7 +566,7 @@
     of it, and the implementation may be in another language such as C, assembler, etc.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="pure-functions" href="#pure-functions">Pure Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="pure-functions" href="#pure-functions">Pure 関数</a></h2>
 <div class="blankline"></div>
         <p>Pure functions are annotated with the <span class="d_inlinecode donthyphenate notranslate">pure</span> attribute.
         </p>
@@ -731,7 +731,7 @@ foo(a);
 <div class="blankline"></div>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="nothrow-functions" href="#nothrow-functions">Nothrow Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="nothrow-functions" href="#nothrow-functions">Nothrow 関数</a></h2>
 <div class="blankline"></div>
         <p>Nothrow functions can only throw exceptions derived
         from <a href="https://dlang.org/phobos/object.html#.Error"><span class="d_inlinecode donthyphenate notranslate">class Error</span></a>.
@@ -739,7 +739,7 @@ foo(a);
 <div class="blankline"></div>
         <p>Nothrow functions are covariant with throwing ones.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="ref-functions" href="#ref-functions">Ref Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="ref-functions" href="#ref-functions">Ref 関数</a></h2>
 <div class="blankline"></div>
         <p>Ref functions allow functions to return by reference,
         meaning that the return value must be an lvalue, and
@@ -776,7 +776,7 @@ foo(a);
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="auto-functions" href="#auto-functions">Auto Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="auto-functions" href="#auto-functions">Auto 関数</a></h2>
 <div class="blankline"></div>
     <p>Auto functions have their return type inferred from any
         <a href="../spec/statement.html#ReturnStatement"><i>ReturnStatement</i></a>s in the function body.
@@ -799,7 +799,7 @@ foo(a);
         
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="auto-ref-functions" href="#auto-ref-functions">Auto Ref Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="auto-ref-functions" href="#auto-ref-functions">Auto Ref 関数</a></h2>
 <div class="blankline"></div>
     <p>Auto ref functions infer their return type just as
         <a href="#auto-functions">auto functions</a> do.
@@ -839,7 +839,7 @@ foo(a);
 </span><span class="d_keyword">auto</span> <span class="d_keyword">ref</span> <span class="d_keyword">int</span> foo(<span class="d_keyword">double</span> x) { <span class="d_keyword">return</span> x; }   <span class="d_comment">// error, cannot convert double to int
 </span></pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="inout-functions" href="#inout-functions">Inout Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="inout-functions" href="#inout-functions">Inout 関数</a></h2>
 <div class="blankline"></div>
     <p>Functions that differ only in whether the parameters are mutable, <span class="d_inlinecode donthyphenate notranslate">const</span> or <span class="d_inlinecode donthyphenate notranslate">immutable</span>,
         and have corresponding mutable, <span class="d_inlinecode donthyphenate notranslate">const</span> or <span class="d_inlinecode donthyphenate notranslate">immutable</span> return types, can be combined
@@ -902,7 +902,7 @@ foo(a);
         
 </div>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="matching-an-inout-parameter" href="#matching-an-inout-parameter">Matching an <span class="d_inlinecode donthyphenate notranslate">inout</span> Parameter</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="matching-an-inout-parameter" href="#matching-an-inout-parameter"><span class="d_inlinecode donthyphenate notranslate">inout</span> 引数の照合</a></h3>
 <div class="blankline"></div>
     <p>A set of arguments to a function with <span class="d_inlinecode donthyphenate notranslate">inout</span> parameters is considered
         a match if any <span class="d_inlinecode donthyphenate notranslate">inout</span> argument types match exactly, or:</p>
@@ -972,7 +972,7 @@ foo(a);
         be matched with <span class="d_inlinecode donthyphenate notranslate">inout</span>.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="optional-parenthesis" href="#optional-parenthesis">Optional Parentheses</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="optional-parenthesis" href="#optional-parenthesis">括弧付けが任意の場合</a></h2>
 <div class="blankline"></div>
     <p>If a function call passes no explicit argument, i.e. it would syntactically use <span class="d_inlinecode donthyphenate notranslate">()</span>, then these parentheses
     may be omitted, similar to a getter invocation of a
@@ -1054,7 +1054,7 @@ foo(a);
     
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="property-functions" href="#property-functions">Property Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="property-functions" href="#property-functions">Property 関数</a></h2>
 <div class="blankline"></div>
     <p>WARNING: The definition and usefulness of property functions is being reviewed, and the implementation
     is currently incomplete.  Using property functions is not recommended until the definition is
@@ -1132,7 +1132,7 @@ foo(a);
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="virtual-functions" href="#virtual-functions">Virtual Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="virtual-functions" href="#virtual-functions">Virtual 関数</a></h2>
 <div class="blankline"></div>
         <p>Virtual functions are class member functions that are called indirectly through a
         function pointer table, called a <span class="d_inlinecode donthyphenate notranslate">vtbl[]</span>, rather than directly.
@@ -1267,7 +1267,7 @@ foo(a);
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="function-inheritance" href="#function-inheritance">Function Inheritance and Overriding</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="function-inheritance" href="#function-inheritance">関数の継承とオーバーライド</a></h3>
 <div class="blankline"></div>
         <p>A function in a derived class with the same name and covariant
         with a function in a base class overrides that function:</p>
@@ -1460,7 +1460,7 @@ foo(a);
 <div class="blankline"></div>
     <p>Static functions with <span class="d_inlinecode donthyphenate notranslate">Objective-C</span> linkage are overridable.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="inline-functions" href="#inline-functions">Inline Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="inline-functions" href="#inline-functions">Inline 関数</a></h2>
 <div class="blankline"></div>
         <p>The compiler makes the decision whether to inline a function or not.
         This decision may be controlled by <a href="pragma.html#inline"><span class="d_inlinecode donthyphenate notranslate">pragma(inline)</span></a>.</p>
@@ -1472,7 +1472,7 @@ foo(a);
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="function-overloading" href="#function-overloading">Function Overloading</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="function-overloading" href="#function-overloading">関数オーバーロード</a></h2>
 <div class="blankline"></div>
         <p><i>Function overloading</i> occurs when two or more functions in the same scope
         have the same name.
@@ -1559,7 +1559,7 @@ t.bacon(0);  <span class="d_comment">// error: ambiguous
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="overload-sets" href="#overload-sets">Overload Sets</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="overload-sets" href="#overload-sets">オーバーロードのセット</a></h3>
 <div class="blankline"></div>
         <p>Functions declared at the same scope overload against each
         other, and are called an <i>Overload Set</i>.
@@ -1635,9 +1635,9 @@ t.bacon(0);  <span class="d_comment">// error: ambiguous
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="parameters" href="#parameters">Function Parameters</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="parameters" href="#parameters">関数の引数</a></h2>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="param-storage" href="#param-storage">Parameter Storage Classes</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="param-storage" href="#param-storage">引数のストレージクラス</a></h3>
 <div class="blankline"></div>
         <p>Parameter storage classes are <span class="d_inlinecode donthyphenate notranslate">in</span>, <span class="d_inlinecode donthyphenate notranslate">out</span>, <span class="d_inlinecode donthyphenate notranslate">ref</span>, <span class="d_inlinecode donthyphenate notranslate">lazy</span>, <span class="d_inlinecode donthyphenate notranslate">return</span> and <span class="d_inlinecode donthyphenate notranslate">scope</span>.
         Parameters can also take the type constructors <span class="d_inlinecode donthyphenate notranslate">const</span>, <span class="d_inlinecode donthyphenate notranslate">immutable</span>, <span class="d_inlinecode donthyphenate notranslate">shared</span> and <span class="d_inlinecode donthyphenate notranslate">inout</span>.
@@ -1700,7 +1700,7 @@ t.bacon(0);  <span class="d_comment">// error: ambiguous
         <tr><td><span class="d_inlinecode donthyphenate notranslate">inout</span></td><td>argument is implicitly converted to an inout type</td></tr>
         </table></center>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="in-params" href="#in-params">In Parameters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="in-params" href="#in-params">In 引数</a></h3>
 <div class="blankline"></div>
         <b>Note: The following requires the <span class="d_inlinecode donthyphenate notranslate">-preview=in</span> switch, available in
         <a href="../changelog/2.094.0.html#preview-in">v2.094.0</a> or higher.
@@ -1722,7 +1722,7 @@ t.bacon(0);  <span class="d_comment">// error: ambiguous
 
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="ref-params" href="#ref-params">Ref and Out Parameters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="ref-params" href="#ref-params">Ref, Out 引数</a></h3>
 <div class="blankline"></div>
         <p>By default, parameters take rvalue arguments.
         A <span class="d_inlinecode donthyphenate notranslate">ref</span> parameter takes an lvalue argument, so changes to its value will operate
@@ -1780,7 +1780,7 @@ t.bacon(0);  <span class="d_comment">// error: ambiguous
         apply only to the reference and not the contents.
         </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="lazy-params" href="#lazy-params">Lazy Parameters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="lazy-params" href="#lazy-params">Lazy 引数</a></h3>
 <div class="blankline"></div>
         <p>An argument to a <span class="d_inlinecode donthyphenate notranslate">lazy</span> parameter is not evaluated before the function is called.
         The argument is only evaluated if/when the parameter is evaluated within the function. Hence,
@@ -1842,7 +1842,7 @@ t.bacon(0);  <span class="d_comment">// error: ambiguous
 <div class="blankline"></div>
         <p>See Also: <a href="#lazy_variadic_functions">Lazy Variadic Functions</a></p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="function-default-args" href="#function-default-args">Function Default Arguments</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="function-default-args" href="#function-default-args">関数のデフォルト引数</a></h3>
 <div class="blankline"></div>
         <p>Function parameter declarations can have default values:</p>
 <div class="blankline"></div>
@@ -1886,7 +1886,7 @@ foo(4);   <span class="d_comment">// same as foo(4, 3);
         parameters must also have default values.
         </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="return-ref-parameters" href="#return-ref-parameters">Return Ref Parameters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="return-ref-parameters" href="#return-ref-parameters">Return Ref 引数</a></h3>
 <div class="blankline"></div>
         <p>Return ref parameters are used with
         <a href="#ref-functions">ref functions</a> to ensure that the
@@ -1996,7 +1996,7 @@ value is considered when determining the lifetime of the return value.</p>
 </span>}
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="scope-parameters" href="#scope-parameters">Scope Parameters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="scope-parameters" href="#scope-parameters">Scope 引数</a></h3>
 <div class="blankline"></div>
     <p>A <span class="d_inlinecode donthyphenate notranslate">scope</span> parameter of reference type must not escape the function call
     (e.g. by being assigned to a global variable). It has no effect for non-reference types.
@@ -2031,7 +2031,7 @@ value is considered when determining the lifetime of the return value.</p>
     literal or a <a href="../spec/expression.html#NewExpression"><i>NewExpression</i></a> to a scope parameter may be allowed in a
     <span class="d_inlinecode donthyphenate notranslate">@nogc</span> context, depending on the compiler implementation.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="return-scope-parameters" href="#return-scope-parameters">Return Scope Parameters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="return-scope-parameters" href="#return-scope-parameters">Return Scope 引数</a></h3>
 <div class="blankline"></div>
         <p>Parameters marked as <span class="d_inlinecode donthyphenate notranslate">return scope</span> that contain indirections
         can only escape those indirections via the function's return value.</p>
@@ -2090,7 +2090,7 @@ C balin(<span class="d_keyword">return</span> <span class="d_keyword">scope</spa
         <a href="../spec/expression.html#function_literals">lambdas</a> can deduce
         the <span class="d_inlinecode donthyphenate notranslate">return scope</span> attribute.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="ref-return-scope-parameters" href="#ref-return-scope-parameters">Ref Return Scope Parameters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="ref-return-scope-parameters" href="#ref-return-scope-parameters">Ref Return Scope 引数</a></h3>
 <div class="blankline"></div>
         <p>Parameters marked as <span class="d_inlinecode donthyphenate notranslate">ref return scope</span> come in two forms:</p>
 <div class="blankline"></div>
@@ -2165,11 +2165,11 @@ S test6(<span class="d_keyword">ref</span> <span class="d_keyword">return</span>
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="udas-parameters" href="#udas-parameters">User-Defined Attributes for Parameters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="udas-parameters" href="#udas-parameters">引数のユーザー定義属性</a></h3>
 <div class="blankline"></div>
 See also: <a href="../spec/attribute.html#UserDefinedAttribute"><i>User-Defined Attributes</i></a>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="variadic" href="#variadic">Variadic Functions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="variadic" href="#variadic">可変長引数関数</a></h3>
 <div class="blankline"></div>
         <p><i>Variadic Functions</i> take a variable number of arguments.
         There are three forms:</p>
@@ -2180,7 +2180,7 @@ See also: <a href="../spec/attribute.html#UserDefinedAttribute"><i>User-Defined 
         </ol>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="c_style_variadic_functions" href="#c_style_variadic_functions">C-style Variadic Functions</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="c_style_variadic_functions" href="#c_style_variadic_functions">C スタイルな可変長引数関数</a></h4>
 <div class="blankline"></div>
         <p>A C-style variadic function is declared with
         a parameter <span class="d_inlinecode donthyphenate notranslate">...</span> as the last function parameter.
@@ -2241,7 +2241,7 @@ See also: <a href="../spec/attribute.html#UserDefinedAttribute"><i>User-Defined 
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="d_style_variadic_functions" href="#d_style_variadic_functions">D-style Variadic Functions</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="d_style_variadic_functions" href="#d_style_variadic_functions">D スタイルな可変長引数関数</a></h4>
 <div class="blankline"></div>
         <p>D-style variadic functions have D linkage and <span class="d_inlinecode donthyphenate notranslate">...</span> as the last
         parameter.</p>
@@ -2368,7 +2368,7 @@ Bar
     <p>D-style variadic functions cannot be marked as <span class="d_inlinecode donthyphenate notranslate">@safe</span>.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="typesafe_variadic_functions" href="#typesafe_variadic_functions">Typesafe Variadic Functions</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="typesafe_variadic_functions" href="#typesafe_variadic_functions">型安全な可変長引数関数</a></h4>
 <div class="blankline"></div>
         <p>A typesafe variadic function has D linkage and a variadic
         parameter declared as either an array or a class.
@@ -2501,7 +2501,7 @@ Bar
 </span>}
 </pre>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="lazy_variadic_functions" href="#lazy_variadic_functions">Lazy Variadic Functions</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="lazy_variadic_functions" href="#lazy_variadic_functions">Lazy な可変長引数関数</a></h4>
 <div class="blankline"></div>
         <p>If the variadic parameter of a function is an array of delegates
         with no parameters,
@@ -2557,7 +2557,7 @@ Bar
 
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><span id="Local Variables"><a class="anchor" title="Permalink to this section" id="local-variables" href="#local-variables">Local Variables</a></span></h2>
+<h2><span id="Local Variables"><a class="anchor" title="Permalink to this section" id="local-variables" href="#local-variables">ローカル変数</a></span></h2>
 <div class="blankline"></div>
         <p>Local variables are declared within the scope of a function.
         Function parameters are included.</p>
@@ -2607,7 +2607,7 @@ Bar
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><span id="Local Static Variables"><a class="anchor" title="Permalink to this section" id="local-static-variables" href="#local-static-variables">Local Static Variables</a></span></h3>
+<h3><span id="Local Static Variables"><a class="anchor" title="Permalink to this section" id="local-static-variables" href="#local-static-variables">ローカル静的変数</a></span></h3>
 <div class="blankline"></div>
         <p>Local variables in functions declared as <span class="d_inlinecode donthyphenate notranslate">static</span>, <span class="d_inlinecode donthyphenate notranslate">shared static</span>
         or <span class="d_inlinecode donthyphenate notranslate">__gshared</span> are statically allocated
@@ -2648,7 +2648,7 @@ Bar
 </span>}
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="nested" href="#nested">Nested Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="nested" href="#nested">関数のネスト</a></h2>
 <div class="blankline"></div>
         <p>Functions may be nested within other functions:</p>
 <div class="blankline"></div>
@@ -2889,7 +2889,7 @@ Bar
 <div class="blankline"></div>
     <p>Nested functions cannot be overloaded.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="closures" href="#closures">Delegates, Function Pointers, and Closures</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="closures" href="#closures">デリゲート, 関数ポインタ, クロージャ</a></h2>
 <div class="blankline"></div>
         <p>A function pointer can point to a static nested function:</p>
 <div class="blankline"></div>
@@ -3089,12 +3089,12 @@ Bar
         </div>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="anonymous" href="#anonymous">Anonymous Functions and Anonymous Delegates</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="anonymous" href="#anonymous">無名関数、無名デリゲート</a></h3>
 <div class="blankline"></div>
         <p>See <a href="../spec/expression.html#FunctionLiteral"><i>FunctionLiteral</i></a>s.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="main" href="#main"><span class="d_inlinecode donthyphenate notranslate">main()</span> Function</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="main" href="#main"><span class="d_inlinecode donthyphenate notranslate">main()</span> 関数</a></h2>
 <div class="blankline"></div>
         <p>For console programs, <span class="d_inlinecode donthyphenate notranslate">main()</span> serves as the entry point.
         It gets called after all the module initializers are run, and
@@ -3113,7 +3113,7 @@ Bar
 <div class="blankline"></div>
         <p>Attributes may be added as needed, e.g. <span class="d_inlinecode donthyphenate notranslate">@safe</span>, <span class="d_inlinecode donthyphenate notranslate">@nogc</span>, <span class="d_inlinecode donthyphenate notranslate">nothrow</span>, etc.</p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="betterc-main" href="#betterc-main">BetterC <span class="d_inlinecode donthyphenate notranslate">main()</span> Function</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="betterc-main" href="#betterc-main">BetterC <span class="d_inlinecode donthyphenate notranslate">main()</span> 関数</a></h3>
 <div class="blankline"></div>
         <p>For <b>BetterC</b> programs, the main function is declared using
         one of the following forms:</p>
@@ -3133,13 +3133,13 @@ Bar
 
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="function-templates" href="#function-templates">Function Templates</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="function-templates" href="#function-templates">関数テンプレート</a></h2>
 <div class="blankline"></div>
         <p>Functions can have compile time arguments in the form of a template.
         See <a href="../spec/template.html#function-templates">function templates</a>.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="interpretation" href="#interpretation">Compile Time Function Execution (CTFE)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="interpretation" href="#interpretation">コンパイル時の関数実行 (CTFE)</a></h2>
 <div class="blankline"></div>
     <p>In contexts where a compile time value is required, functions
     can be used to compute those values. This is called <i>Compile Time Function
@@ -3280,7 +3280,7 @@ Bar
 
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="string-mixins" href="#string-mixins">String Mixins and Compile Time Function Execution</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="string-mixins" href="#string-mixins">文字列ミックスインとコンパイル時関数実行</a></h3>
 <div class="blankline"></div>
         <p>All functions that execute in CTFE must also
         be executable at run time. The compile time evaluation of
@@ -3309,7 +3309,7 @@ Bar
 
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="nogc-functions" href="#nogc-functions">No-GC Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="nogc-functions" href="#nogc-functions">No-GC 関数</a></h2>
 <div class="blankline"></div>
         <p>No-GC functions are functions marked with the <span class="d_inlinecode donthyphenate notranslate">@nogc</span> attribute.
             Those functions do not allocate memory on the GC heap.
@@ -3376,9 +3376,9 @@ Bar
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="function-safety" href="#function-safety">Function Safety</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="function-safety" href="#function-safety">関数の安全性</a></h2>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="safe-functions" href="#safe-functions">Safe Functions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="safe-functions" href="#safe-functions">Safe 関数</a></h3>
 <div class="blankline"></div>
         <p>Safe functions are marked with the <span class="d_inlinecode donthyphenate notranslate">@safe</span> attribute.
         <span class="d_inlinecode donthyphenate notranslate">@safe</span> can be inferred,
@@ -3426,7 +3426,7 @@ Bar
 
 
 <div class="blankline"></div>
-<h4>Safe External Functions</h4>
+<h4>安全な外部関数</h4>
 <div class="blankline"></div>
         <p>External functions don't have a function body visible to the compiler:
         </p>
@@ -3439,7 +3439,7 @@ Bar
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="trusted-functions" href="#trusted-functions">Trusted Functions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="trusted-functions" href="#trusted-functions">Trusted 関数</a></h3>
 <div class="blankline"></div>
         <p>Trusted functions are marked with the <span class="d_inlinecode donthyphenate notranslate">@trusted</span> attribute.</p>
 <div class="blankline"></div>
@@ -3493,7 +3493,7 @@ Bar
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="system-functions" href="#system-functions">System Functions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="system-functions" href="#system-functions">System 関数</a></h3>
 <div class="blankline"></div>
         <p>System functions are functions not marked with <span class="d_inlinecode donthyphenate notranslate">@safe</span> or
         <span class="d_inlinecode donthyphenate notranslate">@trusted</span>
@@ -3520,7 +3520,7 @@ Bar
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="safe-interfaces" href="#safe-interfaces">Safe Interfaces</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="safe-interfaces" href="#safe-interfaces">安全なインターフェース</a></h3>
 <div class="blankline"></div>
         <p>When it is only called with <a href="#safe-values">safe
         values</a> and <a href="#safe-aliasing">safe aliasing</a>, a
@@ -3587,7 +3587,7 @@ Bar
             </li>
         </ul>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="safe-values" href="#safe-values">Safe Values</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="safe-values" href="#safe-values">安全な値</a></h3>
 <div class="blankline"></div>
         <p>For <a href="../spec/type.html#basic-data-types">basic data types</a>, all
         possible bit patterns are safe.</p>
@@ -3683,7 +3683,7 @@ U u = U(<span class="d_keyword">new</span> <span class="d_keyword">int</span>); 
             expected by the function.</li>
         </ol>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="safe-aliasing" href="#safe-aliasing">Safe Aliasing</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="safe-aliasing" href="#safe-aliasing">安全なエイリアス</a></h3>
 <div class="blankline"></div>
     <p>When one memory location is accessible with two different types, that
     aliasing is considered safe if:</p>
@@ -3723,7 +3723,7 @@ f1(u1.x, u1.y); <span class="d_comment">// Ok
     
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="function-attribute-inference" href="#function-attribute-inference">Function Attribute Inference</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="function-attribute-inference" href="#function-attribute-inference">関数属性インターフェース</a></h2>
 <div class="blankline"></div>
         <p><a href="../spec/expression.html#FunctionLiteral"><i>FunctionLiteral</i></a>s,
         <a href="#auto-functions">Auto Functions</a>,
@@ -3763,7 +3763,7 @@ f1(u1.x, u1.y); <span class="d_comment">// Ok
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="pseudo-member" href="#pseudo-member">Uniform Function Call Syntax (UFCS)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="pseudo-member" href="#pseudo-member">統一された関数呼び出し構文 (UFCS)</a></h2>
 <div class="blankline"></div>
         <p>A free function can be called with a syntax equivalent to that of
         a member function of its first parameter type. The free function is
@@ -3886,14 +3886,14 @@ obj.prop;      <span class="d_comment">// if X does not have member prop, reinte
 </pre>
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/const3.html">Type Qualifiers</a></div>
-<div style="float: right"><a href="../spec/operatoroverloading.html">Operator Overloading</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/const3.html">型修飾子[Type Qualifiers]</a></div>
+<div style="float: right"><a href="../spec/operatoroverloading.html">演算子オーバーロード[Operator Overloading]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 10:15:21 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:09 2022
 </div>
     </div>
 </div>

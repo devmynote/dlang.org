@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Structs, Unions - D言語 非公式日本語</title>
+<title>構造体と共用体 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Structs, Unions' class='doc'>
+<body id='構造体と共用体' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -28,8 +28,8 @@
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
 <ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
-    <li><a href='../phobos/index.html'>ライブラリ</a></li>
-    <li><a href='../dmd.html'>コマンドライン</a></li>
+    <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
+    <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
     <li><a href='../articles/index.html'>記事</a></li>
  </ul></li>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BStructs, Unions%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5B構造体と共用体%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Structs, Unions</h1>
+        <h1>構造体と共用体</h1>
         
 <style>    body { counter-reset: h1 14; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,33 +146,33 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#struct_layout">Struct Layout</a></li>
-    <li><a href="#POD">Plain Old Data</a></li>
-    <li><a href="#opaque_struct_unions">Opaque Structs and Unions</a></li>
-    <li><a href="#default_struct_init">Default Initialization of Structs</a></li>
-    <li><a href="#static_struct_init">Static Initialization of Structs</a></li>
-    <li><a href="#default_union_init">Default Initialization of Unions</a></li>
-    <li><a href="#static_union_init">Static Initialization of Unions</a></li>
-    <li><a href="#dynamic_struct_init">Dynamic Initialization of Structs</a></li>
-    <li><a href="#struct-literal">Struct Literals</a></li>
-    <li><a href="#struct_properties">Struct Properties</a></li>
-    <li><a href="#struct_instance_properties">Struct Instance Properties</a></li>
-    <li><a href="#struct_field_properties">Struct Field Properties</a></li>
-    <li><a href="#const-struct">Const, Immutable and Shared Structs</a></li>
-    <li><a href="#UnionConstructor">Union Constructors</a></li>
-    <li><a href="#struct-constructor">Struct Constructors</a><ol>        <li><a href="#delegating-constructor">Delegating Constructors</a></li>
-        <li><a href="#struct-instantiation">Struct Instantiation</a></li>
-        <li><a href="#constructor-attributes">Constructor Attributes</a></li>
-        <li><a href="#disable_default_construction">Disabling Default Struct Construction</a></li>
-        <li><a href="#field-init">Field initialization inside a constructor</a></li>
-        <li><a href="#struct-copy-constructor">Struct Copy Constructors</a></li>
+    <ol>    <li><a href="#struct_layout">構造体のレイアウト</a></li>
+    <li><a href="#POD">C言語との互換[Plain Old Data]</a></li>
+    <li><a href="#opaque_struct_unions">あいまいな定義</a></li>
+    <li><a href="#default_struct_init">構造体初期化のデフォルト</a></li>
+    <li><a href="#static_struct_init">構造体の静的初期化</a></li>
+    <li><a href="#default_union_init">共用体初期化のデフォルト</a></li>
+    <li><a href="#static_union_init">共用体の静的初期化</a></li>
+    <li><a href="#dynamic_struct_init">構造体の動的初期化</a></li>
+    <li><a href="#struct-literal">構造体リテラル</a></li>
+    <li><a href="#struct_properties">構造体のプロパティ</a></li>
+    <li><a href="#struct_instance_properties">構造体インスタンスのプロパティ</a></li>
+    <li><a href="#struct_field_properties">構造体フィールドのプロパティ</a></li>
+    <li><a href="#const-struct">Const, immutable, shared 構造体</a></li>
+    <li><a href="#UnionConstructor">共用体のコンストラクタ</a></li>
+    <li><a href="#struct-constructor">構造体のコンストラクタ</a><ol>        <li><a href="#delegating-constructor">コンストラクタのデリゲート</a></li>
+        <li><a href="#struct-instantiation">構造体のインスタンス化</a></li>
+        <li><a href="#constructor-attributes">コンストラクタの属性</a></li>
+        <li><a href="#disable_default_construction">デフォルトの構造体コンストラクタを無効にする</a></li>
+        <li><a href="#field-init">コンストラクター内でのフィールド初期化</a></li>
+        <li><a href="#struct-copy-constructor">構造体のコピーコンストラクタ</a></li>
     </ol></li>
-    <li><a href="#struct-postblit">Struct Postblits</a></li>
-    <li><a href="#struct-destructor">Struct Destructors</a></li>
-    <li><a href="#Invariant">Struct Invariants</a></li>
-    <li><a href="#assign-overload">Identity Assignment Overload</a></li>
-    <li><a href="#nested">Nested Structs</a></li>
-    <li><a href="#unions_and_special_memb_funct">Unions and Special Member Functions</a></li>
+    <li><a href="#struct-postblit">構造体のpostblit</a></li>
+    <li><a href="#struct-destructor">構造体のデストラクタ</a></li>
+    <li><a href="#Invariant">構造体の不変条件</a></li>
+    <li><a href="#assign-overload">同一の代入オーバーロード</a></li>
+    <li><a href="#nested">構造体のネスト</a></li>
+    <li><a href="#unions_and_special_memb_funct">共用体と特殊なメンバー関数</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -224,7 +224,7 @@
 
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="struct_layout" href="#struct_layout">Struct Layout</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="struct_layout" href="#struct_layout">構造体のレイアウト</a></h2>
 <div class="blankline"></div>
     <p>The non-static data members of a struct are called <i>fields</i>. Fields are laid
     out in lexical order. Fields are aligned according to the <a href="../spec/attribute.html#align">Align Attribute</a>
@@ -270,7 +270,7 @@
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="POD" href="#POD">Plain Old Data</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="POD" href="#POD">C言語との互換[Plain Old Data]</a></h2>
 <div class="blankline"></div>
     <p>A struct or union is <i>Plain Old Data</i> (POD) if it meets the following criteria:</p>
 <div class="blankline"></div>
@@ -284,7 +284,7 @@
 
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="opaque_struct_unions" href="#opaque_struct_unions">Opaque Structs and Unions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="opaque_struct_unions" href="#opaque_struct_unions">あいまいな定義</a></h2>
 <div class="blankline"></div>
     <p>Opaque struct and union declarations do not have a <a href="#AggregateBody"><i>AggregateBody</i></a>:</p>
 <div class="blankline"></div>
@@ -313,7 +313,7 @@ S.sizeof; <span class="d_comment">// error, size is not known
 
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="default_struct_init" href="#default_struct_init">Default Initialization of Structs</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="default_struct_init" href="#default_struct_init">構造体初期化のデフォルト</a></h2>
 <div class="blankline"></div>
         <p>Struct fields are by default initialized to whatever the
         <a href="../spec/declaration.html#Initializer"><i>Initializer</i></a> for the field is, and if none is supplied, to
@@ -331,7 +331,7 @@ S x; <span class="d_comment">// x.a is set to 4, x.b to 0
 <div class="blankline"></div>
         <p>The default initializers may not contain references to mutable data.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="static_struct_init" href="#static_struct_init">Static Initialization of Structs</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="static_struct_init" href="#static_struct_init">構造体の静的初期化</a></h2>
 <div class="blankline"></div>
         <p>If a <a href="../spec/declaration.html#StructInitializer"><i>StructInitializer</i></a> is supplied, the
         fields are initialized by the <a href="../spec/declaration.html#StructMemberInitializer"><i>StructMemberInitializer</i></a> syntax.
@@ -363,7 +363,7 @@ S r;                          <span class="d_comment">// r.a = 0, r.b = 0, r.c =
         
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="default_union_init" href="#default_union_init">Default Initialization of Unions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="default_union_init" href="#default_union_init">共用体初期化のデフォルト</a></h2>
 <div class="blankline"></div>
         <p>Unions are by default initialized to whatever the
         <a href="../spec/declaration.html#Initializer"><i>Initializer</i></a> for the first field is, and if none is supplied, to
@@ -394,7 +394,7 @@ U x; <span class="d_comment">// x.a is set to 4, x.b to an implementation-define
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="static_union_init" href="#static_union_init">Static Initialization of Unions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="static_union_init" href="#static_union_init">共用体の静的初期化</a></h2>
 <div class="blankline"></div>
         <p>Unions are initialized similarly to structs, except that only
         one initializer is allowed.</p>
@@ -421,7 +421,7 @@ U u = { 2 };       <span class="d_comment">// u.a = 2
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="dynamic_struct_init" href="#dynamic_struct_init">Dynamic Initialization of Structs</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="dynamic_struct_init" href="#dynamic_struct_init">構造体の動的初期化</a></h2>
 <div class="blankline"></div>
         <p>The <a href="#static_struct_init">static initializer syntax</a>
         can also be used to initialize non-static variables.
@@ -498,7 +498,7 @@ S s = 3; <span class="d_comment">// sets s.a to 3 using S.opCall(int)
 
 </div>
 <div class="blankline"></div>
-<h2><span id="StructLiteral"><a class="anchor" title="Permalink to this section" id="struct-literal" href="#struct-literal">Struct Literals</a></span></h2>
+<h2><span id="StructLiteral"><a class="anchor" title="Permalink to this section" id="struct-literal" href="#struct-literal">構造体リテラル</a></span></h2>
 <div class="blankline"></div>
         <p>Struct literals consist of the name of the struct followed
         by a parenthesized argument list:</p>
@@ -529,14 +529,14 @@ foo( S(1, 2) ); <span class="d_comment">// set field x to 1, field y to 2
         initialized.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="struct_properties" href="#struct_properties">Struct Properties</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="struct_properties" href="#struct_properties">構造体のプロパティ</a></h2>
 <div class="blankline"></div>
 <center><table><caption>Struct Properties</caption><tr><th class="donthyphenate"><b>Name</b></th><th class="donthyphenate"><b>Description</b></th></tr>
 <tr><td><span class="d_inlinecode donthyphenate notranslate">.sizeof</span></td><td>Size in bytes of struct</td></tr>
 <tr><td><span class="d_inlinecode donthyphenate notranslate">.alignof</span></td><td>Size boundary struct needs to be aligned on</td></tr>
 </table></center>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="struct_instance_properties" href="#struct_instance_properties">Struct Instance Properties</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="struct_instance_properties" href="#struct_instance_properties">構造体インスタンスのプロパティ</a></h2>
 <div class="blankline"></div>
 <center><table><caption>Struct Instance Properties</caption><tr><th class="donthyphenate"><b>Name</b></th><th class="donthyphenate"><b>Description</b></th></tr>
 <tr><td><span class="d_inlinecode donthyphenate notranslate">.tupleof</span></td><td>An <a href="../spec/template.html#variadic-templates">expression sequence</a>
@@ -544,13 +544,13 @@ foo( S(1, 2) ); <span class="d_comment">// set field x to 1, field y to 2
     <a href="../spec/class.html#class_properties">Class Properties</a> for a class-based example.</td></tr>
 </table></center>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="struct_field_properties" href="#struct_field_properties">Struct Field Properties</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="struct_field_properties" href="#struct_field_properties">構造体フィールドのプロパティ</a></h2>
 <div class="blankline"></div>
 <center><table><caption>Struct Field Properties</caption><tr><th class="donthyphenate"><b>Name</b></th><th class="donthyphenate"><b>Description</b></th></tr>
 <tr><td><span class="d_inlinecode donthyphenate notranslate">.offsetof</span></td><td>Offset in bytes of field from beginning of struct</td></tr>
 </table></center>
 <div class="blankline"></div>
-<h2><span id="ConstStruct"><a class="anchor" title="Permalink to this section" id="const-struct" href="#const-struct">Const, Immutable and Shared Structs</a></span></h2>
+<h2><span id="ConstStruct"><a class="anchor" title="Permalink to this section" id="const-struct" href="#const-struct">Const, immutable, shared 構造体</a></span></h2>
 <div class="blankline"></div>
         <p>A struct declaration can have a storage class of
         <span class="d_inlinecode donthyphenate notranslate">const</span>, <span class="d_inlinecode donthyphenate notranslate">immutable</span> or <span class="d_inlinecode donthyphenate notranslate">shared</span>. It has an equivalent
@@ -572,12 +572,12 @@ foo( S(1, 2) ); <span class="d_comment">// set field x to 1, field y to 2
 </div>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="UnionConstructor" href="#UnionConstructor">Union Constructors</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="UnionConstructor" href="#UnionConstructor">共用体のコンストラクタ</a></h2>
 <div class="blankline"></div>
         <p>Unions are constructed in the same way as structs.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><span id="Struct-Constructor"><a class="anchor" title="Permalink to this section" id="struct-constructor" href="#struct-constructor">Struct Constructors</a></span></h2>
+<h2><span id="Struct-Constructor"><a class="anchor" title="Permalink to this section" id="struct-constructor" href="#struct-constructor">構造体のコンストラクタ</a></span></h2>
 <div class="blankline"></div>
         <p>Struct constructors are used to initialize an instance of a struct when a more
         complex construction is needed than is allowed by
@@ -629,7 +629,7 @@ foo( S(1, 2) ); <span class="d_comment">// set field x to 1, field y to 2
         
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="delegating-constructor" href="#delegating-constructor">Delegating Constructors</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="delegating-constructor" href="#delegating-constructor">コンストラクタのデリゲート</a></h3>
 <div class="blankline"></div>
         <p>A constructor can call another constructor for the same struct
         in order to share common initializations. This is called a
@@ -705,7 +705,7 @@ foo( S(1, 2) ); <span class="d_comment">// set field x to 1, field y to 2
         <p>See also: <a href="../spec/class.html#delegating-constructors">delegating class constructors</a>.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="struct-instantiation" href="#struct-instantiation">Struct Instantiation</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="struct-instantiation" href="#struct-instantiation">構造体のインスタンス化</a></h3>
 <div class="blankline"></div>
         <p>When an instance of a struct is created, the following steps happen:</p>
 <div class="blankline"></div>
@@ -725,7 +725,7 @@ foo( S(1, 2) ); <span class="d_comment">// set field x to 1, field y to 2
         </ol>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="constructor-attributes" href="#constructor-attributes">Constructor Attributes</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="constructor-attributes" href="#constructor-attributes">コンストラクタの属性</a></h3>
 <div class="blankline"></div>
         <p>A constructor qualifier (<span class="d_inlinecode donthyphenate notranslate">const</span>, <span class="d_inlinecode donthyphenate notranslate">immutable</span> or <span class="d_inlinecode donthyphenate notranslate">shared</span>) constructs the object instance
         with that specific qualifier.
@@ -818,7 +818,7 @@ S m = S(1);
 <div class="blankline"></div>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="disable_default_construction" href="#disable_default_construction">Disabling Default Struct Construction</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="disable_default_construction" href="#disable_default_construction">デフォルトの構造体コンストラクタを無効にする</a></h3>
 <div class="blankline"></div>
         <p>If a struct constructor is annotated with <span class="d_inlinecode donthyphenate notranslate">@disable</span> and has
         an empty <a href="../spec/function.html#ParameterList"><i>ParameterList</i></a>, the struct has disabled default construction.
@@ -870,7 +870,7 @@ S m = S(1);
 
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="field-init" href="#field-init">Field initialization inside a constructor</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="field-init" href="#field-init">コンストラクター内でのフィールド初期化</a></h3>
 <div class="blankline"></div>
         <p>In a constructor body, if a delegating constructor is called,
         all field assignments are considered assignments.
@@ -1014,7 +1014,7 @@ S m = S(1);
         
 </div>
 <div class="blankline"></div>
-<h3><span id="StructCopyConstructor"><a class="anchor" title="Permalink to this section" id="struct-copy-constructor" href="#struct-copy-constructor">Struct Copy Constructors</a></span></h3>
+<h3><span id="StructCopyConstructor"><a class="anchor" title="Permalink to this section" id="struct-copy-constructor" href="#struct-copy-constructor">構造体のコピーコンストラクタ</a></span></h3>
 <div class="blankline"></div>
     <p>Copy constructors are used to initialize a <span class="d_inlinecode donthyphenate notranslate">struct</span> instance from
     another <span class="d_inlinecode donthyphenate notranslate">struct</span> of the same type.</p>
@@ -1182,7 +1182,7 @@ A gun()
     <p>If the generated copy constructor fails to type check, it will receive the <span class="d_inlinecode donthyphenate notranslate">@disable</span> attribute.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><span id="StructPostblit"><a class="anchor" title="Permalink to this section" id="struct-postblit" href="#struct-postblit">Struct Postblits</a></span></h2>
+<h2><span id="StructPostblit"><a class="anchor" title="Permalink to this section" id="struct-postblit" href="#struct-postblit">構造体のpostblit</a></span></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Postblit"><span class="gname">Postblit</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">this ( this )</span> <a href="../spec/function.html#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -1628,7 +1628,7 @@ A gun()
 
 </div>
 <div class="blankline"></div>
-<h2><span id="StructDestructor"><a class="anchor" title="Permalink to this section" id="struct-destructor" href="#struct-destructor">Struct Destructors</a></span></h2>
+<h2><span id="StructDestructor"><a class="anchor" title="Permalink to this section" id="struct-destructor" href="#struct-destructor">構造体のデストラクタ</a></span></h2>
 <div class="blankline"></div>
         <p>Destructors are called when an object goes out of scope.
         Their purpose is to free up resources owned by the struct
@@ -1676,7 +1676,7 @@ A gun()
 
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="Invariant" href="#Invariant">Struct Invariants</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="Invariant" href="#Invariant">構造体の不変条件</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Invariant"><span class="gname">Invariant</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">invariant ( )</span> <a href="../spec/statement.html#BlockStatement"><i>BlockStatement</i></a>
@@ -1784,7 +1784,7 @@ A gun()
 <div class="blankline"></div>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><span id="AssignOverload"><a class="anchor" title="Permalink to this section" id="assign-overload" href="#assign-overload">Identity Assignment Overload</a></span></h2>
+<h2><span id="AssignOverload"><a class="anchor" title="Permalink to this section" id="assign-overload" href="#assign-overload">同一の代入オーバーロード</a></span></h2>
 <div class="blankline"></div>
         <p>While copy construction takes care of initializing
         an object from another object of the same type,
@@ -1864,7 +1864,7 @@ A gun()
         will reuse the existing storage.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="nested" href="#nested">Nested Structs</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="nested" href="#nested">構造体のネスト</a></h2>
 <div class="blankline"></div>
     <p>A struct is a <i>nested struct</i> if</p>
 <div class="blankline"></div>
@@ -1914,19 +1914,19 @@ A gun()
         
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="unions_and_special_memb_funct" href="#unions_and_special_memb_funct">Unions and Special Member Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="unions_and_special_memb_funct" href="#unions_and_special_memb_funct">共用体と特殊なメンバー関数</a></h2>
 <div class="blankline"></div>
     <p>Unions may not have postblits, destructors, or invariants.</p>
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/hash-map.html">Associative Arrays</a></div>
-<div style="float: right"><a href="../spec/class.html">Classes</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/hash-map.html">連想配列[Associative Arrays]</a></div>
+<div style="float: right"><a href="../spec/class.html">クラス[Classes]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 10:15:21 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:09 2022
 </div>
     </div>
 </div>

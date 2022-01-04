@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Arrays - D言語 非公式日本語</title>
+<title>配列 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Arrays' class='doc'>
+<body id='配列' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -28,8 +28,8 @@
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
 <ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
-    <li><a href='../phobos/index.html'>ライブラリ</a></li>
-    <li><a href='../dmd.html'>コマンドライン</a></li>
+    <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
+    <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
     <li><a href='../articles/index.html'>記事</a></li>
  </ul></li>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BArrays%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5B配列%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Arrays</h1>
+        <h1>配列</h1>
         
 <style>    body { counter-reset: h1 12; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,42 +146,42 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#array-kinds">Kinds</a><ol>        <li><a href="#pointers">Pointers</a></li>
-        <li><a href="#static-arrays">Static Arrays</a></li>
-        <li><a href="#dynamic-arrays">Dynamic Arrays</a></li>
+    <ol>    <li><a href="#array-kinds">種類</a><ol>        <li><a href="#pointers">ポインタ</a></li>
+        <li><a href="#static-arrays">静的配列</a></li>
+        <li><a href="#dynamic-arrays">動的配列</a></li>
     </ol></li>
-    <li><a href="#declarations">Array Declarations</a></li>
-    <li><a href="#usage">Array Usage</a></li>
-    <li><a href="#indexing">Indexing</a></li>
-    <li><a href="#slicing">Slicing</a></li>
-    <li><a href="#array-copying">Array Copying</a><ol>        <li><a href="#overlapping-copying">Overlapping Copying</a></li>
+    <li><a href="#declarations">配列の宣言</a></li>
+    <li><a href="#usage">配列の使い方</a></li>
+    <li><a href="#indexing">インデックス</a></li>
+    <li><a href="#slicing">スライス</a></li>
+    <li><a href="#array-copying">配列のコピー</a><ol>        <li><a href="#overlapping-copying">重複するコピー</a></li>
     </ol></li>
-    <li><a href="#array-setting">Array Setting</a></li>
-    <li><a href="#array-concatenation">Array Concatenation</a></li>
-    <li><a href="#array-operations">Array Operations</a></li>
-    <li><a href="#pointer-arithmetic">Pointer Arithmetic</a></li>
-    <li><a href="#rectangular-arrays">Rectangular Arrays</a></li>
-    <li><a href="#array-length">Array Length</a></li>
-    <li><a href="#array-properties">Array Properties</a><ol>        <li><a href="#resize">Setting Dynamic Array Length</a></li>
-        <li><a href="#func-as-property">Functions as Array Properties</a></li>
+    <li><a href="#array-setting">配列の設定</a></li>
+    <li><a href="#array-concatenation">配列の連結</a></li>
+    <li><a href="#array-operations">配列の操作</a></li>
+    <li><a href="#pointer-arithmetic">ポインタの演算</a></li>
+    <li><a href="#rectangular-arrays">長方形配列</a></li>
+    <li><a href="#array-length">配列の長さ</a></li>
+    <li><a href="#array-properties">配列のプロパティ</a><ol>        <li><a href="#resize">動的配列に長さを設定する</a></li>
+        <li><a href="#func-as-property">配列プロパティとして関数</a></li>
     </ol></li>
-    <li><a href="#bounds">Array Bounds Checking</a><ol>        <li><a href="#disable-bounds-check">Disabling Array Bounds Checking</a></li>
+    <li><a href="#bounds">配列の境界チェック</a><ol>        <li><a href="#disable-bounds-check">配列の境界チェックを無効にする</a></li>
     </ol></li>
-    <li><a href="#array-initialization">Array Initialization</a><ol>        <li><a href="#default-initialization">Default Initialization</a></li>
-        <li><a href="#length-initialization">Length Initialization</a></li>
-        <li><a href="#void-initialization">Void Initialization</a></li>
-        <li><a href="#static-init-static">Static Initialization of Statically Allocated Arrays</a></li>
+    <li><a href="#array-initialization">配列の初期化</a><ol>        <li><a href="#default-initialization">デフォルトの初期化</a></li>
+        <li><a href="#length-initialization">長さの初期化</a></li>
+        <li><a href="#void-initialization">Voidの初期化</a></li>
+        <li><a href="#static-init-static">静的に割り当てられた配列の静的初期化</a></li>
     </ol></li>
-    <li><a href="#special-array">Special Array Types</a><ol>        <li><a href="#strings">Strings</a></li>
-        <li><a href="#void_arrays">Void Arrays</a></li>
+    <li><a href="#special-array">特殊な配列の型</a><ol>        <li><a href="#strings">文字列</a></li>
+        <li><a href="#void_arrays">Void 配列</a></li>
     </ol></li>
-    <li><a href="#implicit-conversions">Implicit Conversions</a></li>
+    <li><a href="#implicit-conversions">暗黙の変換</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="array-kinds" href="#array-kinds">Kinds</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="array-kinds" href="#array-kinds">種類</a></h2>
 <div class="blankline"></div>
-    <p>There are four kinds of arrays:</p>
+    <p>配列には、4種類あります:</p>
 <div class="blankline"></div>
     <center><table><caption>Kinds of Arrays</caption>        <tr><th class="donthyphenate"><b>Syntax</b></th><th class="donthyphenate"><b>Description</b></th></tr>
         <tr><td><i>type</i>*</td><td><a href="#pointers">Pointers to data</a></td></tr>
@@ -190,7 +190,7 @@
         <tr><td><i>type</i>[<i>type</i>]</td><td><a href="../spec/hash-map.html">Associative arrays</a></td></tr>
     </table></center>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="pointers" href="#pointers">Pointers</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="pointers" href="#pointers">ポインタ</a></h3>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">int</span>* p;
 </pre>
@@ -228,7 +228,7 @@
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="static-arrays" href="#static-arrays">Static Arrays</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="static-arrays" href="#static-arrays">静的配列</a></h3>
 <div class="blankline"></div>
 <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">int</span>[3] s;
@@ -261,7 +261,7 @@
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="dynamic-arrays" href="#dynamic-arrays">Dynamic Arrays</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="dynamic-arrays" href="#dynamic-arrays">動的配列</a></h3>
 <div class="blankline"></div>
 <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">int</span>[] a;
@@ -280,7 +280,7 @@
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="declarations" href="#declarations">Array Declarations</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="declarations" href="#declarations">配列の宣言</a></h2>
 <div class="blankline"></div>
         <p>Declarations appear before the identifier being
         declared and read right to left, so:
@@ -296,7 +296,7 @@
 
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="usage" href="#usage">Array Usage</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="usage" href="#usage">配列の使い方</a></h2>
 <div class="blankline"></div>
         <p>There are two broad kinds of operations to do on an array -
         affecting
@@ -326,11 +326,11 @@ a = p;     <span class="d_comment">// error, since the length of the array point
 
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="indexing" href="#indexing">Indexing</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="indexing" href="#indexing">インデックス</a></h2>
 <div class="blankline"></div>
     <p>See also <a href="../spec/expression.html#IndexExpression"><i>IndexExpression</i></a>.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="slicing" href="#slicing">Slicing</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="slicing" href="#slicing">スライス</a></h2>
 <div class="blankline"></div>
         <p><i>Slicing</i> an array means to specify a subarray of it.
         An array slice does not copy the data, it is only another
@@ -402,7 +402,7 @@ writeln(p[7]);      <span class="d_comment">// 10
     <p>See also <a href="../spec/expression.html#SliceExpression"><i>SliceExpression</i></a>.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="array-copying" href="#array-copying">Array Copying</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="array-copying" href="#array-copying">配列のコピー</a></h2>
 <div class="blankline"></div>
         <p>When the slice operator appears as the left-hand side of an
         assignment expression, it means that the contents of the array are the
@@ -426,7 +426,7 @@ s = t;             <span class="d_comment">// the 3 elements of t are copied int
 
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="overlapping-copying" href="#overlapping-copying">Overlapping Copying</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="overlapping-copying" href="#overlapping-copying">重複するコピー</a></h3>
 <div class="blankline"></div>
         <p>Overlapping copies are an error:</p>
 <div class="blankline"></div>
@@ -457,7 +457,7 @@ copy(s[1..3], s[0..2]);
 </div>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="array-setting" href="#array-setting">Array Setting</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="array-setting" href="#array-setting">配列の設定</a></h2>
 <div class="blankline"></div>
         <p>If a slice operator appears as the left-hand side of an assignment
         expression, and the type of the right-hand side is the same as the
@@ -475,7 +475,7 @@ s[] = 3;     <span class="d_comment">// same as s[0] = 3, s[1] = 3, s[2] = 3
 
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="array-concatenation" href="#array-concatenation">Array Concatenation</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="array-concatenation" href="#array-concatenation">配列の連結</a></h2>
 <div class="blankline"></div>
         <p>The binary operator ~ is the <i>cat</i> operator. It is used
         to concatenate arrays:
@@ -524,7 +524,7 @@ a = b ~ c; <span class="d_comment">// Create an array from the concatenation
         <p>Appending does not always create a copy, see <a href="#resize">        setting dynamic array length</a> for details.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="array-operations" href="#array-operations">Array Operations</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="array-operations" href="#array-operations">配列の操作</a></h2>
 <div class="blankline"></div>
         <p>Many array operations, also known as vector operations,
         can be expressed at a high level rather than as a loop.
@@ -574,7 +574,7 @@ a[] -= (b[] + 4) * c[];
         the target computer.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="pointer-arithmetic" href="#pointer-arithmetic">Pointer Arithmetic</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="pointer-arithmetic" href="#pointer-arithmetic">ポインタの演算</a></h2>
 <div class="blankline"></div>
 <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">int</span>[3] abc;              <span class="d_comment">// static array of 3 ints
@@ -601,7 +601,7 @@ a[] -= (b[] + 4) * c[];
 
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="rectangular-arrays" href="#rectangular-arrays">Rectangular Arrays</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="rectangular-arrays" href="#rectangular-arrays">長方形配列</a></h2>
 <div class="blankline"></div>
         <p>Experienced FORTRAN numerics programmers know that multidimensional
         "rectangular" arrays for things like matrix operations are much faster than trying to
@@ -645,7 +645,7 @@ matrix[2][5] = 3.14; <span class="d_comment">// Assignment to bottom right eleme
 
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="array-length" href="#array-length">Array Length</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="array-length" href="#array-length">配列の長さ</a></h2>
 <div class="blankline"></div>
 <div class="blankline"></div>
         <p>Within the [ ] of a static or a dynamic array,
@@ -674,7 +674,7 @@ bar[$-1] <span class="d_comment">// retrieves last element of the array
 
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="array-properties" href="#array-properties">Array Properties</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="array-properties" href="#array-properties">配列のプロパティ</a></h2>
 <div class="blankline"></div>
         <p>Static array properties are:</p>
 <div class="blankline"></div>
@@ -722,7 +722,7 @@ p.dup;    <span class="d_comment">// error, length not known
 
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="resize" href="#resize">Setting Dynamic Array Length</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="resize" href="#resize">動的配列に長さを設定する</a></h3>
 <div class="blankline"></div>
         <p>The <span class="d_inlinecode donthyphenate notranslate">.length</span> property of a dynamic array can be set
         as the left-hand side of an = operator:
@@ -849,11 +849,11 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
 
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="func-as-property" href="#func-as-property">Functions as Array Properties</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="func-as-property" href="#func-as-property">配列プロパティとして関数</a></h3>
 <div class="blankline"></div>
         <p>See <a href="../function.html#pseudo-member">Uniform Function Call Syntax (UFCS)</a>.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="bounds" href="#bounds">Array Bounds Checking</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="bounds" href="#bounds">配列の境界チェック</a></h2>
 <div class="blankline"></div>
         <p>It is an error to index an array with an index that is less than
         0 or greater than or equal to the array length. If an index is
@@ -918,7 +918,7 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
 <div class="blankline"></div>
         <p>See also <a href="../function.html#safe-functions">Safe Functions</a>.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="disable-bounds-check" href="#disable-bounds-check">Disabling Array Bounds Checking</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="disable-bounds-check" href="#disable-bounds-check">配列の境界チェックを無効にする</a></h3>
 <div class="blankline"></div>
         <p>Insertion of array bounds checking code at runtime may be
             turned off with a compiler switch <a href="../dmd.html#switch-boundscheck"><span class="d_inlinecode donthyphenate notranslate">-boundscheck</span></a>.
@@ -933,9 +933,9 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
             unless motivated by speed measurements.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="array-initialization" href="#array-initialization">Array Initialization</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="array-initialization" href="#array-initialization">配列の初期化</a></h2>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="default-initialization" href="#default-initialization">Default Initialization</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="default-initialization" href="#default-initialization">デフォルトの初期化</a></h3>
 <div class="blankline"></div>
         <ul>        <li>Pointers are initialized to <span class="d_inlinecode donthyphenate notranslate">null</span>.</li>
         <li>Static array contents are initialized to the default
@@ -944,7 +944,7 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
         <li>Associative arrays are initialized to having 0 elements.</li>
         </ul>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="length-initialization" href="#length-initialization">Length Initialization</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="length-initialization" href="#length-initialization">長さの初期化</a></h3>
         <p>The <span class="d_inlinecode donthyphenate notranslate">new</span> expression can be used to start a dynamic array
         with a specified length by specifying its type and then using the
         () syntax:
@@ -957,7 +957,7 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
 
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="void-initialization" href="#void-initialization">Void Initialization</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="void-initialization" href="#void-initialization">Voidの初期化</a></h3>
 <div class="blankline"></div>
         <p>Void initialization happens when the <i>Initializer</i> for
         an array is <span class="d_inlinecode donthyphenate notranslate">void</span>. What it means is that no initialization
@@ -971,7 +971,7 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="static-init-static" href="#static-init-static">Static Initialization of Statically Allocated Arrays</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="static-init-static" href="#static-init-static">静的に割り当てられた配列の静的初期化</a></h3>
 <div class="blankline"></div>
         <p>Static initalizations are supplied by a list of array
         element values enclosed in [ ]. The values can be optionally
@@ -1004,9 +1004,9 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
         storage classes to make them statically allocated arrays.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="special-array" href="#special-array">Special Array Types</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="special-array" href="#special-array">特殊な配列の型</a></h2>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="strings" href="#strings">Strings</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="strings" href="#strings">文字列</a></h3>
 <div class="blankline"></div>
         <p>A string is
         an array of characters. String literals are just
@@ -1175,7 +1175,7 @@ printf(<span class="d_string">"the string is '%s'\n"</span>, std.string.toString
 writefln(<span class="d_string">"the string is '%s'"</span>, str);
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="void_arrays" href="#void_arrays">Void Arrays</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="void_arrays" href="#void_arrays">Void 配列</a></h3>
 <div class="blankline"></div>
     <p>There is a special type of array which acts as a wildcard that can hold
     arrays of any kind, declared as <span class="d_inlinecode donthyphenate notranslate">void[]</span>. Void arrays are used for
@@ -1239,7 +1239,7 @@ writefln(<span class="d_string">"the string is '%s'"</span>, str);
     as <span class="d_inlinecode donthyphenate notranslate">ubyte[]</span> may run the risk of the GC collecting live memory if these
     pointers are the only remaining references to their targets.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="implicit-conversions" href="#implicit-conversions">Implicit Conversions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="implicit-conversions" href="#implicit-conversions">暗黙の変換</a></h2>
 <div class="blankline"></div>
         <p>A pointer <span class="d_inlinecode donthyphenate notranslate">T*</span> can be implicitly converted to
         one of the following:</p>
@@ -1275,14 +1275,14 @@ writefln(<span class="d_string">"the string is '%s'"</span>, str);
         types and character pointer types. See <a href="../spec/expression.html#string_literals">        String Literals</a> for details.</p>
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/statement.html">Statements</a></div>
-<div style="float: right"><a href="../spec/hash-map.html">Associative Arrays</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/statement.html">文[Statements]</a></div>
+<div style="float: right"><a href="../spec/hash-map.html">連想配列[Associative Arrays]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 10:15:21 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:09 2022
 </div>
     </div>
 </div>

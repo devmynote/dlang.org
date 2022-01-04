@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Classes - D言語 非公式日本語</title>
+<title>クラス - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Classes' class='doc'>
+<body id='クラス' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -28,8 +28,8 @@
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
 <ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
-    <li><a href='../phobos/index.html'>ライブラリ</a></li>
-    <li><a href='../dmd.html'>コマンドライン</a></li>
+    <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
+    <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
     <li><a href='../articles/index.html'>記事</a></li>
  </ul></li>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BClasses%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5Bクラス%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Classes</h1>
+        <h1>クラス</h1>
         
 <style>    body { counter-reset: h1 15; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,37 +146,37 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#access_control">Access Control</a></li>
-    <li><a href="#fields">Fields</a></li>
-    <li><a href="#field_properties">Field Properties</a></li>
-    <li><a href="#class_properties">Class Properties</a></li>
-    <li><a href="#super_class">Super Class</a></li>
-    <li><a href="#member-functions">Member Functions (a.k.a. Methods)</a><ol>        <li><a href="#objc-member-functions">Objective-C linkage</a></li>
+    <ol>    <li><a href="#access_control">アクセスコントロール</a></li>
+    <li><a href="#fields">フィールド</a></li>
+    <li><a href="#field_properties">フィールドのプロパティ</a></li>
+    <li><a href="#class_properties">クラスのプロパティ</a></li>
+    <li><a href="#super_class">スーパークラス</a></li>
+    <li><a href="#member-functions">メンバ関数 (a.k.a. Methods)</a><ol>        <li><a href="#objc-member-functions">Objective-C リンケージ</a></li>
     </ol></li>
-    <li><a href="#synchronized-classes">Synchronized Classes</a></li>
-    <li><a href="#constructors">Constructors</a><ol>        <li><a href="#delegating-constructors">Delegating Constructors</a></li>
-        <li><a href="#implicit-base-construction">Implicit Base Class Construction</a></li>
-        <li><a href="#class-instantiation">Class Instantiation</a></li>
-        <li><a href="#constructor-attributes">Constructor Attributes</a></li>
-        <li><a href="#field-init">Field initialization inside a constructor</a></li>
+    <li><a href="#synchronized-classes">同期されたクラス</a></li>
+    <li><a href="#constructors">コンストラクタ</a><ol>        <li><a href="#delegating-constructors">コンストラクタのデリゲート</a></li>
+        <li><a href="#implicit-base-construction">暗黙の基底クラスの構築</a></li>
+        <li><a href="#class-instantiation">クラスのインスタンス化</a></li>
+        <li><a href="#constructor-attributes">コンストラクタの属性</a></li>
+        <li><a href="#field-init">コンストラクタ内でのフィールドの初期化</a></li>
     </ol></li>
-    <li><a href="#destructors">Destructors</a></li>
-    <li><a href="#static-constructor">Static Constructors</a></li>
-    <li><a href="#static-destructor">Static Destructors</a></li>
-    <li><a href="#shared_static_constructors">Shared Static Constructors</a></li>
-    <li><a href="#shared_static_destructors">Shared Static Destructors</a></li>
-    <li><a href="#invariants">Class Invariants</a></li>
-    <li><a href="#allocators">Class Allocators</a></li>
+    <li><a href="#destructors">デストラクタ</a></li>
+    <li><a href="#static-constructor">静的コンストラクタ</a></li>
+    <li><a href="#static-destructor">静的デストラクタ</a></li>
+    <li><a href="#shared_static_constructors">shared な静的コンストラクタ</a></li>
+    <li><a href="#shared_static_destructors">shared な静的デストラクタ</a></li>
+    <li><a href="#invariants">クラスの不変条件</a></li>
+    <li><a href="#allocators">クラスアロケータ</a></li>
     <li><a href="#alias-this">Alias This</a></li>
-    <li><a href="#auto">Scope Classes</a></li>
-    <li><a href="#final">Final Classes</a></li>
-    <li><a href="#nested">Nested Classes</a><ol>        <li><a href="#static-nested">Static Nested Classes</a></li>
-        <li><a href="#nested-context">Context Pointer</a></li>
-        <li><a href="#nested-explicit">Explicit Instantiation</a></li>
-        <li><a href="#outer-property"><span class="d_inlinecode donthyphenate notranslate">outer</span> Property</a></li>
-        <li><a href="#anonymous">Anonymous Nested Classes</a></li>
+    <li><a href="#auto">Scope クラス</a></li>
+    <li><a href="#final">Final クラス</a></li>
+    <li><a href="#nested">クラスのネスト</a><ol>        <li><a href="#static-nested">静的クラスのネスト</a></li>
+        <li><a href="#nested-context">属性のポインタ</a></li>
+        <li><a href="#nested-explicit">明示的なインスタンス化</a></li>
+        <li><a href="#outer-property"><span class="d_inlinecode donthyphenate notranslate">outer</span> プロパティ</a></li>
+        <li><a href="#anonymous">無名のネストクラス</a></li>
     </ol></li>
-    <li><a href="#const-class">Const, Immutable and Shared Classes</a></li>
+    <li><a href="#const-class">Const, Immutable, Shared クラス</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -268,14 +268,14 @@
 Foo var;
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="access_control" href="#access_control">Access Control</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="access_control" href="#access_control">アクセスコントロール</a></h2>
 <div class="blankline"></div>
         <p>Access to class members is controlled using
         <a href="../spec/attribute.html#visibility_attributes">        visibility attributes</a>.
         The default visibility attribute is <span class="d_inlinecode donthyphenate notranslate">public</span>.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="fields" href="#fields">Fields</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="fields" href="#fields">フィールド</a></h2>
 <div class="blankline"></div>
         <p>Class members are always accessed with the <span class="d_inlinecode donthyphenate notranslate">.</span> operator.
         </p>
@@ -314,7 +314,7 @@ Foo var;
         without the subclasses needing to recompile or relink.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="field_properties" href="#field_properties">Field Properties</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="field_properties" href="#field_properties">フィールドのプロパティ</a></h2>
 <div class="blankline"></div>
         <p>The <span class="d_inlinecode donthyphenate notranslate">.offsetof</span> property gives the offset in bytes of the field
         from the beginning of the class instantiation.
@@ -339,7 +339,7 @@ Foo var;
 </span>}
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="class_properties" href="#class_properties">Class Properties</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="class_properties" href="#class_properties">クラスのプロパティ</a></h2>
 <div class="blankline"></div>
         <p>The <span class="d_inlinecode donthyphenate notranslate">.tupleof</span> property is an
         <a href="../spec/template.html#variadic-templates">expression sequence</a>
@@ -367,13 +367,13 @@ Foo var;
         should not be used in user code.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="super_class" href="#super_class">Super Class</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="super_class" href="#super_class">スーパークラス</a></h2>
 <div class="blankline"></div>
         All classes inherit from a super class. If one is not specified,
         it inherits from <a href="../phobos/object.html#.Object""><span class="d_inlinecode donthyphenate notranslate">Object</span></a>. <span class="d_inlinecode donthyphenate notranslate">Object</span> forms the root
         of the D class inheritance hierarchy.
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="member-functions" href="#member-functions">Member Functions (a.k.a. Methods)</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="member-functions" href="#member-functions">メンバ関数 (a.k.a. Methods)</a></h2>
 <div class="blankline"></div>
         <p>Non-static member functions have an extra hidden parameter
         called <i>this</i> through which the class object's other members
@@ -399,7 +399,7 @@ Foo var;
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="objc-member-functions" href="#objc-member-functions">Objective-C linkage</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="objc-member-functions" href="#objc-member-functions">Objective-C リンケージ</a></h3>
 <div class="blankline"></div>
         <p>Static member functions with
         <span class="d_inlinecode donthyphenate notranslate">Objective-C</span> linkage also have an extra hidden parameter called <i>this</i>
@@ -416,7 +416,7 @@ Foo var;
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="synchronized-classes" href="#synchronized-classes">Synchronized Classes</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="synchronized-classes" href="#synchronized-classes">同期されたクラス</a></h2>
 <div class="blankline"></div>
         <p>All member functions of synchronized classes are synchronized.
         A static member function is synchronized on the <i>classinfo</i>
@@ -470,7 +470,7 @@ Foo var;
         <p>The <span class="d_inlinecode donthyphenate notranslate">synchronized</span> attribute can only be applied to classes,
         structs cannot be marked to be synchronized.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="constructors" href="#constructors">Constructors</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="constructors" href="#constructors">コンストラクタ</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Constructor"><span class="gname">Constructor</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">this</span> <a href="../spec/function.html#Parameters"><i>Parameters</i></a> <a href="../spec/function.html#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <a href="../spec/function.html#FunctionBody"><i>FunctionBody</i></a>
@@ -528,7 +528,7 @@ Foo var;
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="delegating-constructors" href="#delegating-constructors">Delegating Constructors</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="delegating-constructors" href="#delegating-constructors">コンストラクタのデリゲート</a></h3>
 <div class="blankline"></div>
         <p>A constructor can call another constructor for the same class
         in order to share common initializations.
@@ -593,7 +593,7 @@ Foo var;
         <li>Delegating constructor calls cannot appear after labels.</li>
     </ol>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="implicit-base-construction" href="#implicit-base-construction">Implicit Base Class Construction</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="implicit-base-construction" href="#implicit-base-construction">暗黙の基底クラスの構築</a></h3>
 <div class="blankline"></div>
         <p>If there is no constructor for a class, but there is a constructor
         for the base class, a default constructor is implicitly generated with
@@ -608,7 +608,7 @@ Foo var;
         base class has a constructor that requires arguments and no
         nullary constructor, a matching call to <span class="d_inlinecode donthyphenate notranslate">super</span> is required.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="class-instantiation" href="#class-instantiation">Class Instantiation</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="class-instantiation" href="#class-instantiation">クラスのインスタンス化</a></h3>
 <div class="blankline"></div>
         <p>Instances of class objects are created with a <a href="../spec/expression.html#NewExpression"><i>NewExpression</i></a>:</p>
 <div class="blankline"></div>
@@ -648,7 +648,7 @@ Foo var;
         </li>
     </ol>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="constructor-attributes" href="#constructor-attributes">Constructor Attributes</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="constructor-attributes" href="#constructor-attributes">コンストラクタの属性</a></h3>
 <div class="blankline"></div>
         <p>Constructors can have one of these member function attributes:
         <span class="d_inlinecode donthyphenate notranslate">const</span>, <span class="d_inlinecode donthyphenate notranslate">immutable</span>, and <span class="d_inlinecode donthyphenate notranslate">shared</span>. Construction of qualified
@@ -686,7 +686,7 @@ C m = <span class="d_keyword">new</span> C();
 <span class="d_keyword">immutable</span> i = <span class="d_keyword">new</span> <span class="d_keyword">immutable</span> C();
 </pre>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="pure-constructors" href="#pure-constructors">Pure Constructors</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="pure-constructors" href="#pure-constructors">Pure コンストラクタ</a></h4>
 <div class="blankline"></div>
         <p>If the constructor can create a unique object (e.g. if it is <span class="d_inlinecode donthyphenate notranslate">pure</span>),
         the object can be implicitly convertible to any qualifiers.
@@ -711,7 +711,7 @@ C m = <span class="d_keyword">new</span> C();
 </span>C m = <span class="d_keyword">new</span> C([1,2,3]);       <span class="d_comment">// this(int[]) immutable pure is called
 </span></pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="field-init" href="#field-init">Field initialization inside a constructor</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="field-init" href="#field-init">コンストラクタ内でのフィールドの初期化</a></h3>
 <div class="blankline"></div>
         <p>In a constructor body, the first instance of field assignment is
         its initialization.
@@ -816,7 +816,7 @@ C m = <span class="d_keyword">new</span> C();
 </span>}
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="destructors" href="#destructors">Destructors</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="destructors" href="#destructors">デストラクタ</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Destructor"><span class="gname">Destructor</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">~ this ( )</span> <a href="../spec/function.html#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <a href="../spec/function.html#FunctionBody"><i>FunctionBody</i></a>
@@ -872,7 +872,7 @@ C m = <span class="d_keyword">new</span> C();
         by the gc.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="static-constructor" href="#static-constructor">Static Constructors</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="static-constructor" href="#static-constructor">静的コンストラクタ</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="StaticConstructor"><span class="gname">StaticConstructor</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">static this ( )</span> <a href="../spec/function.html#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -961,7 +961,7 @@ on thread termination.</p>
 </span>}
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="static-destructor" href="#static-destructor">Static Destructors</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="static-destructor" href="#static-destructor">静的デストラクタ</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="StaticDestructor"><span class="gname">StaticDestructor</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">static ~ this ( )</span> <a href="../spec/function.html#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -1004,7 +1004,7 @@ on thread termination.</p>
 </span>}
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="shared_static_constructors" href="#shared_static_constructors">Shared Static Constructors</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="shared_static_constructors" href="#shared_static_constructors">shared な静的コンストラクタ</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="SharedStaticConstructor"><span class="gname">SharedStaticConstructor</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">shared static this ( )</span> <a href="../spec/function.html#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -1015,7 +1015,7 @@ on thread termination.</p>
         and are intended for initializing any shared global data.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="shared_static_destructors" href="#shared_static_destructors">Shared Static Destructors</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="shared_static_destructors" href="#shared_static_destructors">shared な静的デストラクタ</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="SharedStaticDestructor"><span class="gname">SharedStaticDestructor</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">shared static ~ this ( )</span> <a href="../spec/function.html#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -1028,7 +1028,7 @@ on thread termination.</p>
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="invariants" href="#invariants">Class Invariants</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="invariants" href="#invariants">クラスの不変条件</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Invariant"><span class="gname">Invariant</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">invariant ( )</span> <a href="../spec/statement.html#BlockStatement"><i>BlockStatement</i></a>
@@ -1129,7 +1129,7 @@ on thread termination.</p>
 
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="allocators" href="#allocators">Class Allocators</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="allocators" href="#allocators">クラスアロケータ</a></h2>
 <b>Note</b>: Class allocators are deprecated in D2.
 <pre class="bnf notranslate"><a id="Allocator"><span class="gname">Allocator</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="../spec/function.html#Parameters"><i>Parameters</i></a> <a href="../spec/function.html#FunctionBody"><i>FunctionBody</i></a>
@@ -1336,7 +1336,7 @@ on thread termination.</p>
 <div class="blankline"></div>
         <p>Multiple <i>AliasThis</i> are currently not allowed.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="auto" href="#auto">Scope Classes</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="auto" href="#auto">Scope クラス</a></h2>
 <b>Note</b>: Scope classes have been <a href="../deprecate.html#scope for allocating classes on the stack">recommended for deprecation</a>.
 <div class="blankline"></div>
         <p>A scope class is a class with the <span class="d_inlinecode donthyphenate notranslate">scope</span> attribute, as in:</p>
@@ -1363,7 +1363,7 @@ class are also scope.</p>
 it is automatically called. This holds true even if the scope was exited via a
 thrown exception.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="final" href="#final">Final Classes</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="final" href="#final">Final クラス</a></h2>
 <div class="blankline"></div>
         <p>Final classes cannot be subclassed:</p>
 <div class="blankline"></div>
@@ -1373,7 +1373,7 @@ thrown exception.</p>
 <div class="blankline"></div>
         <p>Methods of a final class are <span class="d_inlinecode donthyphenate notranslate">final</span> by default.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="nested" href="#nested">Nested Classes</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="nested" href="#nested">クラスのネスト</a></h2>
 <div class="blankline"></div>
 <p>A <i>nested class</i> is a class that is declared inside the scope of a
 function or another class. A nested class has access to the variables and other
@@ -1406,7 +1406,7 @@ symbols of the classes and functions it is nested inside:</p>
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="static-nested" href="#static-nested">Static Nested Classes</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="static-nested" href="#static-nested">静的クラスのネスト</a></h3>
 <div class="blankline"></div>
 <p>If a nested class has the <span class="d_inlinecode donthyphenate notranslate">static</span> attribute, then it can not access
 variables of the enclosing scope that are local to the stack or need a
@@ -1443,7 +1443,7 @@ variables of the enclosing scope that are local to the stack or need a
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="nested-context" href="#nested-context">Context Pointer</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="nested-context" href="#nested-context">属性のポインタ</a></h3>
 <div class="blankline"></div>
 <p>Non-static nested classes work by containing an extra hidden member (called
 the context pointer) that is the frame pointer of the enclosing function if it
@@ -1475,7 +1475,7 @@ if it is nested inside a class.</p>
 </span>}
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="nested-explicit" href="#nested-explicit">Explicit Instantiation</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="nested-explicit" href="#nested-explicit">明示的なインスタンス化</a></h3>
 <div class="blankline"></div>
         <p>A <span class="d_inlinecode donthyphenate notranslate">this</span> reference can be supplied to the creation of an
         inner class instance by prefixing it to the <i>NewExpression</i>:
@@ -1507,7 +1507,7 @@ if it is nested inside a class.</p>
         instance of <span class="d_inlinecode donthyphenate notranslate">Outer</span>.
         </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="outer-property" href="#outer-property"><span class="d_inlinecode donthyphenate notranslate">outer</span> Property</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="outer-property" href="#outer-property"><span class="d_inlinecode donthyphenate notranslate">outer</span> プロパティ</a></h3>
 <div class="blankline"></div>
         <p>For a nested class instance, the <span class="d_inlinecode donthyphenate notranslate">.outer</span> property is the
         <span class="d_inlinecode donthyphenate notranslate">this</span> reference for the enclosing class's instance. If there
@@ -1576,7 +1576,7 @@ if it is nested inside a class.</p>
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="anonymous" href="#anonymous">Anonymous Nested Classes</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="anonymous" href="#anonymous">無名のネストクラス</a></h3>
 <div class="blankline"></div>
         <p>An anonymous nested class is both defined and instantiated with
         a <i>NewAnonClassExpression</i>:
@@ -1616,7 +1616,7 @@ obj.foo();
 
 </div>
 <div class="blankline"></div>
-<h2><span id="ConstClass"><a class="anchor" title="Permalink to this section" id="const-class" href="#const-class">Const, Immutable and Shared Classes</a></span></h2><div class="blankline"></div>
+<h2><span id="ConstClass"><a class="anchor" title="Permalink to this section" id="const-class" href="#const-class">Const, Immutable, Shared クラス</a></span></h2><div class="blankline"></div>
     <p>If a <i>ClassDeclaration</i> has a <span class="d_inlinecode donthyphenate notranslate">const</span>, <span class="d_inlinecode donthyphenate notranslate">immutable</span>
         or <span class="d_inlinecode donthyphenate notranslate">shared</span> storage class, then it is as if each member of the class
         was declared with that storage class.
@@ -1625,14 +1625,14 @@ obj.foo();
     </p>
 
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/struct.html">Structs and Unions</a></div>
-<div style="float: right"><a href="../spec/interface.html">Interfaces</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/struct.html">構造体と共用体[Structs and Unions]</a></div>
+<div style="float: right"><a href="../spec/interface.html">インターフェース[Interfaces]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 10:15:21 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:09 2022
 </div>
     </div>
 </div>

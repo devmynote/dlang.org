@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Operator Overloading - D言語 非公式日本語</title>
+<title>演算子オーバーロード - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Operator Overloading' class='doc'>
+<body id='演算子オーバーロード' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -28,8 +28,8 @@
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
 <ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
-    <li><a href='../phobos/index.html'>ライブラリ</a></li>
-    <li><a href='../dmd.html'>コマンドライン</a></li>
+    <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
+    <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
     <li><a href='../articles/index.html'>記事</a></li>
  </ul></li>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BOperator Overloading%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5B演算子オーバーロード%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Operator Overloading</h1>
+        <h1>演算子オーバーロード</h1>
         
 <style>    body { counter-reset: h1 20; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,30 +146,30 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#unary">Unary Operator Overloading</a><ol>        <li><a href="#postincrement_postdecrement_operators">Postincrement <i>e</i><span class="d_inlinecode donthyphenate notranslate">++</span> and Postdecrement <i>e</i><span class="d_inlinecode donthyphenate notranslate">--</span> Operators</a></li>
-        <li><a href="#index_unary_operators">Overloading Index Unary Operators</a></li>
-        <li><a href="#slice_unary_operators">Overloading Slice Unary Operators</a></li>
+    <ol>    <li><a href="#unary">単項演算子のオーバーロード</a><ol>        <li><a href="#postincrement_postdecrement_operators">後置加算 <i>e</i><span class="d_inlinecode donthyphenate notranslate">++</span> and 後置減算 <i>e</i><span class="d_inlinecode donthyphenate notranslate">--</span> 演算子</a></li>
+        <li><a href="#index_unary_operators">インデックス付き単項演算子のオーバーロード</a></li>
+        <li><a href="#slice_unary_operators">スライス単項演算子のオーバーロード</a></li>
     </ol></li>
-    <li><a href="#cast">Cast Operator Overloading</a><ol>        <li><a href="#boolean_operators">Boolean Operations</a></li>
+    <li><a href="#cast">キャスト演算子のオーバーロード</a><ol>        <li><a href="#boolean_operators">ブール演算</a></li>
     </ol></li>
-    <li><a href="#binary">Binary Operator Overloading</a></li>
-    <li><a href="#eqcmp">Overloading the Comparison Operators</a><ol>        <li><a href="#equals">Overloading <span class="d_inlinecode donthyphenate notranslate">==</span> and <span class="d_inlinecode donthyphenate notranslate">!=</span></a></li>
-        <li><a href="#compare">Overloading <span class="d_inlinecode donthyphenate notranslate">&lt;</span>, <span class="d_inlinecode donthyphenate notranslate">&lt;</span><span class="d_inlinecode donthyphenate notranslate">=</span>, <span class="d_inlinecode donthyphenate notranslate">&gt;</span>, and <span class="d_inlinecode donthyphenate notranslate">&gt;</span><span class="d_inlinecode donthyphenate notranslate">=</span></a></li>
+    <li><a href="#binary">二項演算子のオーバーロード</a></li>
+    <li><a href="#eqcmp">比較演算子のオーバーロード</a><ol>        <li><a href="#equals"><span class="d_inlinecode donthyphenate notranslate">==</span> , <span class="d_inlinecode donthyphenate notranslate">!=</span> のオーバーロード</a></li>
+        <li><a href="#compare"><span class="d_inlinecode donthyphenate notranslate">&lt;</span>, <span class="d_inlinecode donthyphenate notranslate">&lt;</span><span class="d_inlinecode donthyphenate notranslate">=</span>, <span class="d_inlinecode donthyphenate notranslate">&gt;</span>, <span class="d_inlinecode donthyphenate notranslate">&gt;</span><span class="d_inlinecode donthyphenate notranslate">=</span> のオーバーロード</a></li>
     </ol></li>
-    <li><a href="#function-call">Function Call Operator Overloading <span class="d_inlinecode donthyphenate notranslate">f()</span></a><ol>        <li><a href="#static-opcall">Static opCall</a></li>
+    <li><a href="#function-call">関数呼び出し演算子 <span class="d_inlinecode donthyphenate notranslate">f()</span> のオーバーロード</a><ol>        <li><a href="#static-opcall">Static opCall</a></li>
     </ol></li>
-    <li><a href="#assignment">Assignment Operator Overloading</a><ol>        <li><a href="#index_assignment_operator">Index Assignment Operator Overloading</a></li>
-        <li><a href="#slice_assignment_operator">Slice Assignment Operator Overloading</a></li>
+    <li><a href="#assignment">代入演算子のオーバーロード</a><ol>        <li><a href="#index_assignment_operator">インデックス付き代入演算子のオーバーロード</a></li>
+        <li><a href="#slice_assignment_operator">スライス代入演算子のオーバーロード</a></li>
     </ol></li>
-    <li><a href="#op-assign">Op Assignment Operator Overloading</a><ol>        <li><a href="#index_op_assignment">Index Op Assignment Operator Overloading</a></li>
-        <li><a href="#slice_op_assignment">Slice Op Assignment Operator Overloading</a></li>
+    <li><a href="#op-assign">Op 代入演算子のオーバーロード</a><ol>        <li><a href="#index_op_assignment">インデックス付き Op 代入演算子のオーバーロード</a></li>
+        <li><a href="#slice_op_assignment">スライス Op 代入演算子のオーバーロード</a></li>
     </ol></li>
-    <li><a href="#array-ops">Array Indexing and Slicing Operators Overloading</a><ol>        <li><a href="#array">Index Operator Overloading</a></li>
-        <li><a href="#slice">Slice Operator Overloading</a></li>
-        <li><a href="#dollar">Dollar Operator Overloading</a></li>
+    <li><a href="#array-ops">配列のインデックス付けとスライス演算子のオーバーロード</a><ol>        <li><a href="#array">インデックス演算子のオーバーロード</a></li>
+        <li><a href="#slice">スライス演算子のオーバーロード</a></li>
+        <li><a href="#dollar">＄演算子のオーバーロード</a></li>
     </ol></li>
-    <li><a href="#dispatch">Forwarding</a></li>
-    <li><a href="#old-style">D1 style operator overloading</a></li>
+    <li><a href="#dispatch">転送</a></li>
+    <li><a href="#old-style">D1 スタイルの演算子のオーバーロード</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -200,7 +200,7 @@
         <li><a href="#old-style">D1 style operator overloading</a></li>
         </ul>
 <div class="blankline"></div>
-<h2><span id="Unary"><a class="anchor" title="Permalink to this section" id="unary" href="#unary">Unary Operator Overloading</a></span></h2>
+<h2><span id="Unary"><a class="anchor" title="Permalink to this section" id="unary" href="#unary">単項演算子のオーバーロード</a></span></h2>
 <div class="blankline"></div>
         <center><table><caption>Overloadable Unary Operators</caption>        <tr><th class="donthyphenate"><b><i>op</i></b></th><th class="donthyphenate"><b><i>rewrite</i></b></th></tr>
         <tr><td>        <span class="d_inlinecode donthyphenate notranslate">-</span><i>e</i></td><td>        <i>e</i><span class="d_inlinecode donthyphenate notranslate">.opUnary!("-")()</span>
@@ -239,7 +239,7 @@
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="postincrement_postdecrement_operators" href="#postincrement_postdecrement_operators">Postincrement <i>e</i><span class="d_inlinecode donthyphenate notranslate">++</span> and Postdecrement <i>e</i><span class="d_inlinecode donthyphenate notranslate">--</span> Operators</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="postincrement_postdecrement_operators" href="#postincrement_postdecrement_operators">後置加算 <i>e</i><span class="d_inlinecode donthyphenate notranslate">++</span> and 後置減算 <i>e</i><span class="d_inlinecode donthyphenate notranslate">--</span> 演算子</a></h3>
 <div class="blankline"></div>
         <p>These are not directly overloadable, but instead are rewritten
         in terms of the ++<i>e</i> and --<i>e</i> prefix operators:
@@ -250,7 +250,7 @@
         <tr><td>        <i>e</i><span class="d_inlinecode donthyphenate notranslate">++</span></td><td>        <span class="d_inlinecode donthyphenate notranslate">(auto t =</span> <i>e</i><span class="d_inlinecode donthyphenate notranslate">, ++</span><i>e</i><span class="d_inlinecode donthyphenate notranslate">, t)</span></td></tr>
         </table></center>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="index_unary_operators" href="#index_unary_operators">Overloading Index Unary Operators</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="index_unary_operators" href="#index_unary_operators">インデックス付き単項演算子のオーバーロード</a></h3>
 <div class="blankline"></div>
         <center><table><caption>Overloadable Index Unary Operators</caption>        <tr><th class="donthyphenate"><b><i>op</i></b></th><th class="donthyphenate"><b><i>rewrite</i></b></th></tr>
         <tr><td>        <span class="d_inlinecode donthyphenate notranslate">-</span><i>a</i><span class="d_inlinecode donthyphenate notranslate">[</span><i>b</i><sub>1</sub>, <i>b</i><sub>2</sub>, ... <i>b</i><sub>n</sub><span class="d_inlinecode donthyphenate notranslate">]</span></td><td>        <i>a</i><span class="d_inlinecode donthyphenate notranslate">.opIndexUnary!("-")(</span><i>b</i><sub>1</sub>, <i>b</i><sub>2</sub>, ... <i>b</i><sub>n</sub><span class="d_inlinecode donthyphenate notranslate">)</span></td></tr>
@@ -266,7 +266,7 @@
         </td></tr>
         </table></center>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="slice_unary_operators" href="#slice_unary_operators">Overloading Slice Unary Operators</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="slice_unary_operators" href="#slice_unary_operators">スライス単項演算子のオーバーロード</a></h3>
 <div class="blankline"></div>
         <center><table><caption>Overloadable Slice Unary Operators</caption>        <tr><th class="donthyphenate"><b><i>op</i></b></th><th class="donthyphenate"><b><i>rewrite</i></b></th></tr>
         <tr><td>        <span class="d_inlinecode donthyphenate notranslate">-</span><i>a</i><span class="d_inlinecode donthyphenate notranslate">[</span><i>i</i>..<i>j</i><span class="d_inlinecode donthyphenate notranslate">]</span></td><td>        <i>a</i><span class="d_inlinecode donthyphenate notranslate">.opIndexUnary!("-")(</span><i>a</i><span class="d_inlinecode donthyphenate notranslate">.opSlice(</span><i>i</i>, <i>j</i><span class="d_inlinecode donthyphenate notranslate">))</span>
@@ -311,7 +311,7 @@
         <span class="d_inlinecode donthyphenate notranslate">a.opSliceUnary!(op)(i, j)</span> and
         <span class="d_inlinecode donthyphenate notranslate">a.opSliceUnary!(op)</span> are tried instead, respectively.</p>
 <div class="blankline"></div>
-<h2><span id="Cast"><a class="anchor" title="Permalink to this section" id="cast" href="#cast">Cast Operator Overloading</a></span></h2>
+<h2><span id="Cast"><a class="anchor" title="Permalink to this section" id="cast" href="#cast">キャスト演算子のオーバーロード</a></span></h2>
 <div class="blankline"></div>
     <p>To define how one type can be cast to another, define the
       <span class="d_inlinecode donthyphenate notranslate">opCast</span> template method, which is used as follows:</p>
@@ -324,7 +324,7 @@
         expression, except in the case of boolean operations (see next
         section)</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="boolean_operators" href="#boolean_operators">Boolean Operations</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="boolean_operators" href="#boolean_operators">ブール演算</a></h3>
 <div class="blankline"></div>
         <p>Notably absent from the list of overloaded unary operators is the !
         logical negation operator. More obscurely absent is a unary operator
@@ -345,7 +345,7 @@
         see if the class reference is null or not.
         </p>
 <div class="blankline"></div>
-<h2><span id="Binary"><a class="anchor" title="Permalink to this section" id="binary" href="#binary">Binary Operator Overloading</a></span></h2>
+<h2><span id="Binary"><a class="anchor" title="Permalink to this section" id="binary" href="#binary">二項演算子のオーバーロード</a></span></h2>
 <div class="blankline"></div>
         <p>The following binary operators are overloadable:</p>
 <div class="blankline"></div>
@@ -387,7 +387,7 @@ b.opBinaryRight!(<span class="metacode"><span class="d_string">"op"</span></span
         <p>Note that <span class="d_inlinecode donthyphenate notranslate">opIn</span> and <span class="d_inlinecode donthyphenate notranslate">opIn_r</span> have been deprecated in favor of
         <span class="d_inlinecode donthyphenate notranslate">opBinary!"in"</span> and <span class="d_inlinecode donthyphenate notranslate">opBinaryRight!"in"</span> respectively.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="eqcmp" href="#eqcmp">Overloading the Comparison Operators</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="eqcmp" href="#eqcmp">比較演算子のオーバーロード</a></h2>
 <div class="blankline"></div>
         <p>D allows overloading of the comparison operators <span class="d_inlinecode donthyphenate notranslate">==</span>, <span class="d_inlinecode donthyphenate notranslate">!=</span>,
         <span class="d_inlinecode donthyphenate notranslate">&lt;</span>, <span class="d_inlinecode donthyphenate notranslate">&lt;=</span>, <span class="d_inlinecode donthyphenate notranslate">&gt;=</span>, <span class="d_inlinecode donthyphenate notranslate">&gt;</span> via two functions, <span class="d_inlinecode donthyphenate notranslate">opEquals</span> and
@@ -425,7 +425,7 @@ b.opBinaryRight!(<span class="metacode"><span class="d_string">"op"</span></span
         semantics of <span class="d_inlinecode donthyphenate notranslate">opEquals</span> and <span class="d_inlinecode donthyphenate notranslate">toHash</span> are consistent. If not, the
         associative array may not work in the expected manner.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="equals" href="#equals">Overloading <span class="d_inlinecode donthyphenate notranslate">==</span> and <span class="d_inlinecode donthyphenate notranslate">!=</span></a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="equals" href="#equals"><span class="d_inlinecode donthyphenate notranslate">==</span> , <span class="d_inlinecode donthyphenate notranslate">!=</span> のオーバーロード</a></h3>
 <div class="blankline"></div>
         <p>Expressions of the form <span class="d_inlinecode donthyphenate notranslate">a != b</span> are rewritten as <span class="d_inlinecode donthyphenate notranslate">!(a == b)</span>.</p>
 <div class="blankline"></div>
@@ -485,7 +485,7 @@ b.opBinaryRight!(<span class="metacode"><span class="d_string">"op"</span></span
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="compare" href="#compare">Overloading <span class="d_inlinecode donthyphenate notranslate">&lt;</span>, <span class="d_inlinecode donthyphenate notranslate">&lt;</span><span class="d_inlinecode donthyphenate notranslate">=</span>, <span class="d_inlinecode donthyphenate notranslate">&gt;</span>, and <span class="d_inlinecode donthyphenate notranslate">&gt;</span><span class="d_inlinecode donthyphenate notranslate">=</span></a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="compare" href="#compare"><span class="d_inlinecode donthyphenate notranslate">&lt;</span>, <span class="d_inlinecode donthyphenate notranslate">&lt;</span><span class="d_inlinecode donthyphenate notranslate">=</span>, <span class="d_inlinecode donthyphenate notranslate">&gt;</span>, <span class="d_inlinecode donthyphenate notranslate">&gt;</span><span class="d_inlinecode donthyphenate notranslate">=</span> のオーバーロード</a></h3>
 <div class="blankline"></div>
         <p>Comparison operations are rewritten as follows:</p>
 <div class="blankline"></div>
@@ -530,7 +530,7 @@ b.opBinaryRight!(<span class="metacode"><span class="d_string">"op"</span></span
         version of <span class="d_inlinecode donthyphenate notranslate">opEquals</span>.  Otherwise, inequalities like <span class="d_inlinecode donthyphenate notranslate">a &lt;= b</span>
         will behave inconsistently with equalities like <span class="d_inlinecode donthyphenate notranslate">a == b</span>.</p>
 <div class="blankline"></div>
-<h2><span id="FunctionCall"><a class="anchor" title="Permalink to this section" id="function-call" href="#function-call">Function Call Operator Overloading <span class="d_inlinecode donthyphenate notranslate">f()</span></a></span></h2>
+<h2><span id="FunctionCall"><a class="anchor" title="Permalink to this section" id="function-call" href="#function-call">関数呼び出し演算子 <span class="d_inlinecode donthyphenate notranslate">f()</span> のオーバーロード </a></span></h2>
 <div class="blankline"></div>
         <p>The function call operator, <span class="d_inlinecode donthyphenate notranslate">()</span>, can be overloaded by
         declaring a function named <span class="d_inlinecode donthyphenate notranslate">opCall</span>:
@@ -612,7 +612,7 @@ b.opBinaryRight!(<span class="metacode"><span class="d_string">"op"</span></span
         function to create struct instances.
         </p>
 <div class="blankline"></div>
-<h2><span id="Assignment"><a class="anchor" title="Permalink to this section" id="assignment" href="#assignment">Assignment Operator Overloading</a></span></h2>
+<h2><span id="Assignment"><a class="anchor" title="Permalink to this section" id="assignment" href="#assignment">代入演算子のオーバーロード</a></span></h2>
 <div class="blankline"></div>
         <p>The assignment operator <span class="d_inlinecode donthyphenate notranslate">=</span> can be overloaded if the
         left hand side is a struct aggregate, and <span class="d_inlinecode donthyphenate notranslate">opAssign</span>
@@ -657,7 +657,7 @@ c = <span class="d_keyword">new</span> C();  <span class="d_comment">// Rebindin
 </span>c = 1;        <span class="d_comment">// Rewritten to c.opAssign(1);
 </span></pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="index_assignment_operator" href="#index_assignment_operator">Index Assignment Operator Overloading</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="index_assignment_operator" href="#index_assignment_operator">インデックス付き代入演算子のオーバーロード</a></h3>
 <div class="blankline"></div>
         <p>If the left hand side of an assignment is an index operation
         on a struct or class instance,
@@ -678,7 +678,7 @@ c = <span class="d_keyword">new</span> C();  <span class="d_comment">// Rebindin
 </span>}
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="slice_assignment_operator" href="#slice_assignment_operator">Slice Assignment Operator Overloading</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="slice_assignment_operator" href="#slice_assignment_operator">スライス代入演算子のオーバーロード</a></h3>
 <div class="blankline"></div>
         <p>If the left hand side of an assignment is a slice operation on a
         struct or class instance, it can be overloaded by implementing an
@@ -716,7 +716,7 @@ c = <span class="d_keyword">new</span> C();  <span class="d_comment">// Rebindin
         <span class="d_inlinecode donthyphenate notranslate">opSliceAssign(c,</span> <i>i</i>, <i>j</i><span class="d_inlinecode donthyphenate notranslate">)</span> is used instead.
         </p>
 <div class="blankline"></div>
-<h2><span id="OpAssign"><a class="anchor" title="Permalink to this section" id="op-assign" href="#op-assign">Op Assignment Operator Overloading</a></span></h2>
+<h2><span id="OpAssign"><a class="anchor" title="Permalink to this section" id="op-assign" href="#op-assign">Op 代入演算子のオーバーロード</a></span></h2>
 <div class="blankline"></div>
         <p>The following op assignment operators are overloadable:</p>
 <div class="blankline"></div>
@@ -733,7 +733,7 @@ c = <span class="d_keyword">new</span> C();  <span class="d_comment">// Rebindin
 <pre class="d_code notranslate">a.opOpAssign!(<span class="metacode"><span class="d_string">"op"</span></span>)(b)
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="index_op_assignment" href="#index_op_assignment">Index Op Assignment Operator Overloading</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="index_op_assignment" href="#index_op_assignment">インデックス付き Op 代入演算子のオーバーロード</a></h3>
 <div class="blankline"></div>
         <p>If the left hand side of an <i>op</i>= is an index expression on
         a struct or class instance and <span class="d_inlinecode donthyphenate notranslate">opIndexOpAssign</span> is a member:</p>
@@ -746,7 +746,7 @@ c = <span class="d_keyword">new</span> C();  <span class="d_comment">// Rebindin
 <pre class="d_code notranslate">a.opIndexOpAssign!(<span class="metacode"><span class="d_string">"op"</span></span>)(c, <span class="metacode"><i>b</i><sub>1</sub>, <i>b</i><sub>2</sub>, ... <i>b</i><sub>n</sub></span>)
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="slice_op_assignment" href="#slice_op_assignment">Slice Op Assignment Operator Overloading</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="slice_op_assignment" href="#slice_op_assignment">スライス Op 代入演算子のオーバーロード</a></h3>
 <div class="blankline"></div>
         <p>If the left hand side of an <i>op</i>= is a slice expression on
         a struct or class instance and <span class="d_inlinecode donthyphenate notranslate">opIndexOpAssign</span> is a member:</p>
@@ -776,7 +776,7 @@ c = <span class="d_keyword">new</span> C();  <span class="d_comment">// Rebindin
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><span id="ArrayOps"><a class="anchor" title="Permalink to this section" id="array-ops" href="#array-ops">Array Indexing and Slicing Operators Overloading</a></span></h2>
+<h2><span id="ArrayOps"><a class="anchor" title="Permalink to this section" id="array-ops" href="#array-ops">配列のインデックス付けとスライス演算子のオーバーロード</a></span></h2>
 <div class="blankline"></div>
         <p>The array indexing and slicing operators are overloaded by
         implementing the <span class="d_inlinecode donthyphenate notranslate">opIndex</span>, <span class="d_inlinecode donthyphenate notranslate">opSlice</span>, and <span class="d_inlinecode donthyphenate notranslate">opDollar</span> methods.
@@ -876,7 +876,7 @@ c = <span class="d_keyword">new</span> C();  <span class="d_comment">// Rebindin
 }
 </pre>
 <div class="blankline"></div>
-<h3><span id="Array"><a class="anchor" title="Permalink to this section" id="array" href="#array">Index Operator Overloading</a></span></h3>
+<h3><span id="Array"><a class="anchor" title="Permalink to this section" id="array" href="#array">インデックス演算子のオーバーロード</a></span></h3>
 <div class="blankline"></div>
         <p>Expressions of the form <span class="d_inlinecode donthyphenate notranslate">arr[</span><i>b</i><sub>1</sub>, <i>b</i><sub>2</sub>, ... <i>b</i><sub>n</sub><span class="d_inlinecode donthyphenate notranslate">]</span> are translated
         into <span class="d_inlinecode donthyphenate notranslate">arr.opIndex(</span><i>b</i><sub>1</sub>, <i>b</i><sub>2</sub>, ... <i>b</i><sub>n</sub><span class="d_inlinecode donthyphenate notranslate">)</span>. For example:
@@ -903,7 +903,7 @@ c = <span class="d_keyword">new</span> C();  <span class="d_comment">// Rebindin
         <span class="d_inlinecode donthyphenate notranslate">opIndexOpAssign</span>, those are preferred over <span class="d_inlinecode donthyphenate notranslate">opIndex</span>.
         </p>
 <div class="blankline"></div>
-<h3><span id="Slice"><a class="anchor" title="Permalink to this section" id="slice" href="#slice">Slice Operator Overloading</a></span></h3>
+<h3><span id="Slice"><a class="anchor" title="Permalink to this section" id="slice" href="#slice">スライス演算子のオーバーロード</a></span></h3>
 <div class="blankline"></div>
         <p>Overloading the slicing operator means overloading expressions
         like <span class="d_inlinecode donthyphenate notranslate">a[]</span> or <span class="d_inlinecode donthyphenate notranslate">a[</span><i>i</i>..<i>j</i><span class="d_inlinecode donthyphenate notranslate">]</span>, where the expressions inside
@@ -994,7 +994,7 @@ __tmp.opIndexAssign(c, 1, __tmp.opSlice!1(2,3), __tmp.opDollar!2 - 1);
         usage of <span class="d_inlinecode donthyphenate notranslate">opSlice</span> is discouraged.
         </p>
 <div class="blankline"></div>
-<h3><span id="Dollar"><a class="anchor" title="Permalink to this section" id="dollar" href="#dollar">Dollar Operator Overloading</a></span></h3>
+<h3><span id="Dollar"><a class="anchor" title="Permalink to this section" id="dollar" href="#dollar">＄演算子のオーバーロード</a></span></h3>
 <div class="blankline"></div>
         <p>Within the arguments to array index and slicing operators, <span class="d_inlinecode donthyphenate notranslate">$</span>
         gets translated to <span class="d_inlinecode donthyphenate notranslate">opDollar!i</span>, where <span class="d_inlinecode donthyphenate notranslate">i</span> is the position of the
@@ -1072,7 +1072,7 @@ arr.opIndex(__tmp1 - sqrt(__tmp1), 0, __tmp2 - 1);
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><span id="Dispatch"><a class="anchor" title="Permalink to this section" id="dispatch" href="#dispatch">Forwarding</a></span></h2>
+<h2><span id="Dispatch"><a class="anchor" title="Permalink to this section" id="dispatch" href="#dispatch">転送</a></span></h2>
 <div class="blankline"></div>
         <p>Member names not found in a class or struct can be forwarded
         to a template function named <span class="d_inlinecode donthyphenate notranslate">opDispatch</span> for resolution.
@@ -1119,20 +1119,20 @@ arr.opIndex(__tmp1 - sqrt(__tmp1), 0, __tmp2 - 1);
 }
 </pre>
 <div class="blankline"></div>
-<h2><span id="Old-Style"><a class="anchor" title="Permalink to this section" id="old-style" href="#old-style">D1 style operator overloading</a></span></h2>
+<h2><span id="Old-Style"><a class="anchor" title="Permalink to this section" id="old-style" href="#old-style">D1 スタイルの演算子のオーバーロード</a></span></h2>
 <div class="blankline"></div>
         <p>        The <a href="http://digitalmars.com/d/1.0/operatoroverloading.html">D1 operator overload mechanisms</a>
         are deprecated.
         </p>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/function.html">Functions</a></div>
-<div style="float: right"><a href="../spec/template.html">Templates</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/function.html">関数[Functions]</a></div>
+<div style="float: right"><a href="../spec/template.html">テンプレート[Templates]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan  3 10:15:21 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:09 2022
 </div>
     </div>
 </div>
