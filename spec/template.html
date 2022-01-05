@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Templates - D言語 非公式日本語</title>
+<title>テンプレート - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Templates' class='doc'>
+<body id='テンプレート' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -27,11 +27,11 @@
 <div id="cssmenu"><ul>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'><span>学ぶ</span></a></li>
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
-<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
+<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様 リファレンス</a></li>
     <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
     <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
-    <li><a href='../articles/index.html'>記事</a></li>
+    <li><a href='../articles/index.html'>記事[Articles]</a></li>
  </ul></li>
     <li><a href='../download.html'><span>ダウンロード</span></a></li>
     <li><a href='https://code.dlang.org'><span>パッケージ</span></a></li>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BTemplates%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5Bテンプレート%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Templates</h1>
+        <h1>テンプレート</h1>
         
 <style>    body { counter-reset: h1 21; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,36 +146,36 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#explicit_tmp_instantiation">Explicit Template Instantiation</a><ol>        <li><a href="#copy_example">Practical Example</a></li>
+    <ol>    <li><a href="#explicit_tmp_instantiation">明示的なテンプレートのインスタンス化</a><ol>        <li><a href="#copy_example">実例</a></li>
     </ol></li>
-    <li><a href="#instantiation_scope">Instantiation Scope</a></li>
-    <li><a href="#argument_deduction">Argument Deduction</a></li>
-    <li><a href="#template_type_parameters">Template Type Parameters</a><ol>        <li><a href="#parameters_specialization">Specialization</a></li>
+    <li><a href="#instantiation_scope">インスタンス化のスコープ</a></li>
+    <li><a href="#argument_deduction">引数の推定</a></li>
+    <li><a href="#template_type_parameters">テンプレート型引数</a><ol>        <li><a href="#parameters_specialization">特殊化</a></li>
     </ol></li>
-    <li><a href="#template_this_parameter">Template This Parameters</a></li>
-    <li><a href="#template_value_parameter">Template Value Parameters</a></li>
-    <li><a href="#aliasparameters">Template Alias Parameters</a><ol>        <li><a href="#typed_alias_op">Typed alias parameters</a></li>
-        <li><a href="#alias_parameter_specialization">Specialization</a></li>
+    <li><a href="#template_this_parameter">テンプレート This 引数</a></li>
+    <li><a href="#template_value_parameter">テンプレート 値引数</a></li>
+    <li><a href="#aliasparameters">テンプレート Alias 引数</a><ol>        <li><a href="#typed_alias_op">型付けされた alias 引数</a></li>
+        <li><a href="#alias_parameter_specialization">特殊化</a></li>
     </ol></li>
-    <li><a href="#variadic-templates">Template Sequence Parameters</a><ol>        <li><a href="#variadic_template_specialization">Specialization</a></li>
+    <li><a href="#variadic-templates">テンプレート シーケンス引数</a><ol>        <li><a href="#variadic_template_specialization">特殊化</a></li>
     </ol></li>
-    <li><a href="#template_parameter_def_values">Template Parameter Default Values</a></li>
-    <li><a href="#implicit_template_properties">Eponymous Templates</a></li>
-    <li><a href="#template_ctors">Template Constructors</a></li>
-    <li><a href="#aggregate_templates">Aggregate Templates</a></li>
-    <li><a href="#function-templates">Function Templates</a><ol>        <li><a href="#ifti">Implicit Function Template Instantiation (IFTI)</a></li>
-        <li><a href="#return-deduction">Return Type Deduction</a></li>
-        <li><a href="#function-default">Default Arguments</a></li>
+    <li><a href="#template_parameter_def_values">テンプレート引数のデフォルト値</a></li>
+    <li><a href="#implicit_template_properties">メンバに由来する名前のテンプレート</a></li>
+    <li><a href="#template_ctors">テンプレートコンストラクタ</a></li>
+    <li><a href="#aggregate_templates">集約テンプレート</a></li>
+    <li><a href="#function-templates">関数テンプレート</a><ol>        <li><a href="#ifti">暗黙の関数テンプレートのインスタンス化 (IFTI)</a></li>
+        <li><a href="#return-deduction">Return 型の推定</a></li>
+        <li><a href="#function-default">デフォルト引数</a></li>
     </ol></li>
-    <li><a href="#variable-template">Enum &amp; Variable Templates</a></li>
-    <li><a href="#alias-template">Alias Templates</a><ol>        <li><a href="#auto-ref-parameters">Function Templates with Auto Ref Parameters</a></li>
+    <li><a href="#variable-template">列挙型, 変数テンプレート</a></li>
+    <li><a href="#alias-template">Alias テンプレート</a><ol>        <li><a href="#auto-ref-parameters">Auto Ref 引数を用いた関数テンプレート</a></li>
     </ol></li>
-    <li><a href="#nested-templates">Nested Templates</a><ol>        <li><a href="#implicit-nesting">Implicit Nesting</a></li>
-        <li><a href="#nested_template_limitation">Context Limitation</a></li>
+    <li><a href="#nested-templates">テンプレートのネスト</a><ol>        <li><a href="#implicit-nesting">暗黙のネスト</a></li>
+        <li><a href="#nested_template_limitation">文脈の制限</a></li>
     </ol></li>
-    <li><a href="#recursive_templates">Recursive Templates</a></li>
-    <li><a href="#template_constraints">Template Constraints</a></li>
-    <li><a href="#limitations">Limitations</a></li>
+    <li><a href="#recursive_templates">再帰的なテンプレート</a></li>
+    <li><a href="#template_constraints">テンプレートの制約</a></li>
+    <li><a href="#limitations">制限事項</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -227,7 +227,7 @@
         <i>TemplateParameter</i> in case one is not supplied.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="explicit_tmp_instantiation" href="#explicit_tmp_instantiation">Explicit Template Instantiation</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="explicit_tmp_instantiation" href="#explicit_tmp_instantiation">明示的なテンプレートのインスタンス化</a></h2>
 <div class="blankline"></div>
     <p>Templates are explicitly instantiated with:
     </p>
@@ -332,7 +332,7 @@ a.f = 3;
         arguments or are differently specialized.
     </p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="copy_example" href="#copy_example">Practical Example</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="copy_example" href="#copy_example">実例</a></h3>
 <div class="blankline"></div>
     <p>A simple generic copy template would be:</p>
 <div class="blankline"></div>
@@ -353,7 +353,7 @@ TCopy!(<span class="d_keyword">int</span>).copy(i, 3);
 </pre>
     <p>See also <a href="#function-templates">function templates</a>.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="instantiation_scope" href="#instantiation_scope">Instantiation Scope</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="instantiation_scope" href="#instantiation_scope">インスタンス化のスコープ</a></h2>
 <div class="blankline"></div>
     <p><i>TemplateInstance</i>s are always instantiated in the scope of where
         the <i>TemplateDeclaration</i> is declared, with the addition of the
@@ -394,7 +394,7 @@ f.bar();  <span class="d_comment">// will call a.func(double)
         values are evaluated in the scope of the <i>TemplateDeclaration</i>.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="argument_deduction" href="#argument_deduction">Argument Deduction</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="argument_deduction" href="#argument_deduction">引数の推定</a></h2>
 <div class="blankline"></div>
     <p>The types of template parameters are deduced for a particular
         template instantiation by comparing the template argument with
@@ -464,7 +464,7 @@ Foo!(<span class="d_keyword">int</span>[<span class="d_keyword">long</span>])  <
 </span>                           <span class="d_comment">// (3) U is B
 </span></pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="template_type_parameters" href="#template_type_parameters">Template Type Parameters</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="template_type_parameters" href="#template_type_parameters">テンプレート型引数</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TemplateTypeParameter"><span class="gname">TemplateTypeParameter</span></a>:
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
@@ -479,7 +479,7 @@ Foo!(<span class="d_keyword">int</span>[<span class="d_keyword">long</span>])  <
     <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="../spec/type.html#Type"><i>Type</i></a>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="parameters_specialization" href="#parameters_specialization">Specialization</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="parameters_specialization" href="#parameters_specialization">特殊化</a></h3>
 <div class="blankline"></div>
     <p>Templates may be specialized for particular types of arguments
         by following the template parameter identifier with a : and the
@@ -504,7 +504,7 @@ Foo!(<span class="d_keyword">int</span>[<span class="d_keyword">long</span>])  <
     </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="template_this_parameter" href="#template_this_parameter">Template This Parameters</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="template_this_parameter" href="#template_this_parameter">テンプレート This 引数</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TemplateThisParameter"><span class="gname">TemplateThisParameter</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">this</span> <a href="#TemplateTypeParameter"><i>TemplateTypeParameter</i></a>
@@ -597,7 +597,7 @@ immutable(S)
 </span>}
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="template_value_parameter" href="#template_value_parameter">Template Value Parameters</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="template_value_parameter" href="#template_value_parameter">テンプレート 値引数</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TemplateValueParameter"><span class="gname">TemplateValueParameter</span></a>:
     <a href="../spec/type.html#BasicType"><i>BasicType</i></a> <a href="../spec/declaration.html#Declarator"><i>Declarator</i></a>
@@ -645,7 +645,7 @@ immutable(S)
 }
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="aliasparameters" href="#aliasparameters">Template Alias Parameters</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="aliasparameters" href="#aliasparameters">テンプレート Alias 引数</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TemplateAliasParameter"><span class="gname">TemplateAliasParameter</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">alias</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateAliasParameterSpecialization"><i>TemplateAliasParameterSpecialization</i></a><sub>opt</sub> <a href="#TemplateAliasParameterDefault"><i>TemplateAliasParameterDefault</i></a><sub>opt</sub>
@@ -847,7 +847,7 @@ immutable(S)
 </div></li>
     </ul>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="typed_alias_op" href="#typed_alias_op">Typed alias parameters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="typed_alias_op" href="#typed_alias_op">型付けされた alias 引数</a></h3>
 <div class="blankline"></div>
     <p>Alias parameters can also be typed.
         These parameters will accept symbols of that type:</p>
@@ -860,7 +860,7 @@ Foo!x;  <span class="d_comment">// ok
 </span>Foo!f;  <span class="d_comment">// fails to instantiate
 </span></pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="alias_parameter_specialization" href="#alias_parameter_specialization">Specialization</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="alias_parameter_specialization" href="#alias_parameter_specialization">特殊化</a></h3>
 <div class="blankline"></div>
     <p>Alias parameters can accept both literals and user-defined type symbols,
         but they are less specialized than the matches to type parameters and
@@ -886,7 +886,7 @@ Foo!x;  <span class="d_comment">// ok
 <span class="d_keyword">alias</span> bar = Bar!(C!<span class="d_keyword">int</span>);    <span class="d_comment">// instantiates #5
 </span></pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="variadic-templates" href="#variadic-templates">Template Sequence Parameters</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="variadic-templates" href="#variadic-templates">テンプレート シーケンス引数</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TemplateSequenceParameter"><span class="gname">TemplateSequenceParameter</span></a>:
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">...</span>
@@ -1000,7 +1000,7 @@ R <span class="d_keyword">delegate</span>(Args) partial(R, T, Args...)(R <span c
 </pre>
         See also: <a href="../phobos/std_functional.html#.partial"><span class="d_inlinecode donthyphenate notranslate">std.functional.partial</span></a>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="variadic_template_specialization" href="#variadic_template_specialization">Specialization</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="variadic_template_specialization" href="#variadic_template_specialization">特殊化</a></h3>
 <div class="blankline"></div>
     <p>If both a template with a sequence parameter and a template
         without a sequence parameter exactly match a template instantiation,
@@ -1021,7 +1021,7 @@ R <span class="d_keyword">delegate</span>(Args) partial(R, T, Args...)(R <span c
 <span class="d_keyword">alias</span> foo4 = Foo!(<span class="d_keyword">int</span>, 3, std);  <span class="d_comment">// instantiates #4
 </span></pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="template_parameter_def_values" href="#template_parameter_def_values">Template Parameter Default Values</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="template_parameter_def_values" href="#template_parameter_def_values">テンプレート引数のデフォルト値</a></h2>
 <div class="blankline"></div>
     <p>Trailing template parameters can be given default values:</p>
 <div class="blankline"></div>
@@ -1035,7 +1035,7 @@ Foo!(<span class="d_keyword">uint</span>);      <span class="d_comment">// insta
 <div class="blankline"></div>
     <p>See also: <a href="#function-default">Function Template Default Arguments</a>.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="implicit_template_properties" href="#implicit_template_properties">Eponymous Templates</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="implicit_template_properties" href="#implicit_template_properties">メンバに由来する名前のテンプレート</a></h2>
 <div class="blankline"></div>
     <p>If a template contains members whose name is the same as the
         template identifier then these members are assumed to be referred
@@ -1085,7 +1085,7 @@ Foo!(<span class="d_keyword">uint</span>);      <span class="d_comment">// insta
 </span>}
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="template_ctors" href="#template_ctors">Template Constructors</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="template_ctors" href="#template_ctors">テンプレートコンストラクタ</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="ConstructorTemplate"><span class="gname">ConstructorTemplate</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">this</span> <a href="#TemplateParameters"><i>TemplateParameters</i></a> <a href="../spec/function.html#Parameters"><i>Parameters</i></a> <a href="../spec/function.html#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <a href="#Constraint"><i>Constraint</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">:</span>
@@ -1095,7 +1095,7 @@ Foo!(<span class="d_keyword">uint</span>);      <span class="d_comment">// insta
     <p>Templates can be used to form constructors for classes  and structs.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="aggregate_templates" href="#aggregate_templates">Aggregate Templates</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="aggregate_templates" href="#aggregate_templates">集約テンプレート</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="ClassTemplateDeclaration"><span class="gname">ClassTemplateDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">class</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateParameters"><i>TemplateParameters</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -1145,7 +1145,7 @@ Foo!(<span class="d_keyword">uint</span>);      <span class="d_comment">// insta
         can be transformed into templates by supplying a template parameter list.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="function-templates" href="#function-templates">Function Templates</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="function-templates" href="#function-templates">関数テンプレート</a></h2>
 <div class="blankline"></div>
     <p>If a template declares exactly one member, and that member is a function
         with the same name as the template, it is a function template declaration.
@@ -1179,7 +1179,7 @@ Foo!(<span class="d_keyword">uint</span>);      <span class="d_comment">// insta
 <pre class="d_code notranslate">writefln(<span class="d_string">"The square of %s is %s"</span>, 3, square!(<span class="d_keyword">int</span>)(3));
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="ifti" href="#ifti">Implicit Function Template Instantiation (IFTI)</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="ifti" href="#ifti">暗黙の関数テンプレートのインスタンス化 (IFTI)</a></h3>
 <div class="blankline"></div>
     <p>Function templates can be <i>implicitly</i> instantiated if the
         <i>TemplateArgumentList</i> is deducible from the types of the
@@ -1213,7 +1213,7 @@ foo!(<span class="d_keyword">int</span>*)(x);   <span class="d_comment">// ok, T
 </span>foo(&amp;y);         <span class="d_comment">// error, T has specialization
 </span></pre>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="ifti-conversions" href="#ifti-conversions">Type Conversions</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="ifti-conversions" href="#ifti-conversions">型変換</a></h4>
 <div class="blankline"></div>
     <p>If template type parameters match the literal expressions on function arguments,
         the deduced types may consider narrowing conversions of them.
@@ -1264,7 +1264,7 @@ foo(mptr);  <span class="d_comment">// T == int*
     
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="return-deduction" href="#return-deduction">Return Type Deduction</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="return-deduction" href="#return-deduction">Return 型の推定</a></h3>
 <div class="blankline"></div>
     <p>Function templates can have their return types deduced based on the
         <a href="../spec/statement.html#ReturnStatement"><i>ReturnStatement</i></a>s in the function, just as with
@@ -1284,7 +1284,7 @@ foo(mptr);  <span class="d_comment">// T == int*
     
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="function-default" href="#function-default">Default Arguments</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="function-default" href="#function-default">デフォルト引数</a></h3>
 <div class="blankline"></div>
     <p>Template arguments not implicitly deduced can have default values:</p>
 <div class="blankline"></div>
@@ -1312,7 +1312,7 @@ foo(x);    <span class="d_comment">// T is int, U is int*
         
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="variable-template" href="#variable-template">Enum &amp; Variable Templates</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="variable-template" href="#variable-template">列挙型, 変数テンプレート</a></h2>
 <div class="blankline"></div>
     <p>Like aggregates and functions, manifest constant and variable
         declarations can have template parameters, providing there is
@@ -1339,7 +1339,7 @@ foo(x);    <span class="d_comment">// T is int, U is int*
 }
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="alias-template" href="#alias-template">Alias Templates</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="alias-template" href="#alias-template">Alias テンプレート</a></h2>
 <div class="blankline"></div>
     <p><a href="../spec/declaration.html#AliasDeclaration"><i>AliasDeclaration</i></a> can also have optional template
         parameters:</p>
@@ -1355,7 +1355,7 @@ foo(x);    <span class="d_comment">// T is int, U is int*
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="auto-ref-parameters" href="#auto-ref-parameters">Function Templates with Auto Ref Parameters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="auto-ref-parameters" href="#auto-ref-parameters">Auto Ref 引数を用いた関数テンプレート</a></h3>
 <div class="blankline"></div>
     <p>An auto ref function template parameter becomes a ref parameter
         if its corresponding argument is an lvalue, otherwise it becomes
@@ -1409,7 +1409,7 @@ foo(x);    <span class="d_comment">// T is int, U is int*
 }
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="nested-templates" href="#nested-templates">Nested Templates</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="nested-templates" href="#nested-templates">テンプレートのネスト</a></h2>
 <div class="blankline"></div>
     <p>If a template is declared in aggregate or function local scope, the
         instantiated functions will implicitly capture the context of the
@@ -1450,7 +1450,7 @@ foo(x);    <span class="d_comment">// T is int, U is int*
         of class <span class="d_inlinecode donthyphenate notranslate">C</span>, and <span class="d_inlinecode donthyphenate notranslate">Bar!().bar</span> will work just the same as a nested
         function within function <span class="d_inlinecode donthyphenate notranslate">main()</span>.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="implicit-nesting" href="#implicit-nesting">Implicit Nesting</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="implicit-nesting" href="#implicit-nesting">暗黙のネスト</a></h3>
 <div class="blankline"></div>
     <p>If a template has a <a href="#aliasparameters">template alias parameter</a>,
         and is instantiated with a local symbol, the instantiated function will
@@ -1556,7 +1556,7 @@ A!F makeA(<span class="d_keyword">alias</span> F)() { <span class="d_keyword">re
 }
 </pre>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="nested_template_limitation" href="#nested_template_limitation">Context Limitation</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="nested_template_limitation" href="#nested_template_limitation">文脈の制限</a></h3>
 <div class="blankline"></div>
     <p>Currently nested templates can capture at most one context. As a typical
         example, non-static template member functions cannot take local symbol
@@ -1597,7 +1597,7 @@ A!F makeA(<span class="d_keyword">alias</span> F)() { <span class="d_keyword">re
         template instance <span class="d_inlinecode donthyphenate notranslate">sum!(a, b)</span> will capture only
         inner context.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="recursive_templates" href="#recursive_templates">Recursive Templates</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="recursive_templates" href="#recursive_templates">再帰的なテンプレート</a></h2>
 <div class="blankline"></div>
     <p>Template features can be combined to produce some interesting
         effects, such as compile time evaluation of non-trivial functions.
@@ -1621,7 +1621,7 @@ A!F makeA(<span class="d_keyword">alias</span> F)() { <span class="d_keyword">re
         <a href="../articles/templates-revisited.html#template-recursion">Template Recursion</a>.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="template_constraints" href="#template_constraints">Template Constraints</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="template_constraints" href="#template_constraints">テンプレートの制約</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Constraint"><span class="gname">Constraint</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">if</span> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="../spec/expression.html#Expression"><i>Expression</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
@@ -1664,7 +1664,7 @@ foo!(3)();  <span class="d_comment">// OK, matches
 </span><span class="d_keyword">auto</span> y = Bar!<span class="d_keyword">double</span>;    <span class="d_comment">// Error, double does not satisfy constraint
 </span></pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="limitations" href="#limitations">Limitations</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="limitations" href="#limitations">制限事項</a></h2>
 <div class="blankline"></div>
     <p>Templates cannot be used to add non-static fields or
         virtual functions to classes or interfaces.
@@ -1684,14 +1684,14 @@ foo!(3)();  <span class="d_comment">// OK, matches
 </pre>
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/operatoroverloading.html">Operator Overloading</a></div>
-<div style="float: right"><a href="../spec/template-mixin.html">Template Mixins</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/operatoroverloading.html">演算子オーバーロード[Operator Overloading]</a></div>
+<div style="float: right"><a href="../spec/template-mixin.html">ミックスイン[Template Mixins]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:09 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Jan  5 11:24:41 2022
 </div>
     </div>
 </div>

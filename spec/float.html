@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Floating-Point - D言語 非公式日本語</title>
+<title>浮動小数点数 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Floating-Point' class='doc'>
+<body id='浮動小数点数' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -27,11 +27,11 @@
 <div id="cssmenu"><ul>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'><span>学ぶ</span></a></li>
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
-<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
+<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様 リファレンス</a></li>
     <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
     <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
-    <li><a href='../articles/index.html'>記事</a></li>
+    <li><a href='../articles/index.html'>記事[Articles]</a></li>
  </ul></li>
     <li><a href='../download.html'><span>ダウンロード</span></a></li>
     <li><a href='https://code.dlang.org'><span>パッケージ</span></a></li>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BFloating-Point%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5B浮動小数点数%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Floating-Point</h1>
+        <h1>浮動小数点数</h1>
         
 <style>    body { counter-reset: h1 29; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,15 +146,15 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#fp_intermediate_values">Floating-Point Intermediate Values</a></li>
-    <li><a href="#fp_const_folding">Floating-Point Constant Folding</a></li>
-    <li><a href="#rounding_control">Rounding Control</a></li>
-    <li><a href="#exception_flags">Exception Flags</a></li>
-    <li><a href="#floating-point-transformations">Floating-Point Transformations</a></li>
+    <ol>    <li><a href="#fp_intermediate_values">浮動小数点の内部の値</a></li>
+    <li><a href="#fp_const_folding">浮動小数点定数の折りたたみ構造</a></li>
+    <li><a href="#rounding_control">丸めの制御</a></li>
+    <li><a href="#exception_flags">例外フラグ</a></li>
+    <li><a href="#floating-point-transformations">浮動小数点の変換</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="fp_intermediate_values" href="#fp_intermediate_values">Floating-Point Intermediate Values</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="fp_intermediate_values" href="#fp_intermediate_values">浮動小数点の内部の値</a></h2>
 <div class="blankline"></div>
         <p>For floating-point operations and expression intermediate values,
         a greater precision can be used than the type of the
@@ -170,7 +170,7 @@
         <p>Execution of floating-point expressions may yield a result of greater precision than dictated
         by the source.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="fp_const_folding" href="#fp_const_folding">Floating-Point Constant Folding</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="fp_const_folding" href="#fp_const_folding">浮動小数点定数の折りたたみ構造</a></h2>
 <div class="blankline"></div>
         <p>Regardless of the type of the operands, floating-point
         constant folding is done in <span class="d_inlinecode donthyphenate notranslate">real</span> or greater precision.
@@ -216,7 +216,7 @@ writeln(f - 0.2);
         folding, therefore the results of floating-point calculations may differ
         depending on those settings.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="rounding_control" href="#rounding_control">Rounding Control</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="rounding_control" href="#rounding_control">丸めの制御</a></h2>
 <div class="blankline"></div>
         <p>IEEE 754 floating-point arithmetic includes the ability to set 4
         different rounding modes.
@@ -230,7 +230,7 @@ writeln(f - 0.2);
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="exception_flags" href="#exception_flags">Exception Flags</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="exception_flags" href="#exception_flags">例外フラグ</a></h2>
 <div class="blankline"></div>
         <p>IEEE 754 floating-point arithmetic can set several flags based on what
         happened with a
@@ -246,7 +246,7 @@ writeln(f - 0.2);
 <div class="blankline"></div>
         <p>These flags can be set/reset via the functions in <span class="d_inlinecode donthyphenate notranslate">core.stdc.fenv</span>.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="floating-point-transformations" href="#floating-point-transformations">Floating-Point Transformations</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="floating-point-transformations" href="#floating-point-transformations">浮動小数点の変換</a></h2>
 <div class="blankline"></div>
         <p>An implementation may perform transformations on
         floating-point computations in order to reduce their strength.
@@ -286,14 +286,14 @@ writeln(f - 0.2);
         invalid.</p>
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/garbage.html">Garbage Collection</a></div>
-<div style="float: right"><a href="../spec/iasm.html">D x86 Inline Assembler</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/garbage.html">ガベージコレクション[Garbage Collection]</a></div>
+<div style="float: right"><a href="../spec/iasm.html">インラインアセンブラ[D x86 Inline Assembler]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:10 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Jan  5 11:24:41 2022
 </div>
     </div>
 </div>

@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Conditional Compilation - D言語 非公式日本語</title>
+<title>条件コンパイル - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Conditional Compilation' class='doc'>
+<body id='条件コンパイル' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -27,11 +27,11 @@
 <div id="cssmenu"><ul>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'><span>学ぶ</span></a></li>
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
-<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
+<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様 リファレンス</a></li>
     <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
     <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
-    <li><a href='../articles/index.html'>記事</a></li>
+    <li><a href='../articles/index.html'>記事[Articles]</a></li>
  </ul></li>
     <li><a href='../download.html'><span>ダウンロード</span></a></li>
     <li><a href='https://code.dlang.org'><span>パッケージ</span></a></li>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BConditional Compilation%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5B条件コンパイル%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Conditional Compilation</h1>
+        <h1>条件コンパイル</h1>
         
 <style>    body { counter-reset: h1 24; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,14 +146,14 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#version">Version Condition</a></li>
-    <li><a href="#version-specification">Version Specification</a><ol>        <li><a href="#predefined-versions">Predefined Versions</a></li>
+    <ol>    <li><a href="#version">Version 条件</a></li>
+    <li><a href="#version-specification">Version の指定</a><ol>        <li><a href="#predefined-versions">定義済みの Versions</a></li>
     </ol></li>
-    <li><a href="#debug">Debug Condition</a><ol>        <li><a href="#DebugStatement">Debug Statement</a></li>
+    <li><a href="#debug">Debug 条件</a><ol>        <li><a href="#DebugStatement">Debug 文</a></li>
     </ol></li>
-    <li><a href="#debug_specification">Debug Specification</a></li>
-    <li><a href="#staticif">Static If Condition</a></li>
-    <li><a href="#staticforeach">Static Foreach</a><ol>        <li><a href="#break-continue"><span class="d_inlinecode donthyphenate notranslate">break</span> and <span class="d_inlinecode donthyphenate notranslate">continue</span></a></li>
+    <li><a href="#debug_specification">Debug の指定</a></li>
+    <li><a href="#staticif">Static If 条件</a></li>
+    <li><a href="#staticforeach">Static Foreach</a><ol>        <li><a href="#break-continue"><span class="d_inlinecode donthyphenate notranslate">break</span> と <span class="d_inlinecode donthyphenate notranslate">continue</span></a></li>
     </ol></li>
     <li><a href="#static-assert">Static Assert</a></li>
 </ol>
@@ -207,7 +207,7 @@
     <a href="#StaticIfCondition"><i>StaticIfCondition</i></a>
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="version" href="#version">Version Condition</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="version" href="#version">Version 条件</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="VersionCondition"><span class="gname">VersionCondition</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">version (</span> <a href="../spec/lex.html#IntegerLiteral"><i>IntegerLiteral</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
@@ -263,7 +263,7 @@ x = i;      <span class="d_comment">// uses the i declared above
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><span id="VersionSpecification"><a class="anchor" title="Permalink to this section" id="version-specification" href="#version-specification">Version Specification</a></span></h2>
+<h2><span id="VersionSpecification"><a class="anchor" title="Permalink to this section" id="version-specification" href="#version-specification">Version の指定</a></span></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="VersionSpecification"><span class="gname">VersionSpecification</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">version =</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -356,7 +356,7 @@ x = i;      <span class="d_comment">// uses the i declared above
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><span id="PredefinedVersions"><a class="anchor" title="Permalink to this section" id="predefined-versions" href="#predefined-versions">Predefined Versions</a></span></h3>
+<h3><span id="PredefinedVersions"><a class="anchor" title="Permalink to this section" id="predefined-versions" href="#predefined-versions">定義済みの Versions</a></span></h3>
 <div class="blankline"></div>
         <p>Several environmental version identifiers and identifier
         name spaces are predefined for consistent usage.
@@ -543,7 +543,7 @@ x = i;      <span class="d_comment">// uses the i declared above
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="debug" href="#debug">Debug Condition</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="debug" href="#debug">Debug 条件</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="DebugCondition"><span class="gname">DebugCondition</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">debug</span>
@@ -582,7 +582,7 @@ x = i;      <span class="d_comment">// uses the i declared above
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="DebugStatement" href="#DebugStatement">Debug Statement</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="DebugStatement" href="#DebugStatement">Debug 文</a></h3>
 <div class="blankline"></div>
         <p>A <a href="#ConditionalStatement"><i>ConditionalStatement</i></a> that has a <a href="#DebugCondition"><i>DebugCondition</i></a> is called
         a <i>DebugStatement</i>. <i>DebugStatements</i> have relaxed semantic checks in that
@@ -604,7 +604,7 @@ x = i;      <span class="d_comment">// uses the i declared above
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="debug_specification" href="#debug_specification">Debug Specification</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="debug_specification" href="#debug_specification">Debug の指定</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="DebugSpecification"><span class="gname">DebugSpecification</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">debug =</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -642,7 +642,7 @@ x = i;      <span class="d_comment">// uses the i declared above
         <span class="d_inlinecode donthyphenate notranslate">-debug=</span><i>n</i> and <span class="d_inlinecode donthyphenate notranslate">-debug=</span><i>identifier</i>.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="staticif" href="#staticif">Static If Condition</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="staticif" href="#staticif">Static If 条件</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="StaticIfCondition"><span class="gname">StaticIfCondition</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">static if (</span> <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
@@ -803,7 +803,7 @@ Int!(32) a;  <span class="d_comment">// a is an int
 
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="break-continue" href="#break-continue"><span class="d_inlinecode donthyphenate notranslate">break</span> and <span class="d_inlinecode donthyphenate notranslate">continue</span></a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="break-continue" href="#break-continue"><span class="d_inlinecode donthyphenate notranslate">break</span> と <span class="d_inlinecode donthyphenate notranslate">continue</span></a></h3>
 <div class="blankline"></div>
         <p>As <span class="d_inlinecode donthyphenate notranslate">static foreach</span> is a code generation construct and not a
         loop, <span class="d_inlinecode donthyphenate notranslate">break</span> and <span class="d_inlinecode donthyphenate notranslate">continue</span> cannot be used to change control
@@ -906,14 +906,14 @@ Int!(32) a;  <span class="d_comment">// a is an int
         printed out along with the error diagnostic.
         </p>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/contracts.html">Contract Programming</a></div>
-<div style="float: right"><a href="../spec/traits.html">Traits</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/contracts.html">契約[Contract Programming]</a></div>
+<div style="float: right"><a href="../spec/traits.html">特性[Traits]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:09 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Jan  5 11:24:41 2022
 </div>
     </div>
 </div>

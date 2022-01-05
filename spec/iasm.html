@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Inline Assembler - D言語 非公式日本語</title>
+<title>インラインアセンブラ - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Inline Assembler' class='doc'>
+<body id='インラインアセンブラ' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -27,11 +27,11 @@
 <div id="cssmenu"><ul>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'><span>学ぶ</span></a></li>
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
-<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
+<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様 リファレンス</a></li>
     <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
     <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
-    <li><a href='../articles/index.html'>記事</a></li>
+    <li><a href='../articles/index.html'>記事[Articles]</a></li>
  </ul></li>
     <li><a href='../download.html'><span>ダウンロード</span></a></li>
     <li><a href='https://code.dlang.org'><span>パッケージ</span></a></li>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BInline Assembler%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5Bインラインアセンブラ%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Inline Assembler</h1>
+        <h1>インラインアセンブラ</h1>
         
 <style>    body { counter-reset: h1 30; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,25 +146,25 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#asmstatements">Asm statement</a></li>
-    <li><a href="#asminstruction">Asm instruction</a></li>
-    <li><a href="#labels">Labels</a></li>
-    <li><a href="#align">align <i>IntegerExpression</i></a></li>
-    <li><a href="#even">even</a></li>
-    <li><a href="#naked">naked</a></li>
+    <ol>    <li><a href="#asmstatements">Asm 文</a></li>
+    <li><a href="#asminstruction">Asm 命令</a></li>
+    <li><a href="#labels">ラベル</a></li>
+    <li><a href="#align"><i>整数式</i> を整列</a></li>
+    <li><a href="#even">偶数</a></li>
+    <li><a href="#naked">ありのまま</a></li>
     <li><a href="#raw_data">db, ds, di, dl, df, dd, de</a></li>
-    <li><a href="#opcodes">Opcodes</a><ol>        <li><a href="#special_cases">Special Cases</a></li>
+    <li><a href="#opcodes">Opcodes</a><ol>        <li><a href="#special_cases">特殊なケース</a></li>
     </ol></li>
-    <li><a href="#operands">Operands</a><ol>        <li><a href="#operand_types">Operand Types</a></li>
-        <li><a href="#agregate_member_offsets">Struct/Union/Class Member Offsets</a></li>
-        <li><a href="#stack_variables">Stack Variables</a></li>
-        <li><a href="#special_symbols">Special Symbols</a></li>
+    <li><a href="#operands">被演算子</a><ol>        <li><a href="#operand_types">被演算子の型</a></li>
+        <li><a href="#agregate_member_offsets">Struct/Union/Class メンバーのオフセット</a></li>
+        <li><a href="#stack_variables">スタック変数</a></li>
+        <li><a href="#special_symbols">特別な記号</a></li>
     </ol></li>
-    <li><a href="#supported_opcodes">Opcodes Supported</a><ol>        <li><a href="#P4_opcode_support">Pentium 4 (Prescott) Opcodes Supported</a></li>
-        <li><a href="#amd_opcode_support">AMD Opcodes Supported</a></li>
+    <li><a href="#supported_opcodes">サポートしている Opcodes</a><ol>        <li><a href="#P4_opcode_support">サポートしている Pentium 4 (Prescott) Opcodes</a></li>
+        <li><a href="#amd_opcode_support">サポートしている AMD Opcodes</a></li>
         <li><a href="#simd">SIMD</a></li>
     </ol></li>
-    <li><a href="#gcc">GCC syntax</a><ol>        <li><a href="#other">Other</a></li>
+    <li><a href="#gcc">GCC の構文</a><ol>        <li><a href="#other">その他</a></li>
     </ol></li>
 </ol>
 </div>
@@ -191,7 +191,7 @@
         <span class="d_inlinecode donthyphenate notranslate">D_InlineAsm_X86_64</span> version identifiers, respectively.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="asmstatements" href="#asmstatements">Asm statement</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="asmstatements" href="#asmstatements">Asm 文</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="AsmStatement"><span class="gname">AsmStatement</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">asm</span> <a href="../spec/function.html#FunctionAttributes"><i>FunctionAttributes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">{</span> <a href="#AsmInstructionList"><i>AsmInstructionList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">}</span>
@@ -219,7 +219,7 @@
 }
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="asminstruction" href="#asminstruction">Asm instruction</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="asminstruction" href="#asminstruction">Asm 命令</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="AsmInstruction"><span class="gname">AsmInstruction</span></a>:
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <i>AsmInstruction</i>
@@ -253,7 +253,7 @@
     <a href="#Operand"><i>Operand</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span> <i>Operands</i>
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="labels" href="#labels">Labels</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="labels" href="#labels">ラベル</a></h2>
 <div class="blankline"></div>
     <p>Assembler instructions can be labeled just like other statements.
         They can be the target of goto statements.
@@ -270,7 +270,7 @@
 </span>}
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="align" href="#align">align <i>IntegerExpression</i></a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="align" href="#align"><i>整数式</i> を整列</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="IntegerExpression"><span class="gname">IntegerExpression</span></a>:
     <a href="../spec/lex.html#IntegerLiteral"><i>IntegerLiteral</i></a>
@@ -287,13 +287,13 @@
         effect on the execution speed.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="even" href="#even">even</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="even" href="#even">偶数</a></h2>
 <div class="blankline"></div>
     <p>Causes the assembler to emit NOP instructions to align the next
         assembler instruction on an even boundary.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="naked" href="#naked">naked</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="naked" href="#naked">ありのまま</a></h2>
 <div class="blankline"></div>
     <p>Causes the compiler to not generate the function prolog and epilog
         sequences. This means such is the responsibility of inline
@@ -517,7 +517,7 @@
     <span class="d_inlinecode donthyphenate notranslate">YMM15</span>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="special_cases" href="#special_cases">Special Cases</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="special_cases" href="#special_cases">特殊なケース</a></h3>
 <div class="blankline"></div>
 <dl>    <dt><span class="d_inlinecode donthyphenate notranslate">lock</span>, <span class="d_inlinecode donthyphenate notranslate">rep</span>, <span class="d_inlinecode donthyphenate notranslate">repe</span>, <span class="d_inlinecode donthyphenate notranslate">repne</span>, <span class="d_inlinecode donthyphenate notranslate">repnz</span>, <span class="d_inlinecode donthyphenate notranslate">repz</span></dt>
     <dd>These prefix instructions do not appear in the same statement
@@ -555,7 +555,7 @@
     </dd>
 </dl>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="operands" href="#operands">Operands</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="operands" href="#operands">被演算子</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Operand"><span class="gname">Operand</span></a>:
     <a href="#AsmExp"><i>AsmExp</i></a>
@@ -664,7 +664,7 @@
         that fits in the target register or variable.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="operand_types" href="#operand_types">Operand Types</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="operand_types" href="#operand_types">被演算子の型</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="AsmTypePrefix"><span class="gname">AsmTypePrefix</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">near ptr</span>
@@ -689,7 +689,7 @@ add  <span class="d_keyword">int</span> ptr [EAX],7  ;
     <p><span class="d_inlinecode donthyphenate notranslate">far ptr</span> is not relevant for flat model code.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="agregate_member_offsets" href="#agregate_member_offsets">Struct/Union/Class Member Offsets</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="agregate_member_offsets" href="#agregate_member_offsets">Struct/Union/Class メンバーのオフセット</a></h3>
 <div class="blankline"></div>
     <p>To access members of an aggregate, given a pointer to the aggregate
         is in a register, use the <span class="d_inlinecode donthyphenate notranslate">.offsetof</span> property of the qualified name
@@ -732,7 +732,7 @@ add  <span class="d_keyword">int</span> ptr [EAX],7  ;
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="stack_variables" href="#stack_variables">Stack Variables</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="stack_variables" href="#stack_variables">スタック変数</a></h3>
 <div class="blankline"></div>
     <p>Stack variables (variables local to a function and allocated
         on the stack) are accessed via the name of the variable indexed
@@ -752,7 +752,7 @@ add  <span class="d_keyword">int</span> ptr [EAX],7  ;
         If <span class="d_inlinecode donthyphenate notranslate">naked</span> is used, this no longer holds.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="special_symbols" href="#special_symbols">Special Symbols</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="special_symbols" href="#special_symbols">特別な記号</a></h3>
 <div class="blankline"></div>
 <dl>    <dt>&dollar;</dt>
     <dd>Represents the program counter of the start of the next instruction. So,
@@ -772,7 +772,7 @@ add  <span class="d_keyword">int</span> ptr [EAX],7  ;
     </dd>
 </dl>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="supported_opcodes" href="#supported_opcodes">Opcodes Supported</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="supported_opcodes" href="#supported_opcodes">サポートしている Opcodes</a></h2>
 <div class="blankline"></div>
     <center><table><caption>Opcodes</caption>        <tr><td><em class="tt">aaa</em>
         </td><td><em class="tt">aad</em>
@@ -1327,7 +1327,7 @@ add  <span class="d_keyword">int</span> ptr [EAX],7  ;
         </td></tr>
     </table></center>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="P4_opcode_support" href="#P4_opcode_support">Pentium 4 (Prescott) Opcodes Supported</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="P4_opcode_support" href="#P4_opcode_support">サポートしている Pentium 4 (Prescott) Opcodes</a></h3>
 <div class="blankline"></div>
     <center><table><caption>Pentium 4 Opcodes</caption>        <tr><td><em class="tt">addsubpd</em>
         </td><td><em class="tt">addsubps</em>
@@ -1347,7 +1347,7 @@ add  <span class="d_keyword">int</span> ptr [EAX],7  ;
         </td></tr>
     </table></center>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="amd_opcode_support" href="#amd_opcode_support">AMD Opcodes Supported</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="amd_opcode_support" href="#amd_opcode_support">サポートしている AMD Opcodes</a></h3>
 <div class="blankline"></div>
     <center><table><caption>AMD Opcodes</caption>        <tr><td><em class="tt">pavgusb</em>
         </td><td><em class="tt">pf2id</em>
@@ -1381,7 +1381,7 @@ add  <span class="d_keyword">int</span> ptr [EAX],7  ;
 <div class="blankline"></div>
     <p>SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2 and AVX are supported.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="gcc" href="#gcc">GCC syntax</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="gcc" href="#gcc">GCC の構文</a></h2>
 <div class="blankline"></div>
 <p>The <a href="https://gdcproject.org/">GNU D Compiler</a> uses an alternative, GCC-based syntax for inline assembler:</p>
 <div class="blankline"></div>
@@ -1429,14 +1429,14 @@ add  <span class="d_keyword">int</span> ptr [EAX],7  ;
 
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/float.html">Floating Point</a></div>
-<div style="float: right"><a href="../spec/ddoc.html">Embedded Documentation</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/float.html">浮動小数点数[Floating Point]</a></div>
+<div style="float: right"><a href="../spec/ddoc.html">ドキュメント生成[Embedded Documentation]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:10 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Jan  5 11:24:42 2022
 </div>
     </div>
 </div>

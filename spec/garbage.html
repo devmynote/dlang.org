@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Garbage Collection - D言語 非公式日本語</title>
+<title>ガベージコレクション - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Garbage Collection' class='doc'>
+<body id='ガベージコレクション' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -27,11 +27,11 @@
 <div id="cssmenu"><ul>    <li><a href='https://tour.dlang.org/tour/ja/welcome/welcome-to-d'><span>学ぶ</span></a></li>
     <li class='expand-container'><a class='expand-toggle' href='../documentation.html'><span>ドキュメント</span></a>
       
-<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様リファレンス</a></li>
+<ul class='expand-content'>    <li><a href='../spec/spec.html'>言語仕様 リファレンス</a></li>
     <li><a href='../phobos/index.html'>ライブラリ リファレンス</a></li>
     <li><a href='../dmd.html'>コマンドライン リファレンス</a></li>
     <li class="menu-divider"><a href='../comparison.html'>機能概要</a></li>
-    <li><a href='../articles/index.html'>記事</a></li>
+    <li><a href='../articles/index.html'>記事[Articles]</a></li>
  </ul></li>
     <li><a href='../download.html'><span>ダウンロード</span></a></li>
     <li><a href='https://code.dlang.org'><span>パッケージ</span></a></li>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BGarbage Collection%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5Bガベージコレクション%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Garbage Collection</h1>
+        <h1>ガベージコレクション</h1>
         
 <style>    body { counter-reset: h1 28; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,17 +146,17 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#how_gc_works">How Garbage Collection Works</a></li>
-    <li><a href="#gc_foreign_obj">Interfacing Garbage Collected Objects With Foreign Code</a></li>
-    <li><a href="#pointers_and_gc">Pointers and the Garbage Collector</a></li>
-    <li><a href="#working_with_the_gc">Working with the Garbage Collector</a></li>
-    <li><a href="#obj_pinning_and_gc">Object Pinning and a Moving Garbage Collector</a></li>
-    <li><a href="#gc_config">Configuring the Garbage Collector</a></li>
-    <li><a href="#precise_gc">Precise Heap Scanning</a></li>
-    <li><a href="#precise_dataseg">Precise Scanning of the DATA and TLS segment</a></li>
-    <li><a href="#gc_parallel">Parallel marking</a></li>
-    <li><a href="#gc_registry">Adding your own Garbage Collector</a></li>
-    <li><a href="#references">References</a></li>
+    <ol>    <li><a href="#how_gc_works">ガベージコレクションの仕組み</a></li>
+    <li><a href="#gc_foreign_obj">ガベージコレクションされたオブジェクトと外部コードとのインターフェース</a></li>
+    <li><a href="#pointers_and_gc">ポインタとガベージコレクター</a></li>
+    <li><a href="#working_with_the_gc">ガベージコレクターの操作</a></li>
+    <li><a href="#obj_pinning_and_gc">オブジェクトの固定と移動するガベージコレクター</a></li>
+    <li><a href="#gc_config">ガベージコレクタの構成</a></li>
+    <li><a href="#precise_gc">正確なヒープスキャン</a></li>
+    <li><a href="#precise_dataseg">DATAおよびTLSセグメントの正確なスキャン</a></li>
+    <li><a href="#gc_parallel">並列マーキング</a></li>
+    <li><a href="#gc_registry">独自のガベージコレクターを追加する</a></li>
+    <li><a href="#references">参考文献</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -270,7 +270,7 @@
         to allow its use in scenarios where the use of GC infrastructure is not possible.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="how_gc_works" href="#how_gc_works">How Garbage Collection Works</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="how_gc_works" href="#how_gc_works">ガベージコレクションの仕組み</a></h2>
 <div class="blankline"></div>
         <p>The GC works by:</p>
 <div class="blankline"></div>
@@ -299,7 +299,7 @@
         <li>Returning the current thread to whatever work it was doing.</li>
         </ol>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="gc_foreign_obj" href="#gc_foreign_obj">Interfacing Garbage Collected Objects With Foreign Code</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="gc_foreign_obj" href="#gc_foreign_obj">ガベージコレクションされたオブジェクトと外部コードとのインターフェース</a></h2>
 <div class="blankline"></div>
         <p>The garbage collector looks for roots in:</p>
         <ol>        <li>the static data segment</li>
@@ -327,7 +327,7 @@
         </li>
         </ul>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="pointers_and_gc" href="#pointers_and_gc">Pointers and the Garbage Collector</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="pointers_and_gc" href="#pointers_and_gc">ポインタとガベージコレクター</a></h2>
 <div class="blankline"></div>
         <p>Pointers in D can be broadly divided into two categories: Those that
         point to garbage collected memory, and those that do not. Examples
@@ -479,7 +479,7 @@
         some low level work.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="working_with_the_gc" href="#working_with_the_gc">Working with the Garbage Collector</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="working_with_the_gc" href="#working_with_the_gc">ガベージコレクターの操作</a></h2>
 <div class="blankline"></div>
         <p>Garbage collection doesn't solve every memory deallocation problem.
         For
@@ -494,7 +494,7 @@
         stack to be nulled because new stack frames are initialized anyway.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="obj_pinning_and_gc" href="#obj_pinning_and_gc">Object Pinning and a Moving Garbage Collector</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="obj_pinning_and_gc" href="#obj_pinning_and_gc">オブジェクトの固定と移動するガベージコレクター</a></h2>
 <div class="blankline"></div>
         <p>Although D does not currently use a moving garbage collector, by following
         the rules listed above one can be implemented. No special action is required
@@ -503,7 +503,7 @@
         All other objects will be automatically pinned.
         </p>
 <div class="blankline"></div>
-<h2>D <a class="anchor" title="Permalink to this section" id="op_involving_gc" href="#op_involving_gc">Operations That Involve the Garbage Collector</a></h2>
+<h2>D <a class="anchor" title="Permalink to this section" id="op_involving_gc" href="#op_involving_gc">ガベージコレクターを含む操作</a></h2>
 <div class="blankline"></div>
         <p>Some sections of code may need to avoid using the garbage collector.
         The following constructs may allocate memory using the garbage collector:
@@ -523,7 +523,7 @@
         <li>An <a href="../spec/expression.html#AssertExpression"><i>AssertExpression</i></a> that fails its condition</li>
         </ul>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="gc_config" href="#gc_config">Configuring the Garbage Collector</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="gc_config" href="#gc_config">ガベージコレクタの構成</a></h2>
 <div class="blankline"></div>
     <p>Since version 2.067, The garbage collector can now be configured
         through the command line, the environment or by options embedded
@@ -579,7 +579,7 @@
         options specified through the environment or embedded in the executable.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="precise_gc" href="#precise_gc">Precise Heap Scanning</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="precise_gc" href="#precise_gc">正確なヒープスキャン</a></h2>
 <div class="blankline"></div>
     <p>Selecting <span class="d_inlinecode donthyphenate notranslate">precise</span> as the garbage collector via the options above means type
         information will be used to identify actual or possible pointers or
@@ -606,7 +606,7 @@ S* s = <span class="d_keyword">cast</span>(S*)GC.malloc(S.sizeof, 0, <span class
         ensures proper alignment for pointers being scanned by the GC.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="precise_dataseg" href="#precise_dataseg">Precise Scanning of the DATA and TLS segment</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="precise_dataseg" href="#precise_dataseg">DATAおよびTLSセグメントの正確なスキャン</a></h2>
 <div class="blankline"></div>
     <p><b>Windows only:</b> As of version 2.075, the DATA (global shared data)
         and TLS segment (thread local data) of an executable
@@ -649,7 +649,7 @@ Singleton singleton() { <span class="d_keyword">return</span> <span class="d_key
 </pre>
         This doesn't work for TLS memory, though.
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="gc_parallel" href="#gc_parallel">Parallel marking</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="gc_parallel" href="#gc_parallel">並列マーキング</a></h2>
 <div class="blankline"></div>
     <p>By default the garbage collector uses all available CPU cores to mark the heap.</p>
 <div class="blankline"></div>
@@ -662,7 +662,7 @@ Singleton singleton() { <span class="d_keyword">return</span> <span class="d_key
         <a href="../library/core/cpuid/threads_per_cpu.html"><span class="d_inlinecode donthyphenate notranslate">core.cpuid.threadsPerCPU-1</span></a>.
         A value of <span class="d_inlinecode donthyphenate notranslate">0</span> disables parallel marking completely.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="gc_registry" href="#gc_registry">Adding your own Garbage Collector</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="gc_registry" href="#gc_registry">独自のガベージコレクターを追加する</a></h2>
 <div class="blankline"></div>
     <p>GC implementations are added to a registry that allows to supply
         more implementations by just linking them into
@@ -701,7 +701,7 @@ GC createMyGC()
         all attempts to allocate GC managed memory will terminate
         the application with an appropriate message.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="references" href="#references">References</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="references" href="#references">参考文献</a></h2>
 <div class="blankline"></div>
         <ul>        <li><a href="https://en.wikipedia.org/wiki/Garbage_collection_%28computer_science%29">Wikipedia</a></li>
         <li><a href="http://www.iecc.com/gclist/GC-faq.html">GC FAQ</a></li>
@@ -710,14 +710,14 @@ GC createMyGC()
         </ul>
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/unittest.html">Unit Tests</a></div>
-<div style="float: right"><a href="../spec/float.html">Floating Point</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/unittest.html">単体テスト[Unit Tests]</a></div>
+<div style="float: right"><a href="../spec/float.html">浮動小数点数[Floating Point]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Tue Jan  4 07:57:10 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Jan  5 11:24:41 2022
 </div>
     </div>
 </div>
