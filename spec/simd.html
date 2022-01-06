@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Vector Extensions - D言語 非公式日本語</title>
+<title>ベクトル拡張 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Vector Extensions' class='doc'>
+<body id='ベクトル拡張' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BVector Extensions%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5Bベクトル拡張%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Vector Extensions</h1>
+        <h1>ベクトル拡張</h1>
         
 <style>    body { counter-reset: h1 39; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,12 +146,12 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#core_simd"><span class="d_inlinecode donthyphenate notranslate">core.simd</span></a><ol>        <li><a href="#properties">Properties</a></li>
-        <li><a href="#conversions">Conversions</a></li>
-        <li><a href="#accessing_individual_elems">Accessing Individual Vector Elements</a></li>
-        <li><a href="#conditional_compilation">Conditional Compilation</a></li>
+    <ol>    <li><a href="#core_simd"><span class="d_inlinecode donthyphenate notranslate">core.simd</span></a><ol>        <li><a href="#properties">プロパティ</a></li>
+        <li><a href="#conversions">変換</a></li>
+        <li><a href="#accessing_individual_elems">個々のベクトル要素へのアクセス</a></li>
+        <li><a href="#conditional_compilation">条件付きコンパイル</a></li>
     </ol></li>
-    <li><a href="#x86_64_vec">X86 And X86_64 Vector Extension Implementation</a><ol>        <li><a href="#vector_op_intrinsics">Vector Operation Intrinsics</a></li>
+    <li><a href="#x86_64_vec">X86 と X86_64 ベクトル拡張の実装</a><ol>        <li><a href="#vector_op_intrinsics">ベクトル演算の組み込み関数</a></li>
     </ol></li>
 </ol>
 </div>
@@ -214,7 +214,7 @@
         of those elements in the vector type.
         The type names will not be keywords.
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="properties" href="#properties">Properties</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="properties" href="#properties">プロパティ</a></h3>
 <div class="blankline"></div>
         <p>Vector types have the property:</p>
 <div class="blankline"></div>
@@ -242,7 +242,7 @@
         <tr><td>.nan</td><td>NaN value</td></tr>
         </table></center>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="conversions" href="#conversions">Conversions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="conversions" href="#conversions">変換</a></h3>
 <div class="blankline"></div>
         <p>Vector types of the same size can be implicitly converted among
         each other, this is done as a reinterpret cast (a type paint).
@@ -255,7 +255,7 @@
 v = 3 + v;   <span class="d_comment">// add 3 to each element in v
 </span></pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="accessing_individual_elems" href="#accessing_individual_elems">Accessing Individual Vector Elements</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="accessing_individual_elems" href="#accessing_individual_elems">個々のベクトル要素へのアクセス</a></h3>
 <div class="blankline"></div>
         <p>They cannot be accessed directly, but can be when converted to
         an array type:</p>
@@ -268,7 +268,7 @@ v = 3 + v;   <span class="d_comment">// add 3 to each element in v
 </span></pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="conditional_compilation" href="#conditional_compilation">Conditional Compilation</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="conditional_compilation" href="#conditional_compilation">条件付きコンパイル</a></h3>
 <div class="blankline"></div>
         <p>If vector extensions are implemented, the
         <a href="../spec/version.html#PredefinedVersions">version identifier</a>
@@ -309,7 +309,7 @@ v = 3 + v;   <span class="d_comment">// add 3 to each element in v
     c[] = a[] / b[];
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="x86_64_vec" href="#x86_64_vec">X86 And X86_64 Vector Extension Implementation</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="x86_64_vec" href="#x86_64_vec">X86 と X86_64 ベクトル拡張の実装</a></h2>
 <div class="blankline"></div>
     <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b> <div class="blankline"></div>
         <p>The following describes the specific implementation of the
@@ -396,18 +396,18 @@ v = 3 + v;   <span class="d_comment">// add 3 to each element in v
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="vector_op_intrinsics" href="#vector_op_intrinsics">Vector Operation Intrinsics</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="vector_op_intrinsics" href="#vector_op_intrinsics">ベクトル演算の組み込み関数</a></h3>
 <div class="blankline"></div>
         <p>See <a href="../phobos/core_simd.html"><span class="d_inlinecode donthyphenate notranslate">core.simd</span></a> for the supported intrinsics.</p>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/abi.html">Application Binary Interface</a></div>
-<div style="float: right"><a href="../spec/betterc.html">Better C</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/abi.html">ABI[Application Binary Interface]</a></div>
+<div style="float: right"><a href="../spec/betterc.html">Better C[Better C]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Jan  5 11:24:42 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Thu Jan  6 10:51:07 2022
 </div>
     </div>
 </div>

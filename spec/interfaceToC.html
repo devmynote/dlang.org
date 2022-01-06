@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Interfacing to C - D言語 非公式日本語</title>
+<title>Cとの連携 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Interfacing to C' class='doc'>
+<body id='Cとの連携' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BInterfacing to C%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BCとの連携%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Interfacing to C</h1>
+        <h1>Cとの連携</h1>
         
 <style>    body { counter-reset: h1 32; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,15 +146,15 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#calling_c_functions">Calling C Functions</a></li>
-    <li><a href="#storage_allocation">Storage Allocation</a></li>
-    <li><a href="#data_type_compat">Data Type Compatibility</a></li>
-    <li><a href="#passing_d_array">Passing D Array Arguments to C Functions</a></li>
-    <li><a href="#calling_printf">Calling <span class="d_inlinecode donthyphenate notranslate">printf()</span></a></li>
-    <li><a href="#structs_and_unions">Structs and Unions</a></li>
-    <li><a href="#callbacks">Callbacks</a></li>
-    <li><a href="#using-c-libraries">Using Existing C Libraries</a></li>
-    <li><a href="#c-globals">Accessing C Globals</a></li>
+    <ol>    <li><a href="#calling_c_functions">C 関数を呼び出す</a></li>
+    <li><a href="#storage_allocation">ストレージの割り当て</a></li>
+    <li><a href="#data_type_compat">データ型の互換性</a></li>
+    <li><a href="#passing_d_array">D配列引数を C関数に渡す</a></li>
+    <li><a href="#calling_printf"><span class="d_inlinecode donthyphenate notranslate">printf()</span> を呼び出す</a></li>
+    <li><a href="#structs_and_unions">構造体と共用体</a></li>
+    <li><a href="#callbacks">コールバック</a></li>
+    <li><a href="#using-c-libraries">既存の Cライブラリの使用</a></li>
+    <li><a href="#c-globals">C のグローバルへのアクセス</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -169,7 +169,7 @@
         and function call/return sequences.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="calling_c_functions" href="#calling_c_functions">Calling C Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="calling_c_functions" href="#calling_c_functions">C 関数を呼び出す</a></h2>
 <div class="blankline"></div>
         <p>C functions can be called directly from D. There is no need for
         wrapper functions, argument swizzling, and the C functions do not
@@ -231,7 +231,7 @@
 }
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="storage_allocation" href="#storage_allocation">Storage Allocation</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="storage_allocation" href="#storage_allocation">ストレージの割り当て</a></h2>
 <div class="blankline"></div>
         <p>C code explicitly manages memory with calls to
         <a href="http://www.digitalmars.com/rtl/stdlib.html#malloc">malloc()</a> and
@@ -282,7 +282,7 @@
         segments of other DLLs, etc.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="data_type_compat" href="#data_type_compat">Data Type Compatibility</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="data_type_compat" href="#data_type_compat">データ型の互換性</a></h2>
 <div class="blankline"></div>
         <center><table><caption>D And C Type Equivalence</caption>    <tr><th rowspan="2">D</th><th colspan="2">C</th></tr>
 <tr><th scope="col">32 bit</th><th scope="col">64 bit</th></tr>
@@ -328,7 +328,7 @@
         does not pin down the sizes of the types, so some care is needed.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="passing_d_array" href="#passing_d_array">Passing D Array Arguments to C Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="passing_d_array" href="#passing_d_array">D配列引数を C関数に渡す</a></h2>
 <div class="blankline"></div>
         <p>In C, arrays are passed to functions as pointers even if the function
         prototype says its an array. In D, static arrays are passed by value,
@@ -349,7 +349,7 @@
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="calling_printf" href="#calling_printf">Calling <span class="d_inlinecode donthyphenate notranslate">printf()</span></a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="calling_printf" href="#calling_printf"><span class="d_inlinecode donthyphenate notranslate">printf()</span> を呼び出す</a></h2>
 <div class="blankline"></div>
         <p><span class="d_inlinecode donthyphenate notranslate">printf</span> can be directly called from D code:</p>
 <pre class="d_code notranslate"><span class="d_keyword">import</span> core.stdc.stdio;
@@ -386,7 +386,7 @@ printf(<span class="d_string">"there are %d apples\n"</span>, apples);
         <li>undefined behavior per C99</li>
         </ul>
 <div class="blankline"></div>
-<h3>Strings</h3>
+<h3>文字列</h3>
 <div class="blankline"></div>
         <p>A string cannot be printed directly. But <span class="d_inlinecode donthyphenate notranslate">%.*s</span> can be used:
         </p>
@@ -396,7 +396,7 @@ printf(<span class="d_string">"hello %.*s\n"</span>, <span class="d_keyword">cas
         <p>The cast to <span class="d_inlinecode donthyphenate notranslate">int</span> is required.
         </p>
 <div class="blankline"></div>
-<h3><span class="d_inlinecode donthyphenate notranslate">size_t</span> and <span class="d_inlinecode donthyphenate notranslate">ptrdiff_t</span></h3>
+<h3><span class="d_inlinecode donthyphenate notranslate">size_t</span>, <span class="d_inlinecode donthyphenate notranslate">ptrdiff_t</span></h3>
 <div class="blankline"></div>
         <p>These use the <span class="d_inlinecode donthyphenate notranslate">zd</span> and <span class="d_inlinecode donthyphenate notranslate">dt</span> format specifiers respectively:
         </p>
@@ -405,7 +405,7 @@ printf(<span class="d_string">"hello %.*s\n"</span>, <span class="d_keyword">cas
 printf(<span class="d_string">"size of an int is %zt, pointer difference is %td\n"</span>, <span class="d_keyword">int</span>.sizeof, p - q);
 </pre>
 <div class="blankline"></div>
-<h3>Non-Standard Format Specifiers</h3>
+<h3>非標準フォーマット指定子</h3>
 <div class="blankline"></div>
         <p>Non-Standard format specifiers will be rejected by the compiler.
         Since the checking is only done for formats as string literals,
@@ -415,13 +415,13 @@ printf(<span class="d_string">"size of an int is %zt, pointer difference is %td\
 printf(format, value);
 </pre>
 <div class="blankline"></div>
-<h3>Modern Formatted Writing</h3>
+<h3>モダンに書式化された文書</h3>
 <div class="blankline"></div>
         <p>An improved D function for formatted output is
         <span class="d_inlinecode donthyphenate notranslate">std.stdio.writef()</span>.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="structs_and_unions" href="#structs_and_unions">Structs and Unions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="structs_and_unions" href="#structs_and_unions">構造体と共用体</a></h2>
 <div class="blankline"></div>
         <p>D structs and unions are analogous to C's.
         </p>
@@ -462,7 +462,7 @@ printf(format, value);
 }
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="callbacks" href="#callbacks">Callbacks</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="callbacks" href="#callbacks">コールバック</a></h2>
 <div class="blankline"></div>
     <p>D can easily call C callbacks (function pointers), and C can call
     callbacks provided by D code if the callback is an <span class="d_inlinecode donthyphenate notranslate">extern(C)</span> function,
@@ -506,7 +506,7 @@ extern "C" Callback getCallback(void)
 <div class="blankline"></div>
     <p>For more info about callbacks read the <a href="function.html#closures">closures</a> section.</p>
 <div class="blankline"></div>
-<h2><span id="Using C Libraries"><a class="anchor" title="Permalink to this section" id="using-c-libraries" href="#using-c-libraries">Using Existing C Libraries</a></span></h2>
+<h2><span id="Using C Libraries"><a class="anchor" title="Permalink to this section" id="using-c-libraries" href="#using-c-libraries">既存の Cライブラリの使用</a></span></h2>
 <div class="blankline"></div>
         <p>Since D can call C code directly, it can also call any C library
         functions, giving D access to the smorgasbord of existing C libraries.
@@ -520,7 +520,7 @@ extern "C" Callback getCallback(void)
         to the Deimos Project.
         </p>
 <div class="blankline"></div>
-<h2><span id="C Globals"><a class="anchor" title="Permalink to this section" id="c-globals" href="#c-globals">Accessing C Globals</a></span></h2>
+<h2><span id="C Globals"><a class="anchor" title="Permalink to this section" id="c-globals" href="#c-globals">C のグローバルへのアクセス</a></span></h2>
 <div class="blankline"></div>
         <p>C globals can be accessed directly from D. C globals have the C naming
         convention, and so must be in an <span class="d_inlinecode donthyphenate notranslate">extern (C)</span> block.
@@ -535,14 +535,14 @@ extern "C" Callback getCallback(void)
 </pre>
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/ddoc.html">Embedded Documentation</a></div>
-<div style="float: right"><a href="../spec/cpp_interface.html">Interfacing to C++</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/ddoc.html">ドキュメント生成[Embedded Documentation]</a></div>
+<div style="float: right"><a href="../spec/cpp_interface.html">C++との連携[Interfacing to C++]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Jan  5 11:24:42 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Thu Jan  6 10:51:07 2022
 </div>
     </div>
 </div>

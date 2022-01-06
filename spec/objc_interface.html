@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Interfacing to Objective-C - D言語 非公式日本語</title>
+<title>Objective-Cとの連携 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Interfacing to Objective-C' class='doc'>
+<body id='Objective-Cとの連携' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BInterfacing to Objective-C%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BObjective-Cとの連携%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Interfacing to Objective-C</h1>
+        <h1>Objective-Cとの連携</h1>
         
 <style>    body { counter-reset: h1 34; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,23 +146,23 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#classes">Classes</a><ol>        <li><a href="#external-class">Declaring an External Class</a></li>
-        <li><a href="#defining-class">Defining a Class</a></li>
+    <ol>    <li><a href="#classes">クラス</a><ol>        <li><a href="#external-class">外部クラスの宣言</a></li>
+        <li><a href="#defining-class">クラスの定義</a></li>
     </ol></li>
-    <li><a href="#protocols">Protocols</a><ol>        <li><a href="#declaring-protocol">Declaring a Protocol</a></li>
-        <li><a href="#optional-methods">Optional Methods</a></li>
+    <li><a href="#protocols">プロトコル</a><ol>        <li><a href="#declaring-protocol">プロトコルの宣言</a></li>
+        <li><a href="#optional-methods">オプションメソッド</a></li>
     </ol></li>
-    <li><a href="#instance-variables">Instance Variables</a></li>
-    <li><a href="#instance-method">Calling an Instance Method</a></li>
-    <li><a href="#selector-attribute">The <span class="d_inlinecode donthyphenate notranslate">@selector</span> Attribute</a><ol>        <li><a href="#compiler-checks">Compiler Checks</a></li>
+    <li><a href="#instance-variables">インスタンス変数</a></li>
+    <li><a href="#instance-method">インスタンスメソッドの呼び出し</a></li>
+    <li><a href="#selector-attribute"><span class="d_inlinecode donthyphenate notranslate">@selector</span> 属性</a><ol>        <li><a href="#compiler-checks">コンパイラチェック</a></li>
     </ol></li>
-    <li><a href="#optional-attribute">The <span class="d_inlinecode donthyphenate notranslate">@optional</span> Attribute</a><ol>        <li><a href="#compiler-checks">Compiler Checks</a></li>
+    <li><a href="#optional-attribute"><span class="d_inlinecode donthyphenate notranslate">@optional</span> 属性</a><ol>        <li><a href="#compiler-checks">コンパイラチェック</a></li>
     </ol></li>
-    <li><a href="#objc-linkage">Objective-C Linkage</a></li>
-    <li><a href="#memory-management">Memory Management</a></li>
-    <li><a href="#frameworks">Frameworks</a><ol>        <li><a href="#framework-paths">Framework Paths</a></li>
+    <li><a href="#objc-linkage">Objective-C リンケージ</a></li>
+    <li><a href="#memory-management">メモリ管理</a></li>
+    <li><a href="#frameworks">フレームワーク</a><ol>        <li><a href="#framework-paths">フレームワークのパス</a></li>
     </ol></li>
-    <li><a href="#usage-example">Full Usage Example</a></li>
+    <li><a href="#usage-example">完全な使用例</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -175,9 +175,9 @@
         <a href="#usage-example">the bottom</a>.
     </p>
 <div class="blankline"></div>
-    <h2><a class="anchor" title="Permalink to this section" id="classes" href="#classes">Classes</a></h2>
+    <h2><a class="anchor" title="Permalink to this section" id="classes" href="#classes">クラス</a></h2>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="external-class" href="#external-class">Declaring an External Class</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="external-class" href="#external-class">外部クラスの宣言</a></h3>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">import</span> core.attribute : selector;
 
@@ -200,7 +200,7 @@
         <span class="d_inlinecode donthyphenate notranslate">Objective-C</span> linkage.
     </p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="defining-class" href="#defining-class">Defining a Class</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="defining-class" href="#defining-class">クラスの定義</a></h3>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">import</span> core.attribute : selector;
 
@@ -238,9 +238,9 @@
         virtual. <span class="d_inlinecode donthyphenate notranslate">static</span> methods are overridable as well.
     </p>
 <div class="blankline"></div>
-    <h2><a class="anchor" title="Permalink to this section" id="protocols" href="#protocols">Protocols</a></h2>
+    <h2><a class="anchor" title="Permalink to this section" id="protocols" href="#protocols">プロトコル</a></h2>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="declaring-protocol" href="#declaring-protocol">Declaring a Protocol</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="declaring-protocol" href="#declaring-protocol">プロトコルの宣言</a></h3>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">import</span> core.attribute : selector;
 <span class="d_keyword">import</span> core.stdc.stdio : printf;
@@ -282,7 +282,7 @@
         methods with Objective-C linkage, inside an interface cannot have a body.
     </p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="optional-methods" href="#optional-methods">Optional Methods</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="optional-methods" href="#optional-methods">オプションメソッド</a></h3>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">import</span> core.attribute : optional, selector;
 <span class="d_keyword">import</span> core.stdc.stdio : printf;
@@ -344,7 +344,7 @@
         <a href="#optional-attribute"><span class="d_inlinecode donthyphenate notranslate">@optional</span></a> attribute.
     </p>
 <div class="blankline"></div>
-    <h2><a class="anchor" title="Permalink to this section" id="instance-variables" href="#instance-variables">Instance Variables</a></h2>
+    <h2><a class="anchor" title="Permalink to this section" id="instance-variables" href="#instance-variables">インスタンス変数</a></h2>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">import</span> core.attribute : selector;
 
@@ -389,7 +389,7 @@
         declare instance variables when creating bindings to Objective-C classes.
     </p>
 <div class="blankline"></div>
-    <h2><a class="anchor" title="Permalink to this section" id="instance-method" href="#instance-method">Calling an Instance Method</a></h2>
+    <h2><a class="anchor" title="Permalink to this section" id="instance-method" href="#instance-method">インスタンスメソッドの呼び出し</a></h2>
 <div class="blankline"></div>
     <p>        Calling an Objective-C instance method uses the same syntax as calling
         regular D methods:
@@ -403,7 +403,7 @@
         the method.
     </p>
 <div class="blankline"></div>
-    <h2><a class="anchor" title="Permalink to this section" id="selector-attribute" href="#selector-attribute">The <span class="d_inlinecode donthyphenate notranslate">@selector</span> Attribute</a></h2>
+    <h2><a class="anchor" title="Permalink to this section" id="selector-attribute" href="#selector-attribute"><span class="d_inlinecode donthyphenate notranslate">@selector</span> 属性</a></h2>
 <div class="blankline"></div>
     <p>        The <span class="d_inlinecode donthyphenate notranslate">@selector</span> attribute is a compiler recognized
         <a href="attribute.html#uda">UDA</a>. It is used to tell the compiler which
@@ -440,7 +440,7 @@
         <a href="#objc-version-identifier"><span class="d_inlinecode donthyphenate notranslate">D_ObjectiveC</span></a> is enabled.
     </p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="compiler-checks" href="#compiler-checks">Compiler Checks</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="compiler-checks" href="#compiler-checks">コンパイラチェック</a></h3>
 <div class="blankline"></div>
     <p>        The compiler performs the following checks to enforce the correct usage
         of the <span class="d_inlinecode donthyphenate notranslate">@selector</span> attribute:
@@ -460,7 +460,7 @@
 <div class="blankline"></div>
     <p>If any of the checks fail, a compile error will occur.</p>
 <div class="blankline"></div>
-    <h2><a class="anchor" title="Permalink to this section" id="optional-attribute" href="#optional-attribute">The <span class="d_inlinecode donthyphenate notranslate">@optional</span> Attribute</a></h2>
+    <h2><a class="anchor" title="Permalink to this section" id="optional-attribute" href="#optional-attribute"><span class="d_inlinecode donthyphenate notranslate">@optional</span> 属性</a></h2>
 <div class="blankline"></div>
     <p>        The <span class="d_inlinecode donthyphenate notranslate">@optional</span> attribute is a compiler recognized
         <a href="attribute.html#uda">UDA</a>. It is used to tell the compiler that a
@@ -479,7 +479,7 @@
         <a href="#objc-version-identifier"><span class="d_inlinecode donthyphenate notranslate">D_ObjectiveC</span></a> is enabled.
     </p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="compiler-checks" href="#compiler-checks">Compiler Checks</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="compiler-checks" href="#compiler-checks">コンパイラチェック</a></h3>
 <div class="blankline"></div>
     <p>        The compiler performs the following checks to enforce the correct usage
         of the <span class="d_inlinecode donthyphenate notranslate">@optional</span> attribute:
@@ -493,7 +493,7 @@
 </ul>
     <p>If any of the checks fail, a compile error will occur.</p>
 <div class="blankline"></div>
-    <h2>        <a class="anchor" title="Permalink to this section" id="objc-version-identifier" href="#objc-version-identifier">The <span class="d_inlinecode donthyphenate notranslate">D_ObjectiveC</span> Version Identifier</a>
+    <h2>        <a class="anchor" title="Permalink to this section" id="objc-version-identifier" href="#objc-version-identifier"><span class="d_inlinecode donthyphenate notranslate">D_ObjectiveC</span> バージョン識別子</a>
     </h2>
 <div class="blankline"></div>
     <p>        The <span class="d_inlinecode donthyphenate notranslate">D_ObjectiveC</span> version identifier is a predefined version
@@ -501,7 +501,7 @@
         target.
     </p>
 <div class="blankline"></div>
-    <h2><a class="anchor" title="Permalink to this section" id="objc-linkage" href="#objc-linkage">Objective-C Linkage</a></h2>
+    <h2><a class="anchor" title="Permalink to this section" id="objc-linkage" href="#objc-linkage">Objective-C リンケージ</a></h2>
 <div class="blankline"></div>
     <p>        Objective-C linkage is achieved by attaching the <span class="d_inlinecode donthyphenate notranslate">extern (Objective-C)</span>
         attribute to a class. Example:
@@ -528,7 +528,7 @@
         string mixins or other workarounds.
     </p>
 <div class="blankline"></div>
-    <h2><a class="anchor" title="Permalink to this section" id="memory-management" href="#memory-management">Memory Management</a></h2>
+    <h2><a class="anchor" title="Permalink to this section" id="memory-management" href="#memory-management">メモリ管理</a></h2>
 <div class="blankline"></div>
     <p>        The preferred way to do memory management in Objective-C is to use
         Automatic Reference Counting, <a href="https://developer.apple.com/library/mac/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html">ARC</a>.
@@ -537,7 +537,7 @@
         on an Objective-C instance, like in the old days of Objective-C.
     </p>
 <div class="blankline"></div>
-    <h2><a class="anchor" title="Permalink to this section" id="frameworks" href="#frameworks">Frameworks</a></h2>
+    <h2><a class="anchor" title="Permalink to this section" id="frameworks" href="#frameworks">フレームワーク</a></h2>
 <div class="blankline"></div>
     <p>        Most Objective-C code is bundled in something called a "Framework".
         This is basically a regular directory, with the <span class="d_inlinecode donthyphenate notranslate">.framework</span> extension
@@ -560,7 +560,7 @@
         the framework. DMD cannot handle this and will instead interpret the
         name of the framework as a separate flag.
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="framework-paths" href="#framework-paths">Framework Paths</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="framework-paths" href="#framework-paths">フレームワークのパス</a></h3>
 <div class="blankline"></div>
     <p>        Using the above flag, the linker will search in the standard framework
         paths. The standard search paths for frameworks are:
@@ -581,7 +581,7 @@
         and the <span class="d_inlinecode donthyphenate notranslate">ld</span> man page.
     </p>
 <div class="blankline"></div>
-    <h2><a class="anchor" title="Permalink to this section" id="usage-example" href="#usage-example">Full Usage Example</a></h2>
+    <h2><a class="anchor" title="Permalink to this section" id="usage-example" href="#usage-example">完全な使用例</a></h2>
 <div class="blankline"></div>
     <p>        This example will create an Objective-C string, <span class="d_inlinecode donthyphenate notranslate">NSString</span>, and log the
         message using <span class="d_inlinecode donthyphenate notranslate">NSLog</span> to stderr.
@@ -672,14 +672,14 @@
 <pre class="d_code notranslate">dmd -L-framework -LFoundation main.d
 </pre>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/cpp_interface.html">Interfacing to C++</a></div>
-<div style="float: right"><a href="../spec/portability.html">Portability Guide</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/cpp_interface.html">C++との連携[Interfacing to C++]</a></div>
+<div style="float: right"><a href="../spec/portability.html">移植性[Portability Guide]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Jan  5 11:24:42 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Thu Jan  6 10:51:07 2022
 </div>
     </div>
 </div>

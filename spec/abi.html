@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Application Binary Interface - D言語 非公式日本語</title>
+<title>アプリケーション バイナリ インターフェース[ABI] - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Application Binary Interface' class='doc'>
+<body id='アプリケーション バイナリ インターフェース[ABI]' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BApplication Binary Interface%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5Bアプリケーション バイナリ インターフェース[ABI]%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Application Binary Interface</h1>
+        <h1>アプリケーション バイナリ インターフェース[ABI]</h1>
         
 <style>    body { counter-reset: h1 38; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,31 +146,31 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#c_abi">C ABI</a></li>
-    <li><a href="#endianness">Endianness</a></li>
-    <li><a href="#basic_types">Basic Types</a></li>
-    <li><a href="#delegates">Delegates</a></li>
-    <li><a href="#structs">Structs</a></li>
-    <li><a href="#classes">Classes</a></li>
-    <li><a href="#interfaces">Interfaces</a></li>
-    <li><a href="#arrays">Arrays</a></li>
-    <li><a href="#associative_arrays">Associative Arrays</a></li>
-    <li><a href="#references_types">Reference Types</a></li>
-    <li><a href="#name_mangling">Name Mangling</a><ol>        <li><a href="#back_ref">Back references</a></li>
-        <li><a href="#type_mangling">Type Mangling</a></li>
+    <ol>    <li><a href="#c_abi">C の ABI</a></li>
+    <li><a href="#endianness">エンディアン</a></li>
+    <li><a href="#basic_types">基本型</a></li>
+    <li><a href="#delegates">デリゲート</a></li>
+    <li><a href="#structs">構造体</a></li>
+    <li><a href="#classes">クラス</a></li>
+    <li><a href="#interfaces">インターフェース</a></li>
+    <li><a href="#arrays">配列</a></li>
+    <li><a href="#associative_arrays">連想配列</a></li>
+    <li><a href="#references_types">参照型</a></li>
+    <li><a href="#name_mangling">名前マングリング</a><ol>        <li><a href="#back_ref">後方参照</a></li>
+        <li><a href="#type_mangling">型マングリング</a></li>
     </ol></li>
-    <li><a href="#function_calling_conventions">Function Calling Conventions</a><ol>        <li><a href="#register_conventions">Register Conventions</a></li>
-        <li><a href="#return_value">Return Value</a></li>
-        <li><a href="#parameters">Parameters</a></li>
+    <li><a href="#function_calling_conventions">関数呼び出し規約</a><ol>        <li><a href="#register_conventions">レジスターの規約</a></li>
+        <li><a href="#return_value">戻り値</a></li>
+        <li><a href="#parameters">引数</a></li>
     </ol></li>
-    <li><a href="#exception_handling">Exception Handling</a><ol>        <li><a href="#windows_eh">Windows</a></li>
-        <li><a href="#ninux_fbsd_osx_eh">Linux, FreeBSD and OS X</a></li>
+    <li><a href="#exception_handling">例外処理</a><ol>        <li><a href="#windows_eh">Windows</a></li>
+        <li><a href="#ninux_fbsd_osx_eh">Linux, FreeBSD, OS X</a></li>
     </ol></li>
-    <li><a href="#garbage_collection">Garbage Collection</a></li>
-    <li><a href="#runtime_helper_functions">Runtime Helper Functions</a></li>
-    <li><a href="#module_init_and_fina">Module Initialization and Termination</a></li>
-    <li><a href="#unit_testing">Unit Testing</a></li>
-    <li><a href="#symbolic_debugging">Symbolic Debugging</a><ol>        <li><a href="#codeview">Codeview Debugger Extensions</a></li>
+    <li><a href="#garbage_collection">ガベージコレクション</a></li>
+    <li><a href="#runtime_helper_functions">実行時ヘルパー関数</a></li>
+    <li><a href="#module_init_and_fina">モジュールの初期化と終了</a></li>
+    <li><a href="#unit_testing">ユニットテスト</a></li>
+    <li><a href="#symbolic_debugging">シンボルを使用したデバッグ</a><ol>        <li><a href="#codeview">Codeviewデバッガ拡張</a></li>
     </ol></li>
 </ol>
 </div>
@@ -182,7 +182,7 @@
         D binaries built by other implementations.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="c_abi" href="#c_abi">C ABI</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="c_abi" href="#c_abi">C の ABI</a></h2>
 <div class="blankline"></div>
         <p>The C ABI referred to in this specification means the C Application
         Binary Interface of the target system.
@@ -190,7 +190,7 @@
         code shall have access to the entire C ABI runtime library.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="endianness" href="#endianness">Endianness</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="endianness" href="#endianness">エンディアン</a></h2>
 <div class="blankline"></div>
         <p>The <a href="https://en.wikipedia.org/wiki/Endianness">endianness</a>
         (byte order) of the layout of the data
@@ -200,7 +200,7 @@
         <span class="d_inlinecode donthyphenate notranslate">0D 0C 0B 0A</span>.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="basic_types" href="#basic_types">Basic Types</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="basic_types" href="#basic_types">基本型</a></h2>
 <div class="blankline"></div>
         <table>        <tr><td>bool</td><td>8 bit byte with the values 0 for false and 1 for true</td></tr>
         <tr><td>byte</td><td>8 bit signed value</td></tr>
@@ -219,7 +219,7 @@
          80 bit IEEE 754 extended real</td></tr>
         </table>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="delegates" href="#delegates">Delegates</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="delegates" href="#delegates">デリゲート</a></h2>
 <div class="blankline"></div>
         <p>Delegates are <i>fat pointers</i> with two parts:</p>
 <div class="blankline"></div>
@@ -234,11 +234,11 @@
         function's stack frame (nested functions).
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="structs" href="#structs">Structs</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="structs" href="#structs">構造体</a></h2>
 <div class="blankline"></div>
         <p>Conforms to the target's C ABI struct layout.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="classes" href="#classes">Classes</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="classes" href="#classes">クラス</a></h2>
 <div class="blankline"></div>
         <p>An object consists of:</p>
 <div class="blankline"></div>
@@ -297,7 +297,7 @@
         <li>An instance of StaticClassXXXX called StaticXXXX for the static members.</li>
         </ul>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="interfaces" href="#interfaces">Interfaces</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="interfaces" href="#interfaces">インターフェース</a></h2>
 <div class="blankline"></div>
         <p>An interface is a pointer to a pointer to a vtbl[].
         The vtbl[0] entry is a pointer to the corresponding
@@ -318,7 +318,7 @@
         on the target machine.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="arrays" href="#arrays">Arrays</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="arrays" href="#arrays">配列</a></h2>
 <div class="blankline"></div>
         <p>A dynamic array consists of:</p>
 <div class="blankline"></div>
@@ -342,7 +342,7 @@
         and forth to each other.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="associative_arrays" href="#associative_arrays">Associative Arrays</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="associative_arrays" href="#associative_arrays">連想配列</a></h2>
 <div class="blankline"></div>
         <p>Associative arrays consist of a pointer to an opaque, implementation
         defined type.</p>
@@ -351,7 +351,7 @@
          <a href="https://github.com/dlang/druntime/blob/master/src/rt/aaA.d">rt/aaA.d</a>.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="references_types" href="#references_types">Reference Types</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="references_types" href="#references_types">参照型</a></h2>
 <div class="blankline"></div>
         <p>D has reference types, but they are implicit. For example, classes are always
         referred to by reference; this means that class instances can never reside on the stack
@@ -359,7 +359,7 @@
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="name_mangling" href="#name_mangling">Name Mangling</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="name_mangling" href="#name_mangling">名前マングリング</a></h2>
 <div class="blankline"></div>
         <p>D accomplishes typesafe linking by <i>mangling</i> a D identifier
         to include scope and type information.
@@ -554,7 +554,7 @@
         the number of characters in the <a href="#Name"><i>Name</i></a>.
         </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="back_ref" href="#back_ref">Back references</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="back_ref" href="#back_ref">後方参照</a></h3>
 <div class="blankline"></div>
     <p>Any <a href="#LName"><i>LName</i></a> or non-basic <a href="#Type"><i>Type</i></a> (i.e. any type
     that does not encode as a fixed one or two character sequence) that has been
@@ -580,7 +580,7 @@
     An identifier back reference always points to a digit <b>0</b> to <b>9</b>, while a type back reference always points
     to a letter.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="type_mangling" href="#type_mangling">Type Mangling</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="type_mangling" href="#type_mangling">型マングリング</a></h3>
 <div class="blankline"></div>
         <p>Types are mangled using a simple linear scheme:</p>
 <div class="blankline"></div>
@@ -849,7 +849,7 @@
     <b>B</b> <a href="#Parameters"><i>Parameters</i></a> <b>Z</b>
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="function_calling_conventions" href="#function_calling_conventions">Function Calling Conventions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="function_calling_conventions" href="#function_calling_conventions">関数呼び出し規約</a></h2>
 <div class="blankline"></div>
         <p>The <span class="d_inlinecode donthyphenate notranslate">extern (C)</span> and <span class="d_inlinecode donthyphenate notranslate">extern (D)</span> calling convention matches the C
         calling convention
@@ -857,7 +857,7 @@
         Except that the extern (D) calling convention for Windows x86 is described here.
         </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="register_conventions" href="#register_conventions">Register Conventions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="register_conventions" href="#register_conventions">レジスターの規約</a></h3>
 <div class="blankline"></div>
         <ul><div class="blankline"></div>
         <li>EAX, ECX, EDX are scratch registers and can be destroyed
@@ -877,7 +877,7 @@
 <div class="blankline"></div>
         </ul>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="return_value" href="#return_value">Return Value</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="return_value" href="#return_value">戻り値</a></h3>
 <div class="blankline"></div>
         <ul><div class="blankline"></div>
         <li>The types bool, byte, ubyte, short, ushort, int, uint,
@@ -917,7 +917,7 @@
 <div class="blankline"></div>
         </ul>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="parameters" href="#parameters">Parameters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="parameters" href="#parameters">引数</a></h3>
 <div class="blankline"></div>
         <p>The parameters to the non-variadic function:</p>
 <div class="blankline"></div>
@@ -1002,7 +1002,7 @@ foo(a1, a2, a3, ..., an);
         <span class="d_inlinecode donthyphenate notranslate">_argptr</span> is not
         passed, it is computed by the callee.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="exception_handling" href="#exception_handling">Exception Handling</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="exception_handling" href="#exception_handling">例外処理</a></h2>
 <div class="blankline"></div>
     <h3><a class="anchor" title="Permalink to this section" id="windows_eh" href="#windows_eh">Windows</a></h3>
 <div class="blankline"></div>
@@ -1010,7 +1010,7 @@ foo(a1, a2, a3, ..., an);
         conventions.
         </p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="ninux_fbsd_osx_eh" href="#ninux_fbsd_osx_eh">Linux, FreeBSD and OS X</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="ninux_fbsd_osx_eh" href="#ninux_fbsd_osx_eh">Linux, FreeBSD, OS X</a></h3>
 <div class="blankline"></div>
         <p>Uses static address range/handler tables.
         It is not compatible with the ELF/Mach-O exception handling tables.
@@ -1074,15 +1074,15 @@ foo(a1, a2, a3, ..., an);
         <tr><span class="d_inlinecode donthyphenate notranslate">void*</span>, catch handler code</tr>
         </table></center>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="garbage_collection" href="#garbage_collection">Garbage Collection</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="garbage_collection" href="#garbage_collection">ガベージコレクション</a></h2>
 <div class="blankline"></div>
         <p>The interface to this is found in Druntime's <a href="https://github.com/dlang/druntime/blob/master/src/core/gc/gcinterface.d">core/gc/gcinterface.d</a>.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="runtime_helper_functions" href="#runtime_helper_functions">Runtime Helper Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="runtime_helper_functions" href="#runtime_helper_functions">実行時ヘルパー関数</a></h2>
 <div class="blankline"></div>
         <p>These are found in Druntime's <a href="https://github.com/dlang/druntime/blob/master/src/rt/">rt/</a>.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="module_init_and_fina" href="#module_init_and_fina">Module Initialization and Termination</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="module_init_and_fina" href="#module_init_and_fina">モジュールの初期化と終了</a></h2>
 <div class="blankline"></div>
         <p>All the static constructors for a module are aggregated into a
         single function, and a pointer to that function is inserted
@@ -1096,7 +1096,7 @@ foo(a1, a2, a3, ..., an);
         module.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="unit_testing" href="#unit_testing">Unit Testing</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="unit_testing" href="#unit_testing">ユニットテスト</a></h2>
 <div class="blankline"></div>
         <p>All the unit tests for a module are aggregated into a
         single function, and a pointer to that function is inserted
@@ -1104,7 +1104,7 @@ foo(a1, a2, a3, ..., an);
         module.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="symbolic_debugging" href="#symbolic_debugging">Symbolic Debugging</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="symbolic_debugging" href="#symbolic_debugging">シンボルを使用したデバッグ</a></h2>
 <div class="blankline"></div>
         <p>D has types that are not represented in existing C or C++ debuggers.
         These are dynamic arrays, associative arrays, and delegates.
@@ -1126,7 +1126,7 @@ foo(a1, a2, a3, ..., an);
         following extensions help them fully support the types.
         </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="codeview" href="#codeview">Codeview Debugger Extensions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="codeview" href="#codeview">Codeviewデバッガ拡張</a></h3>
 <div class="blankline"></div>
         <p>The D <b>dchar</b> type is represented by the special
         primitive type 0x78.</p>
@@ -1153,14 +1153,14 @@ foo(a1, a2, a3, ..., an);
         by <a href="http://www.digitalmars.com/ctg/obj2asm.html">obj2asm</a>. The <a href="http://ddbg.mainia.de/releases.html">Ddbg</a> debugger
         supports them.</p>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/memory-safe-d.html">Memory Safety</a></div>
-<div style="float: right"><a href="../spec/simd.html">Vector Extensions</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/memory-safe-d.html">メモリ安全性[Memory Safety]</a></div>
+<div style="float: right"><a href="../spec/simd.html">ベクトル拡張[Vector Extensions]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Jan  5 11:24:42 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Thu Jan  6 10:51:07 2022
 </div>
     </div>
 </div>

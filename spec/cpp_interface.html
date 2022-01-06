@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Interfacing to C++ - D言語 非公式日本語</title>
+<title>C++との連携 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Interfacing to C++' class='doc'>
+<body id='C++との連携' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BInterfacing to C++%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BC++との連携%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Interfacing to C++</h1>
+        <h1>C++との連携</h1>
         
 <style>    body { counter-reset: h1 33; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,25 +146,25 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#general_idea">The General Idea</a></li>
-    <li><a href="#global-functions">Global Functions</a><ol>        <li><a href="#calling_cpp_global_from_d">Calling C++ Global Functions from D</a></li>
-        <li><a href="#calling_global_d_functions_from_cpp">Calling Global D Functions From C++</a></li>
+    <ol>    <li><a href="#general_idea">一般的な考え方</a></li>
+    <li><a href="#global-functions">グローバル関数</a><ol>        <li><a href="#calling_cpp_global_from_d">D から C++ グローバル関数を呼び出す</a></li>
+        <li><a href="#calling_global_d_functions_from_cpp">C++ から D グローバル関数を呼び出す</a></li>
     </ol></li>
-    <li><a href="#cpp-namespaces">C++ Namespaces</a></li>
-    <li><a href="#classes">Classes</a><ol>        <li><a href="#using_cpp_classes_from_d">Using C++ Classes From D</a></li>
-        <li><a href="#using_d_classes_from_cpp">Using D Classes From C++</a></li>
+    <li><a href="#cpp-namespaces">C++ 名前空間</a></li>
+    <li><a href="#classes">クラス</a><ol>        <li><a href="#using_cpp_classes_from_d">D から C++ クラスを使う</a></li>
+        <li><a href="#using_d_classes_from_cpp">C++ から D クラスを使う</a></li>
     </ol></li>
-    <li><a href="#structs">Structs</a></li>
-    <li><a href="#cpp-templates">C++ Templates</a></li>
-    <li><a href="#function-overloading">Function Overloading</a></li>
-    <li><a href="#memory-allocation">Memory Allocation</a></li>
-    <li><a href="#data-type-compatibility">Data Type Compatibility</a></li>
-    <li><a href="#packing-and-alignment">Packing and Alignment</a></li>
-    <li><a href="#lifetime-management">Lifetime Management</a></li>
-    <li><a href="#special-member-functions">Special Member Functions</a></li>
-    <li><a href="#rtti">Runtime Type Identification</a></li>
-    <li><a href="#exception-handling">Exception Handling</a></li>
-    <li><a href="#comparing-d-immutable-and-const-with-cpp-const">Comparing D Immutable and Const with C++ Const</a></li>
+    <li><a href="#structs">構造体</a></li>
+    <li><a href="#cpp-templates">C++ テンプレート</a></li>
+    <li><a href="#function-overloading">関数オーバーロード</a></li>
+    <li><a href="#memory-allocation">メモリ割り当て</a></li>
+    <li><a href="#data-type-compatibility">データ型の互換性</a></li>
+    <li><a href="#packing-and-alignment">詰め込みと調整</a></li>
+    <li><a href="#lifetime-management">ライフタイム管理</a></li>
+    <li><a href="#special-member-functions">特別なメンバ関数</a></li>
+    <li><a href="#rtti">実行時型情報</a></li>
+    <li><a href="#exception-handling">例外処理</a></li>
+    <li><a href="#comparing-d-immutable-and-const-with-cpp-const">D の Imutable, Const と C++ の Constとの比較</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -174,7 +174,7 @@
     through a <a href="../spec/interfaceToC.html">C interface</a> or a
     COM interface.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="general_idea" href="#general_idea">The General Idea</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="general_idea" href="#general_idea">一般的な考え方</a></h2>
 <div class="blankline"></div>
     <p>Being 100% compatible with C++ means more or less adding
     a fully functional C++ compiler front end to D.
@@ -204,12 +204,12 @@
     <li>matching C++ virtual function table layout for single inheritance</li>
     </ul>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="global-functions" href="#global-functions">Global Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="global-functions" href="#global-functions">グローバル関数</a></h2>
 <div class="blankline"></div>
     <p>C++ global functions, including those in namespaces, can be declared
     and called in D, or defined in D and called in C++.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="calling_cpp_global_from_d" href="#calling_cpp_global_from_d">Calling C++ Global Functions from D</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="calling_cpp_global_from_d" href="#calling_cpp_global_from_d">D から C++ グローバル関数を呼び出す</a></h3>
 <div class="blankline"></div>
     <p>Given a C++ function in a C++ source file:</p>
 <div class="blankline"></div>
@@ -274,7 +274,7 @@ k = 3
 <div class="blankline"></div>
     </ul>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="calling_global_d_functions_from_cpp" href="#calling_global_d_functions_from_cpp">Calling Global D Functions From C++</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="calling_global_d_functions_from_cpp" href="#calling_global_d_functions_from_cpp">C++ から D グローバル関数を呼び出す</a></h3>
 <div class="blankline"></div>
     <p>To make a D function accessible from C++, give it
     C++ linkage:</p>
@@ -316,7 +316,7 @@ j = 7
 k = 8
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="cpp-namespaces" href="#cpp-namespaces">C++ Namespaces</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="cpp-namespaces" href="#cpp-namespaces">C++ 名前空間</a></h2>
 <div class="blankline"></div>
         <p>C++ symbols that reside in namespaces can be
         accessed from D. A <a href="attribute.html#namespace">namespace</a>
@@ -405,7 +405,7 @@ k = 8
 <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(foo() == 1 &amp;&amp; bar() == 2);
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="classes" href="#classes">Classes</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="classes" href="#classes">クラス</a></h2>
 <div class="blankline"></div>
     <p>C++ classes can be declared in D by using the <span class="d_inlinecode donthyphenate notranslate">extern (C++)</span>
     attribute on <span class="d_inlinecode donthyphenate notranslate">class</span>, <span class="d_inlinecode donthyphenate notranslate">struct</span> and <span class="d_inlinecode donthyphenate notranslate">interface</span>
@@ -437,7 +437,7 @@ k = 8
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="using_cpp_classes_from_d" href="#using_cpp_classes_from_d">Using C++ Classes From D</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="using_cpp_classes_from_d" href="#using_cpp_classes_from_d">D から C++ クラスを使う</a></h3>
 <div class="blankline"></div>
     <p>The following example shows binding of a pure virtual function, its
     implementation in a derived class, a non-virtual member function, and a
@@ -545,7 +545,7 @@ c = 3
 instead disabled on the D side; an alternative would be to reimplement the
 constructor in D. See the <a href="../spec/cpp_interface.html#lifetime-management">section below on lifetime management</a> for more information.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="using_d_classes_from_cpp" href="#using_d_classes_from_cpp">Using D Classes From C++</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="using_d_classes_from_cpp" href="#using_d_classes_from_cpp">C++ から D クラスを使う</a></h3>
 <div class="blankline"></div>
     <p>Given D code like:</p>
 <div class="blankline"></div>
@@ -598,7 +598,7 @@ k = 13
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="structs" href="#structs">Structs</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="structs" href="#structs">構造体</a></h2>
 <div class="blankline"></div>
     <p>C++ allows a struct to inherit from a base struct. This is done in D using
     <span class="d_inlinecode donthyphenate notranslate">alias this</span>:</p>
@@ -664,7 +664,7 @@ k = 13
     actual functions.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="cpp-templates" href="#cpp-templates">C++ Templates</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="cpp-templates" href="#cpp-templates">C++ テンプレート</a></h2>
 <div class="blankline"></div>
     <p>C++ function and type templates can be bound by using the
     <span class="d_inlinecode donthyphenate notranslate">extern (C++)</span> attribute on a function or type template declaration.</p>
@@ -782,14 +782,14 @@ B
 C
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="function-overloading" href="#function-overloading">Function Overloading</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="function-overloading" href="#function-overloading">関数オーバーロード</a></h2>
 <div class="blankline"></div>
     <p>C++ and D follow different rules for function overloading.
     D source code, even when calling <span class="d_inlinecode donthyphenate notranslate">extern (C++)</span> functions,
     will still follow D overloading rules.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="memory-allocation" href="#memory-allocation">Memory Allocation</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="memory-allocation" href="#memory-allocation">メモリ割り当て</a></h2>
 <div class="blankline"></div>
     <p>C++ code explicitly manages memory with calls to
     <span class="d_inlinecode donthyphenate notranslate">::operator new()</span> and <span class="d_inlinecode donthyphenate notranslate">::operator delete()</span>.
@@ -840,7 +840,7 @@ C
     shared libraries that aren't registered with the D runtime.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="data-type-compatibility" href="#data-type-compatibility">Data Type Compatibility</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="data-type-compatibility" href="#data-type-compatibility">データ型の互換性</a></h2>
 <div class="blankline"></div>
     <center><table><caption>D And C++ Type Equivalence</caption><div class="blankline"></div>
     <tr><th class="donthyphenate"><b>D type</b></th><th class="donthyphenate"><b>C++ type</b></th></tr>
@@ -936,7 +936,7 @@ C
     <p>These equivalents hold when the D and C++ compilers used are companions
     on the host platform.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="packing-and-alignment" href="#packing-and-alignment">Packing and Alignment</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="packing-and-alignment" href="#packing-and-alignment">詰め込みと調整</a></h2>
 <div class="blankline"></div>
     <p>D structs and unions are analogous to C's.
     </p>
@@ -952,7 +952,7 @@ C
     <a href="../phobos/std_bitmanip.html#.bitfields"><span class="d_inlinecode donthyphenate notranslate">std.bitmanip.bitfields</span></a>.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="lifetime-management" href="#lifetime-management">Lifetime Management</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="lifetime-management" href="#lifetime-management">ライフタイム管理</a></h2>
 <div class="blankline"></div>
     <p>C++ constructors, copy constructors, move constructors and destructors
     cannot be called directly in D code, and D constructors, postblit operators
@@ -966,20 +966,20 @@ C
     operators work in the two languages. For example, in D all objects are
     movable and there is no move constructor.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="special-member-functions" href="#special-member-functions">Special Member Functions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="special-member-functions" href="#special-member-functions">特別なメンバ関数</a></h2>
 <div class="blankline"></div>
     <p>D cannot directly call C++ special member functions, and vice versa.
     These include constructors, destructors, conversion operators,
     operator overloading, and allocators.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="rtti" href="#rtti">Runtime Type Identification</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="rtti" href="#rtti">実行時型情報</a></h2>
 <div class="blankline"></div>
     <p>D runtime type identification
     uses completely different techniques than C++.
     The two are incompatible.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="exception-handling" href="#exception-handling">Exception Handling</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="exception-handling" href="#exception-handling">例外処理</a></h2>
 <div class="blankline"></div>
     <p>Exception interoperability is a work in progress.</p>
 <div class="blankline"></div>
@@ -992,7 +992,7 @@ C
     directly in C++ code (but they will be throwable indirectly by calling into
     a D function with C++ linkage).</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="comparing-d-immutable-and-const-with-cpp-const" href="#comparing-d-immutable-and-const-with-cpp-const">Comparing D Immutable and Const with C++ Const</a></h2><div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="comparing-d-immutable-and-const-with-cpp-const" href="#comparing-d-immutable-and-const-with-cpp-const">D の Imutable, Const と C++ の Constとの比較</a></h2><div class="blankline"></div>
 <center><table><caption>Const, Immutable Comparison</caption>   <tr><th class="donthyphenate"><b>Feature</b></th><th class="donthyphenate"><b>D</b></th><th class="donthyphenate"><b>C++98</b></th></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">const</span> keyword</td><td>Yes</td><td>Yes</td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">immutable</span> keyword</td><td>Yes</td><td>No</td></tr>
@@ -1102,14 +1102,14 @@ foo(<span class="d_keyword">cast</span>(<span class="d_keyword">immutable</span>
 
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/interfaceToC.html">Interfacing to C</a></div>
-<div style="float: right"><a href="../spec/objc_interface.html">Interfacing to Objective-C</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/interfaceToC.html">Cとの連携[Interfacing to C]</a></div>
+<div style="float: right"><a href="../spec/objc_interface.html">Objective-Cとの連携[Interfacing to Objective-C]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Jan  5 11:24:42 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Thu Jan  6 10:51:07 2022
 </div>
     </div>
 </div>

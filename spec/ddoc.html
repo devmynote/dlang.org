@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Documentation Generator - D言語 非公式日本語</title>
+<title>ドキュメント生成 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Documentation Generator' class='doc'>
+<body id='ドキュメント生成' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -95,7 +95,7 @@
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BDocumentation Generator%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5Bドキュメント生成%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
 		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
 		</div>
 	</div>
@@ -107,7 +107,7 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Documentation Generator</h1>
+        <h1>ドキュメント生成</h1>
         
 <style>    body { counter-reset: h1 31; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,38 +146,38 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#specifications">Specification</a><ol>        <li><a href="#phases_of_processing">Phases of Processing</a></li>
-        <li><a href="#lexical">Lexical</a></li>
-        <li><a href="#parsing">Parsing</a></li>
-        <li><a href="#sections">Sections</a></li>
-        <li><a href="#standard_sections">Standard Sections</a></li>
-        <li><a href="#special_sections">Special Sections</a></li>
+    <ol>    <li><a href="#specifications">仕様</a><ol>        <li><a href="#phases_of_processing">処理フェーズ</a></li>
+        <li><a href="#lexical">字句の構成</a></li>
+        <li><a href="#parsing">構文解析</a></li>
+        <li><a href="#sections">段落</a></li>
+        <li><a href="#standard_sections">標準的な段落</a></li>
+        <li><a href="#special_sections">特別な段落</a></li>
     </ol></li>
-    <li><a href="#highlighting">Highlighting</a><ol>        <li><a href="#embedded_comments">Embedded Comments</a></li>
-        <li><a href="#embedded_code">Embedded Code</a></li>
-        <li><a href="#inline_code">Inline Code</a></li>
-        <li><a href="#embedded_html">Embedded HTML</a></li>
-        <li><a href="#headings">Headings</a></li>
-        <li><a href="#links">Links</a></li>
-        <li><a href="#lists">Lists</a></li>
-        <li><a href="#tables">Tables</a></li>
-        <li><a href="#quotes">Quotes</a></li>
-        <li><a href="#hrules">Horizontal Rules</a></li>
-        <li><a href="#text_emphasis">Text Emphasis</a></li>
-        <li><a href="#emphasis">Identifier Emphasis</a></li>
-        <li><a href="#character_entities">Character Entities</a></li>
-        <li><a href="#punctuation_escapes">Punctuation Escapes</a></li>
-        <li><a href="#no_documentation">No Documentation</a></li>
+    <li><a href="#highlighting">ハイライト</a><ol>        <li><a href="#embedded_comments">Embedded Comments</a></li>
+        <li><a href="#embedded_code">埋め込みコード</a></li>
+        <li><a href="#inline_code">インラインコード</a></li>
+        <li><a href="#embedded_html">埋め込みHTML</a></li>
+        <li><a href="#headings">見出し</a></li>
+        <li><a href="#links">リンク</a></li>
+        <li><a href="#lists">リスト</a></li>
+        <li><a href="#tables">テーブル</a></li>
+        <li><a href="#quotes">引用</a></li>
+        <li><a href="#hrules">水平方向のルール</a></li>
+        <li><a href="#text_emphasis">テキスト強調</a></li>
+        <li><a href="#emphasis">識別子の強調</a></li>
+        <li><a href="#character_entities">文字エンティティ</a></li>
+        <li><a href="#punctuation_escapes">句読点のエスケープ</a></li>
+        <li><a href="#no_documentation">ドキュメントなし</a></li>
     </ol></li>
-    <li><a href="#macros">Macros</a><ol>        <li><a href="#predefined_macros">Predefined Macros</a></li>
-        <li><a href="#macro_def_scini">Macro Definitions from <span class="d_inlinecode donthyphenate notranslate">sc.ini</span>'s DDOCFILE</a></li>
-        <li><a href="#macro_def_ddoc_file">Macro Definitions from .ddoc Files on the Command Line</a></li>
-        <li><a href="#macro_def_ddocgenerated">Macro Definitions Generated by Ddoc</a></li>
+    <li><a href="#macros">マクロ</a><ol>        <li><a href="#predefined_macros">定義済みマクロ</a></li>
+        <li><a href="#macro_def_scini"><span class="d_inlinecode donthyphenate notranslate">sc.ini</span>のDDOCFILEからのマクロ定義</a></li>
+        <li><a href="#macro_def_ddoc_file">コマンドラインの.ddocファイルからのマクロ定義</a></li>
+        <li><a href="#macro_def_ddocgenerated">Ddocによって生成されたマクロ定義</a></li>
     </ol></li>
-    <li><a href="#using_ddoc_to_generate_examples">Using Ddoc to generate examples from unit tests</a></li>
-    <li><a href="#using_ddoc_for_other_documentation">Using Ddoc for other Documentation</a></li>
-    <li><a href="#security">Security considerations</a></li>
-    <li><a href="#links_to_d_documentation_generators">Links to D documentation generators</a></li>
+    <li><a href="#using_ddoc_to_generate_examples">Ddocを使用して単体テストから使用例を生成する</a></li>
+    <li><a href="#using_ddoc_for_other_documentation">他のドキュメントにDdocを使用する</a></li>
+    <li><a href="#security">セキュリティに関する考慮事項</a></li>
+    <li><a href="#links_to_d_documentation_generators">D言語ドキュメントジェネレータへのリンク</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -221,7 +221,7 @@ the likelihood of the documentation staying consistent with the code.
     documentation extractor if desired.</li>
 </ol>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="specifications" href="#specifications">Specification</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="specifications" href="#specifications">仕様</a></h2>
 <div class="blankline"></div>
 <p>The specification for the form of embedded documentation comments only
 specifies how information is to be presented to the compiler.
@@ -231,7 +231,7 @@ HTML web page, a man page, a PDF file, etc. is not specified as part of the
 D Programming Language.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="phases_of_processing" href="#phases_of_processing">Phases of Processing</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="phases_of_processing" href="#phases_of_processing">処理フェーズ</a></h3>
 <div class="blankline"></div>
 <p>Embedded documentation comments are processed in a series of phases:
 </p>
@@ -248,7 +248,7 @@ D Programming Language.
     <li>Macro and Escape text substitution is performed to produce the final result.</li>
 </ol>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="lexical" href="#lexical">Lexical</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="lexical" href="#lexical">字句の構成</a></h3>
 <div class="blankline"></div>
 <p>Embedded documentation comments are one of the following forms:
 </p>
@@ -301,7 +301,7 @@ of the embedded documentation.
 Comments not following one of those forms are not documentation comments.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="parsing" href="#parsing">Parsing</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="parsing" href="#parsing">構文解析</a></h3>
 <div class="blankline"></div>
 <p>Each documentation comment is associated with a declaration.
 If the documentation comment is on a line by itself or with only whitespace
@@ -356,7 +356,7 @@ put an empty declaration comment for it.
 </span><span class="d_keyword">class</span> D { }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="sections" href="#sections">Sections</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="sections" href="#sections">段落</a></h3>
 <div class="blankline"></div>
 <p>The document comment is a series of <i>Section</i>s.
 A <i>Section</i> is a name that is the first non-blank character on
@@ -367,7 +367,7 @@ The section name is not case-sensitive.
 <p>Section names starting with 'http://' or 'https://' are not recognized as section names.
 </p>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="summary" href="#summary">Summary</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="summary" href="#summary">概要</a></h4>
 <div class="blankline"></div>
 <p>The first section is the <i>Summary</i>, and does not have a section name.
 It is first paragraph, up to a blank line or a section name.
@@ -375,7 +375,7 @@ While the summary can be any length, try to keep it to one line.
 The <i>Summary</i> section is optional.
 </p>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="description" href="#description">Description</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="description" href="#description">解説</a></h4>
 <div class="blankline"></div>
 <p>The next unnamed section is the <i>Description</i>.
 It consists of all the paragraphs following the <i>Summary</i> until
@@ -402,7 +402,7 @@ there cannot be a <i>Description</i> without a <i>Summary</i> section.
 <p>Named sections follow the <i>Summary</i> and <i>Description</i> unnamed sections.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="standard_sections" href="#standard_sections">Standard Sections</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="standard_sections" href="#standard_sections">標準的な段落</a></h3>
 <div class="blankline"></div>
 <p>For consistency and predictability, there are several standard sections.
 None of these are required to be present.
@@ -516,7 +516,7 @@ the description of it goes here.</dd>
 </pre>
 </dl>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="special_sections" href="#special_sections">Special Sections</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="special_sections" href="#special_sections">特別な段落</a></h3>
 <div class="blankline"></div>
 <p>Some sections have specialized meanings and syntax.
 </p>
@@ -586,7 +586,7 @@ the description of it goes here.</dd>
 </pre>
 </dl>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="highlighting" href="#highlighting">Highlighting</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="highlighting" href="#highlighting">ハイライト</a></h2>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="embedded_comments" href="#embedded_comments">Embedded Comments</a></h3>
 <div class="blankline"></div>
@@ -595,7 +595,7 @@ the description of it goes here.</dd>
     nest.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="embedded_code" href="#embedded_code">Embedded Code</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="embedded_code" href="#embedded_code">埋め込みコード</a></h3>
 <div class="blankline"></div>
 <p>    D code can be embedded using lines beginning with at least three hyphens <span class="d_inlinecode donthyphenate notranslate">-</span>,
     backticks <span class="d_inlinecode donthyphenate notranslate">`</span> or tildes <span class="d_inlinecode donthyphenate notranslate">~</span> (ignoring whitespace) to
@@ -640,7 +640,7 @@ the description of it goes here.</dd>
  +/</span>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="inline_code" href="#inline_code">Inline Code</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="inline_code" href="#inline_code">インラインコード</a></h3>
 <div class="blankline"></div>
 <p>    Inline code can be written between backtick characters (`), similarly
     to the syntax used on GitHub, Reddit, Stack Overflow, and other websites. Both
@@ -665,7 +665,7 @@ the description of it goes here.</dd>
 </span> <span class="d_keyword">void</span> bar() {}
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="embedded_html" href="#embedded_html">Embedded HTML</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="embedded_html" href="#embedded_html">埋め込みHTML</a></h3>
 <div class="blankline"></div>
 <p>HTML can be embedded into the documentation comments, and it will
 be passed through to the HTML output unchanged.
@@ -684,7 +684,7 @@ best to avoid using it where practical.
  */</span>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="headings" href="#headings">Headings</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="headings" href="#headings">見出し</a></h3>
 <div class="blankline"></div>
 <p>A long documentation section can be subdivided by adding headings. A heading is
 a line of text that starts with one to six <span class="d_inlinecode donthyphenate notranslate">#</span> characters followed by whitespace
@@ -702,7 +702,7 @@ level. Headings may optionally end with any number of trailing <span class="d_in
  */</span>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="links" href="#links">Links</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="links" href="#links">リンク</a></h3>
 <div class="blankline"></div>
 <p>Documentation may link to other documentation or to a URL. There are four
 styles of links:
@@ -720,7 +720,7 @@ styles of links:
  */</span>
 </pre>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="reference_links" href="#reference_links">Reference Links</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="reference_links" href="#reference_links">参照リンク</a></h4>
 <div class="blankline"></div>
 <p>Reference-style links enclose a reference label in square brackets. They may
 optionally be preceded by some link text, also enclosed in square brackets.
@@ -756,7 +756,7 @@ example is as if it had been written:
 to link to using a <a href="#macros">Macros section</a>.
 </p>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="inline_links" href="#inline_links">Inline Links</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="inline_links" href="#inline_links">インラインリンク</a></h4>
 <div class="blankline"></div>
 <p>Inline-style links enclose link text in square brackets and the link URL in
 parentheses. Like reference links, the URL may optionally be followed by title
@@ -766,7 +766,7 @@ text wrapped in single or double quotes, or in parentheses:
 <pre class="d_code notranslate"><span class="d_comment">/// [a link with title text](https://dlang.org 'Some title text')
 </span></pre>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="urls" href="#urls">Bare URLs</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="urls" href="#urls">URL</a></h4>
 <div class="blankline"></div>
 <p>Bare URLs are sequences of characters that start with <span class="d_inlinecode donthyphenate notranslate">http://</span> or <span class="d_inlinecode donthyphenate notranslate">https://</span>,
 continue with one or more characters from the set of letters, digits and
@@ -776,14 +776,14 @@ The URL is wrapped in a <span class="d_inlinecode donthyphenate notranslate">&do
 left untouched.
 </p>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="images" href="#images">Images</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="images" href="#images">画像</a></h4>
 <div class="blankline"></div>
 <p>Images have the same form as reference or inline links, but add an exclamation
 point <span class="d_inlinecode donthyphenate notranslate">!</span> before the initial square bracket. What would be the link text in a
 normal link is used as the image's alt text.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="lists" href="#lists">Lists</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="lists" href="#lists">リスト</a></h3>
 <div class="blankline"></div>
 <p>Documentation may contain lists. Start an ordered list with a number followed by
 a period:
@@ -844,7 +844,7 @@ after the list symbol:
  */</span>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="tables" href="#tables">Tables</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="tables" href="#tables">テーブル</a></h3>
 <div class="blankline"></div>
 <p>Data may be placed into a table. Tables consist of a single header row, a
 delimiter row, and zero or more data rows. Cells in each row are separated by
@@ -867,7 +867,7 @@ right of the hyphens creates a right-aligned column (like the example above),
 and <span class="d_inlinecode donthyphenate notranslate">:</span>'s on both sides of the hyphens create a center-aligned column.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="quotes" href="#quotes">Quotes</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="quotes" href="#quotes">引用</a></h3>
 <div class="blankline"></div>
 <p>Documentation may include a section of quoted material by prefixing each line of
 the section with a <span class="d_inlinecode donthyphenate notranslate">&gt;</span>. Quotes may include headings, lists, embedded code, etc.
@@ -889,7 +889,7 @@ the section with a <span class="d_inlinecode donthyphenate notranslate">&gt;</sp
  */</span>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="hrules" href="#hrules">Horizontal Rules</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="hrules" href="#hrules">水平方向のルール</a></h3>
 <div class="blankline"></div>
 <p>Create a horizontal rule by adding a line containing three or more asterisks,
 underscores or hyphens:
@@ -918,7 +918,7 @@ spaces:
  */</span>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="text_emphasis" href="#text_emphasis">Text Emphasis</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="text_emphasis" href="#text_emphasis">テキスト強調</a></h3>
 <div class="blankline"></div>
 <p>A span of text wrapped in asterisks (<span class="d_inlinecode donthyphenate notranslate">*</span>) is emphasized, and text wrapped in
 two asterisks (<span class="d_inlinecode donthyphenate notranslate">**</span>) is strongly emphasized:
@@ -939,7 +939,7 @@ would break snake_case names and underscore prefix processing in
 <a href="#emphasis">identifier emphasis</a>.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="emphasis" href="#emphasis">Identifier Emphasis</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="emphasis" href="#emphasis">識別子の強調</a></h3>
 <div class="blankline"></div>
 <p>Identifiers in documentation comments that are function parameters or are
 names that are in scope at the associated declaration are emphasized in
@@ -951,7 +951,7 @@ To prevent unintended emphasis of an identifier, it can be preceded by
 an underscore (_). The underscore will be stripped from the output.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="character_entities" href="#character_entities">Character Entities</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="character_entities" href="#character_entities">文字エンティティ</a></h3>
 <div class="blankline"></div>
 <p>    Some characters have special meaning
     to the documentation processor, to avoid confusion it can be best
@@ -967,7 +967,7 @@ an underscore (_). The underscore will be stripped from the output.
     special character is not immediately followed by a # or a letter.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="punctuation_escapes" href="#punctuation_escapes">Punctuation Escapes</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="punctuation_escapes" href="#punctuation_escapes">句読点のエスケープ</a></h3>
 <div class="blankline"></div>
 <p>    Escape any ASCII punctuation symbol with a backslash <span class="d_inlinecode donthyphenate notranslate">\</span>.
     Doing so outputs the original character without the backslash, except for
@@ -987,7 +987,7 @@ an underscore (_). The underscore will be stripped from the output.
     <span class="d_inlinecode donthyphenate notranslate">C:\dmd2\bin\dmd.exe</span> does not require escaping its embedded backslashes.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="no_documentation" href="#no_documentation">No Documentation</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="no_documentation" href="#no_documentation">ドキュメントなし</a></h3>
 <div class="blankline"></div>
 <p>    No documentation is generated for the following constructs,
     even if they have a documentation comment:
@@ -1000,7 +1000,7 @@ an underscore (_). The underscore will be stripped from the output.
     <li>Class info, type info, and module info</li>
     </ul>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="macros" href="#macros">Macros</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="macros" href="#macros">マクロ</a></h2>
 <div class="blankline"></div>
 <p>    The documentation comment processor includes a simple macro
     text preprocessor.
@@ -1081,7 +1081,7 @@ Macros:
 <p>    Macro names beginning with "D_" and "DDOC_" are reserved.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="predefined_macros" href="#predefined_macros">Predefined Macros</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="predefined_macros" href="#predefined_macros">定義済みマクロ</a></h3>
 <div class="blankline"></div>
 <p>    A number of macros are predefined Ddoc, and represent the
     minimal definitions needed by Ddoc to format and highlight
@@ -1226,7 +1226,7 @@ reference implementation's macro definitions can be found <a href="https://githu
 <p>    And all the summary sections will now be green.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="macro_def_scini" href="#macro_def_scini">Macro Definitions from <span class="d_inlinecode donthyphenate notranslate">sc.ini</span>'s DDOCFILE</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="macro_def_scini" href="#macro_def_scini"><span class="d_inlinecode donthyphenate notranslate">sc.ini</span>のDDOCFILEからのマクロ定義</a></h3>
 <div class="blankline"></div>
 <p>    A text file of macro definitions can be created,
     and specified in <span class="d_inlinecode donthyphenate notranslate">sc.ini</span>:
@@ -1235,13 +1235,13 @@ reference implementation's macro definitions can be found <a href="https://githu
 <pre class="ddoccode notranslate">DDOCFILE=myproject.ddoc
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="macro_def_ddoc_file" href="#macro_def_ddoc_file">Macro Definitions from .ddoc Files on the Command Line</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="macro_def_ddoc_file" href="#macro_def_ddoc_file">コマンドラインの.ddocファイルからのマクロ定義</a></h3>
 <div class="blankline"></div>
 <p>    File names on the DMD command line with the extension
     .ddoc are text files that are read and processed in order.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="macro_def_ddocgenerated" href="#macro_def_ddocgenerated">Macro Definitions Generated by Ddoc</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="macro_def_ddocgenerated" href="#macro_def_ddocgenerated">Ddocによって生成されたマクロ定義</a></h3>
 <div class="blankline"></div>
     <center><table><caption>Generated Macro Definitions</caption>    <tr><th class="donthyphenate"><b>Macro Name</b></th><th class="donthyphenate"><b>Content</b></th></tr>     <tr><td>    <b>BODY</b></td><td>    Set to the generated document text.
     </td></tr>
@@ -1261,7 +1261,7 @@ reference implementation's macro definitions can be found <a href="https://githu
     </td></tr>
     </table></center>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="using_ddoc_to_generate_examples" href="#using_ddoc_to_generate_examples">Using Ddoc to generate examples from unit tests</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="using_ddoc_to_generate_examples" href="#using_ddoc_to_generate_examples">Ddocを使用して単体テストから使用例を生成する</a></h2>
 <div class="blankline"></div>
 <p>    Ddoc can automatically generate usage examples for declarations
     using unit tests. If a declaration is followed by a documented
@@ -1284,7 +1284,7 @@ reference implementation's macro definitions can be found <a href="https://githu
     <a href="unittest.html#documented-unittests">documented unit tests</a>.
 </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="using_ddoc_for_other_documentation" href="#using_ddoc_for_other_documentation">Using Ddoc for other Documentation</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="using_ddoc_for_other_documentation" href="#using_ddoc_for_other_documentation">他のドキュメントにDdocを使用する</a></h2>
 <div class="blankline"></div>
 <p>    Ddoc is primarily designed for use in producing documentation
     from embedded comments. It can also, however, be used for
@@ -1309,7 +1309,7 @@ reference implementation's macro definitions can be found <a href="https://githu
     generated by Ddoc.
 </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="security" href="#security">Security considerations</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="security" href="#security">セキュリティに関する考慮事項</a></h2>
 <div class="blankline"></div>
 <p>    Note that DDoc comments may embed raw HTML, including
     &lt;script&gt; tags. Be careful when publishing or distributing
@@ -1317,21 +1317,21 @@ reference implementation's macro definitions can be found <a href="https://githu
     allow <a href="https://en.wikipedia.org/wiki/Cross-site_scripting">    cross-site scripting</a>.
 </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="links_to_d_documentation_generators" href="#links_to_d_documentation_generators">Links to D documentation generators</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="links_to_d_documentation_generators" href="#links_to_d_documentation_generators">D言語ドキュメントジェネレータへのリンク</a></h2>
 <div class="blankline"></div>
 <p>    A list of current D documentation generators which use Ddoc
     can be found on our <a href="https://wiki.dlang.org/Open_Source_Projects#Documentation_Generators">wiki page</a>.
 </p>
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/iasm.html">D x86 Inline Assembler</a></div>
-<div style="float: right"><a href="../spec/interfaceToC.html">Interfacing to C</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/iasm.html">インラインアセンブラ[D x86 Inline Assembler]</a></div>
+<div style="float: right"><a href="../spec/interfaceToC.html">Cとの連携[Interfacing to C]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Jan  5 11:24:42 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Thu Jan  6 10:51:07 2022
 </div>
     </div>
 </div>
