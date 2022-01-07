@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Live Functions - D言語 非公式日本語</title>
+<title>@live - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="../css/codemirror.css">
 <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Live Functions' class='doc'>
+<body id='@live' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href=".."><img id="logo" alt="D Logo" src="../images/dlogo.svg"></a></div>
     <a href="../menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -89,25 +89,27 @@
 </div></div></div>
 
 <div class="container">    
-<div class="subnav-helper"></div> <div class="subnav">    <div class="head"><h5>Language Reference</h5> <p class="subnav-duplicate"><a href="../spec/spec.html">table of contents</a></p></div>
+<div class="subnav-helper"></div> <div class="subnav">    
+    <div class="head">        <h2>Language Reference</h2>
+        <p class="subnav-duplicate">            <a href="../spec/spec.html">table of contents</a></p>
+    </div>
     <ul>        <li><a href='            ../spec/intro.html'>はじめに[Introduction]</a></li><li><a href='            ../spec/lex.html'>字句の構成[Lexical]</a></li><li><a href='            ../spec/grammar.html'>文法[Grammar]</a></li><li><a href='            ../spec/module.html'>モジュール[Modules]</a></li><li><a href='            ../spec/declaration.html'>宣言[Declarations]</a></li><li><a href='            ../spec/type.html'>型[Types]</a></li><li><a href='            ../spec/property.html'>プロパティ[Properties]</a></li><li><a href='            ../spec/attribute.html'>属性[Attributes]</a></li><li><a href='            ../spec/pragma.html'>プラグマ[Pragmas]</a></li><li><a href='            ../spec/expression.html'>式[Expressions]</a></li><li><a href='            ../spec/statement.html'>文[Statements]</a></li><li><a href='            ../spec/arrays.html'>配列[Arrays]</a></li><li><a href='            ../spec/hash-map.html'>連想配列[Associative Arrays]</a></li><li><a href='            ../spec/struct.html'>構造体と共用体</a></li><li><a href='            ../spec/class.html'>クラス[Classes]</a></li><li><a href='            ../spec/interface.html'>インターフェース[Interfaces]</a></li><li><a href='            ../spec/enum.html'>列挙型[Enums]</a></li><li><a href='            ../spec/const3.html'>型修飾子[Type Qualifiers]</a></li><li><a href='            ../spec/function.html'>関数[Functions]</a></li><li><a href='            ../spec/operatoroverloading.html'>演算子オーバーロード</a></li><li><a href='            ../spec/template.html'>テンプレート[Templates]</a></li><li><a href='            ../spec/template-mixin.html'>ミックスイン[Template Mixins]</a></li><li><a href='            ../spec/contracts.html'>契約[Contract Programming]</a></li><li><a href='            ../spec/version.html'>条件コンパイル</a></li><li><a href='            ../spec/traits.html'>特性[Traits]</a></li><li><a href='            ../spec/errors.html'>エラー処理[Error Handling]</a></li><li><a href='            ../spec/unittest.html'>単体テスト[Unit Tests]</a></li><li><a href='            ../spec/garbage.html'>ガベージコレクション</a></li><li><a href='            ../spec/float.html'>浮動小数点数[Floating Point]</a></li><li><a href='            ../spec/iasm.html'>インラインアセンブラ</a></li><li><a href='            ../spec/ddoc.html'>ドキュメント生成</a></li><li><a href='            ../spec/interfaceToC.html'>Cとの連携[Interfacing to C]</a></li><li><a href='            ../spec/cpp_interface.html'>C++との連携[Interfacing to C++]</a></li><li><a href='            ../spec/objc_interface.html'>Objective-Cとの連携</a></li><li><a href='            ../spec/portability.html'>移植性[Portability Guide]</a></li><li><a href='            ../spec/entity.html'>名前付き文字</a></li><li><a href='            ../spec/memory-safe-d.html'>メモリ安全性[Memory Safety]</a></li><li><a href='            ../spec/abi.html'>ABI[Application Binary Interface]</a></li><li><a href='            ../spec/simd.html'>ベクトル拡張[Vector Extensions]</a></li><li><a href='            ../spec/betterc.html'>Better C</a></li><li><a href='            ../spec/importc.html'>Cのインポート[Import C]</a></li><li><a href='            ../spec/ob.html'>@live[Live Functions]
         </a></li>
     </ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://issues.dlang.org/enter_bug.cgi?bug_file_loc=http%3A%2F%2Fdlang.org/&amp;component=dlang.org&amp;op_sys=All&amp;priority=P3&amp;product=D&amp;rep_platform=All&amp;short_desc=%5BLive Functions%5D&amp;version=D2&amp;bug_severity=enhancement">Report a bug</a>
-		<div >			If you spot a problem with this page, click here to create a Bugzilla issue.
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://github.com/devmynote/dlang.org/edit/master/spec/ob.dd">Improve this page</a>
+		<div >		    いますぐフォークしてオンライン編集し、このページのプルリクエストを送信します。
+			Github へのログインが必要です。 これは小さな変更に適しています。
+			大きな変更を加えたい場合は、通常の cloneの使用をお勧めします。
 		</div>
 	</div>
-	<div class="tip smallprint">		<a href="https://github.com/dlang/dlang.org/edit/master/spec/ob.dd">Improve this page</a>
-		<div >			Quickly fork, edit online, and submit a pull request for this page.
-			Requires a signed-in GitHub account. This works well for small changes.
-			If you'd like to make larger changes you may want to consider using
-			a local clone.
+	<div class="tip smallprint">		<a href="http://dlang.org//home/runner/work/dlang.org/dlang.org/dlang.org/web/spec/ob.html">English</a>
+		<div >			このページの英語版（原文）
 		</div>
 	</div>
 </div></div>
-        <h1>Live Functions</h1>
+        <h1>@live</h1>
         
 <style>    body { counter-reset: h1 42; counter-increment: h1 -1; }
     h1 { counter-reset: h2 h3 p; }
@@ -146,15 +148,15 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#ob">Ownership/Borrowing</a><ol>        <li><a href="#tracked">Tracked Pointers</a></li>
-        <li><a href="#state">Pointer States</a></li>
-        <li><a href="#lifetime">Lifetimes</a></li>
-        <li><a href="#transition">Pointer State Transitions</a></li>
-        <li><a href="#borrower">Borrowers can be Owners</a></li>
-        <li><a href="#exception">Exceptions</a></li>
-        <li><a href="#lazy">Lazy Parameters</a></li>
-        <li><a href="#mempool">Mixing Memory Pools</a></li>
-        <li><a href="#vargs">Variadic Function Arguments</a></li>
+    <ol>    <li><a href="#ob">所有権と借用</a><ol>        <li><a href="#tracked">ポインタの追跡</a></li>
+        <li><a href="#state">ポインターの状態</a></li>
+        <li><a href="#lifetime">ライフタイム</a></li>
+        <li><a href="#transition">ポインターの状態遷移</a></li>
+        <li><a href="#borrower">借用者は所有者になれる</a></li>
+        <li><a href="#exception">例外</a></li>
+        <li><a href="#lazy">Lazy 引数</a></li>
+        <li><a href="#mempool">メモリプールの混合</a></li>
+        <li><a href="#vargs">可変長引数関数の引数</a></li>
     </ol></li>
 </ol>
 </div>
@@ -215,7 +217,7 @@ objects are not disposed of, an error can be diagnosed.
 tracking the status of owner pointers.
 </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="ob" href="#ob">Ownership/Borrowing</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="ob" href="#ob">所有権と借用</a></h2>
 <div class="blankline"></div>
 <p>Tracking the ownership status of a pointer can be safely extended by adding the
 capability of temporarilly <i>borrowing</i> ownership of a pointer from the <i>owner</i>.
@@ -263,7 +265,7 @@ expected to follow <span class="d_inlinecode donthyphenate notranslate">@live</s
 of annotating a type as a non-<span class="d_inlinecode donthyphenate notranslate">null</span> pointer.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="tracked" href="#tracked">Tracked Pointers</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="tracked" href="#tracked">ポインタの追跡</a></h3>
 <div class="blankline"></div>
 <p>The only pointers that are tracked are those declared in the <span class="d_inlinecode donthyphenate notranslate">@live</span> function
 as <span class="d_inlinecode donthyphenate notranslate">this</span>, function parameters or local variables. Variables from other
@@ -274,7 +276,7 @@ Parameters that are <span class="d_inlinecode donthyphenate notranslate">const</
 </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="state" href="#state">Pointer States</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="state" href="#state">ポインターの状態</a></h3>
 <div class="blankline"></div>
 <p>Each tracked pointer is in one of the following states:
 </p>
@@ -316,7 +318,7 @@ must not be a pointer to mutable.
 </dd>
 </dl>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="lifetime" href="#lifetime">Lifetimes</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="lifetime" href="#lifetime">ライフタイム</a></h3>
 <div class="blankline"></div>
 <p>The lifetime of a Borrowed or Readonly pointer value starts when it is
 assigned a value from an Owner or another Borrowed pointer, and ends at
@@ -327,7 +329,7 @@ the last read of that value.
 </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="transition" href="#transition">Pointer State Transitions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="transition" href="#transition">ポインターの状態遷移</a></h3>
 <div class="blankline"></div>
 <p>A pointer changes its state when one of these operations is done to it:
 </p>
@@ -366,7 +368,7 @@ which is treated as assignment to whoever receives that pointer</li>
 states they have from each edge</li>
 </ul>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="borrower" href="#borrower">Borrowers can be Owners</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="borrower" href="#borrower">借用者は所有者になれる</a></h3>
 <div class="blankline"></div>
 <p>Borrowers are considered Owners if they are initialized from other than
 a pointer.
@@ -380,7 +382,7 @@ a pointer.
 </span>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="exception" href="#exception">Exceptions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="exception" href="#exception">例外</a></h3>
 <div class="blankline"></div>
 <p>The analysis assumes no exceptions are thrown.
 </p>
@@ -407,12 +409,12 @@ a pointer.
 <p>or use RAII objects or call only <span class="d_inlinecode donthyphenate notranslate">nothrow</span> functions.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="lazy" href="#lazy">Lazy Parameters</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="lazy" href="#lazy">Lazy 引数</a></h3>
 <div class="blankline"></div>
 <p>Lazy parameters are not considered.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="mempool" href="#mempool">Mixing Memory Pools</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="mempool" href="#mempool">メモリプールの混合</a></h3>
 <div class="blankline"></div>
 <p>Conflation of different memory pools:
 </p>
@@ -445,19 +447,19 @@ vfree(p);  <span class="d_comment">// type mismatch
 <p>and perhaps disabling implicit conversions to <span class="d_inlinecode donthyphenate notranslate">void*</span> in <span class="d_inlinecode donthyphenate notranslate">@live</span> functions.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="vargs" href="#vargs">Variadic Function Arguments</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="vargs" href="#vargs">可変長引数関数の引数</a></h3>
 <div class="blankline"></div>
 <p>Arguments to variadic functions (such as <span class="d_inlinecode donthyphenate notranslate">printf</span>) are considered to be consumed.
 </p>
 <div class="blankline"></div>
 
-<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/importc.html">ImportC</a></div>
+<div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/importc.html">Cのインポート[Import C]</a></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Thu Jan  6 14:52:54 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Fri Jan  7 13:15:20 2022
 </div>
     </div>
 </div>
