@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Overview - D言語 非公式日本語</title>
+<title>D言語の概要 - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="css/codemirror.css">
 <link rel="stylesheet" href="css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Overview' class='doc'>
+<body id='D言語の概要' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href="."><img id="logo" alt="D Logo" src="images/dlogo.svg"></a></div>
     <a href="menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -102,37 +102,37 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Overview</h1>
+        <h1>D言語の概要</h1>
         
         
 
 
 <div class="page-contents quickindex">    <div class="page-contents-header">        <h3>Contents</h3>
     </div>
-    <ol>        <li><a href="#what_is_d">What is D?</a></li>
-        <li><a href="#why_d">Why D?</a><ol>            <li><a href="#goals">Major Design Goals of D</a></li>
-            <li><a href="#features_to_keep">Transitioning To D</a></li>
-            <li><a href="#features_to_drop">Features To Leave Behind</a></li>
-            <li><a href="#for_d">Who D is For?</a></li>
-            <li><a href="#not_for_d">Who D is Not For?</a></li>
+    <ol>        <li><a href="#what_is_d">D言語とは？</a></li>
+        <li><a href="#why_d">なぜDなのか？</a><ol>            <li><a href="#goals">Dの主な設計目標</a></li>
+            <li><a href="#features_to_keep">Dへの移行</a></li>
+            <li><a href="#features_to_drop">扱わないもの</a></li>
+            <li><a href="#for_d">Dは誰のためのもの？</a></li>
+            <li><a href="#not_for_d">Dに不向きと思われる方は？</a></li>
         </ol></li>
-        <li><a href="#major_features">Major Features of D</a><ol>            <li><a href="#OOP">Object Oriented Programming</a></li>
-            <li><a href="#functional">Functional Programming</a></li>
-            <li><a href="#productivity">Productivity</a></li>
-            <li><a href="#functions">Functions</a></li>
-            <li><a href="#arrays">Arrays</a></li>
-            <li><a href="#ranges">Ranges</a></li>
-            <li><a href="#resource">Resource Management</a></li>
-            <li><a href="#performance">Performance</a></li>
-            <li><a href="#reliability">Reliability</a></li>
-            <li><a href="#compatibility">Compatibility</a></li>
-            <li><a href="#management">Project Management</a></li>
+        <li><a href="#major_features">Dの主な機能</a><ol>            <li><a href="#OOP">オブジェクト指向プログラミング</a></li>
+            <li><a href="#functional">関数型プログラミング</a></li>
+            <li><a href="#productivity">生産性</a></li>
+            <li><a href="#functions">関数</a></li>
+            <li><a href="#arrays">配列</a></li>
+            <li><a href="#ranges">Range</a></li>
+            <li><a href="#resource">リソース管理</a></li>
+            <li><a href="#performance">パフォーマンス</a></li>
+            <li><a href="#reliability">信頼性</a></li>
+            <li><a href="#compatibility">互換性</a></li>
+            <li><a href="#management">プロジェクト管理</a></li>
         </ol></li>
-        <li><a href="#sample">Sample D Program</a></li>
+        <li><a href="#sample">D のサンプルプログラム</a></li>
     </ol>
 </div>
 
-<h2><a class="anchor" title="Permalink to this section" id="what_is_d" href="#what_is_d">What is D?</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="what_is_d" href="#what_is_d">D言語とは？</a></h2>
     <img src="images/d3.png" border="0" align="left" alt="D Man">
 
     <p>D is a general purpose systems and applications programming language.
@@ -164,7 +164,7 @@
     </p>
 
 
-<h2><a class="anchor" title="Permalink to this section" id="why_d" href="#why_d">Why D?</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="why_d" href="#why_d">なぜDなのか？</a></h2>
     <p>Why, indeed. Who needs another programming language?
     </p>
 
@@ -183,7 +183,7 @@
     </p>
 
 
-<h3><a class="anchor" title="Permalink to this section" id="goals" href="#goals">Major Design Goals of D</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="goals" href="#goals">Dの主な設計目標</a></h3>
     <p>Everything in designing a language is a tradeoff. Keeping some
     principles in mind will help to make the right decisions.</p>
 
@@ -240,7 +240,7 @@
     </ol>
 
 
-<h3><a class="anchor" title="Permalink to this section" id="features_to_keep" href="#features_to_keep">Transitioning to D</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="features_to_keep" href="#features_to_keep">Dへの移行</a></h3>
     <p>The general look of D is like C and C++. This makes it easier to learn
     and port code to D. Transitioning from C/C++ to D should feel natural.
     The
@@ -332,7 +332,7 @@
     </ul>
 
 
-<h3><a class="anchor" title="Permalink to this section" id="features_to_drop" href="#features_to_drop">Features To Leave Behind</a></h3><ul>
+<h3><a class="anchor" title="Permalink to this section" id="features_to_drop" href="#features_to_drop">扱わないもの</a></h3><ul>
     <li>Support for 16 bit computers.
     No consideration is given in D for mixed near/far pointers and all the
     machinations necessary to generate good 16 bit code. The D language
@@ -371,7 +371,7 @@
 </ul>
 
 
-<h3><a class="anchor" title="Permalink to this section" id="for_d" href="#for_d">Who is D For?</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="for_d" href="#for_d">Dは誰のためのもの？</a></h3>
 <ul>    <li>Programmers who routinely use lint or similar code analysis tools
     to eliminate bugs before the code is even compiled.
     </li>
@@ -410,7 +410,7 @@
 </ul>
 
 
-<h3><a class="anchor" title="Permalink to this section" id="not_for_d" href="#not_for_d">Who D is Not For?</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="not_for_d" href="#not_for_d">Dに不向きと思われる方は？</a></h3>
     <ul>    <li>Realistically, nobody is going to convert million line legacy
     programs into D.
     D, however, can connect directly to any code that exposes a C ABI interface
@@ -434,13 +434,13 @@
 
 
 
-<h2><a class="anchor" title="Permalink to this section" id="major_features" href="#major_features">Major Features of D</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="major_features" href="#major_features">Dの主な機能</a></h2>
     <p>This section lists some of the more interesting features of D
     in various categories.
     </p>
 
-<h3><a class="anchor" title="Permalink to this section" id="OOP" href="#OOP">Object Oriented Programming</a></h3>
-    <h4>Classes</h4>
+<h3><a class="anchor" title="Permalink to this section" id="OOP" href="#OOP">オブジェクト指向プログラミング</a></h3>
+    <h4>クラス</h4>
     <p>D's object oriented nature comes from classes.
     The inheritance model is single inheritance enhanced
     with interfaces. The class Object sits at the root
@@ -456,7 +456,7 @@
     information.
     </p>
 
-    <h4>Operator Overloading</h4>
+    <h4>演算子のオーバーロード</h4>
     <p>Classes can be crafted that work with existing operators to extend
     the type system to support new types. An example would be creating
     a bignumber class and then overloading the +, -, * and / operators
@@ -469,7 +469,7 @@
     </p>
 
 
-<h3><a class="anchor" title="Permalink to this section" id="functional" href="#functional">Functional Programming</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="functional" href="#functional">関数型プログラミング</a></h3>
     <p>Functional programming has a lot to offer in terms of encapsulation,
     concurrent programming, memory safety, and composition. D's support for
     functional style programming include:
@@ -482,8 +482,8 @@
 
 
 
-<h3><a class="anchor" title="Permalink to this section" id="productivity" href="#productivity">Productivity</a></h3>
-    <h4>Modules</h4>
+<h3><a class="anchor" title="Permalink to this section" id="productivity" href="#productivity">生産性</a></h3>
+    <h4>モジュール</h4>
     <p>Source files have a one-to-one correspondence with modules.
     </p>
     
@@ -492,7 +492,7 @@
     page for more information.
     </p>
 
-    <h4>Declaration vs Definition</h4>
+    <h4>宣言と定義</h4>
     <p>Functions and classes are defined once. There is no need
     for declarations when they are forward referenced.
     A module can be imported, and all its public declarations
@@ -529,7 +529,7 @@
     </p>
     
 
-    <h4>Templates</h4>
+    <h4>テンプレート</h4>
     <p>D templates offer a clean way to support generic programming while
     offering the power of partial specialization.
     Template classes and template functions are available, along
@@ -541,7 +541,7 @@
     page for more information.
     </p>
 
-    <h4>Associative Arrays</h4>
+    <h4>連想配列</h4>
     <p>Associative arrays are arrays with an arbitrary data type as
     the index rather than being limited to an integer index.
     In essence, associated arrays are hash tables. Associative
@@ -554,7 +554,7 @@
     page for more information.
     </p>
 
-    <h4>Documentation</h4>
+    <h4>ドキュメント</h4>
     <p>Documentation has traditionally been done twice - first there
     are comments documenting what a function does, and then this gets
     rewritten into a separate html or man page.
@@ -594,33 +594,33 @@
     
 
 
-<h3><a class="anchor" title="Permalink to this section" id="functions" href="#functions">Functions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="functions" href="#functions">関数</a></h3>
     <p>D has the expected support for ordinary functions including
     global functions, overloaded functions, inlining of functions,
     member functions, virtual functions, function pointers, etc.
     In addition:
     </p>
 
-    <h4>Nested Functions</h4>
+    <h4>ネスト関数</h4>
     <p>Functions can be nested within other functions.
     This is highly useful for code factoring, locality, and
     function closure techniques.
     </p>
     
 
-    <h4>Function Literals</h4>
+    <h4>関数リテラル</h4>
     <p>Anonymous functions can be embedded directly into an expression.
     </p>
     
 
-    <h4>Dynamic Closures</h4>
+    <h4>動的クロージャー</h4>
     <p>Nested functions and class member functions can be referenced
     with closures (also called delegates), making generic programming
     much easier and type safe.
     </p>
     
 
-    <h4>In, Out, and Ref Parameters</h4>
+    <h4>In, Out, and Ref 引数</h4>
     <p>Not only does specifying this help make functions more
     self-documenting, it eliminates much of the necessity for pointers
     without sacrificing anything, and it opens up possibilities
@@ -634,7 +634,7 @@
     
 
 
-<h3><a class="anchor" title="Permalink to this section" id="arrays" href="#arrays">Arrays</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="arrays" href="#arrays">配列</a></h3>
     <p>C arrays have several faults that can be corrected:
     </p>
 
@@ -684,7 +684,7 @@
     <p>See the <a href="spec/arrays.html">Arrays</a> page for more information.
     </p>
 
-    <h4>Strings</h4>
+    <h4>文字列</h4>
     <p>String manipulation
     needs direct support in the language. Modern languages handle
     string concatenation, copying, etc., and so does D. Strings are
@@ -694,7 +694,7 @@
 
 
 
-<h3><a class="anchor" title="Permalink to this section" id="ranges" href="#ranges">Ranges</a></h3>    <p>D uses the concept of a range in lieu of iterators or generators found in
+<h3><a class="anchor" title="Permalink to this section" id="ranges" href="#ranges">Range</a></h3>    <p>D uses the concept of a range in lieu of iterators or generators found in
     other languages. A range is any type that provides a common interface to a
     sequence of values. The purpose of a range is to allow for a simpler way to
     write code that works on arbitrary data, thereby making it reusable.
@@ -825,7 +825,7 @@
 }
 </pre>
 
-    <h4>Types of Ranges</h4>        <p>The input range is just the most basic form of range, there are also
+    <h4>Range の種類</h4>        <p>The input range is just the most basic form of range, there are also
         </p>
 
         <ul>        <li>forward ranges</li>
@@ -857,7 +857,7 @@
         </p>
     
 
-    <h4>Advanced Range Code</h4>        <p>The following example uses input ranges and an output range to take
+    <h4>高度なRangeを使ったコード</h4>        <p>The following example uses input ranges and an output range to take
         data from stdin, take only the unique lines, sort them, and then print
         the result to stdout.
         </p>
@@ -887,8 +887,8 @@
 
 
 
-<h3><a class="anchor" title="Permalink to this section" id="resource" href="#resource">Resource Management</a></h3>
-    <h4>Automatic Memory Management</h4>
+<h3><a class="anchor" title="Permalink to this section" id="resource" href="#resource">リソース管理</a></h3>
+    <h4>自動メモリ管理</h4>
     <p>D memory allocation is fully garbage collected.
     With garbage collection, programming gets much simpler.
     Garbage collection eliminates the need for tedious, error prone memory
@@ -903,7 +903,7 @@
     </p>
     
 
-    <h4>Explicit Memory Management</h4>
+    <h4>明示的なメモリ管理</h4>
     <p>Despite D being a garbage collected language, the new and delete
     operations can be overridden for particular classes so that
     a custom allocator can be used.
@@ -920,15 +920,15 @@
 
 
 
-<h3><a class="anchor" title="Permalink to this section" id="performance" href="#performance">Performance</a></h3>
-    <h4>Lightweight Aggregates</h4>
+<h3><a class="anchor" title="Permalink to this section" id="performance" href="#performance">パフォーマンス</a></h3>
+    <h4>軽量な骨組み</h4>
     <p>D supports simple C style structs, both for compatibility with
     C data structures and because they're useful when the full power
     of classes is overkill.
     </p>
     
 
-    <h4>Inline Assembler</h4>
+    <h4>インラインアセンブラ</h4>
     <p>Device drivers, high performance system applications, embedded systems,
     and specialized code sometimes need to dip into assembly language
     to get the job done. While D implementations are not required
@@ -949,14 +949,14 @@
 
 
 
-<h3><a class="anchor" title="Permalink to this section" id="reliability" href="#reliability">Reliability</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="reliability" href="#reliability">信頼性</a></h3>
     <p>A modern language should do all it can to help the programmer flush
     out bugs in the code. Help can come in many forms;
     from making it easy to use more robust techniques,
     to compiler flagging of obviously incorrect code, to runtime checking.
     </p>
 
-    <h4>Contracts</h4>
+    <h4>契約</h4>
     <p><a href="https://en.wikipedia.org/wiki/Design_by_contract">Contract Programming</a>
         (invented by Dr. Bertrand Meyer) is a
     technique
@@ -967,7 +967,7 @@
     </p>
     
 
-    <h4>Unit Tests</h4>
+    <h4>単体テスト</h4>
     <p>Unit tests can be added to a class, such that they are automatically
     run upon program startup. This aids in verifying, in every build,
     that class implementations weren't inadvertently broken. The unit
@@ -1004,7 +1004,7 @@
     </p>
 
 
-    <h4>Debug Attributes and Statements</h4>
+    <h4>デバッグのための属性と文</h4>
     <p>Now debug is part of the syntax of the language.
     The code can be enabled or disabled at compile time, without the
     use of macros or preprocessing commands. The debug syntax enables
@@ -1014,14 +1014,14 @@
     </p>
     
 
-    <h4>Exception Handling</h4>
+    <h4>例外処理</h4>
     <p>The superior <i>try-catch-finally</i> model is used rather than just
     try-catch. There's no need to create dummy objects just to have
     the destructor implement the <i>finally</i> semantics.
     </p>
     
 
-    <h4>Synchronization</h4>
+    <h4>同期</h4>
     <p>Multithreaded programming is becoming more and more mainstream,
     and D provides primitives to build multithreaded programs with.
     Synchronization can be done at either the method or the object level.
@@ -1039,7 +1039,7 @@
     </p>
     
 
-    <h4>Support for Robust Techniques</h4>
+    <h4>強固な技術でサポート</h4>
     <ul>    <li>Dynamic arrays instead of pointers</li>
 
     <li>Reference variables instead of pointers</li>
@@ -1066,7 +1066,7 @@
     </ul>
     
 
-    <h4>Compile Time Checks</h4>
+    <h4>コンパイル時チェック</h4>
     <ul>    <li>Stronger type checking</li>
 
     <li>No empty ; for loop bodies</li>
@@ -1077,7 +1077,7 @@
     </ul>
     
 
-    <h4>Runtime Checking</h4>
+    <h4>実行時チェック</h4>
     <ul>    <li>assert() expressions</li>
 
     <li>array bounds checking</li>
@@ -1091,8 +1091,8 @@
     
 
 
-<h3><a class="anchor" title="Permalink to this section" id="compatibility" href="#compatibility">Compatibility</a></h3>
-    <h4>Operator precedence and evaluation rules</h4>
+<h3><a class="anchor" title="Permalink to this section" id="compatibility" href="#compatibility">互換性</a></h3>
+    <h4>演算子の優先順位と評価ルール</h4>
     <p>D retains C operators and their precedence rules, order of
     evaluation rules, and promotion rules. This avoids subtle
     bugs that might arise from being so used to the way C
@@ -1101,7 +1101,7 @@
     </p>
     
 
-    <h4>Direct Access to C APIs</h4>
+    <h4>C APIへの直接アクセス</h4>
     <p>Not only does D have data types that correspond to C types,
     it provides direct access to C functions. There is no need
     to write wrapper functions, parameter swizzlers, nor code to copy
@@ -1109,7 +1109,7 @@
     </p>
     
 
-    <h4>Support for all C data types</h4>
+    <h4>C のデータ型をすべてサポート</h4>
     <p>Making it possible to interface to any C API or existing C
     library code. This support includes structs, unions, enums,
     pointers, and all C99 types.
@@ -1119,14 +1119,14 @@
     </p>
     
 
-    <h4>OS Exception Handling</h4>
+    <h4>OS 例外処理</h4>
     <p>D's exception handling mechanism will connect to the way
     the underlying operating system handles exceptions in
     an application.
     </p>
     
 
-    <h4>Uses Existing Tools</h4>
+    <h4>既存のツールを使用する</h4>
     <p>D produces code in standard object file format, enabling the use
     of standard assemblers, linkers, debuggers, profilers, exe compressors,
     and other analyzers, as well as linking to code written in other
@@ -1135,15 +1135,15 @@
     
 
 
-<h3><a class="anchor" title="Permalink to this section" id="management" href="#management">Project Management</a></h3>
-    <h4>Versioning</h4>
+<h3><a class="anchor" title="Permalink to this section" id="management" href="#management">プロジェクト管理</a></h3>
+    <h4>バージョン管理</h4>
     <p>D provides built-in support for generation of multiple versions
     of a program from the same text. It replaces the C preprocessor
     #if/#endif technique.
     </p>
     
 
-    <h4>Deprecation</h4>
+    <h4>非推奨</h4>
     <p>As code evolves over time, some old library code gets replaced
     with newer, better versions. The old versions must be available
     to support legacy code, but they can be marked as <i>deprecated</i>.
@@ -1157,7 +1157,7 @@
 
 
 
-<h2><a class="anchor" title="Permalink to this section" id="sample" href="#sample">Sample D Program (sieve.d)</a></h2><pre class="d_code notranslate"><span class="d_comment">/* Sieve of Eratosthenes prime numbers */</span>
+<h2><a class="anchor" title="Permalink to this section" id="sample" href="#sample">D のサンプルプログラム (sieve.d)</a></h2><pre class="d_code notranslate"><span class="d_comment">/* Sieve of Eratosthenes prime numbers */</span>
 
 <span class="d_keyword">import</span> std.stdio;
 
@@ -1210,7 +1210,7 @@ So the numbers represented by the array actually go from 3 to (8190 + 8190 + 3),
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="spec/ddoc.html">Ddoc</a> on Sat Jan  8 02:33:21 2022
+<a href="spec/ddoc.html">Ddoc</a> on Sun Jan  9 10:23:49 2022
 </div>
     </div>
 </div>

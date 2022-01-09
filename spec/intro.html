@@ -89,10 +89,7 @@
 </div></div></div>
 
 <div class="container">    
-<div class="subnav-helper"></div> <div class="subnav">    
-    <div class="head">        <h2>言語仕様 リファレンス</h2>
-        <p class="subnav-duplicate">            <a href="../spec/spec.html">table of contents</a></p>
-    </div>
+<div class="subnav-helper"></div> <div class="subnav">    <div class="head"><h2>言語仕様 リファレンス</h2> <p class="subnav-duplicate"><a href="../spec/spec.html">table of contents</a></p></div>
     <ul>        <li><a href='            ../spec/intro.html'>はじめに[Introduction]</a></li><li><a href='            ../spec/lex.html'>字句の構成[Lexical]</a></li><li><a href='            ../spec/grammar.html'>文法[Grammar]</a></li><li><a href='            ../spec/module.html'>モジュール[Modules]</a></li><li><a href='            ../spec/declaration.html'>宣言[Declarations]</a></li><li><a href='            ../spec/type.html'>型[Types]</a></li><li><a href='            ../spec/property.html'>プロパティ[Properties]</a></li><li><a href='            ../spec/attribute.html'>属性[Attributes]</a></li><li><a href='            ../spec/pragma.html'>プラグマ[Pragmas]</a></li><li><a href='            ../spec/expression.html'>式[Expressions]</a></li><li><a href='            ../spec/statement.html'>文[Statements]</a></li><li><a href='            ../spec/arrays.html'>配列[Arrays]</a></li><li><a href='            ../spec/hash-map.html'>連想配列[Associative Arrays]</a></li><li><a href='            ../spec/struct.html'>構造体と共用体</a></li><li><a href='            ../spec/class.html'>クラス[Classes]</a></li><li><a href='            ../spec/interface.html'>インターフェース[Interfaces]</a></li><li><a href='            ../spec/enum.html'>列挙型[Enums]</a></li><li><a href='            ../spec/const3.html'>型修飾子[Type Qualifiers]</a></li><li><a href='            ../spec/function.html'>関数[Functions]</a></li><li><a href='            ../spec/operatoroverloading.html'>演算子オーバーロード</a></li><li><a href='            ../spec/template.html'>テンプレート[Templates]</a></li><li><a href='            ../spec/template-mixin.html'>ミックスイン[Template Mixins]</a></li><li><a href='            ../spec/contracts.html'>契約[Contract Programming]</a></li><li><a href='            ../spec/version.html'>条件コンパイル</a></li><li><a href='            ../spec/traits.html'>特性[Traits]</a></li><li><a href='            ../spec/errors.html'>エラー処理[Error Handling]</a></li><li><a href='            ../spec/unittest.html'>単体テスト[Unit Tests]</a></li><li><a href='            ../spec/garbage.html'>ガベージコレクション</a></li><li><a href='            ../spec/float.html'>浮動小数点数[Floating Point]</a></li><li><a href='            ../spec/iasm.html'>インラインアセンブラ</a></li><li><a href='            ../spec/ddoc.html'>ドキュメント生成</a></li><li><a href='            ../spec/interfaceToC.html'>Cとの連携[Interfacing to C]</a></li><li><a href='            ../spec/cpp_interface.html'>C++との連携[Interfacing to C++]</a></li><li><a href='            ../spec/objc_interface.html'>Objective-Cとの連携</a></li><li><a href='            ../spec/portability.html'>移植性[Portability Guide]</a></li><li><a href='            ../spec/entity.html'>名前付き文字</a></li><li><a href='            ../spec/memory-safe-d.html'>メモリ安全性[Memory Safety]</a></li><li><a href='            ../spec/abi.html'>ABI[Application Binary Interface]</a></li><li><a href='            ../spec/simd.html'>ベクトル拡張[Vector Extensions]</a></li><li><a href='            ../spec/betterc.html'>Better C</a></li><li><a href='            ../spec/importc.html'>Cのインポート[Import C]</a></li><li><a href='            ../spec/ob.html'>@live[Live Functions]
         </a></li>
     </ul>
@@ -121,7 +118,7 @@
         counter-increment: h1;
         content: counter(h1) ". ";
     }
-    h2::before {
+    .hyphenate h2::before {
         counter-increment: h2;
         content: counter(h1) "." counter(h2) " ";
     }
@@ -146,6 +143,15 @@
 </style>
         <div class="blankline"></div>
 <div class="blankline"></div>
+<div class="blankline"></div>
+<div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
+    </div>
+    <ol>    <li><a href="#compile-phase">コンパイル</a></li>
+    <li><a href="#memory-model">メモリモデル</a></li>
+    <li><a href="#object-model">オブジェクトモデル</a></li>
+    <li><a href="#arithmetic">四則演算</a></li>
+</ol>
+</div>
 <div class="blankline"></div>
 <p>D言語は汎用システムプログラミング言語で、ネイティブコードにコンパイルされます。
 Cライクな構文を持ち、静的に型付けされます。ガベージコレクションによる自動メモリ管理をサポートしますが、
@@ -287,7 +293,7 @@ Cライクな構文を持ち、静的に型付けされます。ガベージコ�
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan  8 02:33:07 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sun Jan  9 10:23:38 2022
 </div>
     </div>
 </div>
