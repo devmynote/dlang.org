@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="keywords" content="D programming language">
 <meta name="description" content="D Programming Language">
-<title>Install.sh script - D言語 非公式日本語</title>
+<title>Install.sh スクリプト - D言語 非公式日本語</title>
 
 <link rel="stylesheet" href="css/codemirror.css">
 <link rel="stylesheet" href="css/style.css">
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
 
 </head>
-<body id='Install.sh script' class='doc'>
+<body id='Install.sh スクリプト' class='doc'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
 <div id="top"><div class="helper"><div class="helper expand-container">    <div class="logo"><a href="."><img id="logo" alt="D Logo" src="images/dlogo.svg"></a></div>
     <a href="menu.html" title="Menu" class="hamburger expand-toggle"><span>Menu</span></a>
@@ -109,13 +109,13 @@
 		</div>
 	</div>
 </div></div>
-        <h1>Install.sh script</h1>
+        <h1>Install.sh スクリプト</h1>
         
         
 
 
 
-<h2>Introduction</h2>
+<h2>はじめに</h2>
 
 The <a href="https://dlang.org/install.sh"><span class="d_inlinecode donthyphenate notranslate">dlang.org/install.sh</span></a> script is the
 official D compiler version manager. It supports DMD, GDC and LDC on FreeBSD,
@@ -165,38 +165,38 @@ Its features include:
  </li>
 </ul>
 
-<h3>Content</h3>
+<h3>目次</h3>
 
-<ul>    <li><a href="#get">Downloading the installer</a></li>
-    <ul>        <li><a href="#get_posix">On FreeBSD, Linux and macOS</a></li>
-        <li><a href="#get_windows">On Windows</a></li>
-        <ul>            <li><a href="#get_git">Using Git BASH</a></li>
-            <li><a href="#get_msys">Using MSYS BASH</a></li>
+<ul>    <li><a href="#get">インストーラーのダウンロード</a></li>
+    <ul>        <li><a href="#get_posix">FreeBSD, Linux, macOS</a></li>
+        <li><a href="#get_windows">Windows</a></li>
+        <ul>            <li><a href="#get_git">Git BASH を使う</a></li>
+            <li><a href="#get_msys">MSYS BASH を使う</a></li>
         </ul>
     </ul>
-    <li><a href="#usage">Usage</a></li>
-    <ul>        <li><a href="#install">Installation</a></li>
-        <li><a href="#activate">Activation</a></li>
-        <ul>            <li><a href="#activate_posix">On POSIX</a></li>
-            <li><a href="#activate_windows">On Windows</a></li>
+    <li><a href="#usage">使い方</a></li>
+    <ul>        <li><a href="#install">インストール</a></li>
+        <li><a href="#activate">起動する</a></li>
+        <ul>            <li><a href="#activate_posix">POSIX</a></li>
+            <li><a href="#activate_windows">Windows</a></li>
         </ul>
-        <li><a href="#uninstall">Uninstallation</a></li>
-        <li><a href="#list">Listing available compilers</a></li>
-        <li><a href="#update">Update</a></li>
-        <li><a href="#get-path">Get compiler executable path</a></li>
+        <li><a href="#uninstall">アンインストール</a></li>
+        <li><a href="#list">利用可能なコンパイラを一覧表示する</a></li>
+        <li><a href="#update">更新する</a></li>
+        <li><a href="#get-path">コンパイラのパスを取得する</a></li>
     </ul>
 </ul>
 
-<h2><a class="anchor" title="Permalink to this section" id="get" href="#get">Downloading the installer</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="get" href="#get">インストーラーのダウンロード</a></h2>
 
-<ul>    <li><a href="#get_posix">On FreeBSD, Linux and macOS</a></li>
-    <li><a href="#get_windows">On Windows</a></li>
-    <ul>        <li><a href="#get_git">Using Git BASH</a></li>
-        <li><a href="#get_msys">Using MSYS BASH</a></li>
+<ul>    <li><a href="#get_posix">FreeBSD, Linux,  macOS</a></li>
+    <li><a href="#get_windows">Windows</a></li>
+    <ul>        <li><a href="#get_git">Git BASH を使う</a></li>
+        <li><a href="#get_msys">MSYS BASH を使う</a></li>
     </ul>
 </ul>
 
-<h3><a class="anchor" title="Permalink to this section" id="get_posix" href="#get_posix">Downloading on FreeBSD, Linux and macOS</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="get_posix" href="#get_posix">FreeBSD, Linux, macOS でのダウンロード</a></h3>
 
 <pre class="console notranslate">mkdir -p ~/dlang &amp;&amp; wget https://dlang.org/install.sh -O ~/dlang/install.sh
 </pre>
@@ -209,7 +209,7 @@ Alternatively, the script can be invoked directly:
 In this case the installer makes a copy of itself at <span class="d_inlinecode donthyphenate notranslate">~/dlang/install.sh</span>.
 If no arguments are provided, the latest DMD compiler will be installed.
 
-<h3><a class="anchor" title="Permalink to this section" id="get_windows" href="#get_windows">Downloading on Windows</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="get_windows" href="#get_windows">Windowsでのダウンロード</a></h3>
 
 The instructions above work unaltered when using a POSIX-like environment on
 Windows, such as Cygwin or MSYS2, but then compilers are installed inside that
@@ -231,7 +231,7 @@ alternatives, this will work:
 <pre class="console notranslate">%BASH% %USERPROFILE%\dlang\install.sh --help
 </pre>
 
-<h4><a class="anchor" title="Permalink to this section" id="get_git" href="#get_git">Using Git BASH</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="get_git" href="#get_git">Git BASH を使う</a></h4>
 
 Download and install <a href="https://gitforwindows.org/">Git for Windows</a> to
 "<span class="d_inlinecode donthyphenate notranslate">C:\Program Files\Git</span>" and <a href="https://www.7-zip.org/">7-Zip</a> to
@@ -241,7 +241,7 @@ Download and install <a href="https://gitforwindows.org/">Git for Windows</a> to
 set BASH="\Program Files\Git\usr\bin\bash.exe"
 </pre>
 
-<h4><a class="anchor" title="Permalink to this section" id="get_msys" href="#get_msys">Using MSYS BASH</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="get_msys" href="#get_msys">MSYS BASH を使う</a></h4>
 
 Follow the <a href="https://www.msys2.org">installation instructions for MSYS2</a>.
 We'll assume MSYS2 is now available in <span class="d_inlinecode donthyphenate notranslate">C:\msys64</span>, which is the default for
@@ -252,23 +252,23 @@ set BASH=C:\msys64\usr\bin\bash.exe
 </pre>
 
 
-<h2><a class="anchor" title="Permalink to this section" id="usage" href="#usage">Usage</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="usage" href="#usage">使い方</a></h2>
 
 <pre class="console notranslate">~/dlang/install.sh [&lt;command&gt;] [&lt;args&gt;]
 </pre>
 
-<ul>    <li><a href="#install">Installation</a></li>
-    <li><a href="#activate">Activation</a></li>
-    <ul>        <li><a href="#activate_posix">On POSIX</a></li>
-        <li><a href="#activate_windows">On Windows</a></li>
+<ul>    <li><a href="#install">インストール</a></li>
+    <li><a href="#activate">起動する</a></li>
+    <ul>        <li><a href="#activate_posix">POSIX</a></li>
+        <li><a href="#activate_windows">Windows</a></li>
     </ul>
-    <li><a href="#uninstall">Uninstallation</a></li>
-    <li><a href="#list">Listing available compilers</a></li>
-    <li><a href="#update">Update</a></li>
-    <li><a href="#get-path">Get compiler executable path</a></li>
+    <li><a href="#uninstall">アンインストール</a></li>
+    <li><a href="#list">利用可能なコンパイラを一覧表示する</a></li>
+    <li><a href="#update">更新する</a></li>
+    <li><a href="#get-path">コンパイラのパスを取得する</a></li>
 </ul>
 
-<h3><a class="anchor" title="Permalink to this section" id="global_options" href="#global_options">Global options</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="global_options" href="#global_options">Global オプション</a></h3>
 
 <dl>    <dt>        <dt><a class="anchor" title="Permalink to this section" id="switch-p" href="#switch-p"><b>-p</b></a> <a class="anchor" title="Permalink to this section" id="switch--path" href="#switch--path"><b>--path</b></a></dt><dd>            Changes the install location (default <span class="d_inlinecode donthyphenate notranslate">~/dlang</span> on POSIX, <span class="d_inlinecode donthyphenate notranslate">%USERPROFILE/dlang</span> on Windows)</dd>
         <dt><a class="anchor" title="Permalink to this section" id="switch-v" href="#switch-v"><b>-v</b></a></dt><dd>            Produces more verbose output</dd>
@@ -276,7 +276,7 @@ set BASH=C:\msys64\usr\bin\bash.exe
     </dt>
 </dl>
 
-<h3><a class="anchor" title="Permalink to this section" id="install" href="#install">Install</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="install" href="#install">インストール</a></h3>
 
 <pre class="console notranslate">~/dlang/install.sh install &lt;compiler&gt;
 </pre>
@@ -284,7 +284,7 @@ set BASH=C:\msys64\usr\bin\bash.exe
 Download and install a D compiler.
 By default the latest release of the DMD compiler is selected.
 
-<h4>Options</h4>
+<h4>オプション</h4>
 
 <dl>    <dt>        <dt><a class="anchor" title="Permalink to this section" id="switch-a" href="#switch-a"><b>-a</b></a> <a class="anchor" title="Permalink to this section" id="switch--activate" href="#switch--activate"><b>--activate</b></a></dt><dd>            Prints the path to the activate script</dd>
         <dt><a class="anchor" title="Permalink to this section" id="switchdmd|ldc|gdc" href="#switchdmd|ldc|gdc"><b>dmd|ldc|gdc</b></a></dt><dd>            Installs the latest version of a compiler</dd>
@@ -330,7 +330,7 @@ Therefore it is recommended to <a href="#activate">activate</a> a compiler
 after installation. For scripting needs the path to compiler executable can be
 queried with <a href="#get-path"><span class="d_inlinecode donthyphenate notranslate">get-path</span></a>.
 
-<h3><a class="anchor" title="Permalink to this section" id="activate" href="#activate">Activate</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="activate" href="#activate">起動する</a></h3>
 
 Once a compiler is installed, it can be activated for the current session.
 Supplying the <span class="d_inlinecode donthyphenate notranslate">-a</span> or <span class="d_inlinecode donthyphenate notranslate">--activate</span> option to the <span class="d_inlinecode donthyphenate notranslate">install</span> command will print
@@ -338,7 +338,7 @@ the path to the appropriate activation script: either a
 <a href="#activate_posix">shell script</a> or a
 <a href="#activate_windows">Windows batch file</a>.
 
-<h4><a class="anchor" title="Permalink to this section" id="activate_posix" href="#activate_posix">In POSIX environments</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="activate_posix" href="#activate_posix">POSIX環境の場合</a></h4>
 
 <pre class="console notranslate">~/dlang/install.sh install &lt;compiler&gt; -a
 </pre>
@@ -363,7 +363,7 @@ the previous environment:
 <pre class="console notranslate">deactivate
 </pre>
 
-<h4><a class="anchor" title="Permalink to this section" id="activate_windows" href="#activate_windows">On the Windows command line</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="activate_windows" href="#activate_windows">Windows コマンドライン</a></h4>
 
 <pre class="console notranslate">%BASH% %USERPROFILE%\dlang\install.sh install &lt;compiler&gt; -a
 </pre>
@@ -381,7 +381,7 @@ To install and activate <span class="d_inlinecode donthyphenate notranslate">%CO
 for /f "usebackq tokens=*" %%a in (<span class="d_inlinecode donthyphenate notranslate">%INSTALL% -a</span>) do call %%a
 </pre>
 
-<h3><a class="anchor" title="Permalink to this section" id="get-path" href="#get-path">Get compiler executable path</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="get-path" href="#get-path">コンパイラのパスを取得する</a></h3>
 
 <pre class="console notranslate">~/dlang/install.sh get-path &lt;compiler&gt;
 </pre>
@@ -390,7 +390,7 @@ Returns the path to the selected compiler executable.
 The command fails if the compiler is not installed locally and <span class="d_inlinecode donthyphenate notranslate">--install</span>
 hasn't been passed.
 
-<h4>Options</h4>
+<h4>オプション</h4>
 
 <dl>    <dt>        <dt><a class="anchor" title="Permalink to this section" id="switch--dmd" href="#switch--dmd"><b>--dmd</b></a></dt><dd>            Prints the path to the DMD-alike executable</dd>
         <dt><a class="anchor" title="Permalink to this section" id="switch--dub" href="#switch--dub"><b>--dub</b></a></dt><dd>            Prints the path to the DUB executable</dd>
@@ -414,7 +414,7 @@ $ ~/dlang/install.sh get-path --dub ldc-1.23.0,dub-1.21.0
 /home/user/dlang/dub-1.21.0/bin/dub
 </pre>
 
-<h3><a class="anchor" title="Permalink to this section" id="uninstall" href="#uninstall">Uninstall</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="uninstall" href="#uninstall">アンインストール</a></h3>
 
 Uninstall a D compiler.
 
@@ -426,14 +426,14 @@ Uninstall a D compiler.
 ~/dlang/install.sh uninstall ldc-1.1.0-beta2
 </pre>
 
-<h3><a class="anchor" title="Permalink to this section" id="list" href="#list">List</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="list" href="#list">一覧表示する</a></h3>
 
 List all installed D compilers.
 
 <pre class="console notranslate">~/dlang/install.sh list
 </pre>
 
-<h3><a class="anchor" title="Permalink to this section" id="update" href="#update">Update</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="update" href="#update">更新する</a></h3>
 
 Update the installer itself and the keyring.
 
@@ -443,7 +443,7 @@ Update the installer itself and the keyring.
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="spec/ddoc.html">Ddoc</a> on Sun Jan  9 10:23:49 2022
+<a href="spec/ddoc.html">Ddoc</a> on Mon Jan 10 07:22:51 2022
 </div>
     </div>
 </div>

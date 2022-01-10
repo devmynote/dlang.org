@@ -114,24 +114,24 @@
         
 
 
-    <ul>    <li><a href="#requirements">Requirements and Downloads</a></li>
-    <li><a href="#installation">Installation</a></li>
+    <ul>    <li><a href="#requirements">要件とダウンロード</a></li>
+    <li><a href="#installation">インストール</a></li>
     
-    <li><a href="#switches">Compiler Arguments and Switches</a></li>
-    <li><a href="#files">Files</a></li>
-    <li><a href="#linking">Linking</a></li>
-    <li><a href="#environment">Environment Variables</a></li>
+    <li><a href="#switches">コンパイラのパラメータとスイッチ</a></li>
+    <li><a href="#files">ファイル</a></li>
+    <li><a href="#linking">リンク</a></li>
+    <li><a href="#environment">環境変数</a></li>
     
-    <li><a href="#dmd-conf">dmd.conf</a> Initialization File</li>
+    <li><a href="#dmd-conf">dmd.conf 初期化ファイル</a></li>
     
-    <li><a href="#differences">Differences between Windows and Linux versions</a></li>
-    <li><a href="#interface-files">D Interface Files</a></li>
-    <li><a href="#library">Building Libraries</a></li>
-    <li><a href="#compiling-dmd">Compiling dmd</a></li>
-    <li><a href="#compiling-phobos">Compiling Phobos</a></li>
+    <li><a href="#differences">Windows 版と Linux 版との違い</a></li>
+    <li><a href="#interface-files">D インターフェイスファイル</a></li>
+    <li><a href="#library">ライブラリのビルド</a></li>
+    <li><a href="#compiling-dmd">dmdのコンパイル</a></li>
+    <li><a href="#compiling-phobos">Phobosのコンパイル</a></li>
     </ul>
 
-<h2><a class="anchor" title="Permalink to this section" id="requirements" href="#requirements">Requirements and Downloads</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="requirements" href="#requirements">要件とダウンロード</a></h2>
 
     <ol>    <li><a href="https://dlang.org/download.html">DMD Compiler</a></li>
 
@@ -144,7 +144,7 @@
     
     </ol>
 
-<h2><a class="anchor" title="Permalink to this section" id="installation" href="#installation">Installation</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="installation" href="#installation">インストール</a></h2>
 
     
     
@@ -219,7 +219,7 @@ sudo cp dmd2/{phobos/std,phobos/etc,druntime/import} /usr/include/d/dmd
 
 
 
-<h2><a class="anchor" title="Permalink to this section" id="switches" href="#switches">Compiler Arguments and Switches</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="switches" href="#switches">コンパイラのパラメータとスイッチ</a></h2>
 
     <dl>      <dt><b>dmd</b> <i>files</i>... -<i>switches</i>...
         <dd></dd>
@@ -666,7 +666,7 @@ sudo cp dmd2/{phobos/std,phobos/etc,druntime/import} /usr/include/d/dmd
 
     
 
-<h2><a class="anchor" title="Permalink to this section" id="files" href="#files">Files</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="files" href="#files">ファイル</a></h2>
 
     <dl>
     <dt><span class="d_inlinecode donthyphenate notranslate">dmd2/src/phobos/</span>
@@ -736,7 +736,7 @@ sudo cp dmd2/{phobos/std,phobos/etc,druntime/import} /usr/include/d/dmd
 
 
 
-<h2><a class="anchor" title="Permalink to this section" id="linking" href="#linking">Linking</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="linking" href="#linking">リンク</a></h2>
 
     <p>Linking is done directly by the <b>dmd</b> compiler after a successful
     compile. To prevent <b>dmd</b> from running the linker, use the
@@ -749,7 +749,7 @@ sudo cp dmd2/{phobos/std,phobos/etc,druntime/import} /usr/include/d/dmd
     </p>
      
 
-<h2><a class="anchor" title="Permalink to this section" id="environment" href="#environment">Environment Variables</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="environment" href="#environment">環境変数</a></h2>
 
     <p>The D compiler dmd uses the following environment variables:
     </p>
@@ -776,7 +776,7 @@ sudo cp dmd2/{phobos/std,phobos/etc,druntime/import} /usr/include/d/dmd
     </dl>
 
 
-<h2><span id="dmd_conf"><a class="anchor" title="Permalink to this section" id="dmd-conf" href="#dmd-conf">dmd.conf Initialization File</a></span></h2>
+<h2><span id="dmd_conf"><a class="anchor" title="Permalink to this section" id="dmd-conf" href="#dmd-conf">dmd.conf 初期化ファイル</a></span></h2>
 
     <p>The dmd file <span class="d_inlinecode donthyphenate notranslate">dmd.conf</span> is the same as <span class="d_inlinecode donthyphenate notranslate">sc.ini</span>
     for Windows, it's just that the file has a different name,
@@ -818,14 +818,14 @@ DFLAGS=-I%@P%/../src/phobos -I%@P%/../src/druntime/import
 
 
 <hr>
-<h2><a class="anchor" title="Permalink to this section" id="differences" href="#differences">Differences between Windows and Linux versions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="differences" href="#differences">Windows 版と Linux 版との違い</a></h2>
 
     <ul>    <li>String literals are read-only under Linux.
     Attempting to write to them
     will cause a segment violation.</li>
     </ul>
 <hr>
-<h2><span id="interface_files"><a class="anchor" title="Permalink to this section" id="interface-files" href="#interface-files">D Interface Files</a></span></h2>
+<h2><span id="interface_files"><a class="anchor" title="Permalink to this section" id="interface-files" href="#interface-files">D インターフェイスファイル</a></span></h2>
 
     <p>When an import declaration is processed in a D source file,
     the compiler searches for the D source file corresponding to
@@ -862,7 +862,7 @@ DFLAGS=-I%@P%/../src/phobos -I%@P%/../src/druntime/import
     of the build process.
     </p>
 
-<h2><a class="anchor" title="Permalink to this section" id="executable" href="#executable">Building Executables</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="executable" href="#executable">実行ファイルのビルド</a></h2>
 
     <p><b>dmd</b> can build an executable much faster if as many of the
     source files as possible are put on the command line.</p>
@@ -873,7 +873,7 @@ DFLAGS=-I%@P%/../src/phobos -I%@P%/../src/druntime/import
     </p>
     <p>The <span class="d_inlinecode donthyphenate notranslate">-i</span> flag can be used to automatically compile imported modules</p>
 
-<h2><a class="anchor" title="Permalink to this section" id="library" href="#library">Building Libraries</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="library" href="#library">ライブラリのビルド</a></h2>
 
     <p>There are three ways to build a library. For example,
     given <span class="d_inlinecode donthyphenate notranslate">foo.d</span> and <span class="d_inlinecode donthyphenate notranslate">bar.d</span> which are to be compiled, and existing
@@ -913,7 +913,7 @@ rm foo.o bar.o
     </li>
     </ol>
 
-<h2><span id="compiling_dmd"><a class="anchor" title="Permalink to this section" id="compiling-dmd" href="#compiling-dmd">Compiling dmd</a></span></h2>
+<h2><span id="compiling_dmd"><a class="anchor" title="Permalink to this section" id="compiling-dmd" href="#compiling-dmd">dmdのコンパイル</a></span></h2>
 
     <p>Complete source code is provided to build the compiler.
     Follow these steps:</p>
@@ -924,7 +924,7 @@ make -f posix.mak
 </pre>
 
 
-<h2><span id="compiling_phobos"><a class="anchor" title="Permalink to this section" id="compiling-phobos" href="#compiling-phobos">Compiling Phobos</a></span></h2>
+<h2><span id="compiling_phobos"><a class="anchor" title="Permalink to this section" id="compiling-phobos" href="#compiling-phobos">Phobosのコンパイル</a></span></h2>
 
     <p>Complete source code is provided to build Phobos, the D runtime library.
     Follow these steps:</p>
@@ -941,7 +941,7 @@ make -f posix.mak
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="spec/ddoc.html">Ddoc</a> on Sun Jan  9 10:23:49 2022
+<a href="spec/ddoc.html">Ddoc</a> on Mon Jan 10 07:22:51 2022
 </div>
     </div>
 </div>
