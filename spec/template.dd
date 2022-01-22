@@ -4,7 +4,7 @@ $(SPEC_S テンプレート,
 
 $(HEADERNAV_TOC)
 
-$(H2 $(LNAME2 declarations, Template Declarations))
+$(H2 $(LNAME2 declarations, テンプレートの宣言))
 
     $(P Templates are D's approach to generic programming.
         Templates can be defined with a $(I TemplateDeclaration):
@@ -839,7 +839,7 @@ $(GNAME TemplateSequenceParameter):
         to dynamically change, add, or remove elements either at compile-time or run-time.
     )
 
-$(H3 $(LNAME2 typeseq_deduction, Type Sequence Deduction))
+$(H3 $(LNAME2 typeseq_deduction, 型シーケンスの推論))
 
     $(P Type sequences can be deduced from the trailing parameters
         of an $(RELATIVE_LINK2 ifti, implicitly instantiated) function template:)
@@ -1096,7 +1096,7 @@ $(H3 $(LNAME2 ifti, 暗黙の関数テンプレートのインスタンス化 (I
         from the function arguments.
     )
 
-$(H4 $(LNAME2 ifti-restrictions, Restrictions))
+$(H4 $(LNAME2 ifti-restrictions, 制限))
 
     $(P Function template type parameters that are to be implicitly
         deduced may not have specializations:)

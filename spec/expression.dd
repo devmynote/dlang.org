@@ -4,7 +4,7 @@ $(SPEC_S 式,
 
 $(HEADERNAV_TOC)
 
-$(H2 $(LEGACY_LNAME2 Expression, expression, Expressions))
+$(H2 $(LEGACY_LNAME2 Expression, expression, 式))
 
 $(GRAMMAR
 $(GNAME Expression):
@@ -545,7 +545,7 @@ $(GNAME EqualExpression):
         x.re == y.re && x.im == y.im
         ---
 
-    $(H3 $(LNAME2 class_struct_equality, Class & Struct Equality))
+    $(H3 $(LNAME2 class_struct_equality, Class や Struct の等式))
 
     $(P For struct objects, equality means the result of the
         $(LINK2 https://dlang.org/spec/operatoroverloading.html#equals, `opEquals()` member function).
@@ -592,7 +592,7 @@ $(GNAME EqualExpression):
             ...
         ---
 
-$(H3 $(LNAME2 identity_expressions, 等式))
+$(H3 $(LNAME2 identity_expressions, 同一式))
 
 $(GRAMMAR
 $(GNAME IdentityExpression):
@@ -641,7 +641,7 @@ $(GNAME RelExpression):
         The result type of a relational expression is $(D bool).
     )
 
-$(H3 $(LNAME2 array_comparisons, Array comparisons))
+$(H3 $(LNAME2 array_comparisons, 配列の比較))
 
     $(P For static and dynamic arrays, the result of the relational
         op is the result of the operator applied to the first non-equal
@@ -808,7 +808,7 @@ $(GNAME AddExpression):
     $(P Add expressions for floating point operands are not associative.
     )
 
-    $(H3 $(LNAME2 pointer_arithmetic, Pointer Arithmetic))
+    $(H3 $(LNAME2 pointer_arithmetic, ポインタ演算))
 
     $(P If the operator is $(D +) or $(D -), and
         the first operand is a pointer, and the second is an integral type,
@@ -872,7 +872,7 @@ $(GNAME MulExpression):
         into the integral type.
     )
 
-$(H3 $(LNAME2 division, Division))
+$(H3 $(LNAME2 division, 除算))
 
     $(P For integral operands of the $(D /) and $(D %) operators,
         the quotient rounds towards zero and the remainder has the
@@ -894,7 +894,7 @@ $(H3 $(LNAME2 division, Division))
         can be used to check for them and select a defined behavior.
     )
 
-$(H3 $(LNAME2 mul_floating, Floating Point))
+$(H3 $(LNAME2 mul_floating, 浮動小数点))
 
     $(P For floating point operands, the `*` and `/` operations correspond
         to the IEEE 754 floating point equivalents. `%` is not the same as
@@ -982,7 +982,7 @@ $(GNAME ArgumentList):
         or using the class specific allocator.
     )
 
-$(H3 $(LNAME2 new_multidimensional, Multidimensional Arrays))
+$(H3 $(LNAME2 new_multidimensional, 多次元配列))
 
     $(P To allocate multidimensional arrays, the declaration reads
         in the same order as the prefix array declaration order.)
@@ -2101,7 +2101,7 @@ $(GNAME ImportExpression):
         }
         ---
 
-$(H3 $(LNAME2 typeid_expressions, Typeid Expressions))
+$(H3 $(LNAME2 typeid_expressions, Typeid 式))
 
 $(GRAMMAR
 $(GNAME TypeidExpression):
