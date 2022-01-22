@@ -146,7 +146,7 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#expression">Expressions</a></li>
+    <ol>    <li><a href="#expression">式</a></li>
     <li><a href="#definitions-and-terms">定義と用語</a><ol>        <li><a href="#.define-full-expression">Full Expression</a></li>
         <li><a href="#.define-lvalue">Lvalue</a></li>
         <li><a href="#.define-rvalue">Rvalue</a></li>
@@ -167,25 +167,25 @@
         <li><a href="#and_expressions">And 式</a></li>
     </ol></li>
     <li><a href="#compare_expressions">比較式</a></li>
-    <li><a href="#equality_expressions">等式</a><ol>        <li><a href="#class_struct_equality">Class &amp; Struct Equality</a></li>
-        <li><a href="#identity_expressions">等式</a></li>
+    <li><a href="#equality_expressions">等式</a><ol>        <li><a href="#class_struct_equality">Class や Struct の等式</a></li>
+        <li><a href="#identity_expressions">同一式</a></li>
     </ol></li>
-    <li><a href="#relation_expressions">関係式</a><ol>        <li><a href="#array_comparisons">Array comparisons</a></li>
+    <li><a href="#relation_expressions">関係式</a><ol>        <li><a href="#array_comparisons">配列の比較</a></li>
         <li><a href="#integer_comparisons">整数の比較</a></li>
         <li><a href="#floating-point-comparisons">浮動小数点の比較</a></li>
         <li><a href="#class-comparisons">クラスの比較</a></li>
     </ol></li>
     <li><a href="#in_expressions">In 式</a></li>
     <li><a href="#shift_expressions">Shift 式</a></li>
-    <li><a href="#add_expressions">Add 式</a><ol>        <li><a href="#pointer_arithmetic">Pointer Arithmetic</a></li>
+    <li><a href="#add_expressions">Add 式</a><ol>        <li><a href="#pointer_arithmetic">ポインタ演算</a></li>
     </ol></li>
     <li><a href="#cat_expressions">Cat 式</a></li>
-    <li><a href="#mul_expressions">Mul 式</a><ol>        <li><a href="#division">Division</a></li>
-        <li><a href="#mul_floating">Floating Point</a></li>
+    <li><a href="#mul_expressions">Mul 式</a><ol>        <li><a href="#division">除算</a></li>
+        <li><a href="#mul_floating">浮動小数点</a></li>
     </ol></li>
     <li><a href="#unary-expression">単項式</a><ol>        <li><a href="#complement_expressions">補数式</a></li>
         <li><a href="#new_expressions">New 式</a></li>
-        <li><a href="#new_multidimensional">Multidimensional Arrays</a></li>
+        <li><a href="#new_multidimensional">多次元配列</a></li>
         <li><a href="#delete_expressions">Delete 式</a></li>
         <li><a href="#cast_expressions">キャスト式</a></li>
     </ol></li>
@@ -205,7 +205,7 @@
         <li><a href="#assert_expressions">Assert 式</a></li>
         <li><a href="#mixin_expressions">Mixin 式</a></li>
         <li><a href="#import_expressions">Import 式</a></li>
-        <li><a href="#typeid_expressions">Typeid Expressions</a></li>
+        <li><a href="#typeid_expressions">Typeid 式</a></li>
         <li><a href="#is_expression">Is 式</a></li>
     </ol></li>
     <li><a href="#specialkeywords">特殊なキーワード</a></li>
@@ -213,7 +213,7 @@
 </ol>
 </div>
 <div class="blankline"></div>
-<h2><span id="Expression"><a class="anchor" title="Permalink to this section" id="expression" href="#expression">Expressions</a></span></h2>
+<h2><span id="Expression"><a class="anchor" title="Permalink to this section" id="expression" href="#expression">式</a></span></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Expression"><span class="gname">Expression</span></a>:
     <a href="#CommaExpression"><i>CommaExpression</i></a>
@@ -733,7 +733,7 @@ test ? a = b : c = 2;   <span class="d_comment">// Deprecated
 <pre class="d_code notranslate">x.re == y.re &amp;&amp; x.im == y.im
 </pre>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="class_struct_equality" href="#class_struct_equality">Class &amp; Struct Equality</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="class_struct_equality" href="#class_struct_equality">Class や Struct の等式</a></h3>
 <div class="blankline"></div>
     <p>For struct objects, equality means the result of the
         <a href="https://dlang.org/spec/operatoroverloading.html#equals"><span class="d_inlinecode donthyphenate notranslate">opEquals()</span> member function</a>.
@@ -782,7 +782,7 @@ C c;
 </span>    ...
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="identity_expressions" href="#identity_expressions">等式</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="identity_expressions" href="#identity_expressions">同一式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="IdentityExpression"><span class="gname">IdentityExpression</span></a>:
     <a href="#ShiftExpression"><i>ShiftExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">is</span> <a href="#ShiftExpression"><i>ShiftExpression</i></a>
@@ -829,7 +829,7 @@ C c;
         The result type of a relational expression is <span class="d_inlinecode donthyphenate notranslate">bool</span>.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="array_comparisons" href="#array_comparisons">Array comparisons</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="array_comparisons" href="#array_comparisons">配列の比較</a></h3>
 <div class="blankline"></div>
     <p>For static and dynamic arrays, the result of the relational
         op is the result of the operator applied to the first non-equal
@@ -986,7 +986,7 @@ C c;
     <p>Add expressions for floating point operands are not associative.
     </p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="pointer_arithmetic" href="#pointer_arithmetic">Pointer Arithmetic</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="pointer_arithmetic" href="#pointer_arithmetic">ポインタ演算</a></h3>
 <div class="blankline"></div>
     <p>If the operator is <span class="d_inlinecode donthyphenate notranslate">+</span> or <span class="d_inlinecode donthyphenate notranslate">-</span>, and
         the first operand is a pointer, and the second is an integral type,
@@ -1048,7 +1048,7 @@ C c;
         into the integral type.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="division" href="#division">Division</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="division" href="#division">除算</a></h3>
 <div class="blankline"></div>
     <p>For integral operands of the <span class="d_inlinecode donthyphenate notranslate">/</span> and <span class="d_inlinecode donthyphenate notranslate">%</span> operators,
         the quotient rounds towards zero and the remainder has the
@@ -1071,7 +1071,7 @@ C c;
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="mul_floating" href="#mul_floating">Floating Point</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="mul_floating" href="#mul_floating">浮動小数点</a></h3>
 <div class="blankline"></div>
     <p>For floating point operands, the <span class="d_inlinecode donthyphenate notranslate">*</span> and <span class="d_inlinecode donthyphenate notranslate">/</span> operations correspond
         to the IEEE 754 floating point equivalents. <span class="d_inlinecode donthyphenate notranslate">%</span> is not the same as
@@ -1156,7 +1156,7 @@ C c;
         or using the class specific allocator.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="new_multidimensional" href="#new_multidimensional">Multidimensional Arrays</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="new_multidimensional" href="#new_multidimensional">多次元配列</a></h3>
 <div class="blankline"></div>
     <p>To allocate multidimensional arrays, the declaration reads
         in the same order as the prefix array declaration order.</p>
@@ -2221,7 +2221,7 @@ type:</p>
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="typeid_expressions" href="#typeid_expressions">Typeid Expressions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="typeid_expressions" href="#typeid_expressions">Typeid 式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TypeidExpression"><span class="gname">TypeidExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">typeid (</span> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
@@ -2641,7 +2641,7 @@ file full path: '/example/test.d'
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 11:22:55 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:41 2022
 </div>
     </div>
 </div>
