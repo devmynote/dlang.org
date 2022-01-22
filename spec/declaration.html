@@ -151,7 +151,12 @@
         <li><a href="#declaring-multiple-symbols">複数シンボルの宣言</a></li>
     </ol></li>
     <li><a href="#auto-declaration">暗黙の型推論</a></li>
-    <li><a href="#alias">Alias宣言</a></li>
+    <li><a href="#alias">Alias宣言</a><ol>        <li><a href="#alias-type">Type Aliases</a></li>
+        <li><a href="#alias-symbol">Symbol Aliases</a></li>
+        <li><a href="#alias-overload">Aliasing an Overload Set</a></li>
+        <li><a href="#alias-variable">Aliasing Variables</a></li>
+        <li><a href="#alias-function">Aliasing a Function Type</a></li>
+    </ol></li>
     <li><a href="#AliasAssign">Aliasの割り当て</a></li>
     <li><a href="#alias-reassignment">Aliasの再割り当て</a></li>
     <li><a href="#extern">Extern宣言</a></li>
@@ -423,9 +428,11 @@ must be of the same type:
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="../spec/template.html#TemplateParameters"><i>TemplateParameters</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="#StorageClasses"><i>StorageClasses</i></a><sub>opt</sub> <a href="../spec/type.html#BasicType"><i>BasicType</i></a> <a href="../spec/function.html#Parameters"><i>Parameters</i></a> <a href="../spec/function.html#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub>
 </pre>
 <div class="blankline"></div>
-    <p><i>AliasDeclaration</i>s create a symbol that is an alias for another type,
-        and can be used anywhere that other type may appear.
+    <p><i>AliasDeclaration</i>s create a symbol name that refers to another symbol.
+        That symbol name can be used anywhere that the aliased symbol may appear.
     </p>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="alias-type" href="#alias-type">Type Aliases</a></h3>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">alias</span> myint = abc.Foo.bar;
 </pre>
@@ -440,6 +447,20 @@ must be of the same type:
 <span class="d_keyword">void</span> foo(<span class="d_keyword">int</span> x) { ... }
 <span class="d_keyword">void</span> foo(myint m) { ... } <span class="d_comment">// error, multiply defined function foo
 </span></pre>
+<div class="blankline"></div>
+        <p>        Type aliases can sometimes look indistinguishable from
+        other symbol aliases:
+        </p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">alias</span> abc = foo.bar; <span class="d_comment">// is it a type or a symbol?
+</span></pre>
+<div class="blankline"></div>
+        <div class="spec-boxes best-practice"><b>Best Practices:</b> Other than when aliasing simple basic type names,
+        type alias names should be Capitalized.</div>
+
+
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="alias-symbol" href="#alias-symbol">Symbol Aliases</a></h3>
 <div class="blankline"></div>
     <p>A symbol can be declared as an <i>alias</i> of another symbol.
         For example:
@@ -465,16 +486,7 @@ t1.t v1;  <span class="d_comment">// v1 is type int
 </span>t2 v2;    <span class="d_comment">// v2 is type int
 </span>t3 v3;    <span class="d_comment">// v3 is type int
 </span>t4 v4;    <span class="d_comment">// v4 is type int
-</span>
-<span class="d_keyword">alias</span> Fun = <span class="d_keyword">int</span>(string p);
-<span class="d_keyword">int</span> fun(string){<span class="d_keyword">return</span> 0;}
-<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(fun) == Fun));
-
-<span class="d_keyword">alias</span> MemberFun1 = <span class="d_keyword">int</span>() <span class="d_keyword">const</span>;
-<span class="d_keyword">alias</span> MemberFun2 = <span class="d_keyword">const</span> <span class="d_keyword">int</span>();
-<span class="d_comment">// leading attributes apply to the func, not the return type
-</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(MemberFun1 == MemberFun2));
-</pre>
+</span></pre>
 <div class="blankline"></div>
         <p>        Aliased symbols are useful as a shorthand for a long qualified
         symbol name, or as a way to redirect references from one symbol
@@ -498,52 +510,43 @@ t1.t v1;  <span class="d_comment">// v1 is type int
 <pre class="d_code notranslate"><span class="d_keyword">alias</span> strlen = string.strlen;
 </pre>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="alias-overload" href="#alias-overload">Aliasing an Overload Set</a></h3>
+<div class="blankline"></div>
         <p>        Aliases can also <span class="d_inlinecode donthyphenate notranslate">import</span> a set of overloaded functions, that can
         be overloaded with functions in the current scope:
         </p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">class</span> A
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">class</span> B
 {
-    <span class="d_keyword">int</span> foo(<span class="d_keyword">int</span> a) { <span class="d_keyword">return</span> 1; }
-}
-
-<span class="d_keyword">class</span> B : A
-{
-    <span class="d_keyword">int</span> foo( <span class="d_keyword">int</span> a, <span class="d_keyword">uint</span> b ) { <span class="d_keyword">return</span> 2; }
+    <span class="d_keyword">int</span> foo(<span class="d_keyword">int</span> a, <span class="d_keyword">uint</span> b) { <span class="d_keyword">return</span> 2; }
 }
 
 <span class="d_keyword">class</span> C : B
 {
-    <span class="d_keyword">int</span> foo( <span class="d_keyword">int</span> a ) { <span class="d_keyword">return</span> 3; }
-    <span class="d_keyword">alias</span> foo = B.foo;
+    <span class="d_comment">// declaring an overload hides any base class overloads
+</span>    <span class="d_keyword">int</span> foo(<span class="d_keyword">int</span> a) { <span class="d_keyword">return</span> 3; }
+    <span class="d_comment">// redeclare hidden overload
+</span>    <span class="d_keyword">alias</span> foo = B.foo;
 }
 
-<span class="d_keyword">class</span> D : C
+<span class="d_keyword">void</span> main()
 {
-}
+    <span class="d_keyword">import</span> std.stdio;
 
-<span class="d_keyword">void</span> test()
-{
-    D b = <span class="d_keyword">new</span> D();
-    <span class="d_keyword">int</span> i;
-
-    i = b.foo(1, 2u);   <span class="d_comment">// calls B.foo
-</span>    i = b.foo(1);       <span class="d_comment">// calls C.foo
+    C c = <span class="d_keyword">new</span> C();
+    c.foo(1, 2u).writeln;   <span class="d_comment">// calls B.foo
+</span>    c.foo(1).writeln;       <span class="d_comment">// calls C.foo
 </span>}
 </pre>
+
+</div>
 <div class="blankline"></div>
-        <p>        <b>Note:</b> Type aliases can sometimes look indistinguishable from
-        alias declarations:
-        </p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">alias</span> abc = foo.bar; <span class="d_comment">// is it a type or a symbol?
-</span></pre>
-<div class="blankline"></div>
-        <p>        The distinction is made in the semantic analysis pass.
-        </p>
+<h3><a class="anchor" title="Permalink to this section" id="alias-variable" href="#alias-variable">Aliasing Variables</a></h3>
 <div class="blankline"></div>
         <p>Aliases cannot be used for expressions:</p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> S
 {
     <span class="d_keyword">static</span> <span class="d_keyword">int</span> i;
@@ -552,14 +555,32 @@ t1.t v1;  <span class="d_comment">// v1 is type int
 
 <span class="d_keyword">alias</span> a = S.i; <span class="d_comment">// OK, `S.i` is a symbol
 </span><span class="d_keyword">alias</span> b = S.j; <span class="d_comment">// OK. `S.j` is also a symbol
-</span><span class="d_keyword">alias</span> c = a + b; <span class="d_comment">// illegal, `a + b` is an expression
+</span><span class="d_comment">//alias c = a + b; // illegal, `a + b` is an expression
 </span>a = 2;         <span class="d_comment">// sets `S.i` to `2`
 </span>b = 4;         <span class="d_comment">// sets `S.j` to `4`
-</span></pre>
+</span><span class="d_keyword">assert</span>(S.i == 2);
+<span class="d_keyword">assert</span>(S.j == 4);
+</pre>
+
+</div>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="alias-function" href="#alias-function">Aliasing a Function Type</a></h3>
+<div class="blankline"></div>
+        <p>Function types can be aliased:</p>
+<pre class="d_code notranslate"><span class="d_keyword">alias</span> Fun = <span class="d_keyword">int</span>(string p);
+<span class="d_keyword">int</span> fun(string){<span class="d_keyword">return</span> 0;}
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(fun) == Fun));
+
+<span class="d_keyword">alias</span> MemberFun1 = <span class="d_keyword">int</span>() <span class="d_keyword">const</span>;
+<span class="d_keyword">alias</span> MemberFun2 = <span class="d_keyword">const</span> <span class="d_keyword">int</span>();
+<span class="d_comment">// leading attributes apply to the func, not the return type
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(MemberFun1 == MemberFun2));
+</pre>
 <div class="blankline"></div>
         <p>Aliases can be used to call a function with different default
         arguments, change an argument from required to default or vice versa:</p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio : writefln;
 
 <span class="d_keyword">void</span> main() {
@@ -589,6 +610,8 @@ t1.t v1;  <span class="d_comment">// v1 is type int
     writefln(<span class="d_string">"a: %d, b: %d, c: %d"</span>, a, b, c);
 }
 </pre>
+
+</div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="AliasAssign" href="#AliasAssign">Aliasの割り当て</a></h2>
 <div class="blankline"></div>
@@ -599,6 +622,7 @@ t1.t v1;  <span class="d_comment">// v1 is type int
         <p>An <a href="#AliasDeclaration"><i>AliasDeclaration</i></a> can have a new value assigned to it with an
         <i>AliasAssign</i>:</p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">template</span> Gorgon(T)
 {
     <span class="d_keyword">alias</span> A = <span class="d_keyword">long</span>;
@@ -607,6 +631,8 @@ t1.t v1;  <span class="d_comment">// v1 is type int
 }
 <span class="d_keyword">pragma</span>(msg, Gorgon!<span class="d_keyword">int</span>); <span class="d_comment">// prints int
 </span></pre>
+
+</div>
 <div class="blankline"></div>
 <ul><li>The <i>AliasAssign</i> and its corresponding <i>AliasDeclaration</i> must both be
 declared in the same <a href="../spec/template.html#TemplateDeclaration"><i>TemplateDeclaration</i></a>.</li>
@@ -624,8 +650,12 @@ to another <i>AliasAssign</i> to the same lvalue other than in the right hand si
         <div class="spec-boxes best-practice"><b>Best Practices:</b>         <i>AliasAssign</i> is particularly useful when using an iterative
         computation rather than a recursive one, as it avoids creating
         the large number of intermediate templates that the recursive one
-        engenders.
-<pre class="d_code notranslate"><span class="d_keyword">template</span> AliasSeq(T...) { <span class="d_keyword">alias</span> AliasSeq = T; }
+        engenders.</div>
+
+
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.meta : AliasSeq;
 
 <span class="d_keyword">static</span> <span class="d_keyword">if</span> (0) <span class="d_comment">// recursive method for comparison
 </span>{
@@ -652,9 +682,8 @@ to another <i>AliasAssign</i> to the same lvalue other than in the right hand si
 <span class="d_keyword">alias</span> TK = Reverse!(<span class="d_keyword">int</span>, <span class="d_keyword">const</span> <span class="d_keyword">uint</span>, X);
 <span class="d_keyword">pragma</span>(msg, TK); <span class="d_comment">// prints tuple(3, (const(uint)), (int))
 </span></pre>
-        </div>
 
-
+</div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="alias-reassignment" href="#alias-reassignment">Aliasの再割り当て</a></h2>
 <div class="blankline"></div>
@@ -666,14 +695,22 @@ to another <i>AliasAssign</i> to the same lvalue other than in the right hand si
 <div class="blankline"></div>
         <p>An alias declaration inside a template can be reassigned a new value.</p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">template</span> staticMap(<span class="d_keyword">alias</span> F, T...)
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.meta : AliasSeq;
+
+<span class="d_keyword">template</span> staticMap(<span class="d_keyword">alias</span> F, Args...)
 {
     <span class="d_keyword">alias</span> A = AliasSeq!();
-    <span class="d_keyword">static</span> <span class="d_keyword">foreach</span> (t; T)
-        A = AliasSeq!(A, F!T); <span class="d_comment">// alias reassignment
+    <span class="d_keyword">static</span> <span class="d_keyword">foreach</span> (Arg; Args)
+        A = AliasSeq!(A, F!Arg); <span class="d_comment">// alias reassignment
 </span>    <span class="d_keyword">alias</span> staticMap = A;
 }
+
+<span class="d_keyword">enum</span> size(T) = T.sizeof;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(staticMap!(size, <span class="d_keyword">char</span>, <span class="d_keyword">wchar</span>, <span class="d_keyword">dchar</span>) == AliasSeq!(1, 2, 4));
 </pre>
+        
+</div>
 <div class="blankline"></div>
         <p>The <i>Identifier</i> must resolve to a lexically preceding <a href="#AliasDeclaration"><i>AliasDeclaration</i></a>.
         Both must be members of the same <a href="../spec/template.html#TemplateDeclaration"><i>TemplateDeclaration</i></a>.
@@ -923,7 +960,7 @@ ImmutableInt z;     <span class="d_comment">// typeof(z) == immutable(int)
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan 10 07:22:39 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 11:22:55 2022
 </div>
     </div>
 </div>

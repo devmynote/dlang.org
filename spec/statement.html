@@ -165,8 +165,7 @@
         <li><a href="#foreach_over_tuples">シーケンスに対する foreach</a></li>
         <li><a href="#foreach_ref_parameters">Ref 引数の Foreach</a></li>
         <li><a href="#foreach_restrictions">Foreach の制限</a></li>
-    </ol></li>
-    <li><a href="#foreach-range-statement">Foreach Range 文</a><ol>        <li><a href="#break_and_continue_out_of_foreach">Foreach と Break, Continue</a></li>
+        <li><a href="#foreach-range-statement">Foreach Range 文</a></li>
     </ol></li>
     <li><a href="#switch-statement">Switch 文</a></li>
     <li><a href="#final-switch-statement">Final Switch 文</a></li>
@@ -424,8 +423,8 @@ x++;               <span class="d_comment">// ok
     <a href="#ScopeStatement"><i>ScopeStatement</i></a>
 </pre>
 <div class="blankline"></div>
-        <p><a href="../spec/expression.html#Expression"><i>Expression</i></a> is evaluated and must have a type that
-        can be converted to a boolean. If it's true the
+        <p><em>Expression</em> is evaluated and must have a type that
+        can be converted to a boolean. If it's <span class="d_inlinecode donthyphenate notranslate">true</span> the
         <i>ThenStatement</i> is transferred to, else the <i>ElseStatement</i>
         is transferred to.</p>
 <div class="blankline"></div>
@@ -435,19 +434,19 @@ x++;               <span class="d_comment">// ok
         <p>If an <span class="d_inlinecode donthyphenate notranslate">auto</span> <i>Identifier</i> is provided, it is declared and
         initialized
         to the value
-        and type of the <a href="../spec/expression.html#Expression"><i>Expression</i></a>. Its scope extends from when it is
+        and type of the <em>Expression</em>. Its scope extends from when it is
         initialized to the end of the <i>ThenStatement</i>.</p>
 <div class="blankline"></div>
         <p>If a <i>TypeCtors</i> <i>Identifier</i> is provided, it is declared
         to be of the type specified by <i>TypeCtors</i>
-        and is initialized with the value of the <a href="../spec/expression.html#Expression"><i>Expression</i></a>.
+        and is initialized with the value of the <em>Expression</em>.
         Its scope extends from when it is
         initialized to the end of the <i>ThenStatement</i>.</p>
 <div class="blankline"></div>
         <p>If a <i>Declarator</i> is provided, it is declared and
         initialized
         to the value
-        of the <a href="../spec/expression.html#Expression"><i>Expression</i></a>. Its scope extends from when it is
+        of the <em>Expression</em>. Its scope extends from when it is
         initialized to the end of the <i>ThenStatement</i>.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.regex;
@@ -474,11 +473,11 @@ writeln(m.pre);      <span class="d_comment">// Error: undefined identifier 'm'
 <div class="blankline"></div>
 <p>A <i>While Statement</i> implements a simple loop.</p>
 <div class="blankline"></div>
-<p>If the <a href="#IfCondition"><i>IfCondition</i></a> is an <a href="../spec/expression.html#Expression"><i>Expression</i></a>, it is evaluated and must have a type
-that can be converted to a boolean. If it's true the <a href="#ScopeStatement"><i>ScopeStatement</i></a> is executed.
-After the <a href="#ScopeStatement"><i>ScopeStatement</i></a> is executed, the <a href="../spec/expression.html#Expression"><i>Expression</i></a> is evaluated again, and
-if true the <a href="#ScopeStatement"><i>ScopeStatement</i></a> is executed again. This continues until the <a href="../spec/expression.html#Expression"><i>Expression</i></a>
-evaluates to false.</p>
+<p>If the <i>IfCondition</i> is an <em>Expression</em>, it is evaluated and must have a type
+that can be converted to a boolean. If it's <span class="d_inlinecode donthyphenate notranslate">true</span> the <em>ScopeStatement</em> is executed.
+After the <em>ScopeStatement</em> is executed, the <em>Expression</em> is evaluated again, and
+if <span class="d_inlinecode donthyphenate notranslate">true</span> the <em>ScopeStatement</em> is executed again. This continues until the <em>Expression</em>
+evaluates to <span class="d_inlinecode donthyphenate notranslate">false</span>.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">int</span> i = 0;
 <span class="d_keyword">while</span> (i &lt; 10)
@@ -489,21 +488,21 @@ evaluates to false.</p>
 </pre>
 <div class="blankline"></div>
 <p>If an <span class="d_inlinecode donthyphenate notranslate">auto</span> <i>Identifier</i> is provided, it is declared and
-initialized to the value and type of the <a href="../spec/expression.html#Expression"><i>Expression</i></a>. Its scope
-extends from when it is initialized to the end of the <a href="#ScopeStatement"><i>ScopeStatement</i></a>.</p>
+initialized to the value and type of the <em>Expression</em>. Its scope
+extends from when it is initialized to the end of the <em>ScopeStatement</em>.</p>
 <div class="blankline"></div>
 <p>If a <i>TypeCtors</i> <i>Identifier</i> is provided, it is declared
 to be of the type specified by <i>TypeCtors</i> and is initialized with
-the value of the <a href="../spec/expression.html#Expression"><i>Expression</i></a>. Its scope extends from when it is
-initialized to the end of the <a href="#ScopeStatement"><i>ScopeStatement</i></a>.</p>
+the value of the <em>Expression</em>. Its scope extends from when it is
+initialized to the end of the <em>ScopeStatement</em>.</p>
 <div class="blankline"></div>
 <p>If a <i>Declarator</i> is provided, it is declared and initialized
-to the value of the <a href="../spec/expression.html#Expression"><i>Expression</i></a>. Its scope extends from when it is
-initialized to the end of the <a href="#ScopeStatement"><i>ScopeStatement</i></a>.</p>
+to the value of the <em>Expression</em>. Its scope extends from when it is
+initialized to the end of the <em>ScopeStatement</em>.</p>
 <div class="blankline"></div>
 <p>A <a href="#BreakStatement"><i>BreakStatement</i></a> will exit the loop.</p>
 <div class="blankline"></div>
-<p>A <a href="#ContinueStatement"><i>ContinueStatement</i></a> will transfer directly to evaluating <a href="#IfCondition"><i>IfCondition</i></a> again.</p>
+<p>A <a href="#ContinueStatement"><i>ContinueStatement</i></a> will transfer directly to evaluating <i>IfCondition</i> again.</p>
 <div class="blankline"></div>
 <h2><span id="DoStatement"><a class="anchor" title="Permalink to this section" id="do-statement" href="#do-statement">Do 文</a></span></h2>
 <div class="blankline"></div>
@@ -514,9 +513,9 @@ initialized to the end of the <a href="#ScopeStatement"><i>ScopeStatement</i></a
 <div class="blankline"></div>
 <p>Do while statements implement simple loops.</p>
 <div class="blankline"></div>
-<p><a href="#ScopeStatement"><i>ScopeStatement</i></a> is executed. Then <a href="../spec/expression.html#Expression"><i>Expression</i></a> is evaluated and must have a
-type that can be converted to a boolean. If it's true the loop is iterated
-again. This continues until the <a href="../spec/expression.html#Expression"><i>Expression</i></a> evaluates to false.</p>
+<p><em>ScopeStatement</em> is executed. Then <em>Expression</em> is evaluated and must have a
+type that can be converted to a boolean. If it's <span class="d_inlinecode donthyphenate notranslate">true</span> the loop is iterated
+again. This continues until the <em>Expression</em> evaluates to <span class="d_inlinecode donthyphenate notranslate">false</span>.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">int</span> i = 0;
 <span class="d_keyword">do</span>
@@ -526,7 +525,7 @@ again. This continues until the <a href="../spec/expression.html#Expression"><i>
 </pre>
 <div class="blankline"></div>
 <p>A <a href="#BreakStatement"><i>BreakStatement</i></a> will exit the loop. A <a href="#ContinueStatement"><i>ContinueStatement</i></a>
-will transfer directly to evaluating <a href="../spec/expression.html#Expression"><i>Expression</i></a> again.</p>
+will transfer directly to evaluating <em>Expression</em> again.</p>
 <div class="blankline"></div>
 <h2><span id="ForStatement"><a class="anchor" title="Permalink to this section" id="for-statement" href="#for-statement">For 文</a></span></h2>
 <div class="blankline"></div>
@@ -645,7 +644,7 @@ clauses.</p>
 <p>        <i>ForeachAggregate</i> is evaluated. It must evaluate to an expression
         of type static array, dynamic array, associative array,
         struct, class, delegate, or sequence.
-        The <a href="#NoScopeNonEmptyStatement"><i>NoScopeNonEmptyStatement</i></a> is executed, once for each element of the
+        The <em>NoScopeNonEmptyStatement</em> is executed, once for each element of the
         aggregate.
         At the start of each iteration, the variables declared by
         the <i>ForeachTypeList</i>
@@ -657,8 +656,13 @@ clauses.</p>
 </p>
 <p>        The aggregate must be loop invariant, meaning that
         elements to the aggregate cannot be added or removed from it
-        in the <a href="#NoScopeNonEmptyStatement"><i>NoScopeNonEmptyStatement</i></a>.
+        in the <em>NoScopeNonEmptyStatement</em>.
 </p>
+<div class="blankline"></div>
+        <p>A <a href="#BreakStatement"><i>BreakStatement</i></a> in the body of the foreach will exit the
+        foreach, a <a href="#ContinueStatement"><i>ContinueStatement</i></a> will immediately start the
+        next iteration.
+        </p>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="foreach_over_arrays" href="#foreach_over_arrays">配列に対する foreach</a></h3>
 <div class="blankline"></div>
@@ -676,13 +680,16 @@ clauses.</p>
         <i>index</i> cannot be <span class="d_inlinecode donthyphenate notranslate">ref</span>.
         It is set to be the index of the array element.
 </p>
-<pre class="d_code notranslate"><span class="d_keyword">char</span>[] a;
-...
-<span class="d_keyword">foreach</span> (<span class="d_keyword">int</span> i, <span class="d_keyword">char</span> c; a)
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">char</span>[] a = ['h', 'i'];
+
+<span class="d_keyword">foreach</span> (size_t i, <span class="d_keyword">char</span> c; a)
 {
     writefln(<span class="d_string">"a[%d] = '%c'"</span>, i, c);
 }
 </pre>
+
+</div>
 <div class="blankline"></div>
         <p>For <span class="d_inlinecode donthyphenate notranslate">foreach</span>, the
         elements for the array are iterated over starting at index 0
@@ -715,6 +722,7 @@ clauses.</p>
         can be decoded into any UTF type:
         </p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">char</span>[] a = <span class="d_string">"\xE2\x89\xA0"</span>.dup;  <span class="d_comment">// \u2260 encoded as 3 UTF-8 bytes
 </span>
 <span class="d_keyword">foreach</span> (<span class="d_keyword">dchar</span> c; a)
@@ -729,24 +737,25 @@ clauses.</p>
     writef(<span class="d_string">"%x, "</span>, c);  <span class="d_comment">// prints 'e2, 89, a0, '
 </span>}
 </pre>
-<div class="blankline"></div>
+
+</div>
 <div class="blankline"></div>
         <p>Aggregates can be string literals, which can be accessed
         as char, wchar, or dchar arrays:
         </p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">void</span> test()
+    <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">foreach</span> (<span class="d_keyword">char</span> c; <span class="d_string">"ab"</span>)
 {
-    <span class="d_keyword">foreach</span> (<span class="d_keyword">char</span> c; <span class="d_string">"ab"</span>)
-    {
-        writefln(<span class="d_string">"'%s'"</span>, c);
-    }
-    <span class="d_keyword">foreach</span> (<span class="d_keyword">wchar</span> w; <span class="d_string">"xy"</span>)
-    {
-        writefln(<span class="d_string">"'%s'"</span>, w);
-    }
+    writefln(<span class="d_string">"'%s'"</span>, c);
+}
+<span class="d_keyword">foreach</span> (<span class="d_keyword">wchar</span> w; <span class="d_string">"xy"</span>)
+{
+    writefln(<span class="d_string">"'%s'"</span>, w);
 }
 </pre>
+    
+</div>
 <div class="blankline"></div>
         <p>which would print:
         </p>
@@ -816,6 +825,7 @@ clauses.</p>
 <div class="blankline"></div>
     <p>For example, consider a class that is a container for two elements:</p>
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">class</span> Foo
 {
     <span class="d_keyword">uint</span>[2] array;
@@ -824,21 +834,19 @@ clauses.</p>
     {
         <span class="d_keyword">int</span> result = 0;
 
-        <span class="d_keyword">for</span> (<span class="d_keyword">int</span> i = 0; i &lt; array.length; i++)
+        <span class="d_keyword">foreach</span> (e; array)
         {
-            result = dg(array[i]);
+            result = dg(e);
             <span class="d_keyword">if</span> (result)
                 <span class="d_keyword">break</span>;
         }
         <span class="d_keyword">return</span> result;
     }
 }
-</pre>
-<div class="blankline"></div>
-    <p>An example using this might be:</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">void</span> test()
+
+<span class="d_keyword">void</span> main()
 {
+    <span class="d_keyword">import</span> std.stdio;
     Foo a = <span class="d_keyword">new</span> Foo();
 
     a.array[0] = 73;
@@ -846,12 +854,14 @@ clauses.</p>
 
     <span class="d_keyword">foreach</span> (<span class="d_keyword">uint</span> u; a)
     {
-        writefln(<span class="d_string">"%d"</span>, u);
+        writeln(u);
     }
 }
 </pre>
+        
+</div>
 <div class="blankline"></div>
-    <p>which would print:</p>
+    <p>This would print:</p>
 <div class="blankline"></div>
 <pre class="console notranslate">73
 82
@@ -1059,6 +1069,8 @@ clauses.</p>
         and it is set to the index of each sequence element.
 </p>
         <p>Example:</p>
+<div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.meta : AliasSeq;
 
 <span class="d_keyword">void</span> main()
@@ -1071,6 +1083,8 @@ clauses.</p>
     }
 }
 </pre>
+
+</div>
         <p>Output:</p>
 <div class="blankline"></div>
 <pre class="console notranslate">int
@@ -1085,20 +1099,20 @@ main()
         <p><span class="d_inlinecode donthyphenate notranslate">ref</span> can be used to update the original elements:
         </p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">void</span> test()
-{
-    <span class="d_keyword">static</span> <span class="d_keyword">uint</span>[2] a = [7, 8];
+    <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">uint</span>[2] a = [7, 8];
 
-    <span class="d_keyword">foreach</span> (<span class="d_keyword">ref</span> <span class="d_keyword">uint</span> u; a)
-    {
-        u++;
-    }
-    <span class="d_keyword">foreach</span> (<span class="d_keyword">uint</span> u; a)
-    {
-        writefln(<span class="d_string">"%d"</span>, u);
-    }
+<span class="d_keyword">foreach</span> (<span class="d_keyword">ref</span> <span class="d_keyword">uint</span> u; a)
+{
+    u++;
+}
+<span class="d_keyword">foreach</span> (<span class="d_keyword">uint</span> u; a)
+{
+    writeln(u);
 }
 </pre>
+    
+</div>
 <div class="blankline"></div>
         which would print:
 <div class="blankline"></div>
@@ -1130,7 +1144,7 @@ main()
 a = <span class="d_keyword">null</span>;         <span class="d_comment">// ok
 </span></pre>
 <div class="blankline"></div>
-<h2><span id="ForeachRangeStatement"><a class="anchor" title="Permalink to this section" id="foreach-range-statement" href="#foreach-range-statement">Foreach Range 文</a></span></h2>
+<h3><span id="ForeachRangeStatement"><a class="anchor" title="Permalink to this section" id="foreach-range-statement" href="#foreach-range-statement">Foreach Range 文</a></span></h3>
 <div class="blankline"></div>
 <p>A foreach range statement loops over the specified range.</p>
 <div class="blankline"></div>
@@ -1162,6 +1176,7 @@ a = <span class="d_keyword">null</span>;         <span class="d_comment">// ok
         is executed.
         </p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio;
 
 <span class="d_keyword">int</span> foo()
@@ -1178,20 +1193,14 @@ a = <span class="d_keyword">null</span>;         <span class="d_comment">// ok
     }
 }
 </pre>
+
+</div>
 <div class="blankline"></div>
 prints:
 <div class="blankline"></div>
 <pre class="console notranslate">foo0123456789
 </pre>
 <div class="blankline"></div>
-<div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="break_and_continue_out_of_foreach" href="#break_and_continue_out_of_foreach">Foreach と Break, Continue</a></h3>
-<div class="blankline"></div>
-<div class="blankline"></div>
-        <p>A <a href="#BreakStatement"><i>BreakStatement</i></a> in the body of the foreach will exit the
-        foreach, a <a href="#ContinueStatement"><i>ContinueStatement</i></a> will immediately start the
-        next iteration.
-        </p>
 <div class="blankline"></div>
 <h2><span id="SwitchStatement"><a class="anchor" title="Permalink to this section" id="switch-statement" href="#switch-statement">Switch 文</a></span></h2>
 <div class="blankline"></div>
@@ -1265,7 +1274,7 @@ prints:
         <p>The case expressions must all evaluate to a constant value or array,
         or a runtime initialized const or immutable variable of integral type.
         They must be implicitly convertible to the type of the switch
-        <a href="../spec/expression.html#Expression"><i>Expression</i></a>. </p>
+        <em>Expression</em>. </p>
 <div class="blankline"></div>
         <p>Case expressions must all evaluate to distinct values. Const or
         immutable variables must all have different names. If they share a
@@ -1369,13 +1378,13 @@ string message;
 <div class="blankline"></div>
         <ul>        <li>No <a href="#DefaultStatement"><i>DefaultStatement</i></a> is allowed.</li>
         <li>No <a href="#CaseRangeStatement"><i>CaseRangeStatement</i></a>s are allowed.</li>
-        <li>If the switch <a href="../spec/expression.html#Expression"><i>Expression</i></a> is of enum type, all
+        <li>If the switch <em>Expression</em> is of enum type, all
         the enum members must appear in the <a href="#CaseStatement"><i>CaseStatement</i></a>s.</li>
         <li>The case expressions cannot evaluate to a run time
         initialized value.</li>
         </ul>
 <div class="blankline"></div>
-        <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b> If the <a href="../spec/expression.html#Expression"><i>Expression</i></a> value does not match any
+        <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b> If the <em>Expression</em> value does not match any
         of the <i>CaseRangeStatements</i>, whether that is diagnosed at compile
         time or at runtime.</div>
 
@@ -1449,8 +1458,8 @@ statement, resuming execution at the statement following it.</p>
 <div class="blankline"></div>
 <p><span class="d_inlinecode donthyphenate notranslate">return</span> exits the current function and supplies its return value.</p>
 <div class="blankline"></div>
-<p><a href="../spec/expression.html#Expression"><i>Expression</i></a> is required if the function specifies a return type that is
-not void. The <a href="../spec/expression.html#Expression"><i>Expression</i></a> is implicitly converted to the function return
+<p><em>Expression</em> is required if the function specifies a return type that is
+not void. The <em>Expression</em> is implicitly converted to the function return
 type.</p>
 <div class="blankline"></div>
         <p>At least one return statement, throw statement, or assert(0) expression
@@ -1472,7 +1481,7 @@ type.</p>
         <p>If there is an out postcondition
         (see <a href="../spec/contracts.html">Contract Programming</a>),
         that postcondition is executed
-        after the <a href="../spec/expression.html#Expression"><i>Expression</i></a> is evaluated and before the function
+        after the <em>Expression</em> is evaluated and before the function
         actually returns.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">int</span> foo(<span class="d_keyword">int</span> x)
@@ -1505,10 +1514,10 @@ L1:
         next <a href="#CaseStatement"><i>CaseStatement</i></a> of the innermost enclosing
         <a href="#SwitchStatement"><i>SwitchStatement</i></a>.</p>
 <div class="blankline"></div>
-        <p>The fourth form, <span class="d_inlinecode donthyphenate notranslate">goto case</span> <a href="../spec/expression.html#Expression"><i>Expression</i></a><span class="d_inlinecode donthyphenate notranslate">;</span>, transfers to the
+        <p>The fourth form, <span class="d_inlinecode donthyphenate notranslate">goto case</span> <em>Expression</em><span class="d_inlinecode donthyphenate notranslate">;</span>, transfers to the
         <a href="#CaseStatement"><i>CaseStatement</i></a> of the innermost enclosing
         <a href="#SwitchStatement"><i>SwitchStatement</i></a>
-        with a matching <a href="../spec/expression.html#Expression"><i>Expression</i></a>.</p>
+        with a matching <em>Expression</em>.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">switch</span> (x)
 {
@@ -1541,12 +1550,12 @@ object.</p>
     <span class="d_inlinecode donthyphenate notranslate">with</span> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="../spec/template.html#TemplateInstance"><i>TemplateInstance</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#ScopeStatement"><i>ScopeStatement</i></a>
 </pre>
 <div class="blankline"></div>
-        where <a href="../spec/expression.html#Expression"><i>Expression</i></a> evaluates to a class reference or struct
+        where <em>Expression</em> evaluates to a class reference or struct
         instance.
         Within the with body the referenced object is searched first for
         identifier symbols.
 <div class="blankline"></div>
-<p>The <i>WithStatement</i></p>
+<p>Below, if <span class="d_inlinecode donthyphenate notranslate">ident</span> is a member of the type of <span class="d_inlinecode donthyphenate notranslate">expression</span>, the <i>WithStatement</i>:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">with</span> (expression)
 {
@@ -1565,7 +1574,7 @@ object.</p>
 }
 </pre>
 <div class="blankline"></div>
-        <p>Note that <a href="../spec/expression.html#Expression"><i>Expression</i></a> only gets evaluated once and is not copied.
+        <p>Note that <em>Expression</em> only gets evaluated once and is not copied.
         The with statement does not change what <span class="d_inlinecode donthyphenate notranslate">this</span> or
         <span class="d_inlinecode donthyphenate notranslate">super</span> refer to.
         </p>
@@ -1587,7 +1596,7 @@ Y y;        <span class="d_comment">// error, Y undefined
 </span>}
 </pre>
 <div class="blankline"></div>
-        <p>Use of with object symbols that shadow local symbols with
+        <p>Use of <span class="d_inlinecode donthyphenate notranslate">with</span> object symbols that shadow local symbols with
         the same identifier are not allowed.
         This is to reduce the risk of inadvertent breakage of with
         statements when new members are added to the object declaration.
@@ -1611,6 +1620,8 @@ Y y;        <span class="d_comment">// error, Y undefined
         <p>In nested <i>WithStatement</i>s, the inner-most scope takes precedence.  If
         a symbol cannot be resolved at the inner-most scope, resolution is forwarded
         incrementally up the scope hierarchy.</p>
+<div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio;
 
 <span class="d_keyword">struct</span> Foo
@@ -1669,8 +1680,9 @@ Y y;        <span class="d_comment">// error, Y undefined
 </span>                       <span class="d_comment">// subsequently forward to module scope.
 </span>    }
 }
-
 </pre>
+
+</div>
 <div class="blankline"></div>
 <h2><span id="SynchronizedStatement"><a class="anchor" title="Permalink to this section" id="synchronized-statement" href="#synchronized-statement">Synchronized 文</a></span></h2>
 <div class="blankline"></div>
@@ -1687,13 +1699,13 @@ Y y;        <span class="d_comment">// error, Y undefined
         <i>ScopeStatement</i> by using a mutex.
         </p>
 <div class="blankline"></div>
-        <p>What mutex is used is determined by the <a href="../spec/expression.html#Expression"><i>Expression</i></a>.
-        If there is no <a href="../spec/expression.html#Expression"><i>Expression</i></a>, then a global mutex is created,
+        <p>What mutex is used is determined by the <em>Expression</em>.
+        If there is no <em>Expression</em>, then a global mutex is created,
         one per such synchronized statement.
         Different synchronized statements will have different global mutexes.
         </p>
 <div class="blankline"></div>
-        <p>If there is an <a href="../spec/expression.html#Expression"><i>Expression</i></a>, it must evaluate to either an
+        <p>If there is an <em>Expression</em>, it must evaluate to either an
         Object or an instance of an <i>Interface</i>, in which case it
         is cast to the Object instance that implemented that <i>Interface</i>.
         The mutex used is specific to that Object instance, and
@@ -1779,6 +1791,7 @@ Y y;        <span class="d_comment">// error, Y undefined
         to the original exception (the head of the chain) if a bypass occurred,
         so that the entire exception history is retained.</p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio;
 
 <span class="d_keyword">int</span> main()
@@ -1803,6 +1816,8 @@ Y y;        <span class="d_comment">// error, Y undefined
     <span class="d_keyword">return</span> 0;
 }
 </pre>
+
+</div>
 <div class="blankline"></div>
     prints:
 <div class="blankline"></div>
@@ -1828,7 +1843,7 @@ done
     <span class="d_inlinecode donthyphenate notranslate">throw</span> <a href="../spec/expression.html#Expression"><i>Expression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
 </pre>
 <div class="blankline"></div>
-<p><a href="../spec/expression.html#Expression"><i>Expression</i></a> is evaluated and must be  a <span class="d_inlinecode donthyphenate notranslate">Throwable</span> reference. The
+<p><em>Expression</em> is evaluated and must be  a <span class="d_inlinecode donthyphenate notranslate">Throwable</span> reference. The
 <span class="d_inlinecode donthyphenate notranslate">Throwable</span> reference is thrown as an exception.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">throw</span> <span class="d_keyword">new</span> Exception(<span class="d_string">"message"</span>);
@@ -1849,12 +1864,12 @@ and abort the program.
     <span class="d_inlinecode donthyphenate notranslate">scope ( failure )</span> <a href="#NonEmptyOrScopeBlockStatement"><i>NonEmptyOrScopeBlockStatement</i></a>
 </pre>
 <div class="blankline"></div>
-<p>The <i>ScopeGuardStatement</i> executes <a href="#NonEmptyOrScopeBlockStatement"><i>NonEmptyOrScopeBlockStatement</i></a> at the close of the
+<p>The <i>ScopeGuardStatement</i> executes <em>NonEmptyOrScopeBlockStatement</em> at the close of the
 current scope, rather than at the point where the <i>ScopeGuardStatement</i>
-appears. <span class="d_inlinecode donthyphenate notranslate">scope(exit)</span> executes <a href="#NonEmptyOrScopeBlockStatement"><i>NonEmptyOrScopeBlockStatement</i></a> when the scope exits normally
+appears. <span class="d_inlinecode donthyphenate notranslate">scope(exit)</span> executes <em>NonEmptyOrScopeBlockStatement</em> when the scope exits normally
 or when it exits due to exception unwinding. <span class="d_inlinecode donthyphenate notranslate">scope(failure)</span> executes
-<a href="#NonEmptyOrScopeBlockStatement"><i>NonEmptyOrScopeBlockStatement</i></a> when the scope exits due to exception unwinding.
-<span class="d_inlinecode donthyphenate notranslate">scope(success)</span> executes <a href="#NonEmptyOrScopeBlockStatement"><i>NonEmptyOrScopeBlockStatement</i></a> when the scope exits normally.</p>
+<em>NonEmptyOrScopeBlockStatement</em> when the scope exits due to exception unwinding.
+<span class="d_inlinecode donthyphenate notranslate">scope(success)</span> executes <em>NonEmptyOrScopeBlockStatement</em> when the scope exits normally.</p>
 <div class="blankline"></div>
         <p>If there are multiple <i>ScopeGuardStatement</i>s in a scope, they
         will be executed in the reverse lexical order in which they appear.
@@ -1862,7 +1877,7 @@ or when it exits due to exception unwinding. <span class="d_inlinecode donthyphe
         scope, their destructions will be interleaved with the <i>ScopeGuardStatement</i>s
         in the reverse lexical order in which they appear.</p>
 <div class="blankline"></div>
-<div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate">write(<span class="d_string">"1"</span>);
 {
     write(<span class="d_string">"2"</span>);
@@ -1872,6 +1887,8 @@ or when it exits due to exception unwinding. <span class="d_inlinecode donthyphe
 }
 writeln();
 </pre>
+
+</div>
 <div class="blankline"></div>
         writes:
 <div class="blankline"></div>
@@ -1879,6 +1896,7 @@ writeln();
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate">{
     <span class="d_keyword">scope</span>(exit) write(<span class="d_string">"1"</span>);
     <span class="d_keyword">scope</span>(success) write(<span class="d_string">"2"</span>);
@@ -1887,13 +1905,15 @@ writeln();
 }
 writeln();
 </pre>
+
+</div>
 <div class="blankline"></div>
         writes:
 <div class="blankline"></div>
 <pre class="console notranslate">4321
 </pre>
 <div class="blankline"></div>
-<div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> Foo
 {
     <span class="d_keyword">this</span>(string s) { write(s); }
@@ -1916,6 +1936,8 @@ writeln();
 }
 writeln();
 </pre>
+
+</div>
 <div class="blankline"></div>
         writes:
 <div class="blankline"></div>
@@ -2028,31 +2050,32 @@ be used to account for this:</p>
         <a href="#StatementList"><i>StatementList</i></a>, and is compiled as such.
         </p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio;
 
 <span class="d_keyword">void</span> main()
 {
-    <span class="d_keyword">int</span> j;
+    <span class="d_keyword">int</span> i = 0;
     <span class="d_keyword">mixin</span>(<span class="d_string">"
         int x = 3;
-        for (int i = 0; i &lt; 3; i++)
-            writeln(x + i, ++j);
+        for (; i &lt; 3; i++)
+            writeln(x + i, i);
         "</span>);    <span class="d_comment">// ok
 </span>
-    string s = <span class="d_string">"int y;"</span>;
+    <span class="d_keyword">enum</span> s = <span class="d_string">"int y;"</span>;
     <span class="d_keyword">mixin</span>(s);  <span class="d_comment">// ok
 </span>    y = 4;     <span class="d_comment">// ok, mixin declared y
 </span>
     string t = <span class="d_string">"y = 3;"</span>;
-    <span class="d_keyword">mixin</span>(t);  <span class="d_comment">// error, t is not evaluatable at compile time
-</span>
-    <span class="d_keyword">mixin</span>(<span class="d_string">"y ="</span>) 4; <span class="d_comment">// error, string must be complete statement
+    <span class="d_comment">//mixin(t);  // error, t is not evaluatable at compile time
+</span>    <span class="d_comment">//mixin("y =") 4; // error, string must be complete statement
 </span>
     <span class="d_keyword">mixin</span>(<span class="d_string">"y ="</span> ~ <span class="d_string">"4;"</span>);  <span class="d_comment">// ok
-</span>
-    <span class="d_keyword">mixin</span>(<span class="d_string">"y ="</span>, 2+2, <span class="d_string">";"</span>);  <span class="d_comment">// ok
+</span>    <span class="d_keyword">mixin</span>(<span class="d_string">"y ="</span>, 2+2, <span class="d_string">";"</span>);  <span class="d_comment">// ok
 </span>}
 </pre>
+
+</div>
 <div class="blankline"></div>
 
 <div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/expression.html">式[Expressions]</a></div>
@@ -2062,7 +2085,7 @@ be used to account for this:</p>
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan 10 07:22:39 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 11:22:56 2022
 </div>
     </div>
 </div>

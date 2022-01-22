@@ -151,9 +151,11 @@
         <li><a href="#dynamic-arrays">動的配列</a></li>
     </ol></li>
     <li><a href="#declarations">配列の宣言</a></li>
-    <li><a href="#usage">配列の使い方</a></li>
+    <li><a href="#literals">配列リテラル</a></li>
+    <li><a href="#assignment">Array Assignment</a></li>
     <li><a href="#indexing">インデックス</a></li>
     <li><a href="#slicing">スライス</a></li>
+    <li><a href="#array-length">Array Length</a></li>
     <li><a href="#array-copying">配列のコピー</a><ol>        <li><a href="#overlapping-copying">重複するコピー</a></li>
     </ol></li>
     <li><a href="#array-setting">配列の設定</a></li>
@@ -161,7 +163,6 @@
     <li><a href="#array-operations">配列の操作</a></li>
     <li><a href="#pointer-arithmetic">ポインタの演算</a></li>
     <li><a href="#rectangular-arrays">長方形配列</a></li>
-    <li><a href="#array-length">配列の長さ</a></li>
     <li><a href="#array-properties">配列のプロパティ</a><ol>        <li><a href="#resize">動的配列に長さを設定する</a></li>
         <li><a href="#func-as-property">配列プロパティとして関数</a></li>
     </ol></li>
@@ -296,16 +297,23 @@
 
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="usage" href="#usage">配列の使い方</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="literals" href="#literals">配列リテラル</a></h2>
 <div class="blankline"></div>
-        <p>There are two broad kinds of operations to do on an array -
-        affecting
-        the handle to the array,
-        and affecting the contents of the array.
-        </p>
+<pre class="d_code notranslate"><span class="d_keyword">auto</span> a1 = [1,2,3];  <span class="d_comment">// type is int[], with elements 1, 2 and 3
+</span><span class="d_keyword">auto</span> a2 = [1u,2,3]; <span class="d_comment">// type is uint[], with elements 1u, 2u, and 3u
+</span><span class="d_keyword">int</span>[2] = [1, 2];
+</pre>
+    <p><span class="d_inlinecode donthyphenate notranslate">[]</span> is an empty array literal.</p>
 <div class="blankline"></div>
-        <p>The handle to an array is specified by naming the array, as
-        in p, s or a:
+    <p>See <a href="../expression.html#array_literals">Array Literals</a>.</p>
+<div class="blankline"></div>
+<span id="usage"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span>
+<h2><a class="anchor" title="Permalink to this section" id="assignment" href="#assignment">Array Assignment</a></h2>
+<div class="blankline"></div>
+        <p>There are two broad kinds of operations to do on dynamic arrays and
+        pointer arrays - those affecting the handle to the array,
+        and those affecting the contents of the array. Assignment only affects
+        the handle for these types.
         </p>
 <div class="blankline"></div>
 <div class="runnable-examples">
@@ -313,20 +321,49 @@
 <span class="d_keyword">int</span>[3] s;
 <span class="d_keyword">int</span>[] a;
 
-<span class="d_keyword">int</span>[] b;
-
 p = s.ptr; <span class="d_comment">// p points to the first element of the array s.
 </span>p = a.ptr; <span class="d_comment">// p points to the first element of the array a.
 </span>
-a = p;     <span class="d_comment">// error, since the length of the array pointed
-</span>           <span class="d_comment">// to by p is unknown
-</span>a = s;     <span class="d_comment">// a is initialized to point to the s array
-</span>a = b;     <span class="d_comment">// a points to the same array as b does
+<span class="d_comment">// error, since the length of the array pointed to by p is unknown
+</span><span class="d_comment">//s = p;
+</span><span class="d_comment">//s = a; // error, as a's length is not known at compile-time
+</span>s = [1,2,3];
+
+<span class="d_comment">//a = p;   // error, length unknown
+</span>a = s;     <span class="d_comment">// a points to the elements of s
+</span><span class="d_keyword">assert</span>(a.ptr == s.ptr);
+<span class="d_keyword">assert</span>(a == [1,2,3]);
+
+<span class="d_keyword">int</span>[] b;
+a = b;     <span class="d_comment">// a points to the same array as b does
+</span><span class="d_keyword">assert</span>(a.ptr == b.ptr);
+<span class="d_keyword">assert</span>(a == []);
+</pre>
+
+</div>
+    <p>Each of the three error lines above can be made to copy elements
+    using <a href="#slicing">slicing</a>, so that the number of elements
+    to copy is then known.</p>
+<div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="indexing" href="#indexing">インデックス</a></h2>
+<div class="blankline"></div>
+    <p>Indexing allows access to an element of an array:</p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">auto</span> a = [1,2,3];
+<span class="d_keyword">assert</span>(a[0] == 1);
+<span class="d_keyword">assert</span>(a[2] == 3);
+a[2] = 4;
+<span class="d_keyword">assert</span>(a[2] == 4);
+<span class="d_keyword">assert</span>(a == [1,2,4]);
+<span class="d_comment">//writeln(a[3]); // runtime error (unless bounds checks turned off)
+</span>
+<span class="d_keyword">int</span>[2] b = [1,2];
+<span class="d_keyword">assert</span>(b[1] == 2);
+<span class="d_comment">//writeln(b[2]); // compile-time error, index out of bounds
 </span></pre>
 
 </div>
-<div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="indexing" href="#indexing">インデックス</a></h2>
 <div class="blankline"></div>
     <p>See also <a href="../spec/expression.html#IndexExpression"><i>IndexExpression</i></a>.</p>
 <div class="blankline"></div>
@@ -356,28 +393,7 @@ foo(b[1]);   <span class="d_comment">// equivalent to foo(3)
 
 </div>
 <div class="blankline"></div>
-        <p>The [] is shorthand for a slice of the entire array.
-        For example, the assignments to b:
-        </p>
-<div class="blankline"></div>
-<div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">int</span>[10] a = [ 1,2,3,4,5,6,7,8,9,10 ];
-<span class="d_keyword">int</span>[] b1, b2, b3, b4;
-
-b1 = a;
-b2 = a[];
-b3 = a[0 .. a.length];
-b4 = a[0 .. $];
-writeln(b1);
-writeln(b2);
-writeln(b3);
-writeln(b4);
-
-</pre>
-
-</div>
-<div class="blankline"></div>
-        <p>are all semantically equivalent.
+        <p><i>Identifier</i>[] is shorthand for a slice of the entire array.
         </p>
 <div class="blankline"></div>
         <p>Slicing
@@ -400,6 +416,34 @@ writeln(p[7]);      <span class="d_comment">// 10
 </div>
 <div class="blankline"></div>
     <p>See also <a href="../spec/expression.html#SliceExpression"><i>SliceExpression</i></a>.</p>
+<div class="blankline"></div>
+<div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="array-length" href="#array-length">Array Length</a></h2>
+<div class="blankline"></div>
+        <p>When indexing or slicing a static or dynamic array,
+        the symbol <span class="d_inlinecode donthyphenate notranslate">$</span> represents the length of the array.
+        </p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[4] foo;
+<span class="d_keyword">int</span>[]  bar = foo;
+
+<span class="d_comment">// These expressions are equivalent:
+</span>bar = foo;
+bar = foo[];
+bar = foo[0 .. 4];
+bar = foo[0 .. $];
+bar = foo[0 .. foo.length];
+
+<span class="d_keyword">int</span>* p = foo.ptr;
+<span class="d_comment">//bar = p[0 .. &dollar;]; // error, '&dollar;' is not defined, since p is not an array
+</span>
+<span class="d_keyword">int</span> i;
+<span class="d_comment">//i = foo[0]+&dollar;; // error, '&dollar;' is not defined, out of scope of [ ]
+</span>i = bar[$-1]; <span class="d_comment">// retrieves last element of the array
+</span></pre>
+
+</div>
 <div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="array-copying" href="#array-copying">配列のコピー</a></h2>
@@ -431,7 +475,9 @@ s = t;             <span class="d_comment">// the 3 elements of t are copied int
         <p>Overlapping copies are an error:</p>
 <div class="blankline"></div>
 <div class="runnable-examples">
-<pre class="d_code notranslate">s[0..2] = s[1..3]; <span class="d_comment">// error, overlapping copy
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[3] s;
+
+s[0..2] = s[1..3]; <span class="d_comment">// error, overlapping copy
 </span>s[1..3] = s[0..2]; <span class="d_comment">// error, overlapping copy
 </span></pre>
 
@@ -577,10 +623,7 @@ a[] -= (b[] + 4) * c[];
 <h2><a class="anchor" title="Permalink to this section" id="pointer-arithmetic" href="#pointer-arithmetic">ポインタの演算</a></h2>
 <div class="blankline"></div>
 <div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">int</span>[3] abc;              <span class="d_comment">// static array of 3 ints
-</span><span class="d_keyword">int</span>[] def = [ 1, 2, 3 ]; <span class="d_comment">// dynamic array of 3 ints
-</span>
-<span class="d_keyword">void</span> dibb(<span class="d_keyword">int</span>* array)
+<pre class="d_code notranslate"><span class="d_keyword">void</span> dibb(<span class="d_keyword">int</span>* array)
 {
     array[2];     <span class="d_comment">// means same thing as *(array + 2)
 </span>    *(array + 2); <span class="d_comment">// get 3rd element
@@ -641,35 +684,6 @@ matrix[2][5] = 3.14; <span class="d_comment">// Assignment to bottom right eleme
 </span>writeln(matrix); <span class="d_comment">// [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 3.14]]
 </span>
 <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, matrix[5][2])); <span class="d_comment">// Array index out of bounds.
-</span></pre>
-
-</div>
-<div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="array-length" href="#array-length">配列の長さ</a></h2>
-<div class="blankline"></div>
-<div class="blankline"></div>
-        <p>Within the [ ] of a static or a dynamic array,
-        the symbol <span class="d_inlinecode donthyphenate notranslate">$</span>
-        represents the length of the array.
-        </p>
-<div class="blankline"></div>
-<div class="blankline"></div>
-<div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">int</span>[4] foo;
-<span class="d_keyword">int</span>[]  bar = foo;
-<span class="d_keyword">int</span>*   p = &amp;foo[0];
-
-<span class="d_comment">// These expressions are equivalent:
-</span>bar[]
-bar[0 .. 4]
-bar[0 .. $]
-bar[0 .. bar.length]
-
-
-p[0 .. $]      <span class="d_comment">// '&dollar;' is not defined, since p is not an array
-</span>bar[0]+$            <span class="d_comment">// '&dollar;' is not defined, out of scope of [ ]
-</span>
-bar[$-1] <span class="d_comment">// retrieves last element of the array
 </span></pre>
 
 </div>
@@ -857,9 +871,9 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
 <div class="blankline"></div>
         <p>It is an error to index an array with an index that is less than
         0 or greater than or equal to the array length. If an index is
-        out of bounds, a RangeError exception is
-        raised if detected at runtime, and an error if detected at compile
-        time.  A program may not rely on array bounds checking happening, for
+        out of bounds, an <span class="d_inlinecode donthyphenate notranslate">ArrayIndexError</span> is thrown
+        if detected at runtime, and an error is raised if detected at compile
+        time. A program may not rely on array bounds checking happening, for
         example, the following program is incorrect:
         </p>
 <div class="blankline"></div>
@@ -873,7 +887,7 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
         array[i] = 5;
     }
 }
-<span class="d_keyword">catch</span> (RangeError)
+<span class="d_keyword">catch</span> (ArrayIndexError)
 {
     <span class="d_comment">// terminate loop
 </span>}
@@ -1282,7 +1296,7 @@ writefln(<span class="d_string">"the string is '%s'"</span>, str);
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan 10 07:22:39 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 11:22:56 2022
 </div>
     </div>
 </div>

@@ -146,20 +146,21 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#module_declaration">モジュールの宣言</a></li>
-    <li><a href="#import-declaration">Import宣言</a></li>
-    <li><a href="#name_lookup">シンボル名を調べる</a></li>
-    <li><a href="#public_imports">Public Imports</a></li>
-    <li><a href="#static_imports">Static Imports</a></li>
-    <li><a href="#renamed_imports">Importのリネーム</a></li>
-    <li><a href="#selective_imports">Importの選択</a></li>
-    <li><a href="#renamed_selective_imports">Importのリネーム、選択</a></li>
-    <li><a href="#scoped_imports">Importのスコープ</a></li>
+    <ol>    <li><a href="#module_declaration">モジュールの宣言</a><ol>        <li><a href="#deprecated_modules">Deprecated modules</a></li>
+    </ol></li>
+    <li><a href="#import-declaration">Import宣言</a><ol>        <li><a href="#name_lookup">シンボル名を調べる</a></li>
+        <li><a href="#public_imports">Public Imports</a></li>
+        <li><a href="#static_imports">Static Imports</a></li>
+        <li><a href="#renamed_imports">Importのリネーム</a></li>
+        <li><a href="#selective_imports">Importの選択</a></li>
+        <li><a href="#renamed_selective_imports">Importのリネーム、選択</a></li>
+        <li><a href="#scoped_imports">Importのスコープ</a></li>
+    </ol></li>
     <li><a href="#module_scope_operators">モジュールのスコープ演算子</a></li>
-    <li><a href="#staticorder">静的コンストラクション、デストラクション</a></li>
-    <li><a href="#order_of_static_ctor">静的コンストラクションの順序</a></li>
-    <li><a href="#order_of_static_ctors">モジュール内での静的コンストラクションの順序</a></li>
-    <li><a href="#order_static_dtor">デストラクションの順序</a></li>
+    <li><a href="#staticorder">静的コンストラクション、デストラクション</a><ol>        <li><a href="#order_of_static_ctor">静的コンストラクションの順序</a></li>
+        <li><a href="#order_of_static_ctors">モジュール内での静的コンストラクションの順序</a></li>
+        <li><a href="#order_static_dtor">デストラクションの順序</a></li>
+    </ol></li>
     <li><a href="#order_of_unittests">単体テストの順序</a></li>
     <li><a href="#mixin-declaration">Mixin宣言</a></li>
     <li><a href="#package-module">パッケージモジュール</a></li>
@@ -297,30 +298,7 @@ between dissimilar file systems.</p>
 <pre class="d_code notranslate"><span class="d_keyword">module</span> foo_bar;
 </pre>
 <div class="blankline"></div>
-<p>A <i>ModuleDeclaration</i> can have an optional <a href="../spec/attribute.html#DeprecatedAttribute"><i>DeprecatedAttribute</i></a>. The compiler will produce a message when the deprecated
-module is imported.</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">deprecated</span> <span class="d_keyword">module</span> foo;
-</pre>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">module</span> bar;
-<span class="d_keyword">import</span> foo;  <span class="d_comment">// Deprecated: module foo is deprecated
-</span></pre>
-<div class="blankline"></div>
-<p>A <i>DeprecatedAttribute</i> can have an optional <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a> argument to provide a
-more informative message. An <i>AssignExpression</i> must evaluate to a string at compile time.
-</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">deprecated</span>(<span class="d_string">"Please use foo2 instead."</span>)
-<span class="d_keyword">module</span> foo;
-</pre>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">module</span> bar;
-<span class="d_keyword">import</span> foo;  <span class="d_comment">// Deprecated: module foo is deprecated - Please use foo2 instead.
-</span></pre>
-<div class="blankline"></div>
     <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b>     <ol>    <li>The mapping of package and module identifiers to directory and file names.</li>
-    <li>How the deprecation messages are presented to the user.</li>
     </ol></div>
 
 
@@ -333,6 +311,36 @@ more informative message. An <i>AssignExpression</i> must evaluate to a string a
     </ol></div>
 
 
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="deprecated_modules" href="#deprecated_modules">Deprecated modules</a></h3>
+<div class="blankline"></div>
+<p>A <i>ModuleDeclaration</i> can have an optional <a href="../spec/attribute.html#DeprecatedAttribute"><i>DeprecatedAttribute</i></a>. The compiler will produce a message when the deprecated
+module is imported.</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">deprecated</span> <span class="d_keyword">module</span> foo;
+</pre>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">module</span> bar;
+<span class="d_keyword">import</span> foo;  <span class="d_comment">// Deprecated: module foo is deprecated
+</span></pre>
+<div class="blankline"></div>
+<p>A <i>DeprecatedAttribute</i> can have an optional <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a> argument to provide a
+more informative message. The <i>AssignExpression</i> must evaluate to a string at compile time.
+</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">deprecated</span>(<span class="d_string">"Please use foo2 instead."</span>)
+<span class="d_keyword">module</span> foo;
+</pre>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">module</span> bar;
+<span class="d_keyword">import</span> foo;  <span class="d_comment">// Deprecated: module foo is deprecated - Please use foo2 instead.
+</span></pre>
+<div class="blankline"></div>
+    <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b>     <ol>    <li>How the deprecation messages are presented to the user.</li>
+    </ol></div>
+
+
+<div class="blankline"></div>
 <div class="blankline"></div>
 <h2><span id="ImportDeclaration"><a class="anchor" title="Permalink to this section" id="import-declaration" href="#import-declaration">Import宣言</a></span></h2>
 <div class="blankline"></div>
@@ -376,7 +384,7 @@ fine-grained importing.</p>
 qualified with whatever packages they are in. They are not considered to be
 relative to the module that imports them.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="name_lookup" href="#name_lookup">シンボル名を調べる</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="name_lookup" href="#name_lookup">シンボル名を調べる</a></h3>
 <div class="blankline"></div>
 <p>The simplest form of importing is to just list the modules being imported:</p>
 <div class="blankline"></div>
@@ -461,7 +469,7 @@ compilation error.</p>
 </span>}
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="public_imports" href="#public_imports">Public Imports</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="public_imports" href="#public_imports">Public Imports</a></h3>
 <div class="blankline"></div>
 <p>By default, imports are <i>private</i>. This means that if module A imports
 module B, and module B imports module C, then names inside C are visible only inside
@@ -503,7 +511,7 @@ foo();   <span class="d_comment">// error, foo() is undefined
 </span>Y.bar(); <span class="d_comment">// ok, Y.bar() is an alias to X.bar()
 </span></pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="static_imports" href="#static_imports">Static Imports</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="static_imports" href="#static_imports">Static Imports</a></h3>
 <div class="blankline"></div>
 <p>A static import requires the use of a fully qualified name
 to reference the module's names:</p>
@@ -517,7 +525,7 @@ to reference the module's names:</p>
 </span>}
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="renamed_imports" href="#renamed_imports">Importのリネーム</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="renamed_imports" href="#renamed_imports">Importのリネーム</a></h3>
 <div class="blankline"></div>
 <p>A local name for an import can be given, through which all references to the
 module's symbols must be qualified with:</p>
@@ -539,7 +547,7 @@ module's symbols must be qualified with:</p>
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="selective_imports" href="#selective_imports">Importの選択</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="selective_imports" href="#selective_imports">Importの選択</a></h3>
 <div class="blankline"></div>
 <p>Specific symbols can be exclusively imported from a module and bound into
 the current namespace:</p>
@@ -561,7 +569,7 @@ the current namespace:</p>
 <div class="blankline"></div>
 <p><span class="d_inlinecode donthyphenate notranslate">static</span> cannot be used with selective imports.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="renamed_selective_imports" href="#renamed_selective_imports">Importのリネーム、選択</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="renamed_selective_imports" href="#renamed_selective_imports">Importのリネーム、選択</a></h3>
 <div class="blankline"></div>
 <p>When renaming and selective importing are combined:</p>
 <div class="blankline"></div>
@@ -585,7 +593,7 @@ the current namespace:</p>
 
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="scoped_imports" href="#scoped_imports">Importのスコープ</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="scoped_imports" href="#scoped_imports">Importのスコープ</a></h3>
 <div class="blankline"></div>
 <p>Import declarations may be used at any scope. For example:</p>
 <div class="blankline"></div>
@@ -696,7 +704,7 @@ Resource x;
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="order_of_static_ctor" href="#order_of_static_ctor">静的コンストラクションの順序</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="order_of_static_ctor" href="#order_of_static_ctor">静的コンストラクションの順序</a></h3>
 <div class="blankline"></div>
 <p>Shared static constructors on all modules are run before any non-shared static
 constructors.</p>
@@ -740,12 +748,12 @@ destructors. Violation of this rule will result in a runtime exception.</p>
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="order_of_static_ctors" href="#order_of_static_ctors">モジュール内での静的コンストラクションの順序</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="order_of_static_ctors" href="#order_of_static_ctors">モジュール内での静的コンストラクションの順序</a></h3>
 <div class="blankline"></div>
 <p>Within a module, static construction occurs in the lexical order in
 which they appear.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="order_static_dtor" href="#order_static_dtor">デストラクションの順序</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="order_static_dtor" href="#order_static_dtor">デストラクションの順序</a></h3>
 <div class="blankline"></div>
 <p>This is defined to be in exactly the reverse order of static construction.
 Static destructors for individual modules will only be run if the
@@ -853,7 +861,7 @@ declaration:</p>
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan 10 07:22:39 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 11:22:55 2022
 </div>
     </div>
 </div>

@@ -1605,6 +1605,38 @@ While DMD itself does not support cross-compilation, GDC and LDC do.
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#Target.objectFormat" id="Target.objectFormat"><code class="code">objectFormat</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Target.objectFormat"></span>Target.ObjectFormat <code class="code">objectFormat</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Determine the object format to be used
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#Target.setCPU" id="Target.setCPU"><code class="code">setCPU</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -2536,6 +2568,45 @@ For Posix/x86_64 this returns the type which will really
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#Target.supportsLinkerDirective" id="Target.supportsLinkerDirective"><code class="code">supportsLinkerDirective</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Target.supportsLinkerDirective"></span>const bool <code class="code">supportsLinkerDirective</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Returns <code class="code">true</code> if the target supports <code class="code">pragma(linkerDirective)</code>.
+
+  </p>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    <code class="code">false</code> if the target does not support <code class="code">pragma(linkerDirective)</code>.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#Target.isXmmSupported" id="Target.isXmmSupported"><code class="code">isXmmSupported</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -2960,6 +3031,38 @@ For Posix/x86_64 this returns the type which will really
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#TargetCPP.splitVBasetable" id="TargetCPP.splitVBasetable"><code class="code">splitVBasetable</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="TargetCPP.splitVBasetable"></span>bool <code class="code">splitVBasetable</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    set if C++ ABI uses separate tables for virtual functions and virtual bases
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#TargetCPP.wrapDtorInExternD" id="TargetCPP.wrapDtorInExternD"><code class="code">wrapDtorInExternD</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -3293,7 +3396,7 @@ For Posix/x86_64 this returns the type which will really
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="TargetCPP.parameterType"></span>Type <code class="code">parameterType</code>(Parameter <code class="code">p</code>);
+            <span class="ddoc_anchor" id="TargetCPP.parameterType"></span>Type <code class="code">parameterType</code>(Type <code class="code">t</code>);
 
           </code>
         </p>
@@ -3306,7 +3409,7 @@ For Posix/x86_64 this returns the type which will really
   <div class="ddoc_summary">
   <p class="para">
     Get the type that will really be used for passing the given argument
- to an <code class="code">extern(C++)</code> function.
+ to an <code class="code">extern(C++)</code> function, or <code class="code">null</code> if unhandled.
 
   </p>
 </div>
@@ -3317,13 +3420,13 @@ For Posix/x86_64 this returns the type which will really
       <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">Parameter <code class="code">p</code></em>
+    <em class="term">Type <code class="code">t</code></em>
   </code>
 </td>
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      parameter to be passed.
+      type to be passed.
     </p>
   </div>
 </td>
@@ -3335,7 +3438,7 @@ For Posix/x86_64 this returns the type which will really
 <div class="ddoc_returns">
   <h4>Return Value</h4>
   <p class="para">
-    <code class="code">Type</code> to use for parameter <code class="code"><code class="code">p</code></code>.
+    <code class="code">Type</code> to use for type <code class="code"><code class="code">t</code></code>.
   </p>
 </div>
 

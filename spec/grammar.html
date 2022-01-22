@@ -632,8 +632,8 @@
 <h2><a class="anchor" title="Permalink to this section" id="式[expressions]" href="#式[expressions]">式[Expressions]</a></h2>
 <pre class="bnf notranslate"><a id="Expression"><span class="gname">Expression</span></a>:
     <a href="#CommaExpression"><i>CommaExpression</i></a>
-<div class="blankline"></div>
-<a id="CommaExpression"><span class="gname">CommaExpression</span></a>:
+</pre>
+<pre class="bnf notranslate"><a id="CommaExpression"><span class="gname">CommaExpression</span></a>:
     <a href="#AssignExpression"><i>AssignExpression</i></a>
     <i>CommaExpression</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="#AssignExpression"><i>AssignExpression</i></a>
 </pre>
@@ -679,11 +679,11 @@
     <i>AndExpression</i> <span class="d_inlinecode donthyphenate notranslate">&amp;</span> <a href="#CmpExpression"><i>CmpExpression</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="CmpExpression"><span class="gname">CmpExpression</span></a>:
-    <a href="#ShiftExpression"><i>ShiftExpression</i></a>
     <a href="#EqualExpression"><i>EqualExpression</i></a>
     <a href="#IdentityExpression"><i>IdentityExpression</i></a>
     <a href="#RelExpression"><i>RelExpression</i></a>
     <a href="#InExpression"><i>InExpression</i></a>
+    <a href="#ShiftExpression"><i>ShiftExpression</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="EqualExpression"><span class="gname">EqualExpression</span></a>:
     <a href="#ShiftExpression"><i>ShiftExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">==</span> <a href="#ShiftExpression"><i>ShiftExpression</i></a>
@@ -798,12 +798,12 @@
     <a href="#this"><span class="d_inlinecode donthyphenate notranslate">this</span></a>
     <a href="#super"><span class="d_inlinecode donthyphenate notranslate">super</span></a>
     <a href="#null"><span class="d_inlinecode donthyphenate notranslate">null</span></a>
-    <span class="d_inlinecode donthyphenate notranslate">true</span>
-    <span class="d_inlinecode donthyphenate notranslate">false</span>
-    <span class="d_inlinecode donthyphenate notranslate">$</span>
+    <span id="true_false"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span><a href="../spec/type.html#bool"><span class="d_inlinecode donthyphenate notranslate">true</span></a>
+    <a href="../spec/type.html#bool"><span class="d_inlinecode donthyphenate notranslate">false</span></a>
+    <a href="#IndexExpression"><span class="d_inlinecode donthyphenate notranslate">$</span></a>
     <a href="../spec/lex.html#IntegerLiteral"><i>IntegerLiteral</i></a>
     <a href="../spec/lex.html#FloatLiteral"><i>FloatLiteral</i></a>
-    <a href="../spec/lex.html#CharacterLiteral"><i>CharacterLiteral</i></a>
+    <span id="CharacterLiteral"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span><span id="character-literal"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span><a href="../spec/lex.html#CharacterLiteral"><i>CharacterLiteral</i></a>
     <a href="#StringLiterals"><i>StringLiterals</i></a>
     <a href="#ArrayLiteral"><i>ArrayLiteral</i></a>
     <a href="#AssocArrayLiteral"><i>AssocArrayLiteral</i></a>
@@ -1569,10 +1569,6 @@
 <pre class="bnf notranslate"><a id="TemplateSequenceParameter"><span class="gname">TemplateSequenceParameter</span></a>:
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">...</span>
 </pre>
-<pre class="bnf notranslate"><a id="ConstructorTemplate"><span class="gname">ConstructorTemplate</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">this</span> <a href="#TemplateParameters"><i>TemplateParameters</i></a> <a href="#Parameters"><i>Parameters</i></a> <a href="#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <a href="#Constraint"><i>Constraint</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">:</span>
-    <span class="d_inlinecode donthyphenate notranslate">this</span> <a href="#TemplateParameters"><i>TemplateParameters</i></a> <a href="#Parameters"><i>Parameters</i></a> <a href="#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <a href="#Constraint"><i>Constraint</i></a><sub>opt</sub> <a href="#FunctionBody"><i>FunctionBody</i></a>
-</pre>
 <pre class="bnf notranslate"><a id="ClassTemplateDeclaration"><span class="gname">ClassTemplateDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">class</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateParameters"><i>TemplateParameters</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
     <span class="d_inlinecode donthyphenate notranslate">class</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateParameters"><i>TemplateParameters</i></a> <a href="#Constraint"><i>Constraint</i></a><sub>opt</sub> <a href="#BaseClassList"><i>BaseClassList</i></a><sub>opt</sub> <a href="#AggregateBody"><i>AggregateBody</i></a>
@@ -1590,6 +1586,10 @@
 <a id="UnionTemplateDeclaration"><span class="gname">UnionTemplateDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">union</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateParameters"><i>TemplateParameters</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
     <span class="d_inlinecode donthyphenate notranslate">union</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateParameters"><i>TemplateParameters</i></a> <a href="#Constraint"><i>Constraint</i></a><sub>opt</sub> <a href="#AggregateBody"><i>AggregateBody</i></a>
+</pre>
+<pre class="bnf notranslate"><a id="ConstructorTemplate"><span class="gname">ConstructorTemplate</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">this</span> <a href="#TemplateParameters"><i>TemplateParameters</i></a> <a href="#Parameters"><i>Parameters</i></a> <a href="#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <a href="#Constraint"><i>Constraint</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">:</span>
+    <span class="d_inlinecode donthyphenate notranslate">this</span> <a href="#TemplateParameters"><i>TemplateParameters</i></a> <a href="#Parameters"><i>Parameters</i></a> <a href="#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <a href="#Constraint"><i>Constraint</i></a><sub>opt</sub> <a href="#FunctionBody"><i>FunctionBody</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="Constraint"><span class="gname">Constraint</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">if</span> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#Expression"><i>Expression</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
@@ -2495,7 +2495,7 @@
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Jan 10 07:22:38 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 11:22:54 2022
 </div>
     </div>
 </div>
