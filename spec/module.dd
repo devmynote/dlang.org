@@ -155,7 +155,7 @@ module foo_bar;
     the ASCII lower case letters, digits, and `_`s, and should not be a $(GLINK_LEX Keyword).)
     ))
 
-$(H3 $(LNAME2 deprecated_modules, Deprecated modules))
+$(H3 $(LNAME2 deprecated_modules, 非推奨のモジュール))
 
 $(P A $(I ModuleDeclaration) can have an optional $(GLINK2 attribute,
 DeprecatedAttribute). The compiler will produce a message when the deprecated
@@ -324,7 +324,7 @@ void test()
 }
 ---
 
-$(H3 $(LNAME2 public_imports, Public Imports))
+$(H3 $(LNAME2 public_imports, Public Import))
 
 $(P By default, imports are $(I private). This means that if module A imports
 module B, and module B imports module C, then names inside C are visible only inside
@@ -370,7 +370,7 @@ X.bar(); // ditto
 Y.bar(); // ok, Y.bar() is an alias to X.bar()
 ---
 
-$(H3 $(LNAME2 static_imports, Static Imports))
+$(H3 $(LNAME2 static_imports, Static Import))
 
 $(P A static import requires the use of a fully qualified name
 to reference the module's names:)
