@@ -121,7 +121,7 @@ $(GNAME MissingFunctionBody):
     $(GLINK FunctionContracts)$(OPT) $(GLINK InOutStatement)
 
 $(GNAME ShortenedFunctionBody):
-    $(D =>) $(GLINK2 expression, AssignExpression) $(D ;)
+    $(GLINK InOutContractExpressions)$(OPT) $(D =>) $(GLINK2 expression, AssignExpression) $(D ;)
 )
 
         $(P Examples:)
@@ -145,6 +145,10 @@ $(GNAME FunctionContracts):
 $(GNAME FunctionContract):
     $(GLINK InOutContractExpression)
     $(GLINK InOutStatement)
+
+$(GNAME InOutContractExpressions):
+    $(GLINK InOutContractExpression)
+    $(GLINK InOutContractExpression) $(GSELF InOutContractExpressions)
 
 $(GNAME InOutContractExpression):
     $(GLINK InContractExpression)
@@ -374,13 +378,30 @@ int foo();
 $(H2 $(LNAME2 pure-functions, Pure Functions))
 
         $(P Pure functions are annotated with the `pure` attribute.
-        )
+        Pure functions cannot directly access global or static
+        mutable state.
+        Pure functions can only call pure functions.)
 
-        $(P Pure functions cannot directly access global or static
-            mutable state.
+        $(P Pure functions can:)
+        $(UL
+        $(LI Modify the local state of the function.)
+        $(LI Throw exceptions.)
         )
+        ---
+        int x;
+        immutable int y;
+        const int* pz;
 
-        $(P Pure functions can only call pure functions.)
+        pure int foo(int i)
+        {
+            i++;     // ok, modifying local state
+            x = i;   // error, modifying global state
+            i = x;   // error, reading mutable global state
+            i = y;   // ok, reading immutable global state
+            i = *pz; // error, reading const global state
+            throw new Exception("failed"); // ok
+        }
+        ---
 
         $(P A pure function can override an impure function,
             but cannot be overridden by an impure function.
@@ -392,12 +413,18 @@ $(H2 $(LNAME2 pure-functions, Pure Functions))
             argument.
         )
 
+            $(SPEC_RUNNABLE_EXAMPLE_RUN
             ---
-            pure int foo(int[] arr) { arr[] += 1; return arr.length; }
+            pure size_t foo(int[] arr)
+            {
+                arr[] += 1;
+                return arr.length;
+            }
             int[] a = [1, 2, 3];
             foo(a);
             assert(a == [2, 3, 4]);
             ---
+            )
 
         $(P A $(I strongly pure function) has no parameters with mutable indirections
             and cannot modify any program state external to the function.
@@ -405,6 +432,7 @@ $(H2 $(LNAME2 pure-functions, Pure Functions))
 
             ---
             struct S { double x; }
+
             pure int foo(immutable(int)[] arr, int num, S val)
             {
                 //arr[num] = 1; // compile error
@@ -416,7 +444,7 @@ $(H2 $(LNAME2 pure-functions, Pure Functions))
 
         $(P A strongly pure function can call a weakly pure function.)
 
-        $(P Pure functions can modify the local state of the function.)
+$(H3 $(LNAME2 pure-special-cases, Special Cases))
 
         $(P A pure function can:)
 
@@ -435,28 +463,14 @@ $(H2 $(LNAME2 pure-functions, Pure Functions))
         controlled by a $(GLINK2 version, DebugCondition).
         )
 
-        $(BEST_PRACTICE this relaxation of purity checks in DebugConditions is
+        $(BEST_PRACTICE this relaxation of purity checks in *DebugCondition*s is
         intended solely to make debugging programs easier.)
 
-        $(P A pure function can throw exceptions.)
-
         ---
-        import std.stdio;
-        int x;
-        immutable int y;
-        const int* pz;
-
-        pure int foo(int i,
-                     char* p,
-                     const char* q,
-                     immutable int* s)
+        pure int foo(int i)
         {
-            debug writeln("in foo()"); // ok, impure code allowed in debug statement
-            x = i;   // error, modifying global state
-            i = x;   // error, reading mutable global state
-            i = y;   // ok, reading immutable global state
-            i = *pz; // error, reading const global state
-            return i;
+            debug writeln("i = ", i); // ok, impure code allowed in debug statement
+            ...
         }
         ---
 
@@ -489,50 +503,69 @@ $(H2 $(LNAME2 pure-functions, Pure Functions))
         }
         ---
 
+$(H3 $(LNAME2 pure-factory-functions, Pure Factory Functions))
+
         $(P A $(I pure factory function) is a strongly pure function
         that returns a result that has mutable indirections.
         All mutable
-        memory returned by the call may not be referenced by any other part of the
+        memory returned by the call cannot be referenced by any other part of the
         program, i.e. it is newly allocated by the function.
-        Nor may the mutable
-        references of the result refer to any object that
-        existed before the function call. For example:)
+        The mutable
+        references of the result similarly cannot refer to any object that
+        existed before the function call.
+        This allows the result to be implicitly cast to any qualifier.
+        For example:)
 
         $(SPEC_RUNNABLE_EXAMPLE_COMPILE
         ---
         struct List { int payload; List* next; }
+
         pure List* make(int a, int b)
         {
             auto result = new List(a, null);
             result.next = new List(b, result);
             return result;
         }
+
+        void main()
+        {
+            auto list = make(1, 2);
+            pragma(msg, typeof(list));       // List*
+
+            immutable ilist = make(1, 2);
+            pragma(msg, typeof(ilist));      // immutable List*
+            pragma(msg, typeof(ilist.next)); // immutable List*
+        }
         ---
         )
 
-        $(P All references in `make`'s result refer to other `List`
+        $(P All references in `make`'s result refer to `List`
         objects created by `make`, and no other part of the program refers to
-        any of these objects.
-        This restriction does not apply to any Exception or Error thrown from the function.
+        any of these objects. Hence the result can initialize an immutable
+        variable.)
+
+        $(P This does not affect any *Exception* or *Error* thrown from the function.
         )
 
-
-        $(P Pure destructors do not benefit of special elision.)
+$(H3 $(LNAME2 pure-optimization, Optimization))
 
         $(IMPLEMENTATION_DEFINED An implementation may assume that a strongly pure
         function that returns a result
         without mutable indirections will have the same effect for all invocations
         with equivalent arguments. It is allowed to memoize the result of the
         function under the assumption that equivalent parameters always produce
-        equivalent results.
+        equivalent results.)
+
+        $(P
         A strongly pure function may still have behavior
         inconsistent with memoization by e.g. using `cast`s or by changing behavior
         depending on the address of its parameters. An implementation is currently
         not required to enforce validity of memoization in all cases.
-        If a strongly pure function throws an Exception or an Error, the
+        If a strongly pure function throws an *Exception* or an *Error*, the
         assumptions related to memoization do not carry to the thrown
         exception.)
 
+        $(P Pure destructors do not benefit of special elision.)
 
 
 $(H2 $(LNAME2 nothrow-functions, Nothrow Functions))
@@ -950,26 +983,45 @@ $(H2 $(LNAME2 virtual-functions, Virtual Functions))
 
         $(P Virtual functions are class member functions that are called indirectly through a
         function pointer table, called a `vtbl[]`, rather than directly.
+        Member functions that are virtual can be overridden in a derived class:
         )
 
-        $(P Member functions that are virtual can be overridden, unless they are `final`.
+$(SPEC_RUNNABLE_EXAMPLE_COMPILE
+------
+class A
+{
+    void foo(int x) {}
+}
+
+class B : A
+{
+    override void foo(int x) {}
+    //override void foo() {} // error, no foo() in A
+}
+
+void test()
+{
+    A a = new B();
+    a.foo(1);   // calls B.foo(int)
+}
+------
+)
+
+        $(P The `override` attribute is required when overriding a function.
+        This is useful for catching errors when a base class's member function
+        has its parameters changed, and all derived classes need to have
+        their overriding functions updated.)
+
+        $(P The following are not virtual:)
+        $(UL
+        $(LI Struct and union member functions)
+        $(LI `final` member functions)
+        $(LI $(DDSUBLINK spec/attribute, static, `static`) member functions)
+        $(LI Member functions which are $(D private) or $(D package))
+        $(LI Member template functions)
         )
 
-        $(P Struct and union member functions are not virtual.
-        )
-
-        $(P Static member functions are not virtual.
-        )
-
-        $(P Member functions which are $(D private) or $(D package) are not virtual.
-        )
-
-        $(P Member template functions are not virtual.
-        )
-
-        $(P Member functions with `Objective-C` linkage are virtual even if marked
-        with `final` or `static`.
-        )
+        $(P $(B Example:))
 
 ------
 class A
@@ -988,22 +1040,23 @@ class B : A
     int abc() { ... }  // ok, A.abc is not virtual, B.abc is virtual
 }
 
-void test(A a)
+void test()
 {
+    A a = new B;
     a.def();    // calls B.def
     a.foo();    // calls A.foo
     a.bar();    // calls A.bar
     a.abc();    // calls A.abc
 }
-
-void func()
-{
-    B b = new B();
-    test(b);
-}
 ------
 
-        $(P The overriding function may be covariant with the overridden function.
+        $(P Member functions with `Objective-C` linkage are virtual even if marked
+        with `final` or `static`, and can be overridden.
+        )
+
+$(H3 $(LNAME2 covariance, Covariance))
+
+        $(P An overriding function may be covariant with the overridden function.
         A covariant function has a type that is implicitly convertible to the
         type of the overridden function.
         )
@@ -1026,21 +1079,12 @@ class Bar : Foo
 ------
 )
 
-        $(P
-            Non-static (i.e., virtual functions and `final` member
-            functions) all have a hidden parameter called the
-            `this` reference, which refers to the class object for which
-            the function is called.
-        )
+$(H3 $(LNAME2 base-methods, Calling Base Class Methods))
 
-        $(P
-            Functions with `Objective-C` linkage have an additional hidden,
-            unnamed, parameter which is the selector it was called with.
-        )
-
-        $(P To directly call a base member function (i.e., avoid dynamic
-        binding on member function call), insert the base class name before
-        the member function name. For example:
+        $(P To directly call a member function of a base class `Base`,
+        write `Base.` before the function name.
+        This avoids dynamic dispatch through a function pointer. For
+        example:
         )
 
 $(SPEC_RUNNABLE_EXAMPLE_COMPILE
@@ -1082,33 +1126,7 @@ void main()
         known, such as if it is `final`, it can use a direct call instead.
         )
 
-$(H3 $(LNAME2 function-inheritance, Function Inheritance and Overriding))
-
-        $(P A function in a derived class with the same name and covariant
-        with a function in a base class overrides that function:)
-
-------
-class A
-{
-    int foo(int x) { ... }
-}
-
-class B : A
-{
-    override int foo(int x) { ... }
-}
-
-void test()
-{
-    B b = new B();
-    bar(b);
-}
-
-void bar(A a)
-{
-    a.foo(1);   // calls B.foo(int)
-}
-------
+$(H3 $(LNAME2 function-inheritance, Overload Sets and Overriding))
 
         $(P When doing overload resolution, the functions in the base
         class are not considered, as they are not in the same
@@ -1130,9 +1148,9 @@ class B : A
 void test()
 {
     B b = new B();
-    b.foo(1);  // calls B.foo(long), since A.foo(int) not considered
-    A a = b;
+    b.foo(1);  // calls B.foo(long), since A.foo(int) is not considered
 
+    A a = b;
     a.foo(1);  // issues runtime error (instead of calling A.foo(int))
 }
 ------
@@ -1156,12 +1174,7 @@ class B : A
 
 void test()
 {
-    B b = new B();
-    bar(b);
-}
-
-void bar(A a)
-{
+    A a = new B();
     a.foo(1);      // calls A.foo(int)
     B b = new B();
     b.foo(1);      // calls A.foo(int)
@@ -1176,6 +1189,8 @@ void bar(A a)
         implicit conversions to the base class, those other functions do
         get called:
         )
+
+$(SPEC_RUNNABLE_EXAMPLE_FAIL
 ---
 class A
 {
@@ -1184,22 +1199,19 @@ class A
 }
 class B : A
 {
-    void set(long i) { }
+    override void set(long i) { }
 }
 
-void foo(A a)
+void test()
 {
-    int i;
+    A a = new B;
     a.set(3);   // error, use of A.set(int) is hidden by B
                 // use 'alias set = A.set;' to introduce base class overload set
-    assert(i == 1);
-}
-
-void main()
-{
-    foo(new B);
 }
 ---
+)
+
+$(H3 $(LNAME2 override-defaults, Default Values))
 
         $(P A function parameter's default value is not inherited:)
 
@@ -1232,6 +1244,8 @@ void test()
 }
 ------
 
+$(H3 $(LNAME2 inheriting-attributes, Inherited Attributes))
+
         $(P An overriding function inherits any unspecified $(GLINK FunctionAttributes)
         from the attributes of the overridden function.)
 
@@ -1253,6 +1267,8 @@ void main()
 }
 ------
 )
+
+$(H3 $(LNAME2 override-restrictions, Restrictions))
 
         $(P The attributes
         $(LINK2 attribute.html#disable, $(D @disable)) and
@@ -1277,7 +1293,6 @@ void main()
         }
         ---
 
-    $(P Static functions with `Objective-C` linkage are overridable.)
 
 $(H2 $(LNAME2 inline-functions, Inline Functions))
 
@@ -2410,6 +2425,19 @@ $(H4 $(LNAME2 lazy_variadic_functions, Lazy Variadic Functions))
         parameter. This will prevent a closure being generated for the delegate,
         as `scope` means the delegate will not escape the function.)
 
+$(H3 $(LNAME2 this-reference, `this` Reference))
+
+        $(P
+            Non-static member functions all have a hidden parameter called the
+            `this` reference, which refers to the object for which
+            the function is called.
+        )
+
+        $(P
+            Functions with `Objective-C` linkage have an additional hidden,
+            unnamed, parameter which is the selector it was called with.
+        )
+
 
 $(H2 $(LEGACY_LNAME2 Local Variables, local-variables, Local Variables))
 
@@ -2956,18 +2984,37 @@ $(H3 $(LNAME2 anonymous, Anonymous Functions and Anonymous Delegates))
 $(H2 $(LNAME2 main, $(D main()) Function))
 
         $(P For console programs, $(D main()) serves as the entry point.
-        It gets called after all the module initializers are run, and
-        after any unittests are run.
+        It gets called after all the $(DDSUBLINK spec/module, staticorder, module initializers)
+        are run, and after any $(DDLINK spec/unittest, Unit Tests, unittests) are run.
         After it returns, all the module destructors are run.
-        $(D main()) must be declared using one of the following forms:
+        $(D main()) must be declared as follows:
+        )
+
+        $(GRAMMAR
+        $(GNAME MainFunction):
+            $(GLINK MainReturnDecl) $(D main$(LPAREN)$(RPAREN)) $(GLINK2 statement, BlockStatement)
+            $(GLINK MainReturnDecl) $(D main$(LPAREN)string[]) $(GLINK_LEX Identifier)$(D $(RPAREN)) $(GLINK2 statement, BlockStatement)
+
+        $(GNAME MainReturnDecl):
+            $(D void)
+            $(D int)
+            $(GLINK2 type, noreturn)
+            $(RELATIVE_LINK2 auto-functions, $(D auto))
         )
 
         $(UL
-        $(LI `void main() { ... }`)
-        $(LI `void main(string[] args) { ... }`)
-        $(LI `int main() { ... }`)
-        $(LI `int main(string[] args) { ... }`)
+        $(LI If `main` returns `void`, the OS will receive a zero value on success.)
+        $(LI If `main` returns `void` or `noreturn`, the OS will receive a non-zero
+        value on abnormal termination, such as an uncaught exception.)
+        $(LI If `main` is declared as `auto`, the inferred return type must be
+        one of `void`, `int` and `noreturn`.)
         )
+
+        $(P If the $(D string[]) parameter is declared, the parameter will hold
+        arguments passed to the program by the OS. The first argument is typically
+        the executable name, followed by any command-line arguments.)
+
+        $(NOTE The runtime can remove any arguments prefixed `--DRT-`.)
 
         $(P The main function must have D linkage.)
 
@@ -3052,7 +3099,7 @@ void main()
     $(LI Expressions may not reference any global or local
         static variables.)
 
-    $(LI $(DDSUBLINK iasm, asmstatements, AsmStatements) are not permitted)
+    $(LI $(DDSUBLINK spec/iasm, asmstatements, AsmStatements) are not permitted)
 
     $(LI Non-portable casts (eg, from $(D int[]) to $(D float[])), including
         casts which depend on endianness, are not permitted.
@@ -3186,14 +3233,14 @@ $(H2 $(LNAME2 nogc-functions, No-GC Functions))
         )
 
         $(OL
-        $(LI $(DDSUBLINK expression, ArrayLiteral, constructing an array) on the heap)
+        $(LI $(DDSUBLINK spec/expression, ArrayLiteral, constructing an array) on the heap)
         $(LI resizing an array by writing to its $(D .length) property)
-        $(LI $(DDSUBLINK expression, CatExpression, array concatenation))
-        $(LI $(DDSUBLINK expression, simple_assignment_expressions, array appending))
-        $(LI $(DDSUBLINK expression, AssocArrayLiteral, constructing an associative array))
-        $(LI $(DDSUBLINK expression, IndexExpression, indexing) an associative array
+        $(LI $(DDSUBLINK spec/expression, CatExpression, array concatenation))
+        $(LI $(DDSUBLINK spec/expression, simple_assignment_expressions, array appending))
+        $(LI $(DDSUBLINK spec/expression, AssocArrayLiteral, constructing an associative array))
+        $(LI $(DDSUBLINK spec/expression, IndexExpression, indexing) an associative array
             $(NOTE because it may throw $(D RangeError) if the specified key is not present))
-        $(LI $(DDSUBLINK expression, NewExpression, allocating an object with `new`) on the heap)
+        $(LI $(DDSUBLINK spec/expression, NewExpression, allocating an object with `new`) on the heap)
         $(LI calling functions that are not `@nogc`, unless the call is
             in a $(GLINK2 version, ConditionalStatement)
             controlled by a $(GLINK2 version, DebugCondition))
