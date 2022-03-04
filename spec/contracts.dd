@@ -34,7 +34,7 @@ $(H2 $(LNAME2 pre_post_contracts, 事前、事後契約))
 
 $(H2 $(LNAME2 Invariants, 不変条件))
 
-        $(P See $(DDSUBLINK struct, Invariant, Struct Invariants) and $(DDSUBLINK class, invariants, Class Invariants).)
+        $(P See $(DDSUBLINK spec/struct, Invariant, Struct Invariants) and $(DDSUBLINK spec/class, invariants, Class Invariants).)
 
 
 $(H2 $(LNAME2 references, 参考文献))
