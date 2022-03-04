@@ -4,19 +4,36 @@ $(SPEC_S Declarations,
 
 $(HEADERNAV_TOC)
 
+$(H2 $(LNAME2 grammar, Grammar))
+
 $(GRAMMAR
 $(GNAME Declaration):
     $(GLINK2 function, FuncDeclaration)
     $(GLINK VarDeclarations)
     $(GLINK AliasDeclaration)
     $(GLINK AliasAssign)
-    $(GLINK2 struct, AggregateDeclaration)
+    $(GLINK AggregateDeclaration)
     $(GLINK2 enum, EnumDeclaration)
     $(GLINK2 module, ImportDeclaration)
     $(GLINK2 version, ConditionalDeclaration)
     $(GLINK2 version, StaticForeachDeclaration)
     $(GLINK2 version, StaticAssert)
 )
+
+$(P See also $(GLINK2 module, DeclDef).
+)
+
+$(H3 $(LNAME2 aggregates, Aggregates))
+
+$(GRAMMAR
+$(GNAME AggregateDeclaration):
+    $(GLINK2 class, ClassDeclaration)
+    $(GLINK2 interface, InterfaceDeclaration)
+    $(GLINK2 struct, StructDeclaration)
+    $(GLINK2 struct, UnionDeclaration)
+)
+
+$(H3 $(LNAME2 variable-declarations, Variable Declarations))
 
 $(GRAMMAR
 $(GNAME VarDeclarations):
@@ -30,57 +47,23 @@ $(GNAME Declarators):
 $(GNAME DeclaratorInitializer):
     $(GLINK VarDeclarator)
     $(GLINK VarDeclarator) $(GLINK2 template, TemplateParameters)$(OPT) $(D =) $(GLINK Initializer)
-    $(GLINK AltDeclarator)
-    $(GLINK AltDeclarator) $(D =) $(GLINK Initializer)
 
 $(GNAME DeclaratorIdentifierList):
     $(GLINK DeclaratorIdentifier)
     $(GLINK DeclaratorIdentifier) $(D ,) $(GSELF DeclaratorIdentifierList)
 
-$(GNAME DeclaratorIdentifier):
-    $(GLINK VarDeclaratorIdentifier)
-    $(GLINK AltDeclaratorIdentifier)
-
-$(GNAME VarDeclaratorIdentifier):
+$(GNAME DeclaratorIdentifier):$(LEGACY_LNAME2 VarDeclaratorIdentifier)
     $(GLINK_LEX Identifier)
     $(GLINK_LEX Identifier) $(GLINK2 template, TemplateParameters)$(OPT) $(D =) $(GLINK Initializer)
 
-$(GNAME AltDeclaratorIdentifier):
-    $(GLINK2 type, TypeSuffixes) $(GLINK_LEX Identifier) $(GLINK AltDeclaratorSuffixes)$(OPT)
-    $(GLINK2 type, TypeSuffixes) $(GLINK_LEX Identifier) $(GLINK AltDeclaratorSuffixes)$(OPT) $(D =) $(GLINK Initializer)
-    $(GLINK2 type, TypeSuffixes)$(OPT) $(GLINK_LEX Identifier) $(GLINK AltDeclaratorSuffixes)
-    $(GLINK2 type, TypeSuffixes)$(OPT) $(GLINK_LEX Identifier) $(GLINK AltDeclaratorSuffixes) $(D =) $(GLINK Initializer)
-
 $(GNAME Declarator):
     $(GLINK VarDeclarator)
-    $(GLINK AltDeclarator)
 
 $(GNAME VarDeclarator):
     $(GLINK2 type, TypeSuffixes)$(OPT) $(GLINK_LEX Identifier)
-
-$(GNAME AltDeclarator):
-    $(GLINK2 type, TypeSuffixes)$(OPT) $(GLINK_LEX Identifier) $(GLINK AltDeclaratorSuffixes)
-    $(GLINK2 type, TypeSuffixes)$(OPT) $(D $(LPAREN)) $(GLINK AltDeclaratorInner) $(D $(RPAREN))
-    $(GLINK2 type, TypeSuffixes)$(OPT) $(D $(LPAREN)) $(GLINK AltDeclaratorInner) $(D $(RPAREN)) $(GLINK AltFuncDeclaratorSuffix)
-    $(GLINK2 type, TypeSuffixes)$(OPT) $(D $(LPAREN)) $(GLINK AltDeclaratorInner) $(D $(RPAREN)) $(GLINK AltDeclaratorSuffixes)
-
-$(GNAME AltDeclaratorInner):
-    $(GLINK2 type, TypeSuffixes)$(OPT) $(GLINK_LEX Identifier)
-    $(GLINK2 type, TypeSuffixes)$(OPT) $(GLINK_LEX Identifier) $(GLINK AltFuncDeclaratorSuffix)
-    $(GLINK AltDeclarator)
-
-$(GNAME AltDeclaratorSuffixes):
-    $(GLINK AltDeclaratorSuffix)
-    $(GLINK AltDeclaratorSuffix) $(GSELF AltDeclaratorSuffixes)
-
-$(GNAME AltDeclaratorSuffix):
-    $(D [ ])
-    $(D [) $(GLINK2 expression, AssignExpression) $(D ])
-    $(D [) $(GLINK2 type, Type) $(D ])
-
-$(GNAME AltFuncDeclaratorSuffix):
-    $(GLINK2 function, Parameters) $(GLINK2 function, MemberFunctionAttributes)$(OPT)
 )
+
+$(H3 $(LNAME2 storage-classes, Storage Classes))
 
 $(GRAMMAR
 $(GNAME StorageClasses):
@@ -112,18 +95,17 @@ $(MULTICOLS 5,     $(GLINK2 attribute, LinkageAttribute)
     $(D ref))
 )
 
+$(H3 $(LNAME2 initializers, Initializers))
+
 $(GRAMMAR
 $(GNAME Initializer):
     $(GLINK VoidInitializer)
     $(GLINK NonVoidInitializer)
 
 $(GNAME NonVoidInitializer):
-    $(GLINK ExpInitializer)
+    $(GLINK2 expression, AssignExpression)$(LEGACY_LNAME2 ExpInitializer)
     $(GLINK ArrayInitializer)
-    $(GLINK StructInitializer)
-
-$(GNAME ExpInitializer):
-    $(GLINK2 expression, AssignExpression)
+    $(GLINK2 struct, StructInitializer)$(LEGACY_LNAME2 StructInitializer)
 
 $(GNAME ArrayInitializer):
     $(D [) $(GLINK ArrayMemberInitializations)$(OPT) $(D ])
@@ -136,18 +118,6 @@ $(GNAME ArrayMemberInitializations):
 $(GNAME ArrayMemberInitialization):
     $(GLINK NonVoidInitializer)
     $(GLINK2 expression, AssignExpression) $(D :) $(GLINK NonVoidInitializer)
-
-$(GNAME StructInitializer):
-    $(D {) $(GLINK StructMemberInitializers)$(OPT) $(D })
-
-$(GNAME StructMemberInitializers):
-    $(GLINK StructMemberInitializer)
-    $(GLINK StructMemberInitializer) $(D ,)
-    $(GLINK StructMemberInitializer) $(D ,) $(GSELF StructMemberInitializers)
-
-$(GNAME StructMemberInitializer):
-    $(GLINK NonVoidInitializer)
-    $(GLINK_LEX Identifier) $(D :) $(GLINK NonVoidInitializer)
 )
 
 $(H2 $(LNAME2 declaration_syntax, Declaration Syntax))

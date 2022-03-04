@@ -18,13 +18,24 @@ $(H2 $(LNAME2 array-kinds, Kinds))
 
 $(H3 $(LNAME2 pointers, Pointers))
 
+        $(P A pointer to type $(D T) has a value which is a reference (address) to another
+        object of type $(D T). It is commonly called a $(I pointer to T) and its type is
+        `T*`. To access the object value, use the `*` dereference operator:
+        )
+
+$(SPEC_RUNNABLE_EXAMPLE_RUN
 ---------
 int* p;
----------
 
-        $(P A pointer to type $(I T) has a value which is a reference (address) to another
-        object of type $(I T). It is commonly called a $(I pointer to T).
-        )
+assert(p == null);
+p = new int(5);
+assert(p != null);
+
+assert(*p == 5);
+(*p)++;
+assert(*p == 6);
+---------
+)
 
         $(P If a pointer contains a $(I null) value, it is not pointing to a valid object.)
 
@@ -43,13 +54,34 @@ int* p;
         to a valid object of type $(I T).)
         ))
 
-        $(BEST_PRACTICE These are simple pointers to data.
-        Pointers are provided for interfacing with C and for
+        $(P To set a pointer to point at an existing object, use the
+        `&` *address of* operator:)
+
+$(SPEC_RUNNABLE_EXAMPLE_RUN
+---------
+int i = 2;
+int* p = &i;
+
+assert(p == &i);
+assert(*p == 2);
+*p = 4;
+assert(i == 4);
+---------
+)
+
+        $(P These are simple pointers to data.
+        A pointer can manipulate a block of multiple values. Accessing more
+        than one value cannot be
+        $(DDLINK spec/memory-safe-d, Memory-Safe-D-Spec, `@safe`) as it
+        requires $(RELATIVE_LINK2 pointer-arithmetic, pointer arithmetic).
+        This is supported for interfacing with C and for
         specialized systems work.
-        There is no length associated with it, and so there is no way for the
+        A pointer has no length associated with it, so there is no way for the
         compiler or runtime to do bounds checking, etc., on it.
-        Most conventional uses for pointers can be replaced with
-        dynamic arrays, $(D out) and $(D ref) parameters,
+        )
+
+        $(BEST_PRACTICE Most conventional uses for pointers can be replaced with
+        dynamic arrays, $(D ref) and $(D out) $(DDSUBLINK spec/function, parameters, parameters),
         and reference types.
         )
 
@@ -130,7 +162,7 @@ int[2] = [1, 2];
 ---
     $(P `[]` is an empty array literal.)
 
-    $(P See $(DDSUBLINK expression, array_literals, Array Literals).)
+    $(P See $(DDSUBLINK spec/expression, array_literals, Array Literals).)
 
 $(LEGACY_LNAME2 usage)
 $(H2 $(LNAME2 assignment, Array Assignment))
@@ -192,6 +224,29 @@ assert(b[1] == 2);
 
     $(P See also $(GLINK2 expression, IndexExpression).)
 
+$(H3 $(LNAME2 pointer-arithmetic, Pointer Arithmetic))
+
+    $(P A pointer can also be indexed, but no bounds checks are done.
+    Unlike arrays, a pointer value can also be used in certain
+    arithmetic expressions to produce another pointer:)
+
+$(SPEC_RUNNABLE_EXAMPLE_RUN
+---
+int[] a = [1,2,3];
+int* p = a.ptr;
+
+p[2] = 4;
+assert(a[2] == 4);
+writeln(p[3]); // undefined behaviour
+
+assert(p == &a[0]);
+p++; // point to a[1]
+assert(*p == 2);
+---
+)
+
+    $(P See $(DDSUBLINK spec/expression, pointer_arithmetic, *AddExpression*) for details.)
+
 $(H2 $(LNAME2 slicing, Slicing))
 
         $(P $(I Slicing) an array means to specify a subarray of it.
@@ -231,12 +286,14 @@ $(SPEC_RUNNABLE_EXAMPLE_RUN
 int[10] a = [ 1,2,3,4,5,6,7,8,9,10 ];
 
 int* p = &a[2];
-int[] b = p[0..8];
-writeln(b);
 writeln(p[7]);      // 10
 writeln(p[8]);      // undefined behaviour
+
+int[] b = p[0..8];  // convert pointer elements to dynamic array
+assert(b is a[2..10]);
+writeln(b);
 writeln(b[7]);      // 10
-//writeln(b[8]);    // range error
+//writeln(b[8]);    // runtime error (unless bounds checks turned off)
 ---------
 )
 
@@ -352,19 +409,18 @@ $(H2 $(LNAME2 array-concatenation, Array Concatenation))
         to concatenate arrays:
         )
 
-$(SPEC_RUNNABLE_EXAMPLE_COMPILE
----------
-int[] a;
-int[] b;
-int[] c;
+$(SPEC_RUNNABLE_EXAMPLE_RUN
+---
+int[] a = [1, 2];
+assert(a ~ 3 == [1, 2, 3]); // concatenate array with a single value
 
-a = b ~ c; // Create an array from the concatenation
-           // of the b and c arrays
----------
+int[] b = a ~ [3, 4];
+assert(b == [1, 2, 3, 4]); // concatenate two arrays
+---
 )
 
-        $(P Many languages overload the + operator to mean concatenation.
-        This confusingly leads to, does:
+        $(P Many languages overload the + operator for concatenation.
+        This confusingly leads to a dilemma - does:
         )
 
 ---------
@@ -379,20 +435,31 @@ a = b ~ c; // Create an array from the concatenation
         concatenation.
         )
 
+        $(P Concatenation always creates a copy of its operands, even
+        if one of the operands is a 0 length array, so:
+        )
+
+$(SPEC_RUNNABLE_EXAMPLE_RUN
+---------
+auto b = [7];
+auto a = b;      // a refers to b
+assert(a is b);
+
+a = b ~ []; // a refers to a copy of b
+assert(a !is b);
+assert(a == b);
+---------
+)
+
+        $(P See also: $(DDSUBLINK spec/expression, identity_expressions, `is` operator).)
+
+$(H2 $(LNAME2 array-appending, Array Appending))
+
         $(P Similarly, the ~= operator means append, as in:
         )
 
 ---------
 a ~= b; // a becomes the concatenation of a and b
----------
-
-        $(P Concatenation always creates a copy of its operands, even
-        if one of the operands is a 0 length array, so:
-        )
-
----------
-a = b;           // a refers to b
-a = b ~ c[0..0]; // a refers to a copy of b
 ---------
 
         $(P Appending does not always create a copy, see $(RELATIVE_LINK2 resize,
@@ -452,30 +519,6 @@ a[] -= (b[] + 4) * c[];
         the target computer.
         )
 
-$(H2 $(LNAME2 pointer-arithmetic, Pointer Arithmetic))
-
-$(SPEC_RUNNABLE_EXAMPLE_FAIL
----------
-void dibb(int* array)
-{
-    array[2];     // means same thing as *(array + 2)
-    *(array + 2); // get 3rd element
-}
-
-void diss(int[] array)
-{
-    array[2];     // ok
-    *(array + 2); // error, array is not a pointer
-}
-
-void ditt(int[3] array)
-{
-    array[2];     // ok
-    *(array + 2); // error, array is not a pointer
-}
----------
-)
-
 $(H2 $(LNAME2 rectangular-arrays, Rectangular Arrays))
 
         $(P Experienced FORTRAN numerics programmers know that multidimensional
@@ -519,6 +562,8 @@ writeln(matrix); // [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 3.1
 static assert(!__traits(compiles, matrix[5][2])); // Array index out of bounds.
 ---------
 )
+
+$(P More information can be found at $(LINK2 https://wiki.dlang.org/Dense_multidimensional_arrays, Dlang Wiki - Dense Multidimensional Arrays).)
 
 $(H2 $(LNAME2 array-properties, Array Properties))
 
@@ -702,7 +747,7 @@ assert(cap == array.capacity);
 
 $(H3 $(LNAME2 func-as-property, Functions as Array Properties))
 
-        $(P See $(DDSUBLINK function, pseudo-member, Uniform Function Call Syntax (UFCS)).)
+        $(P See $(DDSUBLINK spec/function, pseudo-member, Uniform Function Call Syntax (UFCS)).)
 
 $(H2 $(LNAME2 bounds, Array Bounds Checking))
 
@@ -765,7 +810,7 @@ int x = foo[3]; // error, out of bounds
             The runtime behavior is part of the language semantics.
         )
 
-        $(P See also $(DDSUBLINK function, safe-functions, Safe Functions).)
+        $(P See also $(DDSUBLINK spec/function, safe-functions, Safe Functions).)
 
 $(H3 $(LNAME2 disable-bounds-check, Disabling Array Bounds Checking))
 
