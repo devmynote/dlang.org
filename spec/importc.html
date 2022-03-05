@@ -147,20 +147,20 @@
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
     <ol>    <li><a href="#dialect">ImportC で使える文法</a></li>
-    <li><a href="#command-line">ImportCを呼び出す</a><ol>        <li><a href="#command-line">ImportC Files on the Command Line</a></li>
-        <li><a href="#importing">Importing C Files</a></li>
+    <li><a href="#command-line">ImportCを呼び出す</a><ol>        <li><a href="#command-line">コマンドライン上の ImportCファイル</a></li>
+        <li><a href="#importing">Cファイルのインポート</a></li>
     </ol></li>
-    <li><a href="#preprocessor">プリプロセッサ</a><ol>        <li><a href="#spp">Digital Mars C Preprocessor sppn.exe</a></li>
+    <li><a href="#preprocessor">プリプロセッサ</a><ol>        <li><a href="#spp">Digital Mars C プリプロセッサ sppn.exe</a></li>
         <li><a href="#gcc-preprocessor">Gnu C プリプロセッサ</a></li>
         <li><a href="#clang-preprocessor">Clang C プリプロセッサ</a></li>
         <li><a href="#dmpp">dmpp C プリプロセッサ</a></li>
     </ol></li>
     <li><a href="#predefined-macros">定義済みマクロ</a></li>
-    <li><a href="#preprocessor-directives">プリプロセッサ指令</a><ol>        <li><a href="#line-control">Line control</a></li>
+    <li><a href="#preprocessor-directives">プリプロセッサ指令</a><ol>        <li><a href="#line-control">行コントロール</a></li>
         <li><a href="#linemarker">ラインマーカー</a></li>
-        <li><a href="#pragma">pragma</a></li>
+        <li><a href="#pragma">プラグマ</a></li>
     </ol></li>
-    <li><a href="#implementation">実装</a><ol>        <li><a href="#enums">Enums</a></li>
+    <li><a href="#implementation">実装</a><ol>        <li><a href="#enums">列挙型</a></li>
         <li><a href="#bitfields">ビットフィールド</a></li>
         <li><a href="#implicit-function-declaration">暗黙の関数宣言</a></li>
         <li><a href="#pragma-STDC-FENV_ACCESS">#pragma STDC FENV_ACCESS</a></li>
@@ -170,16 +170,16 @@
         <li><a href="#volatile">Volatile</a></li>
         <li><a href="#restrict">Restrict</a></li>
         <li><a href="#_atomic">_Atomic</a></li>
-        <li><a href="#compatible_types">互換性のある型</a></li>
-        <li><a href="#same_only_different">Same only Different Types</a></li>
+        <li><a href="#compatible_types">互換タイプ</a></li>
+        <li><a href="#same_only_different">異なる型でも同じく扱う</a></li>
         <li><a href="#_generic">_Generic</a></li>
     </ol></li>
     <li><a href="#extensions">拡張機能</a><ol>        <li><a href="#forward-references">前方参照</a></li>
         <li><a href="#ctfe">コンパイル時関数実行</a></li>
-        <li><a href="#inlining">Function Inlining</a></li>
-        <li><a href="#enumbasetype">Enum Base Types</a></li>
+        <li><a href="#inlining">関数のインライン化</a></li>
+        <li><a href="#enumbasetype">列挙型の基本型</a></li>
         <li><a href="#register">ストレージクラスの登録</a></li>
-        <li><a href="#__import">Import Declarations</a></li>
+        <li><a href="#__import">インポート宣言</a></li>
     </ol></li>
     <li><a href="#gnu-clang-extensions">Gnu や Clang の拡張機能</a><ol>        <li><a href="#noreturn"><span class="d_inlinecode donthyphenate notranslate">__attribute__((noreturn))</span></a></li>
     </ol></li>
@@ -192,8 +192,8 @@
     <li><a href="#wrapping">Cのコードのラッピング</a></li>
     <li><a href="#warnings">警告</a></li>
     <li><a href="#importcpp">C++ のインポート</a></li>
-    <li><a href="#other-solutions">その他の解決策</a><ol>        <li><a href="#dpp">dpp by Atila Neves</a></li>
-        <li><a href="#dstep">DStep by Jacob Carlborg</a></li>
+    <li><a href="#other-solutions">その他の解決策</a><ol>        <li><a href="#dpp">Atila Neves による dpp</a></li>
+        <li><a href="#dstep">Jacob Carlborg による DStep</a></li>
         <li><a href="#htod">Walter Bright による htod</a></li>
     </ol></li>
     <li><a href="#internals">ImportC の仕組み</a></li>
@@ -250,9 +250,9 @@
     <li>indirectly via importing a C file</li>
     </ul>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="command-line" href="#command-line">ImportC Files on the Command Line</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="command-line" href="#command-line">コマンドライン上の ImportCファイル</a></h3>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="importing" href="#importing">Importing C Files</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="importing" href="#importing">Cファイルのインポート</a></h3>
 <div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="preprocessor" href="#preprocessor">プリプロセッサ</a></h2>
@@ -260,7 +260,7 @@
     <p>ImportC does not have a preprocessor. It is designed to compile C
     files after they have been first run through the C preprocessor.</p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="spp" href="#spp">Digital Mars C Preprocessor sppn.exe</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="spp" href="#spp">Digital Mars C プリプロセッサ sppn.exe</a></h3>
 <div class="blankline"></div>
     <p><a href="https://www.digitalmars.com/ctg/sc.html"><em class="tt">sppn.exe</em></a> runs on Win32 and is invoked as:</p>
 <div class="blankline"></div>
@@ -306,7 +306,7 @@
 <div class="blankline"></div>
     <p>Nevertheless, ImportC supports these preprocessor directives:</p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="line-control" href="#line-control">Line control</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="line-control" href="#line-control">行コントロール</a></h3>
 <div class="blankline"></div>
     <p>C11 6.10.4</p>
 <div class="blankline"></div>
@@ -315,7 +315,7 @@
     <p><a href="https://gcc.gnu.org/onlinedocs/gcc-11.1.0/cpp/Preprocessor-Output.html">linemarker</a>
     directives are normally embedded in the output of C preprocessors.</p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="pragma" href="#pragma">pragma</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="pragma" href="#pragma">プラグマ</a></h3>
 <div class="blankline"></div>
     <p>Pragma directives are ignored.</p>
 <div class="blankline"></div>
@@ -323,7 +323,7 @@
 <div class="blankline"></div>
     <p>The implementation defined characteristics of ImportC are:</p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="enums" href="#enums">Enums</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="enums" href="#enums">列挙型</a></h3>
 <div class="blankline"></div>
     <p><i>enumeration-constants</i> are always typed as <span class="d_inlinecode donthyphenate notranslate">int</span>.</p>
 <div class="blankline"></div>
@@ -408,11 +408,11 @@ on-off-switch:
     <p>The <span class="d_inlinecode donthyphenate notranslate">_Atomic</span> type-qualifier (C11 6.7.3) is ignored.
     To do atomic operations, use an externally compiled function for that, or the inline assembler.</p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="compatible_types" href="#compatible_types">互換性のある型</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="compatible_types" href="#compatible_types">互換タイプ</a></h3>
 <div class="blankline"></div>
     <p><i>Compatible Types</i> (C11 6.7.2) are identical types in ImportC.</p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="same_only_different" href="#same_only_different">Same only Different Types</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="same_only_different" href="#same_only_different">異なる型でも同じく扱う</a></h3>
 <div class="blankline"></div>
     <p>On some platforms, C <span class="d_inlinecode donthyphenate notranslate">long</span> and <span class="d_inlinecode donthyphenate notranslate">unsigned long</span> are the same size as <span class="d_inlinecode donthyphenate notranslate">int</span> and <span class="d_inlinecode donthyphenate notranslate">unsigned int</span>, respectively.
     On other platforms, C <span class="d_inlinecode donthyphenate notranslate">long</span> and <span class="d_inlinecode donthyphenate notranslate">unsigned long</span> are the same size as <span class="d_inlinecode donthyphenate notranslate">long long</span> and <span class="d_inlinecode donthyphenate notranslate">unsigned long long</span>.
@@ -444,12 +444,12 @@ on-off-switch:
     same manner as D's CTFE can.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="inlining" href="#inlining">Function Inlining</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="inlining" href="#inlining">関数のインライン化</a></h3>
 <div class="blankline"></div>
     <p>Functions for which the function body is present can
     be inlined by ImportC as well as by the D code that calls them.</p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="enumbasetype" href="#enumbasetype">Enum Base Types</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="enumbasetype" href="#enumbasetype">列挙型の基本型</a></h3>
 <div class="blankline"></div>
     <p>Enums are extended with an optional <i>EnumBaseType</i>:</p>
 <div class="blankline"></div>
@@ -478,7 +478,7 @@ _Static_assert(sizeof(A) == 1, "A should be size 1");
     <p>Arrays can have <span class="d_inlinecode donthyphenate notranslate">register</span> storage class, and may be enregistered by the compiler. C11 6.3.2.1-3</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="__import" href="#__import">Import Declarations</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="__import" href="#__import">インポート宣言</a></h3>
 <div class="blankline"></div>
     <p>Modules can be imported with a <i>CImportDeclaration</i>:</p>
 <div class="blankline"></div>
@@ -659,7 +659,7 @@ int foo()
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="other-solutions" href="#other-solutions">その他の解決策</a></h2>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="dpp" href="#dpp">dpp by Atila Neves</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="dpp" href="#dpp">Atila Neves による dpp</a></h3>
 <div class="blankline"></div>
     <p><a href="https://code.dlang.org/packages/dpp/0.2.1">dpp code</a></p>
 <div class="blankline"></div>
@@ -675,7 +675,7 @@ int foo()
     <p>Like DStep, dpp relies on libclang.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="dstep" href="#dstep">DStep by Jacob Carlborg</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="dstep" href="#dstep">Jacob Carlborg による DStep</a></h3>
 <div class="blankline"></div>
     <p><a href="https://code.dlang.org/packages/dstep">DStep code</a></p>
 <div class="blankline"></div>
@@ -724,7 +724,7 @@ int foo()
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:59 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 15:49:37 2022
 </div>
     </div>
 </div>

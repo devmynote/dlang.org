@@ -147,10 +147,10 @@
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
     <ol>    <li><a href="#expression">式</a></li>
-    <li><a href="#definitions-and-terms">定義と用語</a><ol>        <li><a href="#.define-full-expression">Full Expression</a></li>
-        <li><a href="#.define-lvalue">Lvalue</a></li>
-        <li><a href="#.define-rvalue">Rvalue</a></li>
-        <li><a href="#.define-smallest-short-circuit">Smallest Short-Circuit Expression</a></li>
+    <li><a href="#definitions-and-terms">定義と用語</a><ol>        <li><a href="#.define-full-expression">完全式</a></li>
+        <li><a href="#.define-lvalue">左辺値</a></li>
+        <li><a href="#.define-rvalue">右辺値</a></li>
+        <li><a href="#.define-smallest-short-circuit">最小の短絡式</a></li>
     </ol></li>
     <li><a href="#order-of-evaluation">評価の順序</a></li>
     <li><a href="#temporary-lifetime">テンポラリのライフタイム</a></li>
@@ -190,10 +190,10 @@
         <li><a href="#cast_expressions">キャスト式</a></li>
     </ol></li>
     <li><a href="#throw_expression">Throw 式</a></li>
-    <li><a href="#pow_expressions">Pow Expressions</a></li>
+    <li><a href="#pow_expressions">べき乗式</a></li>
     <li><a href="#postfix_expressions">後置演算式</a></li>
     <li><a href="#index_expressions">Index 式</a></li>
-    <li><a href="#slice_expressions">Slice 式</a><ol>        <li><a href="#slice_to_static_array">Slice Conversion to Static Array</a></li>
+    <li><a href="#slice_expressions">Slice 式</a><ol>        <li><a href="#slice_to_static_array">静的配列へのスライス変換</a></li>
     </ol></li>
     <li><a href="#primary_expressions">一次式</a><ol>        <li><a href="#identifier">ドット(.)付き識別子</a></li>
         <li><a href="#this">this</a></li>
@@ -201,7 +201,7 @@
         <li><a href="#null">null</a></li>
         <li><a href="#string_literals">文字列リテラル</a></li>
         <li><a href="#array_literals">配列リテラル</a></li>
-        <li><a href="#cast_array_literal">Casting</a></li>
+        <li><a href="#cast_array_literal">キャスト</a></li>
         <li><a href="#associative_array_literals">連想配列リテラル</a></li>
         <li><a href="#function_literals">関数リテラル</a></li>
         <li><a href="#uniform_construction_syntax">スカラー型の統一された構築構文</a></li>
@@ -232,7 +232,7 @@ The syntax, order of evaluation, and semantics of expressions are as follows.</p
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="definitions-and-terms" href="#definitions-and-terms">定義と用語</a></h2>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id=".define-full-expression" href="#.define-full-expression">Full Expression</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id=".define-full-expression" href="#.define-full-expression">完全式</a></h3>
 <div class="blankline"></div>
 <p>For any expression
 <i>expr</i>, the full expression of <i>expr</i> is defined as follows. If <i>expr</i> parses as a
@@ -255,7 +255,7 @@ full expression of <span class="d_inlinecode donthyphenate notranslate">f() + g(
 <p>The full expression of <span class="d_inlinecode donthyphenate notranslate">f()</span> above is <span class="d_inlinecode donthyphenate notranslate">x + f()</span>, not the expression passed
 to <span class="d_inlinecode donthyphenate notranslate">return</span>. This is because the parent of <span class="d_inlinecode donthyphenate notranslate">x + f()</span> has function literal type, not expression type.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id=".define-lvalue" href="#.define-lvalue">Lvalue</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id=".define-lvalue" href="#.define-lvalue">左辺値</a></h3>
 <div class="blankline"></div>
 <p>The following expressions, and no others, are called <em>lvalue expressions</em> or <em>lvalues</em>:</p>
 <ol><li><span class="d_inlinecode donthyphenate notranslate">this</span> inside <span class="d_inlinecode donthyphenate notranslate">struct</span> and <span class="d_inlinecode donthyphenate notranslate">union</span> member functions;</li>
@@ -280,14 +280,14 @@ the argument(s) to <span class="d_inlinecode donthyphenate notranslate">mixin</s
 <li><span class="d_inlinecode donthyphenate notranslate">cast()</span> and <span class="d_inlinecode donthyphenate notranslate">cast(</span><i>qualifier list</i><span class="d_inlinecode donthyphenate notranslate">)</span> when applied to an lvalue.</li>
 </ul></li></ol>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id=".define-rvalue" href="#.define-rvalue">Rvalue</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id=".define-rvalue" href="#.define-rvalue">右辺値</a></h3>
 <div class="blankline"></div>
 <p>Expressions that are not lvalues are <em>rvalues</em>. Rvalues include all literals, special value keywords such as <span class="d_inlinecode donthyphenate notranslate">__FILE__</span> and <span class="d_inlinecode donthyphenate notranslate">__LINE__</span>,
 <span class="d_inlinecode donthyphenate notranslate">enum</span> values, and the result of expressions not defined as lvalues above.</p>
 <div class="blankline"></div>
 <p>The built-in address-of operator (unary <span class="d_inlinecode donthyphenate notranslate">&amp;</span>) may only be applied to lvalues.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id=".define-smallest-short-circuit" href="#.define-smallest-short-circuit">Smallest Short-Circuit Expression</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id=".define-smallest-short-circuit" href="#.define-smallest-short-circuit">最小の短絡式</a></h3>
 <div class="blankline"></div>
 <p>Given an expression <i>expr</i> that is a subexpression of a full
 expression <i>fullexpr</i>, the <em>smallest short-circuit expression</em>, if any, is the shortest
@@ -1499,7 +1499,7 @@ and abort the program.
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="pow_expressions" href="#pow_expressions">Pow Expressions</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="pow_expressions" href="#pow_expressions">べき乗式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="PowExpression"><span class="gname">PowExpression</span></a>:
     <a href="#PostfixExpression"><i>PostfixExpression</i></a>
@@ -1612,7 +1612,7 @@ and abort the program.
 <div class="blankline"></div>
     <p>A <i>SliceExpression</i> is not a modifiable lvalue.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="slice_to_static_array" href="#slice_to_static_array">Slice Conversion to Static Array</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="slice_to_static_array" href="#slice_to_static_array">静的配列へのスライス変換</a></h3>
 <div class="blankline"></div>
     <p>If the slice bounds can be known at compile time, the slice expression
     may be implicitly convertible to an lvalue of static array. For example:</p>
@@ -1899,7 +1899,7 @@ and abort the program.
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="cast_array_literal" href="#cast_array_literal">Casting</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="cast_array_literal" href="#cast_array_literal">キャスト</a></h3>
 <div class="blankline"></div>
     <p>When array literals are cast to another array type, each
         element of the array is cast to the new element type.
@@ -2761,7 +2761,7 @@ file full path: '/example/test.d'
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:57 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 15:49:33 2022
 </div>
     </div>
 </div>

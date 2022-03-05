@@ -151,9 +151,9 @@
     </ol></li>
     <li><a href="#function-return-values">関数の戻り値</a></li>
     <li><a href="#function-declarations">本文無し関数</a></li>
-    <li><a href="#pure-functions">Pure 関数</a><ol>        <li><a href="#pure-special-cases">Special Cases</a></li>
-        <li><a href="#pure-factory-functions">Pure Factory Functions</a></li>
-        <li><a href="#pure-optimization">Optimization</a></li>
+    <li><a href="#pure-functions">Pure 関数</a><ol>        <li><a href="#pure-special-cases">特殊なケース</a></li>
+        <li><a href="#pure-factory-functions">Pure ファクトリ関数</a></li>
+        <li><a href="#pure-optimization">最適化</a></li>
     </ol></li>
     <li><a href="#nothrow-functions">Nothrow 関数</a></li>
     <li><a href="#ref-functions">Ref 関数</a></li>
@@ -163,12 +163,12 @@
     </ol></li>
     <li><a href="#optional-parenthesis">括弧付けが任意の場合</a></li>
     <li><a href="#property-functions">Property 関数</a></li>
-    <li><a href="#virtual-functions">Virtual 関数</a><ol>        <li><a href="#covariance">Covariance</a></li>
-        <li><a href="#base-methods">Calling Base Class Methods</a></li>
+    <li><a href="#virtual-functions">Virtual 関数</a><ol>        <li><a href="#covariance">共変性</a></li>
+        <li><a href="#base-methods">基本クラスのメソッド呼び出し</a></li>
         <li><a href="#function-inheritance">関数の継承とオーバーライド</a></li>
         <li><a href="#override-defaults">デフォルト値</a></li>
-        <li><a href="#inheriting-attributes">Inherited Attributes</a></li>
-        <li><a href="#override-restrictions">Restrictions</a></li>
+        <li><a href="#inheriting-attributes">継承された属性</a></li>
+        <li><a href="#override-restrictions">制限</a></li>
     </ol></li>
     <li><a href="#inline-functions">Inline 関数</a></li>
     <li><a href="#function-overloading">関数オーバーロード</a><ol>        <li><a href="#overload-sets">オーバーロードのセット</a></li>
@@ -645,7 +645,7 @@ foo(a);
 <div class="blankline"></div>
         <p>A strongly pure function can call a weakly pure function.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="pure-special-cases" href="#pure-special-cases">Special Cases</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="pure-special-cases" href="#pure-special-cases">特殊なケース</a></h3>
 <div class="blankline"></div>
         <p>A pure function can:</p>
 <div class="blankline"></div>
@@ -705,7 +705,7 @@ foo(a);
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="pure-factory-functions" href="#pure-factory-functions">Pure Factory Functions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="pure-factory-functions" href="#pure-factory-functions">Pure ファクトリ関数</a></h3>
 <div class="blankline"></div>
         <p>A <i>pure factory function</i> is a strongly pure function
         that returns a result that has mutable indirections.
@@ -749,7 +749,7 @@ foo(a);
         <p>This does not affect any <em>Exception</em> or <em>Error</em> thrown from the function.
         </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="pure-optimization" href="#pure-optimization">Optimization</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="pure-optimization" href="#pure-optimization">最適化</a></h3>
 <div class="blankline"></div>
         <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b> An implementation may assume that a strongly pure
         function that returns a result
@@ -1245,7 +1245,7 @@ foo(a);
         with <span class="d_inlinecode donthyphenate notranslate">final</span> or <span class="d_inlinecode donthyphenate notranslate">static</span>, and can be overridden.
         </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="covariance" href="#covariance">Covariance</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="covariance" href="#covariance">共変性</a></h3>
 <div class="blankline"></div>
         <p>An overriding function may be covariant with the overridden function.
         A covariant function has a type that is implicitly convertible to the
@@ -1270,7 +1270,7 @@ foo(a);
 
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="base-methods" href="#base-methods">Calling Base Class Methods</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="base-methods" href="#base-methods">基本クラスのメソッド呼び出し</a></h3>
 <div class="blankline"></div>
         <p>To directly call a member function of a base class <span class="d_inlinecode donthyphenate notranslate">Base</span>,
         write <span class="d_inlinecode donthyphenate notranslate">Base.</span> before the function name.
@@ -1434,7 +1434,7 @@ foo(a);
 </span>}
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="inheriting-attributes" href="#inheriting-attributes">Inherited Attributes</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="inheriting-attributes" href="#inheriting-attributes">継承された属性</a></h3>
 <div class="blankline"></div>
         <p>An overriding function inherits any unspecified <a href="#FunctionAttributes"><i>FunctionAttributes</i></a>
         from the attributes of the overridden function.</p>
@@ -1458,7 +1458,7 @@ foo(a);
 
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="override-restrictions" href="#override-restrictions">Restrictions</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="override-restrictions" href="#override-restrictions">制限</a></h3>
 <div class="blankline"></div>
         <p>The attributes
         <a href="attribute.html#disable"><span class="d_inlinecode donthyphenate notranslate">@disable</span></a> and
@@ -3952,7 +3952,7 @@ obj.prop;      <span class="d_comment">// if X does not have member prop, reinte
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:58 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 15:49:34 2022
 </div>
     </div>
 </div>

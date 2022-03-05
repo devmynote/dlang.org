@@ -146,21 +146,21 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#grammar">Grammar</a><ol>        <li><a href="#aggregates">Aggregates</a></li>
-        <li><a href="#variable-declarations">Variable Declarations</a></li>
-        <li><a href="#storage-classes">Storage Classes</a></li>
-        <li><a href="#initializers">Initializers</a></li>
+    <ol>    <li><a href="#grammar">文法</a><ol>        <li><a href="#aggregates">集合体</a></li>
+        <li><a href="#variable-declarations">変数の宣言</a></li>
+        <li><a href="#storage-classes">ストレージクラス</a></li>
+        <li><a href="#initializers">初期化子</a></li>
     </ol></li>
     <li><a href="#declaration_syntax">宣言の構文</a><ol>        <li><a href="#pointers-to-functions">関数ポインタ</a></li>
         <li><a href="#c-style-declarations">C スタイルな宣言</a></li>
         <li><a href="#declaring-multiple-symbols">複数シンボルの宣言</a></li>
     </ol></li>
     <li><a href="#auto-declaration">暗黙の型推論</a></li>
-    <li><a href="#alias">Alias宣言</a><ol>        <li><a href="#alias-type">Type Aliases</a></li>
-        <li><a href="#alias-symbol">Symbol Aliases</a></li>
-        <li><a href="#alias-overload">Aliasing an Overload Set</a></li>
-        <li><a href="#alias-variable">Aliasing Variables</a></li>
-        <li><a href="#alias-function">Aliasing a Function Type</a></li>
+    <li><a href="#alias">Alias宣言</a><ol>        <li><a href="#alias-type">型のエイリアス</a></li>
+        <li><a href="#alias-symbol">シンボルのエイリアス</a></li>
+        <li><a href="#alias-overload">オーバーロード集合のエイリアス</a></li>
+        <li><a href="#alias-variable">変数のエイリアス</a></li>
+        <li><a href="#alias-function">変数タイプのエイリアス</a></li>
     </ol></li>
     <li><a href="#AliasAssign">Aliasの割り当て</a></li>
     <li><a href="#alias-reassignment">Aliasの再割り当て</a></li>
@@ -171,7 +171,7 @@
 </ol>
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="grammar" href="#grammar">Grammar</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="grammar" href="#grammar">文法</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Declaration"><span class="gname">Declaration</span></a>:
     <a href="../spec/function.html#FuncDeclaration"><i>FuncDeclaration</i></a>
@@ -189,7 +189,7 @@
 <p>See also <a href="../spec/module.html#DeclDef"><i>DeclDef</i></a>.
 </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="aggregates" href="#aggregates">Aggregates</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="aggregates" href="#aggregates">集合体</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="AggregateDeclaration"><span class="gname">AggregateDeclaration</span></a>:
     <a href="../spec/class.html#ClassDeclaration"><i>ClassDeclaration</i></a>
@@ -198,7 +198,7 @@
     <a href="../spec/struct.html#UnionDeclaration"><i>UnionDeclaration</i></a>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="variable-declarations" href="#variable-declarations">Variable Declarations</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="variable-declarations" href="#variable-declarations">変数の宣言</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="VarDeclarations"><span class="gname">VarDeclarations</span></a>:
     <a href="#StorageClasses"><i>StorageClasses</i></a><sub>opt</sub> <a href="../spec/type.html#BasicType"><i>BasicType</i></a> <a href="#Declarators"><i>Declarators</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -227,7 +227,7 @@
     <a href="../spec/type.html#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="storage-classes" href="#storage-classes">Storage Classes</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="storage-classes" href="#storage-classes">ストレージクラス</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="StorageClasses"><span class="gname">StorageClasses</span></a>:
     <a href="#StorageClass"><i>StorageClass</i></a>
@@ -258,7 +258,7 @@
     <span class="d_inlinecode donthyphenate notranslate">ref</span>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="initializers" href="#initializers">Initializers</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="initializers" href="#initializers">初期化子</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Initializer"><span class="gname">Initializer</span></a>:
     <a href="#VoidInitializer"><i>VoidInitializer</i></a>
@@ -406,7 +406,7 @@ must be of the same type:
         That symbol name can be used anywhere that the aliased symbol may appear.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="alias-type" href="#alias-type">Type Aliases</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="alias-type" href="#alias-type">型のエイリアス</a></h3>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">alias</span> myint = abc.Foo.bar;
 </pre>
@@ -434,7 +434,7 @@ must be of the same type:
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="alias-symbol" href="#alias-symbol">Symbol Aliases</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="alias-symbol" href="#alias-symbol">シンボルのエイリアス</a></h3>
 <div class="blankline"></div>
     <p>A symbol can be declared as an <i>alias</i> of another symbol.
         For example:
@@ -484,7 +484,7 @@ t1.t v1;  <span class="d_comment">// v1 is type int
 <pre class="d_code notranslate"><span class="d_keyword">alias</span> strlen = string.strlen;
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="alias-overload" href="#alias-overload">Aliasing an Overload Set</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="alias-overload" href="#alias-overload">オーバーロード集合のエイリアス</a></h3>
 <div class="blankline"></div>
         <p>        Aliases can also <span class="d_inlinecode donthyphenate notranslate">import</span> a set of overloaded functions, that can
         be overloaded with functions in the current scope:
@@ -516,7 +516,7 @@ t1.t v1;  <span class="d_comment">// v1 is type int
 
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="alias-variable" href="#alias-variable">Aliasing Variables</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="alias-variable" href="#alias-variable">変数のエイリアス</a></h3>
 <div class="blankline"></div>
         <p>Aliases cannot be used for expressions:</p>
 <div class="blankline"></div>
@@ -538,7 +538,7 @@ t1.t v1;  <span class="d_comment">// v1 is type int
 
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="alias-function" href="#alias-function">Aliasing a Function Type</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="alias-function" href="#alias-function">変数タイプのエイリアス</a></h3>
 <div class="blankline"></div>
         <p>Function types can be aliased:</p>
 <pre class="d_code notranslate"><span class="d_keyword">alias</span> Fun = <span class="d_keyword">int</span>(string p);
@@ -934,7 +934,7 @@ ImmutableInt z;     <span class="d_comment">// typeof(z) == immutable(int)
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:57 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 15:49:33 2022
 </div>
     </div>
 </div>
