@@ -521,11 +521,11 @@ void main() { foo(); /* error, foo is disabled */ }
 
 $(H2 $(LNAME2 safe, $(D @safe), $(D @trusted), $(D @system) 属性))
 
-    $(P See $(DDSUBLINK function, function-safety, Function Safety).)
+    $(P See $(DDSUBLINK spec/function, function-safety, Function Safety).)
 
 $(H2 $(LNAME2 nogc, $(D @nogc) 属性))
 
-    $(P See $(DDSUBLINK function, nogc-functions, No-GC Functions).)
+    $(P See $(DDSUBLINK spec/function, nogc-functions, No-GC Functions).)
 
 $(H2 $(LNAME2 property, $(D @property) 属性))
 
@@ -549,30 +549,7 @@ $(H2 $(LNAME2 return, $(D return) 属性))
 
 $(H2 $(LNAME2 override, $(D override) 属性))
 
-        $(P The $(D override) attribute applies to virtual functions.
-        It means that the function must override a function with the
-        same name and parameters in a base class. The override attribute
-        is useful for catching errors when a base class's member function
-        gets its parameters changed, and all derived classes need to have
-        their overriding functions updated.
-        )
-
----------------
-class Foo
-{
-    int bar();
-    int abc(int x);
-}
-
-class Foo2 : Foo
-{
-    override
-    {
-        int bar(char c); // error, no bar(char) in Foo
-        int abc(int x);  // ok
-    }
-}
----------------
+    $(P See $(DDSUBLINK spec/function, virtual-functions, Virtual Functions).)
 
 $(H2 $(LNAME2 static, $(D static) 属性))
 
@@ -629,7 +606,7 @@ auto i = 6.8;   // declare i as a double
 ---
 
     $(P For functions, the `auto` attribute means return type inference.
-        See $(DDSUBLINK function, auto-functions, Auto Functions).
+        See $(DDSUBLINK spec/function, auto-functions, Auto Functions).
     )
 
 $(H2 $(LNAME2 scope, $(D scope) 属性))
@@ -788,6 +765,42 @@ pragma(msg, __traits(getAttributes, typeof(a))); // prints tuple("hello")
             attributes accumulate or override earlier ones is also up to how the user
             interprets them.
         )
+
+        $(P
+            If a UDA is attached to a template declaration, then it will be automatically
+            attached to all direct members of instances of that template. If any of those
+            members are templates themselves, this rule applies recursively:
+        )
+
+---
+@("foo") template Outer(T)
+{
+    struct S
+    {
+        int x;
+    }
+    int y;
+    void fun() {}
+    @("bar") template Inner(U)
+    {
+        int z;
+    }
+}
+
+pragma(msg, __traits(getAttributes, Outer!int.S));
+// prints tuple("foo")
+pragma(msg, __traits(getAttributes, Outer!int.S.x));
+// prints tuple()
+pragma(msg, __traits(getAttributes, Outer!int.y));
+// prints tuple("foo")
+pragma(msg, __traits(getAttributes, Outer!int.fun));
+// prints tuple("foo")
+pragma(msg, __traits(getAttributes, Outer!int.Inner));
+// prints tuple("foo", "bar")
+pragma(msg, __traits(getAttributes, Outer!int.Inner!int.z));
+// prints tuple("foo", "bar")
+---
+
         $(P
             UDAs cannot be attached to template parameters.
         )

@@ -57,7 +57,6 @@ $(GNAME NonEmptyStatementNoCaseNoDefault):
     $(GLINK SynchronizedStatement)
     $(GLINK TryStatement)
     $(GLINK ScopeGuardStatement)
-    $(GLINK ThrowStatement)
     $(GLINK AsmStatement)
     $(GLINK MixinStatement)
     $(GLINK ForeachRangeStatement)
@@ -385,12 +384,12 @@ $(GNAME Increment):
 
         $(P $(I Initialize) is executed.
         $(I Test) is evaluated and must have a type that
-        can be converted to a boolean. If it's true the
-        statement is executed. After the statement is executed,
-        the $(I Increment) is executed.
-        Then $(I Test) is evaluated again, and if true the
-        statement is executed again. This continues until the
-        $(I Test) evaluates to false.
+        can be converted to a boolean. If *Test* is `true` the
+        *ScopeStatement* is executed. After execution,
+        $(I Increment) is executed.
+        Then $(I Test) is evaluated again, and if `true` the
+        *ScopeStatement* is executed again. This continues until the
+        $(I Test) evaluates to `false`.
         )
 
         $(P A $(GLINK BreakStatement) will exit the loop.
@@ -400,7 +399,7 @@ $(GNAME Increment):
 
         $(P A $(I ForStatement) creates a new scope.
         If $(I Initialize) declares a variable, that variable's scope
-        extends through the end of the for statement. For example:
+        extends through *ScopeStatement*. For example:
         )
 
 --------------
@@ -418,7 +417,7 @@ for (int i = 0; i < 10; i++)
 }
 --------------
 
-$(P Function bodies cannot be empty:)
+$(P *ScopeStatement* cannot be an empty statement:)
 
 --------------
 for (int i = 0; i < 10; i++)
@@ -433,9 +432,9 @@ for (int i = 0; i < 10; i++)
 }
 --------------
 
-    $(P The $(I Initialize) may be omitted (although the trailing $(D ;) is still required).
-    $(I Test) may also be omitted, and if
-    so, it is treated as if it evaluated to true.)
+    $(P $(I Initialize) may be just $(D ;).
+    $(I Test) may be omitted, and if
+    so, it is treated as if it evaluated to `true`.)
 
     $(BEST_PRACTICE Consider replacing $(I ForStatements) with
     $(DDSUBLINK spec/statement, foreach-statement, Foreach Statements) or
@@ -445,7 +444,7 @@ for (int i = 0; i < 10; i++)
 
 $(H2 $(LEGACY_LNAME2 ForeachStatement, foreach-statement, Foreach 文))
 
-$(P A `foreach` statement loops over the contents of an aggregate.)
+$(P A `foreach` statement iterates a series of values.)
 
 $(GRAMMAR
 $(GNAME AggregateForeach):
@@ -483,26 +482,48 @@ $(GNAME ForeachAggregate):
 
 $(P
         $(I ForeachAggregate) is evaluated. It must evaluate to an expression
-        of type static array, dynamic array, associative array,
+        which is a static array, dynamic array, associative array,
         struct, class, delegate, or sequence.
         The *NoScopeNonEmptyStatement* is executed, once for each element of the
         aggregate.
-        At the start of each iteration, the variables declared by
-        the $(I ForeachTypeList)
-        are set to be a copy of the elements of the aggregate.
-        If the $(I ForeachTypeAttribute) is $(D ref), it is a reference to the
-        contents of that aggregate.
-        If the $(I ForeachTypeAttribute) is $(D scope), the $(I ForeachType) declaration
-        will have $(D scope) semantics.
 )
 $(P
-        The aggregate must be loop invariant, meaning that
-        elements to the aggregate cannot be added or removed from it
+        The number of variables declared in $(I ForeachTypeList)
+        depends on the kind of aggregate. The declared variables are
+        set at the start of each iteration.
+)
+$(UL
+        $(LI By default a single declared variable is a copy of the current element.)
+        $(LI If the $(I ForeachTypeAttribute) is $(D ref), that variable will
+        be a reference to the current element of the aggregate.)
+        $(LI If the $(I ForeachTypeAttribute) is $(D scope), the variable
+        will have $(DDSUBLINK spec/function, scope-parameters, `scope`) semantics.)
+)
+$(P
+        If not specified, the type of a $(I ForeachType) variable
+        can be inferred from the type of the $(I ForeachAggregate).
+        Note that `auto` is not a valid $(I ForeachTypeAttribute).
+        The two `foreach` statements below are equivalent:
+)
+$(SPEC_RUNNABLE_EXAMPLE_RUN
+--------------
+int[] arr = [1, 2, 3];
+
+foreach (int n; arr)
+    writeln(n);
+
+foreach (n; arr) // ok, n is an int
+    writeln(n);
+--------------
+)
+$(P
+        The aggregate must be $(RELATIVE_LINK2 foreach_restrictions, loop invariant),
+        meaning that elements cannot be added or removed from it
         in the *NoScopeNonEmptyStatement*.
 )
 
         $(P A $(GLINK BreakStatement) in the body of the foreach will exit the
-        foreach, a $(GLINK ContinueStatement) will immediately start the
+        loop. A $(GLINK ContinueStatement) will immediately start the
         next iteration.
         )
 
@@ -511,56 +532,48 @@ $(H3 $(LNAME2 foreach_over_arrays, 配列に対する foreach))
 $(P
         If the aggregate is a static or dynamic array, there
         can be one or two variables declared. If one, then the variable
-        is said to be the $(I value) set to the elements of the array,
-        one by one. The type of the
-        variable must match the type of the array contents, except for the
-        special cases outlined below.
+        is said to be the $(I value), which is set successively to each
+        element of the array. The type of the variable, if specified,
+        must be compatible with the array element type (except for the
+        special handling of character elements outlined below).
+        The *value* variable can modify array elements when
+        $(RELATIVE_LINK2 foreach_ref_parameters, declared with `ref`).
+)
+$(P
         If there are
         two variables declared, the first is said to be the $(I index)
-        and the second is said to be the $(I value). The $(I index)
-        must be of type `size_t` for dynamic arrays. Static arrays may use
-        any integral type that spans the length of the array.
-        $(I index) cannot be `ref`.
-        It is set to be the index of the array element.
+        and the second is said to be the $(I value) as above.
+        $(I index) cannot be declared with `ref`.
+        It is set to the index of the array element on each iteration.
+        The index type can be inferred:
 )
 $(SPEC_RUNNABLE_EXAMPLE_RUN
 --------------
 char[] a = ['h', 'i'];
 
-foreach (size_t i, char c; a)
+foreach (i, char c; a)
 {
     writefln("a[%d] = '%c'", i, c);
 }
 --------------
 )
+        $(P For a dynamic array, the $(I index) type must be compatible
+        with `size_t`.
+        Static arrays may use any integral type that spans the length
+        of the array.)
 
         $(P For $(D foreach), the
         elements for the array are iterated over starting at index 0
-        and continuing to the maximum of the array.
+        and continuing to the last element of the array.
         For $(D foreach_reverse), the array elements are visited in the reverse
         order.
         )
 
-        $(P $(B Note:) The $(I ForeachTypeAttribute) is implicit, and when a
-        type is not specified, it is inferred. In that case, $(D auto) is
-        implied, and it is not necessary (and actually forbidden) to use it.
-        )
-
---------------
-int[] arr;
-...
-foreach (n; arr) // ok, n is an int
-    writeln(n);
-
-foreach (auto n; arr) // error, auto is redundant
-    writeln(n);
---------------
-
 $(H3 $(LNAME2 foreach_over_arrays_of_characters, 文字配列に対する foreach))
 
         $(P If the aggregate expression is a static or dynamic array of
-        $(D char)s, $(D wchar)s, or $(D dchar)s, then the $(I Type) of
-        the $(I value)
+        $(D char)s, $(D wchar)s, or $(D dchar)s, then the type of
+        the $(I value) variable
         can be any of $(D char), $(D wchar), or $(D dchar).
         In this manner any UTF array
         can be decoded into any UTF type:
@@ -585,7 +598,7 @@ foreach (char c; b)
 )
 
         $(P Aggregates can be string literals, which can be accessed
-        as char, wchar, or dchar arrays:
+        as `char`, `wchar`, or `dchar` arrays:
         )
 
     $(SPEC_RUNNABLE_EXAMPLE_RUN
@@ -616,26 +629,44 @@ $(H3 $(LNAME2 foreach_over_associative_arrays, 連想配列に対する foreach)
         $(P If the aggregate expression is an associative array, there
         can be one or two variables declared. If one, then the variable
         is said to be the $(I value) set to the elements of the array,
-        one by one. The type of the
-        variable must match the type of the array contents. If there are
+        one by one. If the type of the
+        variable is provided, it must implicitly convert from the array element type.)
+
+$(SPEC_RUNNABLE_EXAMPLE_RUN
+--------------
+// value type is int
+int[string] userAges = ["john":30, "sue":32];
+
+foreach (ref age; userAges)
+{
+    age++;
+}
+assert(userAges == ["john":31, "sue":33]);
+--------------
+)
+
+        $(P If there are
         two variables declared, the first is said to be the $(I index)
         and the second is said to be the $(I value). The $(I index)
-        must be of the same type as the indexing type of the associative
+        must be compatible with the indexing type of the associative
         array. It cannot be `ref`,
-        and it is set to be the index of the array element.
-        The order in which the elements of the array are iterated over is unspecified
-        for $(D foreach). $(D foreach_reverse) for associative arrays
-        is illegal.
-        )
+        and it is set to be the index of the array element.)
 
+$(SPEC_RUNNABLE_EXAMPLE_RUN
 --------------
-double[string] a; // index type is string, value type is double
-...
-foreach (string s, double d; a)
+// index type is string, value type is double
+double[string] aa = ["pi":3.14, "e":2.72];
+
+foreach (string s, double d; aa)
 {
-    writefln("a['%s'] = %g", s, d);
+    writefln("aa['%s'] = %g", s, d);
 }
 --------------
+)
+
+        $(P The order in which the elements of the
+        array are iterated over is unspecified for $(D foreach).
+        This is why $(D foreach_reverse) for associative arrays is illegal.)
 
 $(H3 $(LNAME2 foreach_over_struct_and_classes, opApply を使った構造体、クラス 配列に対する foreach))
 
@@ -644,7 +675,7 @@ $(H3 $(LNAME2 foreach_over_struct_and_classes, opApply を使った構造体、�
         special $(LEGACY_LNAME2 opApply, op-apply, $(D opApply)) member function, and the
         `foreach_reverse` behavior is defined by the special
         $(LEGACY_LNAME2 opApplyReverse, op-apply-reverse, $(D opApplyReverse)) member function.
-        These functions have the type:
+        These functions have the signatures:
     )
 
         --------------
@@ -653,21 +684,27 @@ $(H3 $(LNAME2 foreach_over_struct_and_classes, opApply を使った構造体、�
         int opApplyReverse(scope int delegate(ref Type [, ...]) dg);
         --------------
 
-    $(P where $(I Type) matches the $(I Type) used in the $(I ForeachType)
-        declaration of $(I Identifier). Multiple $(I ForeachType)s
-        correspond with multiple $(I Type)s in the delegate type
-        passed to $(D opApply) or $(D opApplyReverse).
-        There can be multiple $(D opApply) and $(D opApplyReverse) functions,
+    $(P where $(I Type) determines the type of the first $(GLINK ForeachType)
+        declared. Multiple $(I ForeachType)s are supported.
+        Each one must match a parameter of the delegate *dg*,
+        otherwise the *ForeachStatement* will cause an error.)
+
+    $(P There can be multiple $(D opApply) and $(D opApplyReverse) functions -
         one is selected
-        by matching the type of $(I dg) to the $(I ForeachType)s
-        of the $(I ForeachStatement).
-        The body of the apply
-        function iterates over the elements it aggregates, passing them
-        each to the $(I dg) function. If the $(I dg) returns 0, then
-        apply goes on to the next element.
-        If the $(I dg) returns a nonzero value, apply must cease
-        iterating and return that value. Otherwise, after done iterating
-        across all the elements, apply will return 0.
+        by matching each parameter type of *dg* to the type of each $(I ForeachType)
+        declared in the $(I ForeachStatement).)
+
+    $(P The body of the apply
+        function iterates over the elements it aggregates, passing each one
+        in successive calls to the $(I dg) delegate. The delegate return value
+        determines whether to interrupt iteration:)
+
+    $(UL
+        $(LI If the result is nonzero, apply must cease
+        iterating and return that value.)
+        $(LI If the result is 0, then iteration should continue.
+        If there are no more elements to iterate,
+        apply must return 0.)
     )
 
     $(P For example, consider a class that is a container for two elements:)
@@ -680,25 +717,22 @@ $(H3 $(LNAME2 foreach_over_struct_and_classes, opApply を使った構造体、�
 
             int opApply(scope int delegate(ref uint) dg)
             {
-                int result = 0;
-
                 foreach (e; array)
                 {
-                    result = dg(e);
+                    int result = dg(e);
                     if (result)
-                        break;
+                        return result;
                 }
-                return result;
+                return 0;
             }
         }
 
         void main()
         {
             import std.stdio;
-            Foo a = new Foo();
 
-            a.array[0] = 73;
-            a.array[1] = 82;
+            Foo a = new Foo();
+            a.array = [73, 82];
 
             foreach (uint u; a)
             {
@@ -714,33 +748,44 @@ $(CONSOLE
 73
 82
 )
-    $(P The `scope` storage class on the $(I dg) parameter means that the parameter's value does
-    not escape the scope of the $(I opApply) function (an example would be assigning $(I dg) to a
-    global). If it cannot be statically guaranteed that $(I dg) does not escape, a closure may
+    $(P The `scope` storage class on the $(I dg) parameter means that the delegate does
+    not escape the scope of the $(D opApply) function (an example would be assigning $(I dg) to a
+    global variable). If it cannot be statically guaranteed that $(I dg) does not escape, a closure may
     be allocated for it on the heap instead of the stack.
-    Best practice is to annotate delegate parameters with `scope` when possible.
     )
 
-    $(P $(LEGACY_LNAME2 opApply, op-apply, $(I opApply)) can also be a templated function,
+    $(BEST_PRACTICE Annotate delegate parameters to `opApply` functions with `scope` when possible.)
+
+    $(P $(B Important:) If $(D opApply) catches any exceptions, ensure that those
+        exceptions did not originate from the delegate passed to $(D opApply). The user would expect
+        exceptions thrown from a `foreach` body to both terminate the loop, and propagate outside
+        the `foreach` body.
+     )
+
+$(H4 $(LNAME2 template-op-apply, Template `opApply`))
+
+    $(P $(D opApply) can also be a templated function,
         which will infer the types of parameters based on the $(I ForeachStatement).
-    )
+        For example:)
 
-    $(P For example:)
-
+        $(SPEC_RUNNABLE_EXAMPLE_RUN
         --------------
         struct S
         {
             import std.traits : ParameterTypeTuple;  // introspection template
+            import std.stdio;
 
             int opApply(Dg)(scope Dg dg)
             if (ParameterTypeTuple!Dg.length == 2) // foreach with 2 parameters
             {
+                writeln(2);
                 return 0;
             }
 
             int opApply(Dg)(scope Dg dg)
-            if (ParameterTypeTuple!Dg.length == 3) // foreach with takes 3 parameters
+            if (ParameterTypeTuple!Dg.length == 3) // foreach with 3 parameters
             {
+                writeln(3);
                 return 0;
             }
         }
@@ -751,18 +796,13 @@ $(CONSOLE
             foreach (int a, int b, float c; S()) { }  // calls second opApply function
         }
         --------------
-
-    $(P It is important to make sure that, if $(D opApply) catches any exceptions, that those
-        exceptions did not originate from the delegate passed to $(I opApply). The user would expect
-        exceptions thrown from a `foreach` body to both terminate the loop, and propagate outside
-        the `foreach` body.
-     )
+        )
 
 $(H3 $(LEGACY_LNAME2 foreach_with_ranges, foreach-with-ranges, Range を使った構造体、クラス 配列に対する foreach))
 
     $(P If the aggregate expression is a struct or class object, but the
-        $(D opApply) for $(D foreach), or $(D opApplyReverse) $(D foreach_reverse) do not exist,
-        then iteration over struct and class objects can be done with range primitives.
+        $(D opApply) for $(D foreach), or $(D opApplyReverse) for $(D foreach_reverse) do not exist,
+        then iteration can be done with $(LINK2 $(ROOT_DIR)phobos/std_range.html, range) primitives.
         For $(D foreach), this means the following properties and methods must
         be defined:
     )
@@ -827,58 +867,105 @@ $(H3 $(LEGACY_LNAME2 foreach_with_ranges, foreach-with-ranges, Range を使っ�
         }
         ---
 
+    $(P Example with a linked list:)
+
+$(SPEC_RUNNABLE_EXAMPLE_RUN
+---
+struct Node
+{
+    int i;
+    Node* next;
+}
+
+// range
+struct List
+{
+    Node* node;
+
+    bool empty() { return node == null; }
+
+    ref int front() { return node.i; }
+
+    void popFront() { node = node.next; }
+}
+
+void main()
+{
+    import std.stdio;
+    auto l = new Node(1, new Node(2, null));
+    auto r = List(l);
+
+    foreach (e; r)
+    {
+        writeln(e);
+    }
+}
+---
+)
+
+$(H4 $(LNAME2 front-seq, Multiple Element Values))
+
     $(P Multiple loop variables are allowed if the `front` property returns a type that
         expands to an $(DDSUBLINK spec/template, variadic-templates, expression sequence)
         whose size matches the number of variables. Each variable is assigned
-        to the corresponding value in the tuple.
+        to the corresponding value in the sequence.
     )
 
+        $(SPEC_RUNNABLE_EXAMPLE_RUN
         ---
-        // Common tuple implementation that can decay into its members
-        import std.typecons : Tuple;
+        struct Tuple(Types...) // takes a TypeSeq
+        {
+            Types items; // ValueSeq
+            alias items this; // decay to a value sequence
+        }
 
-        // Range whose elements are tuples
+        // Infinite range whose element is a fixed tuple
         struct TupleRange
         {
-            Tuple!(char, bool, int) front()
-            {
-                return typeof(return)('a', true, 2);
-            }
+            enum front = Tuple!(char, bool, int)('a', true, 2);
 
-            bool empty() { return false; }
+            enum bool empty = false;
 
             void popFront() {}
         }
 
         void main()
         {
+            // Tuple destructuring
             foreach (a, b, c; TupleRange())
             {
                 assert(a == 'a');
                 assert(b == true);
                 assert(c == 2);
+                break;
             }
-
-            // Expected 3 arguments, not 1
-            // foreach (a; TupleRange()) { ... }
+            // Tuple variable
+            foreach (tup; TupleRange())
+            {
+                assert(tup[0] == 'a');
+                assert(tup == TupleRange.front);
+                break;
+            }
         }
         ---
+        )
+        $(P See also: $(REF Tuple, std,typecons).)
 
 $(H3 $(LNAME2 foreach_over_delegates, デリゲートに対する foreach))
 
         $(P If $(I ForeachAggregate) is a delegate, the type signature of
-        the delegate is of the same as for $(D opApply). This enables
+        the delegate is of the same as for
+        $(RELATIVE_LINK2 foreach_over_struct_and_classes, opApply). This enables
         many different named looping strategies to coexist in the same
         class or struct.)
 
-        $(P For example:)
+        $(P The delegate can generate the elements on the fly:)
 
---------------
-void main()
-{
+$(SPEC_RUNNABLE_EXAMPLE_RUN
+    --------------
     // Custom loop implementation, that iterates over powers of 2 with
-    // alternating sign. The loop body is passed in dg.
-    int myLoop(int delegate(ref int) dg)
+    // alternating sign. The foreach loop body is passed in dg.
+    int myLoop(int delegate(int) dg)
     {
         for (int z = 1; z < 128; z *= -2)
         {
@@ -891,15 +978,15 @@ void main()
         return 0;
     }
 
-    // This example loop simply collects the loop index values into an array.
+    // Append each value in the iteration to an array
     int[] result;
-    foreach (ref x; &myLoop)
+    foreach (x; &myLoop)
     {
         result ~= x;
     }
     assert(result == [1, -2, 4, -8, 16, -32, 64, -128]);
-}
---------------
+    --------------
+)
 
         $(P $(B Note:) When $(I ForeachAggregate) is a delegate, the compiler
         does not try to implement reverse traversal of the results returned by
@@ -910,20 +997,28 @@ void main()
 $(H3 $(LNAME2 foreach_over_tuples, シーケンスに対する foreach))
 
 $(P
-        If the aggregate expression is a sequence, there
+        If the aggregate expression is a
+        $(DDSUBLINK spec/template, variadic-templates, sequence),
+        the loop body is statically expanded once for each element. This is
+        the same as $(DDSUBLINK spec/version, staticforeach, Static Foreach)
+        on a sequence.
+)
+        $(P There
         can be one or two iteration symbols declared. If one, then the symbol
         is an $(I element alias) of each element in the sequence in turn.
-)$(P
-        If the sequence is a $(I TypeSeq), then the foreach statement
-        is executed once for each type, and the element alias is set to each
-        type.
-)$(P
-        When the sequence is a $(I ValueSeq), the element alias is a variable
-        and is set to each value in the sequence. If the type of the
-        variable is given, it must match the type of the sequence contents.
-        If no type is given, the type of the variable is set to the type
-        of the sequence element, which may change from iteration to iteration.
-)$(P
+)
+$(UL
+$(LI
+        If the sequence is a $(I TypeSeq), the element alias is set to each
+        type in turn.
+)$(LI
+        If the sequence is a $(I ValueSeq), the element alias
+        is set to each value in turn. If the type of the element alias
+        is given, it must be compatible with the type of every sequence element.
+        If no type is given, the type of the element alias will match the type
+        of each sequence element, which may change between elements.
+))
+$(P
         If there are
         two symbols declared, the first is the $(I index variable)
         and the second is the $(I element alias). The index
@@ -941,9 +1036,9 @@ void main()
 {
     alias Seq = AliasSeq!(int, "literal", main);
 
-    foreach (sym; Seq)
+    foreach (int i, sym; Seq)
     {
-        pragma(msg, sym.stringof);
+        pragma(msg, i, ": ", sym.stringof);
     }
 }
 -----
@@ -951,16 +1046,38 @@ void main()
         $(P Output:)
 
 $(CONSOLE
-int
-"literal"
-main()
+0: int
+1: "literal"
+2: main()
 )
 
-        $(P See also: $(DDSUBLINK spec/version, staticforeach, Static Foreach).)
+        $(P Example:)
+
+$(SPEC_RUNNABLE_EXAMPLE_COMPILE
+    -----
+    import std.meta : AliasSeq;
+
+    alias values = AliasSeq!(7.4, "hi", [2,5]);
+
+    foreach (sym; values)
+    {
+        pragma(msg, sym, " has type ", typeof(sym));
+    }
+    -----
+)
+
+        $(P Output:)
+
+$(CONSOLE
+7.4 has type double
+hi has type string
+[2, 5] has type int[]
+)
 
 $(H3 $(LNAME2 foreach_ref_parameters, Ref 引数の Foreach))
 
-        $(P $(D ref) can be used to update the original elements:
+        $(P $(D ref) can be used to update the original elements for some
+        kinds of container. Arrays support this:
         )
 
     $(SPEC_RUNNABLE_EXAMPLE_RUN
@@ -984,31 +1101,52 @@ $(CONSOLE
 8
 9
 )
-        $(P $(D ref) can not be applied to the index values.)
-
-        $(P If not specified, the $(I Type)s in the $(I ForeachType) can be
-        inferred from
-        the type of the $(I ForeachAggregate).
-        )
+        $(P $(D ref) cannot be applied to an array index variable.)
 
 $(H3 $(LNAME2 foreach_restrictions, Foreach の制限))
 
         $(P The aggregate itself must not be resized, reallocated, free'd,
         reassigned or destructed
-        while the foreach is iterating over the elements.
+        while `foreach` is iterating over the elements.
         )
 
 --------------
-int[] a;
-int[] b;
-foreach (int i; a)
+int[] a = [1, 2, 3];
+auto fun = { a ~= 4; };
+
+foreach (int v; a)
 {
-    a = null;       // error
-    a.length += 10; // error
-    a = b;          // error
+    // resizing is unspecified!
+    fun();
+    a ~= 4;
+    a.length += 10;
+
+    // reallocating is unspecified!
+    a.reserve(10);
+
+    // reassigning is unspecified!
+    a = null;
+    a = [5, 6];
 }
-a = null;         // ok
+a ~= 4;   // OK
+a = null; // OK
 --------------
+---
+auto aa = [1: 1, 2: 2];
+
+foreach (v; aa)
+{
+    aa[3] = 3; // unspecified resize
+    aa.rehash; // unspecified reallocation
+    aa = [4: 4]; // unspecified reassign
+}
+aa[3] = 3; // OK
+aa = null; // OK
+---
+
+        $(NOTE Resizing or reassigning a dynamic or associative array during
+        `foreach` is still `@safe`.
+        )
 
 $(H3 $(LEGACY_LNAME2 ForeachRangeStatement, foreach-range-statement, Foreach Range 文))
 
@@ -1030,11 +1168,13 @@ $(GNAME ForeachRangeStatement):
 
         $(P
         $(I ForeachType) declares a variable with either an explicit type,
-        or a type inferred from $(I LwrExpression) and $(I UprExpression).
+        or a common type inferred from $(I LwrExpression) and $(I UprExpression).
         The $(I ScopeStatement) is then executed $(I n) times, where $(I n)
-        is the result of $(I UprExpression) - $(I LwrExpression).
+        is the result of $(I UprExpression) `-` $(I LwrExpression).
         If $(I UprExpression) is less than or equal to $(I LwrExpression),
-        the $(I ScopeStatement) is executed zero times.
+        the $(I ScopeStatement) is not executed.)
+
+        $(P
         If $(I Foreach) is $(D foreach), then the variable is set to
         $(I LwrExpression), then incremented at the end of each iteration.
         If $(I Foreach) is $(D foreach_reverse), then the variable is set to
@@ -1110,36 +1250,34 @@ $(GNAME StatementNoCaseNoDefault):
 )
 
         $(P $(I Expression) is evaluated.
-        If the type of the $(I Expression) is `enum`,
-        it is repeatedly converted
-        to its $(GLINK2 enum, EnumBaseType) until it isn't. Then,
-        if the type is integral,
-        the $(I Expression) undergoes $(DDSUBLINK spec/type, integer-promotions, Integer Promotions).
-        Then, the type of the $(I Expression) must be either integral or
+        If the type of $(I Expression) is an `enum`, it is
+        (recursively) converted to its $(GLINK2 enum, EnumBaseType).
+        Then, if the type is an integral, $(I Expression) undergoes
+        $(DDSUBLINK spec/type, integer-promotions, Integer Promotions).
+        Then, the type of $(I Expression) must be either an integral or
         a static or dynamic array of $(CODE char), $(CODE wchar), or $(CODE dchar).
         )
 
-        $(P The result is
+        $(P The resulting value is
         compared against each of the case expressions. If there is
         a match, the corresponding case statement is transferred to.
         )
 
-        $(P The case expressions, $(GLINK2 expression, ArgumentList),
-        are a comma separated list of expressions.
-        )
+        $(P The case expressions in $(I ArgumentList)
+        are a comma separated list of expressions.)
+
+        ---
+        case 1, 2, 3:
+        ---
 
         $(P A $(I CaseRangeStatement) is a shorthand for listing a series
-        of case statements from $(I FirstExp) to $(I LastExp).
-        )
+        of case statements from $(I FirstExp) to $(I LastExp), inclusive.)
 
+        ---
+        case 1: .. case 3:
+        ---
 
-        $(P If none of the case expressions match, and there is a default
-        statement, the default statement is transferred to.
-        )
-
-
-        $(P A switch statement must have a default statement.)
-
+        $(P The two examples above are equivalent.)
 
         $(P The case expressions must all evaluate to a constant value or array,
         or a runtime initialized const or immutable variable of integral type.
@@ -1148,10 +1286,16 @@ $(GNAME StatementNoCaseNoDefault):
 
         $(P Case expressions must all evaluate to distinct values. Const or
         immutable variables must all have different names. If they share a
-        value, the first case statement with that value gets control. There must
-        be exactly one default statement.)
+        value, the first case statement with that value gets control.)
 
         $(P The $(GLINK ScopeStatementList) introduces a new scope.
+        )
+
+        $(P A matching `break` statement will exit the switch $(I BlockStatement).)
+
+        $(P A switch statement must have exactly one *DefaultStatement*.
+        If none of the case expressions match, control is transferred
+        to the default statement.
         )
 
         $(P Case statements and default statements associated with the switch
@@ -1166,53 +1310,70 @@ switch (i)
     {
         case 2:
     }
+    i++;
     break;
+    default:
 }
 --------------
 
+$(H3 $(LNAME2 no-implicit-fallthrough, No Implicit Fall-Through))
 
 
         $(P A $(GLINK ScopeStatementList) must either be empty, or be ended with
         a $(GLINK ContinueStatement), $(GLINK BreakStatement),
-        $(GLINK ReturnStatement), $(GLINK GotoStatement), $(GLINK ThrowStatement)
-        or assert(0) expression unless this is the last case. This is to
-        set apart with C's error-prone implicit fall-through behavior.
-        $(D goto case;) could be used for explicit fall-through:
-        )
+        $(GLINK ReturnStatement), $(GLINK GotoStatement), $(GLINK2 expression, ThrowExpression)
+        or `assert(0)` expression unless this is the last case. This is to
+        set apart with C's error-prone implicit fall-through behavior.)
 
 --------------
-int number;
-string message;
-switch (number)
+switch (i)
 {
-    default:    // valid: ends with 'throw'
-        throw new Exception("unknown number");
-
-    case 3:     // valid: ends with 'break' (break out of the 'switch' only)
-        message ~= "three ";
-        break;
-
-    case 4:     // valid: ends with 'continue' (continue the enclosing loop)
-        message ~= "four ";
-        continue;
-
-    case 5:     // valid: ends with 'goto' (explicit fall-through to next case.)
-        message ~= "five ";
-        goto case;
-
-    case 6:     // ERROR: implicit fall-through
-        message ~= "six ";
-
-    case 1:     // valid: the body is empty
-    case 2:     // valid: this is the last case in the switch statement.
-        message = "one or two";
+    case 1:
+        message ~= "one";
+        // ERROR: implicit fall-through
+    case 2:
+        // valid: the body is empty
+    default:
+        message ~= "unknown";
 }
 --------------
 
-        $(P A break statement will exit the switch $(I BlockStatement).)
+        $(P $(D goto case;) can be used for explicit fall-through:)
 
+$(SPEC_RUNNABLE_EXAMPLE_RUN
+--------------
+string message;
+foreach (i; 1..5)
+{
+    switch (i)
+    {
+        default:    // valid: ends with 'throw'
+            throw new Exception("unknown number");
 
-        $(P $(LNAME2 string-switch, Strings can be used in switch expressions).
+        case 3:     // valid: ends with 'break' (break out of the 'switch' only)
+            message ~= "three";
+            break;
+
+        case 4:     // valid: ends with 'continue' (continue the enclosing loop)
+            message ~= "four";
+            continue; // don't append a comma
+
+        case 1:     // valid: ends with 'goto' (explicit fall-through to next case.)
+            message ~= ">";
+            goto case;
+
+        case 2:     // valid: this is the last case in the switch statement.
+            message ~= "one or two";
+    }
+    message ~= ", ";
+}
+writeln(message);
+--------------
+)
+
+$(H3 $(LNAME2 string-switch, String Switch))
+
+        $(P Strings can be used in switch expressions.
         For example:
         )
 
@@ -1732,27 +1893,6 @@ done
         $(P A $(I FinallyStatement) may not contain any $(I Catches).
         This restriction may be relaxed in future versions.
         )
-
-$(H2 $(LEGACY_LNAME2 ThrowStatement, throw-statement, Throw 文))
-
-$(P Throws an exception.)
-
-$(GRAMMAR
-$(GNAME ThrowStatement):
-    $(D throw) $(EXPRESSION) $(D ;)
-)
-
-$(P *Expression* is evaluated and must be  a `Throwable` reference. The
-`Throwable` reference is thrown as an exception.)
-
----
-throw new Exception("message");
----
-
-$(BEST_PRACTICE Use $(DDSUBLINK spec/expression, assert_expressions, Assert Expressions)
-rather than $(LINK2 $(ROOT_DIR)library/object#.Error, Error) to report program bugs
-and abort the program.
-)
 
 $(H2 $(LEGACY_LNAME2 ScopeGuardStatement, scope-guard-statement, Scope ガード文))
 
