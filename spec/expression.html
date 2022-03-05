@@ -189,16 +189,19 @@
         <li><a href="#delete_expressions">Delete 式</a></li>
         <li><a href="#cast_expressions">キャスト式</a></li>
     </ol></li>
-    <li><a href="#pow_expressions">Pow 式</a></li>
+    <li><a href="#throw_expression">Throw 式</a></li>
+    <li><a href="#pow_expressions">Pow Expressions</a></li>
     <li><a href="#postfix_expressions">後置演算式</a></li>
     <li><a href="#index_expressions">Index 式</a></li>
-    <li><a href="#slice_expressions">Slice 式</a></li>
+    <li><a href="#slice_expressions">Slice 式</a><ol>        <li><a href="#slice_to_static_array">Slice Conversion to Static Array</a></li>
+    </ol></li>
     <li><a href="#primary_expressions">一次式</a><ol>        <li><a href="#identifier">ドット(.)付き識別子</a></li>
         <li><a href="#this">this</a></li>
         <li><a href="#super">super</a></li>
         <li><a href="#null">null</a></li>
         <li><a href="#string_literals">文字列リテラル</a></li>
         <li><a href="#array_literals">配列リテラル</a></li>
+        <li><a href="#cast_array_literal">Casting</a></li>
         <li><a href="#associative_array_literals">連想配列リテラル</a></li>
         <li><a href="#function_literals">関数リテラル</a></li>
         <li><a href="#uniform_construction_syntax">スカラー型の統一された構築構文</a></li>
@@ -909,25 +912,36 @@ C c;
     <a href="#ShiftExpression"><i>ShiftExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">! in</span> <a href="#ShiftExpression"><i>ShiftExpression</i></a>
 </pre>
 <div class="blankline"></div>
-<p>An associative array can be tested to see if an element is in the array:</p>
+<p>A container such as an associative array
+    <a href="../spec/hash-map.html#testing_membership">can be tested</a> to see if it contains a certain key:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">int</span> foo[string];
 ...
 <span class="d_keyword">if</span> (<span class="d_string">"hello"</span> <span class="d_keyword">in</span> foo)
-    ...
+{
+    <span class="d_comment">// the string was found
+</span>}
 </pre>
 <div class="blankline"></div>
-    <p>The <span class="d_inlinecode donthyphenate notranslate">in</span> expression has the same precedence as the
-        relational expressions <span class="d_inlinecode donthyphenate notranslate">&lt;</span>, <span class="d_inlinecode donthyphenate notranslate">&lt;</span><span class="d_inlinecode donthyphenate notranslate">=</span>,
-        etc.
-        The return value of the <i>InExpression</i> is <span class="d_inlinecode donthyphenate notranslate">null</span>
-        if the element is not in the array;
-        if it is in the array it is a pointer to the element.
+    <p>The result of an <i>InExpression</i> is a pointer for associative
+        arrays.
+        The pointer is <span class="d_inlinecode donthyphenate notranslate">null</span> if the container has no matching key.
+        If there is a match, the pointer points to a value associated
+        with the key.
     </p>
 <div class="blankline"></div>
     <p>The <span class="d_inlinecode donthyphenate notranslate">!in</span> expression is the logical negation of the <span class="d_inlinecode donthyphenate notranslate">in</span>
         operation.
     </p>
+<div class="blankline"></div>
+    <p>The <span class="d_inlinecode donthyphenate notranslate">in</span> expression has the same precedence as the
+        relational expressions <span class="d_inlinecode donthyphenate notranslate">&lt;</span>, <span class="d_inlinecode donthyphenate notranslate">&lt;</span><span class="d_inlinecode donthyphenate notranslate">=</span>, etc.</p>
+<div class="blankline"></div>
+    <div class="spec-boxes note"><b>Note:</b> When <a href="../spec/operatoroverloading.html#binary">overloading</a>
+        <span class="d_inlinecode donthyphenate notranslate">in</span>, normally only <em class="tt">opBinaryRight</em> would be defined. This is
+        because the operation is usually not defined by the key type but by
+        the container, which appears on the right hand side of the <span class="d_inlinecode donthyphenate notranslate">in</span>
+        operator.</div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="shift_expressions" href="#shift_expressions">Shift 式</a></h2>
 <div class="blankline"></div>
@@ -995,6 +1009,20 @@ C c;
         the size of the type pointed to by the first operand.
     </p>
 <div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[] a = [1,2,3];
+<span class="d_keyword">int</span>* p = a.ptr;
+<span class="d_keyword">assert</span>(*p == 1);
+
+*(p + 2) = 4; <span class="d_comment">// same as `p[2] = 4`
+</span><span class="d_keyword">assert</span>(a[2] == 4);
+</pre>
+
+</div>
+<div class="blankline"></div>
+    <p><a href="#IndexExpression"><i>IndexExpression</i></a> can also be used with a pointer and has
+    the same behaviour as adding an integer.</p>
+<div class="blankline"></div>
     <p>If the second operand is a pointer, and the first is an integral type,
         and the operator is <span class="d_inlinecode donthyphenate notranslate">+</span>,
         the operands are reversed and the pointer arithmetic just described
@@ -1013,7 +1041,13 @@ C c;
         The type of the result is <span class="d_inlinecode donthyphenate notranslate">ptrdiff_t</span>.
     </p>
 <div class="blankline"></div>
-    <p><a href="#IndexExpression"><i>IndexExpression</i></a> can also be used with a pointer.</p>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[] a = [1,2,3];
+ptrdiff_t d = &amp;a[2] - a.ptr;
+<span class="d_keyword">assert</span>(d == 2);
+</pre>
+
+</div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="cat_expressions" href="#cat_expressions">Cat 式</a></h2>
 <div class="blankline"></div>
@@ -1021,13 +1055,12 @@ C c;
     <a href="#AddExpression"><i>AddExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">~</span> <a href="#MulExpression"><i>MulExpression</i></a>
 </pre>
 <div class="blankline"></div>
-    <p>A <i>CatExpression</i> concatenates arrays, producing
-        a dynamic array with the result. The arrays must be
-        arrays of the same element type. If one operand is an array
-        and the other is of that array's element type, that element
-        is converted to an array of length 1 of that element,
-        and then the concatenation is performed.
-    </p>
+    <p>A <i>CatExpression</i> concatenates a container's data with other data, producing
+        a new container.</p>
+<div class="blankline"></div>
+    <p>For a dynamic array, the other operand must either be another array or a
+        single value that implicitly converts to the element type of the array.
+        See <a href="../spec/arrays.html#array-concatenation">Array Concatenation</a>.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="mul_expressions" href="#mul_expressions">Mul 式</a></h2>
 <div class="blankline"></div>
@@ -1095,11 +1128,12 @@ C c;
     <a href="#ComplementExpression"><i>ComplementExpression</i></a>
     <a href="#DeleteExpression"><i>DeleteExpression</i></a>
     <a href="#CastExpression"><i>CastExpression</i></a>
+    <a href="#ThrowExpression"><i>ThrowExpression</i></a>
     <a href="#PowExpression"><i>PowExpression</i></a>
 </pre>
 <div class="blankline"></div>
 <table>    <tr><th class="donthyphenate"><b>Operator</b></th><th class="donthyphenate"><b>Description</b></th></tr>
-    <tr><td><span class="d_inlinecode donthyphenate notranslate">&amp;</span></td><td>Take memory address of an <a href="#.define-lvalue">lvalue</a> - see <a href="../arrays.html#pointer">pointers</a></td></tr>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">&amp;</span></td><td>Take memory address of an <a href="#.define-lvalue">lvalue</a> - see <a href="../spec/arrays.html#pointers">pointers</a></td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">++</span></td><td>Increment before use - see <a href="#order-of-evaluation">order of evaluation</a></td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">--</span></td><td>Decrement before use</td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">*</span></td><td>Dereference/indirection - typically for pointers</td></tr>
@@ -1125,13 +1159,10 @@ C c;
 <h3><a class="anchor" title="Permalink to this section" id="new_expressions" href="#new_expressions">New 式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="NewExpression"><span class="gname">NewExpression</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="#AllocatorArguments"><i>AllocatorArguments</i></a><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a>
-    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="#AllocatorArguments"><i>AllocatorArguments</i></a><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
-    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="#AllocatorArguments"><i>AllocatorArguments</i></a><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span>
+    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="../spec/type.html#Type"><i>Type</i></a>
+    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
+    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span>
     <a href="../spec/class.html#NewAnonClassExpression"><i>NewAnonClassExpression</i></a>
-<div class="blankline"></div>
-<a id="AllocatorArguments"><span class="gname">AllocatorArguments</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span>
 <div class="blankline"></div>
 <a id="ArgumentList"><span class="gname">ArgumentList</span></a>:
     <a href="#AssignExpression"><i>AssignExpression</i></a>
@@ -1140,20 +1171,12 @@ C c;
 </pre>
 <div class="blankline"></div>
     <p><i>NewExpression</i>s are used to allocate memory on the garbage
-        collected heap (default) or using a class or struct specific allocator.
+        collected heap.
     </p>
-<div class="blankline"></div>
-    <div class="keyval Deprecated"><span class="key keyDeprecated">Deprecated:</span> <div class="val valDeprecated">If <i>AllocatorArguments</i> is provided, then
-        the <i>ArgumentList</i> is passed to the class or struct specific
-        <a href="../spec/class.html#allocators">allocator function</a> after the size argument.
-    </div></div>
-
 <div class="blankline"></div>
     <p>If a <i>NewExpression</i> is used as an initializer for
         a function local variable with <span class="d_inlinecode donthyphenate notranslate">scope</span> storage class,
-        and the <i>ArgumentList</i> to <span class="d_inlinecode donthyphenate notranslate">new</span> is empty, then
-        the instance is allocated on the stack rather than the heap
-        or using the class specific allocator.
+        then the instance is allocated on the stack.
     </p>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="new_multidimensional" href="#new_multidimensional">多次元配列</a></h3>
@@ -1228,8 +1251,7 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
 <div class="blankline"></div>
     <p>If <i>UnaryExpression</i> is a variable allocated
         on the stack, the class destructor (if any) is called for that
-        instance. Neither the garbage collector nor any class deallocator
-        is called.
+        instance. The garbage collector is not called.
     </p>
 <div class="blankline"></div>
     <div class="spec-boxes undefined-behavior"><b>Undefined Behavior:</b>     <ol>    <li>Using <span class="d_inlinecode donthyphenate notranslate">delete</span> to free memory not allocated by the garbage collector.</li>
@@ -1242,32 +1264,41 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="CastExpression"><span class="gname">CastExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">cast (</span> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#UnaryExpression"><i>UnaryExpression</i></a>
-    <span class="d_inlinecode donthyphenate notranslate">cast (</span> <a href="../spec/type.html#TypeCtors"><i>TypeCtors</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#UnaryExpression"><i>UnaryExpression</i></a>
+    <a href="#CastQual"><i>CastQual</i></a>
 </pre>
 <div class="blankline"></div>
     <p>A <i>CastExpression</i> converts the <i>UnaryExpression</i>
-        to <a href="../spec/type.html#Type"><i>Type</i></a>.</p>
+        to <i>Type</i>.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">cast</span>(foo) -p; <span class="d_comment">// cast (-p) to type foo
 </span>(foo) - p;      <span class="d_comment">// subtract p from foo
 </span></pre>
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="cast_class" href="#cast_class">Class References</a></h4>
 <div class="blankline"></div>
     <p>Any casting of a class reference to a
         derived class reference is done with a runtime check to make sure it
         really is a downcast. <span class="d_inlinecode donthyphenate notranslate">null</span> is the result if it isn't.
     </p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">class</span> A { ... }
-<span class="d_keyword">class</span> B : A { ... }
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">class</span> A {}
+<span class="d_keyword">class</span> B : A {}
 
-<span class="d_keyword">void</span> test(A a, B b)
+<span class="d_keyword">void</span> main()
 {
-    B bx = a;         <span class="d_comment">// error, need cast
-</span>    B bx = <span class="d_keyword">cast</span>(B) a; <span class="d_comment">// bx is null if a is not a B
-</span>    A ax = b;         <span class="d_comment">// no cast needed
-</span>    A ax = <span class="d_keyword">cast</span>(A) b; <span class="d_comment">// no runtime check needed for upcast
-</span>}
+    A a = <span class="d_keyword">new</span> A;
+    <span class="d_comment">//B b = a;         // error, need cast
+</span>    B b = <span class="d_keyword">cast</span>(B) a; <span class="d_comment">// b is null if a is not a B
+</span>    <span class="d_keyword">assert</span>(b <span class="d_keyword">is</span> <span class="d_keyword">null</span>);
+
+    a = b;         <span class="d_comment">// no cast needed
+</span>    a = <span class="d_keyword">cast</span>(A) b; <span class="d_comment">// no runtime check needed for upcast
+</span>    <span class="d_keyword">assert</span>(a <span class="d_keyword">is</span> b);
+}
 </pre>
+        
+</div>
 <div class="blankline"></div>
     <p>In order to determine if an object <span class="d_inlinecode donthyphenate notranslate">o</span> is an instance of
         a class <span class="d_inlinecode donthyphenate notranslate">B</span> use a cast:</p>
@@ -1286,27 +1317,30 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
         (i.e. a reinterpret cast).
     </p>
 <div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="cast_array" href="#cast_array">Arrays</a></h4>
+<div class="blankline"></div>
     <p>Casting a dynamic array to another dynamic array is done only if the
         array lengths multiplied by the element sizes match. The cast is done
         as a type paint, with the array length adjusted to match any change in
         element size. If there's not a match, a runtime error is generated.</p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio;
-
-<span class="d_keyword">int</span> main()
-{
-    <span class="d_keyword">byte</span>[] a = [1,2,3];
-    <span class="d_keyword">auto</span> b = <span class="d_keyword">cast</span>(<span class="d_keyword">int</span>[])a; <span class="d_comment">// runtime array cast misalignment
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">byte</span>[] a = [1,2,3];
+<span class="d_comment">//auto b = cast(int[])a; // runtime error: array cast misalignment
 </span>
-    <span class="d_keyword">int</span>[] c = [1, 2, 3];
-    <span class="d_keyword">auto</span> d = <span class="d_keyword">cast</span>(<span class="d_keyword">byte</span>[])c; <span class="d_comment">// ok
-</span>    <span class="d_comment">// prints:
-</span>    <span class="d_comment">// [1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0]
-</span>    writeln(d);
-    <span class="d_keyword">return</span> 0;
-}
+<span class="d_keyword">int</span>[] c = [1, 2, 3];
+<span class="d_keyword">auto</span> d = <span class="d_keyword">cast</span>(<span class="d_keyword">byte</span>[])c; <span class="d_comment">// ok
+</span><span class="d_comment">// prints:
+</span><span class="d_comment">// [1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0]
+</span>writeln(d);
 </pre>
+        
+</div>
 <div class="blankline"></div>
+    <div class="keyval SeeAlso"><span class="key keySeeAlso">See Also:</span> <div class="val valSeeAlso"><a href="#cast_array_literal">Casting array literals</a>.</div></div>
+
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="cast_static_array" href="#cast_static_array">Static Arrays</a></h4>
 <div class="blankline"></div>
     <p>Casting a static array to another static array is done only if the
         array lengths multiplied by the element sizes match; a mismatch
@@ -1314,22 +1348,24 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
         The cast is done as a type paint (aka a reinterpret cast).
         The contents of the array are not changed.</p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">import</span> core.stdc.stdio;
-
-<span class="d_keyword">void</span> main()
-{
-    <span class="d_keyword">byte</span>[16] b = 3;
-    <span class="d_keyword">int</span>[4] ia = <span class="d_keyword">cast</span>(<span class="d_keyword">int</span>[4]) b;
-    <span class="d_keyword">foreach</span> (i; ia)
-        printf(<span class="d_string">"%x\n"</span>, i);
-    <span class="d_comment">/* prints:
-       3030303
-       3030303
-       3030303
-       3030303
-     */</span>
-}
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">byte</span>[16] b = 3; <span class="d_comment">// set each element to 3
+</span><span class="d_keyword">assert</span>(b[0] == 0x03);
+<span class="d_keyword">int</span>[4] ia = <span class="d_keyword">cast</span>(<span class="d_keyword">int</span>[4]) b;
+<span class="d_comment">// print elements as hex
+</span><span class="d_keyword">foreach</span> (i; ia)
+    writefln(<span class="d_string">"%x"</span>, i);
+<span class="d_comment">/* prints:
+   3030303
+   3030303
+   3030303
+   3030303
+ */</span>
 </pre>
+        
+</div>
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="cast_floating" href="#cast_floating">Floating Point</a></h4>
 <div class="blankline"></div>
     <p>Casting a floating point literal from one type to another
         changes its type, but internally it is retained at full
@@ -1379,41 +1415,91 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
 }
 </pre>
 <div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="cast_struct" href="#cast_struct">Structs</a></h4>
+<div class="blankline"></div>
     <p>Casting a value <i>v</i> to a struct <i>S</i>, when value is not a struct
         of the same type, is equivalent to:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate">S(v)
 </pre>
 <div class="blankline"></div>
-    <p>Casting to a <a href="#CastQual"><i>CastQual</i></a> replaces the qualifiers to the type of
-        the <a href="#UnaryExpression"><i>UnaryExpression</i></a>.</p>
+<h4><a class="anchor" title="Permalink to this section" id="cast_qualifier" href="#cast_qualifier">Qualifier Cast</a></h4>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">shared</span> <span class="d_keyword">int</span> x;
-<span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(<span class="d_keyword">cast</span>(<span class="d_keyword">const</span>)x) == <span class="d_keyword">const</span> <span class="d_keyword">int</span>));
+<pre class="bnf notranslate"><a id="CastQual"><span class="gname">CastQual</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">cast (</span> <a href="../spec/type.html#TypeCtors"><i>TypeCtors</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#UnaryExpression"><i>UnaryExpression</i></a>
 </pre>
 <div class="blankline"></div>
-    <p>Casting with no <a href="../spec/type.html#Type"><i>Type</i></a> or <a href="#CastQual"><i>CastQual</i></a> removes
+    <p>A <i>CastQual</i> replaces the qualifiers in the type of
+        the <i>UnaryExpression</i>:</p>
+<div class="blankline"></div>
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">shared</span> <span class="d_keyword">int</span> x;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(<span class="d_keyword">cast</span>(<span class="d_keyword">const</span>)x) == <span class="d_keyword">const</span> <span class="d_keyword">int</span>));
+</pre>
+        
+</div>
+<div class="blankline"></div>
+    <p>Casting with no type or qualifiers removes
         any top level <span class="d_inlinecode donthyphenate notranslate">const</span>, <span class="d_inlinecode donthyphenate notranslate">immutable</span>, <span class="d_inlinecode donthyphenate notranslate">shared</span> or <span class="d_inlinecode donthyphenate notranslate">inout</span>
         type modifiers from the type
-        of the <a href="#UnaryExpression"><i>UnaryExpression</i></a>.</p>
+        of the <i>UnaryExpression</i>.</p>
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">shared</span> <span class="d_keyword">int</span> x;
-<span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(<span class="d_keyword">cast</span>()x) == <span class="d_keyword">int</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(<span class="d_keyword">cast</span>()x) == <span class="d_keyword">int</span>));
 </pre>
+        
+</div>
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="cast_void" href="#cast_void">Casting to <span class="d_inlinecode donthyphenate notranslate">void</span></a></h4>
 <div class="blankline"></div>
     <p>Casting an expression to <span class="d_inlinecode donthyphenate notranslate">void</span> type is allowed to mark that
         the result is unused. On <a href="../spec/statement.html#ExpressionStatement"><i>ExpressionStatement</i></a>,
-        it could be used properly to avoid "has no effect" error.</p>
+        it could be used properly to avoid a "has no effect" error.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">void</span> foo(<span class="d_keyword">lazy</span> <span class="d_keyword">void</span> exp) {}
 <span class="d_keyword">void</span> main()
 {
-    foo(10);            <span class="d_comment">// NG - has no effect in expression '10'
+    foo(10);            <span class="d_comment">// NG - expression '10' has no effect
 </span>    foo(<span class="d_keyword">cast</span>(<span class="d_keyword">void</span>)10);  <span class="d_comment">// OK
 </span>}
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="pow_expressions" href="#pow_expressions">Pow 式</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="throw_expression" href="#throw_expression">Throw 式</a></h2>
+<div class="blankline"></div>
+<pre class="bnf notranslate"><a id="ThrowExpression"><span class="gname">ThrowExpression</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">throw</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
+</pre>
+<div class="blankline"></div>
+<p>    <i>AssignExpression</i> is evaluated and must yield a reference to a <span class="d_inlinecode donthyphenate notranslate">Throwable</span>
+    or a class derived from <span class="d_inlinecode donthyphenate notranslate">Throwable</span>. The reference is thrown as an exception,
+    interrupting the current control flow to continue at a suitable <span class="d_inlinecode donthyphenate notranslate">catch</span> clause
+    of a <a href="../spec/statement.html#try-statement"><i>try-statement</i></a>. This process will execute any applicable
+    <a href="statement.html#ScopeGuardStatement"><span class="d_inlinecode donthyphenate notranslate">scope (exit)</span> / <span class="d_inlinecode donthyphenate notranslate">scope (failure)</span></a>
+    passed since entering the corresponding <span class="d_inlinecode donthyphenate notranslate">try</span> block.
+</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">throw</span> <span class="d_keyword">new</span> Exception(<span class="d_string">"message"</span>);
+</pre>
+<div class="blankline"></div>
+<p>    A <i>ThrowExpression</i> may be nested in another expression:
+</p>
+<pre class="d_code notranslate"><span class="d_keyword">void</span> foo(<span class="d_keyword">int</span> <span class="d_keyword">function</span>() f) {}
+
+<span class="d_keyword">void</span> main() {
+    foo(() =&gt; <span class="d_keyword">throw</span> <span class="d_keyword">new</span> Exception());
+}
+</pre>
+<div class="blankline"></div>
+<div class="blankline"></div>
+<div class="spec-boxes best-practice"><b>Best Practices:</b> Use <a href="../spec/expression.html#assert_expressions">Assert Expressions</a>
+rather than <a href="../library/object#.Error">Error</a> to report program bugs
+and abort the program.
+</div>
+
+
+<div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="pow_expressions" href="#pow_expressions">Pow Expressions</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="PowExpression"><span class="gname">PowExpression</span></a>:
     <a href="#PostfixExpression"><i>PostfixExpression</i></a>
@@ -1450,19 +1536,28 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
     <a href="#PostfixExpression"><i>PostfixExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#ArgumentList"><i>ArgumentList</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
 </pre>
 <div class="blankline"></div>
-<p><i>PostfixExpression</i> is evaluated. If <i>PostfixExpression</i> is an
-expression of type static array or dynamic array, the symbol &dollar; is set to
-be the number of elements in the array. If <i>PostfixExpression</i> is a <i>ValueSeq</i>, the symbol &dollar; is set to be the number of elements
-in the sequence. A new declaration scope is created for the evaluation of the
-<a href="#ArgumentList"><i>ArgumentList</i></a> and &dollar; appears in that scope only.</p>
+    <p><i>PostfixExpression</i> is evaluated.
+        If <i>PostfixExpression</i> is an expression of static or
+        dynamic array type, the result of the indexing is an lvalue
+        of the <em>i</em>th element in the array, where <span class="d_inlinecode donthyphenate notranslate">i</span> is an integer
+        evaluated from <i>ArgumentList</i>.
+        If <i>PostfixExpression</i> is a pointer <span class="d_inlinecode donthyphenate notranslate">p</span>, the result is
+        <span class="d_inlinecode donthyphenate notranslate">*(p + i)</span> (see <a href="#pointer_arithmetic">Pointer Arithmetic</a>).
+    </p>
 <div class="blankline"></div>
-    <p>If <i>PostfixExpression</i> is a <i>ValueSeq</i>,
-        then the <a href="#ArgumentList"><i>ArgumentList</i></a> must consist of only one argument,
+    <p>If <i>PostfixExpression</i> is a <a href="../spec/template.html#variadic-templates"><i>ValueSeq</i></a>
+        then the <i>ArgumentList</i> must consist of only one argument,
         and that must be statically evaluatable to an integral constant.
         That integral constant <i>n</i> then selects the <i>n</i>th
         expression in the <i>ValueSeq</i>, which is the result
         of the <i>IndexExpression</i>.
         It is an error if <i>n</i> is out of bounds of the <i>ValueSeq</i>.
+    </p>
+<div class="blankline"></div>
+    <p>The special variable <span class="d_inlinecode donthyphenate notranslate">$</span> is declared and set to be the number
+        of elements in the <i>PostfixExpression</i> (when available).
+        A new declaration scope is created for the evaluation of the
+        <i>ArgumentList</i> and <span class="d_inlinecode donthyphenate notranslate">$</span> appears in that scope only.
     </p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="slice_expressions" href="#slice_expressions">Slice 式</a></h2>
@@ -1479,77 +1574,105 @@ in the sequence. A new declaration scope is created for the evaluation of the
 </pre>
 <div class="blankline"></div>
     <p><i>PostfixExpression</i> is evaluated.
-        if <i>PostfixExpression</i> is an expression of type
-        static array or dynamic array, the special variable &dollar;
-        is declared and set to be the length of the array.
-        A new declaration scope is created for the evaluation of the
-        <a href="#AssignExpression"><i>AssignExpression</i></a>..<a href="#AssignExpression"><i>AssignExpression</i></a>
-        and &dollar; appears in that scope only.
+        If <i>PostfixExpression</i> is a static or dynamic
+        array <span class="d_inlinecode donthyphenate notranslate">a</span>, the result of the slice is a dynamic array
+        referencing elements <span class="d_inlinecode donthyphenate notranslate">a[i]</span> to <span class="d_inlinecode donthyphenate notranslate">a[j-1]</span> inclusive, where <span class="d_inlinecode donthyphenate notranslate">i</span>
+        and <span class="d_inlinecode donthyphenate notranslate">j</span> are integers evaluated from the first and second <i>        AssignExpression</i> respectively.
+    </p>
+<div class="blankline"></div>
+    <p>If <i>PostfixExpression</i> is a pointer <span class="d_inlinecode donthyphenate notranslate">p</span>, the result
+        will be a dynamic array referencing elements from <span class="d_inlinecode donthyphenate notranslate">p[i]</span> to <span class="d_inlinecode donthyphenate notranslate">p[j-1]</span>
+        inclusive, where <span class="d_inlinecode donthyphenate notranslate">i</span> and <span class="d_inlinecode donthyphenate notranslate">j</span> are integers evaluated from the
+        first and second <i>AssignExpression</i> respectively.
+    </p>
+<div class="blankline"></div>
+    <p>If <i>PostfixExpression</i> is a <a href="../spec/template.html#variadic-templates"><i>ValueSeq</i></a>, then
+        the result of the slice is a new <i>ValueSeq</i> formed
+        from the upper and lower bounds, which must statically evaluate
+        to integral constants.
+        It is an error if those bounds are out of range.
     </p>
 <div class="blankline"></div>
     <p>The first <i>AssignExpression</i> is taken to be the inclusive
         lower bound
         of the slice, and the second <i>AssignExpression</i> is the
         exclusive upper bound.
-        The result of the expression is a slice of the <i>PostfixExpression</i>
-        array.
+        The result of the expression is a slice of the elements in <i>PostfixExpression</i>.
     </p>
 <div class="blankline"></div>
-    <p>If the <span class="d_inlinecode donthyphenate notranslate">[ ]</span> form is used, the slice is of the entire
-        array.
+    <p>The special variable <span class="d_inlinecode donthyphenate notranslate">$</span> is declared and set to be the number
+        of elements in the <i>PostfixExpression</i> (when available).
+        A new declaration scope is created for the evaluation of the
+        <i>AssignExpression</i><span class="d_inlinecode donthyphenate notranslate">..</span><i>AssignExpression</i> and <span class="d_inlinecode donthyphenate notranslate">$</span> appears in
+        that scope only.
     </p>
 <div class="blankline"></div>
-    <p>The type of the slice is a dynamic array of the element
-        type of the <i>PostfixExpression</i>.
+    <p>If the <span class="d_inlinecode donthyphenate notranslate">[ ]</span> form is used, the slice is of all the elements in <i>PostfixExpression</i>.
     </p>
 <div class="blankline"></div>
     <p>A <i>SliceExpression</i> is not a modifiable lvalue.</p>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="slice_to_static_array" href="#slice_to_static_array">Slice Conversion to Static Array</a></h3>
+<div class="blankline"></div>
     <p>If the slice bounds can be known at compile time, the slice expression
-    is implicitly convertible to an lvalue of static array. For example:</p>
+    may be implicitly convertible to an lvalue of static array. For example:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate">arr[a .. b]     <span class="d_comment">// typed T[]
 </span></pre>
 <div class="blankline"></div>
-        If both <span class="d_inlinecode donthyphenate notranslate">a</span> and <span class="d_inlinecode donthyphenate notranslate">b</span> are integers (may be constant-folded),
-        the slice expression can be converted to a static array type
+        If both <span class="d_inlinecode donthyphenate notranslate">a</span> and <span class="d_inlinecode donthyphenate notranslate">b</span> are integers (which may be constant-folded),
+        the slice expression can be converted to a static array of type
         <span class="d_inlinecode donthyphenate notranslate">T[b - a]</span>.
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">void</span> foo(<span class="d_keyword">int</span>[2] a)
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[] arr = [1, 2, 3];
+<span class="d_keyword">int</span>[2] sa = arr[1 .. 3];
+
+<span class="d_keyword">assert</span>(sa == [2, 3]);
+<span class="d_comment">//sa = arr[0 .. 3]; // error, cannot match length
+</span></pre>
+        
+</div>
+<div class="blankline"></div>
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">void</span> bar(<span class="d_keyword">ref</span> <span class="d_keyword">int</span>[2] a)
 {
     <span class="d_keyword">assert</span>(a == [2, 3]);
+    a = [4, 5];
 }
-<span class="d_keyword">void</span> bar(<span class="d_keyword">ref</span> <span class="d_keyword">int</span>[2] a)
-{
-    <span class="d_keyword">assert</span>(a == [2, 3]);
-    a[0] = 4;
-    a[1] = 5;
-    <span class="d_keyword">assert</span>(a == [4, 5]);
-}
-<span class="d_keyword">void</span> baz(<span class="d_keyword">int</span>[3] a) {}
 
 <span class="d_keyword">void</span> main()
 {
     <span class="d_keyword">int</span>[] arr = [1, 2, 3];
 
-    foo(arr[1 .. 3]);
-    <span class="d_keyword">assert</span>(arr == [1, 2, 3]);
-
-    bar(arr[1 .. 3]);
+    <span class="d_comment">// slicing an lvalue gives an lvalue
+</span>    bar(arr[1 .. 3]);
     <span class="d_keyword">assert</span>(arr == [1, 4, 5]);
-
-  <span class="d_comment">//baz(arr[1 .. 3]); // cannot match length
-</span>}
+}
 </pre>
+        
+</div>
 <div class="blankline"></div>
-<p>The following forms of slice expression can be convertible to a static array
-type:</p>
+    <p>Certain other forms of slice expression can be implicitly converted to a static array
+        when the slice length can be known at compile-time.
+<div class="blankline"></div>
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[] da = [1, 2, 3];
+<span class="d_keyword">int</span> i = da[0]; <span class="d_comment">// runtime variable
+</span>
+<span class="d_keyword">int</span>[2] sa = da[i .. i + 2];
+<span class="d_keyword">assert</span>(sa == [2, 3]);
+</pre>
+        
+</div>
+<div class="blankline"></div>
+    <p>The table below shows all the forms recognized:</p>
 <div class="blankline"></div>
         <dl>        <dt><span class="d_inlinecode donthyphenate notranslate">e</span></dt> <dd>An expression that contains no side effects.</dd>
         <dt><span class="d_inlinecode donthyphenate notranslate">a</span>, <span class="d_inlinecode donthyphenate notranslate">b</span></dt> <dd>Integers (that may be constant-folded).</dd>
         </dl>
 <div class="blankline"></div>
-        <center><table><caption>Computing array lengths during compilation</caption>        <tr><th class="donthyphenate"><b>Form</b></th><th class="donthyphenate"><b>The length calculated at compile time</b></th></tr>
+        <center><table><caption></caption>        <tr><th class="donthyphenate"><b>Form</b></th><th class="donthyphenate"><b>The length calculated at compile time</b></th></tr>
         <tr><td><span class="d_inlinecode donthyphenate notranslate">arr[]</span></td><td>The compile time length of <span class="d_inlinecode donthyphenate notranslate">arr</span> if it's known.</td></tr>
         <tr><td><span class="d_inlinecode donthyphenate notranslate">arr[a .. b]</span></td><td>              <span class="d_inlinecode donthyphenate notranslate">b - a</span></td></tr>
         <tr><td><span class="d_inlinecode donthyphenate notranslate">arr[e-a .. e]</span></td><td>  <span class="d_inlinecode donthyphenate notranslate">a</span></td></tr>
@@ -1558,14 +1681,6 @@ type:</p>
         <tr><td><span class="d_inlinecode donthyphenate notranslate">arr[e+a .. e+b]</span></td><td><span class="d_inlinecode donthyphenate notranslate">b - a</span> <i>if</i> <span class="d_inlinecode donthyphenate notranslate">a &lt;= b</span></td></tr>
         <tr><td><span class="d_inlinecode donthyphenate notranslate">arr[e-a .. e-b]</span></td><td><span class="d_inlinecode donthyphenate notranslate">a - b</span> <i>if</i> <span class="d_inlinecode donthyphenate notranslate">a &gt;= b</span></td></tr>
         </table></center>
-<div class="blankline"></div>
-    <p>If <i>PostfixExpression</i> is a <i>ValueSeq</i>, then
-        the result of the slice is a new <i>ValueSeq</i> formed
-        from the upper and lower bounds, which must statically evaluate
-        to integral constants.
-        It is an error if those
-        bounds are out of range.
-    </p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="primary_expressions" href="#primary_expressions">一次式</a></h2>
 <div class="blankline"></div>
@@ -1784,11 +1899,14 @@ type:</p>
 }
 </pre>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="cast_array_literal" href="#cast_array_literal">Casting</a></h3>
+<div class="blankline"></div>
     <p>When array literals are cast to another array type, each
         element of the array is cast to the new element type.
-        When arrays that are not literals are cast, the array is
+        When arrays that are not literals <a href="#cast_array">are cast</a>, the array is
         reinterpreted as the new type, and the length is recomputed:</p>
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio;
 
 <span class="d_keyword">void</span> main()
@@ -1806,6 +1924,8 @@ type:</p>
     writeln(rt);  <span class="d_comment">// writes [257]
 </span>}
 </pre>
+        
+</div>
 <div class="blankline"></div>
         In other words, casting an array literal will change the type of each initializer element.
 <div class="blankline"></div>
@@ -2637,11 +2757,11 @@ file full path: '/example/test.d'
 <div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/pragma.html">プラグマ[Pragmas]</a></div>
 <div style="float: right"><a href="../spec/statement.html">文[Statements]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
-)
+</p>
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:41 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:57 2022
 </div>
     </div>
 </div>

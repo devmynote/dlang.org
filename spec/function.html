@@ -151,7 +151,10 @@
     </ol></li>
     <li><a href="#function-return-values">関数の戻り値</a></li>
     <li><a href="#function-declarations">本文無し関数</a></li>
-    <li><a href="#pure-functions">Pure 関数</a></li>
+    <li><a href="#pure-functions">Pure 関数</a><ol>        <li><a href="#pure-special-cases">Special Cases</a></li>
+        <li><a href="#pure-factory-functions">Pure Factory Functions</a></li>
+        <li><a href="#pure-optimization">Optimization</a></li>
+    </ol></li>
     <li><a href="#nothrow-functions">Nothrow 関数</a></li>
     <li><a href="#ref-functions">Ref 関数</a></li>
     <li><a href="#auto-functions">Auto 関数</a></li>
@@ -160,7 +163,12 @@
     </ol></li>
     <li><a href="#optional-parenthesis">括弧付けが任意の場合</a></li>
     <li><a href="#property-functions">Property 関数</a></li>
-    <li><a href="#virtual-functions">Virtual 関数</a><ol>        <li><a href="#function-inheritance">関数の継承とオーバーライド</a></li>
+    <li><a href="#virtual-functions">Virtual 関数</a><ol>        <li><a href="#covariance">Covariance</a></li>
+        <li><a href="#base-methods">Calling Base Class Methods</a></li>
+        <li><a href="#function-inheritance">関数の継承とオーバーライド</a></li>
+        <li><a href="#override-defaults">デフォルト値</a></li>
+        <li><a href="#inheriting-attributes">Inherited Attributes</a></li>
+        <li><a href="#override-restrictions">Restrictions</a></li>
     </ol></li>
     <li><a href="#inline-functions">Inline 関数</a></li>
     <li><a href="#function-overloading">関数オーバーロード</a><ol>        <li><a href="#overload-sets">オーバーロードのセット</a></li>
@@ -176,6 +184,7 @@
         <li><a href="#ref-return-scope-parameters">Ref Return Scope 引数</a></li>
         <li><a href="#udas-parameters">引数のユーザー定義属性</a></li>
         <li><a href="#variadic">可変長引数関数</a></li>
+        <li><a href="#this-reference"><span class="d_inlinecode donthyphenate notranslate">this</span> Reference</a></li>
     </ol></li>
     <li><a href="#local-variables">ローカル変数</a><ol>        <li><a href="#local-static-variables">ローカル静的変数</a></li>
     </ol></li>
@@ -313,7 +322,7 @@
     <a href="#FunctionContracts"><i>FunctionContracts</i></a><sub>opt</sub> <a href="#InOutStatement"><i>InOutStatement</i></a>
 <div class="blankline"></div>
 <a id="ShortenedFunctionBody"><span class="gname">ShortenedFunctionBody</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">=&gt;</span> <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
+    <a href="#InOutContractExpressions"><i>InOutContractExpressions</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">=&gt;</span> <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
 </pre>
 <div class="blankline"></div>
         <p>例:</p>
@@ -335,6 +344,10 @@
 <a id="FunctionContract"><span class="gname">FunctionContract</span></a>:
     <a href="#InOutContractExpression"><i>InOutContractExpression</i></a>
     <a href="#InOutStatement"><i>InOutStatement</i></a>
+<div class="blankline"></div>
+<a id="InOutContractExpressions"><span class="gname">InOutContractExpressions</span></a>:
+    <a href="#InOutContractExpression"><i>InOutContractExpression</i></a>
+    <a href="#InOutContractExpression"><i>InOutContractExpression</i></a> <i>InOutContractExpressions</i>
 <div class="blankline"></div>
 <a id="InOutContractExpression"><span class="gname">InOutContractExpression</span></a>:
     <a href="#InContractExpression"><i>InContractExpression</i></a>
@@ -569,13 +582,28 @@
 <h2><a class="anchor" title="Permalink to this section" id="pure-functions" href="#pure-functions">Pure 関数</a></h2>
 <div class="blankline"></div>
         <p>Pure functions are annotated with the <span class="d_inlinecode donthyphenate notranslate">pure</span> attribute.
-        </p>
+        Pure functions cannot directly access global or static
+        mutable state.
+        Pure functions can only call pure functions.</p>
 <div class="blankline"></div>
-        <p>Pure functions cannot directly access global or static
-            mutable state.
-        </p>
-<div class="blankline"></div>
-        <p>Pure functions can only call pure functions.</p>
+        <p>Pure functions can:</p>
+        <ul>        <li>Modify the local state of the function.</li>
+        <li>Throw exceptions.</li>
+        </ul>
+<pre class="d_code notranslate"><span class="d_keyword">int</span> x;
+<span class="d_keyword">immutable</span> <span class="d_keyword">int</span> y;
+<span class="d_keyword">const</span> <span class="d_keyword">int</span>* pz;
+
+<span class="d_keyword">pure</span> <span class="d_keyword">int</span> foo(<span class="d_keyword">int</span> i)
+{
+    i++;     <span class="d_comment">// ok, modifying local state
+</span>    x = i;   <span class="d_comment">// error, modifying global state
+</span>    i = x;   <span class="d_comment">// error, reading mutable global state
+</span>    i = y;   <span class="d_comment">// ok, reading immutable global state
+</span>    i = *pz; <span class="d_comment">// error, reading const global state
+</span>    <span class="d_keyword">throw</span> <span class="d_keyword">new</span> Exception(<span class="d_string">"failed"</span>); <span class="d_comment">// ok
+</span>}
+</pre>
 <div class="blankline"></div>
         <p>A pure function can override an impure function,
             but cannot be overridden by an impure function.
@@ -587,17 +615,25 @@
             argument.
         </p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">pure</span> <span class="d_keyword">int</span> foo(<span class="d_keyword">int</span>[] arr) { arr[] += 1; <span class="d_keyword">return</span> arr.length; }
+            <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">pure</span> size_t foo(<span class="d_keyword">int</span>[] arr)
+{
+    arr[] += 1;
+    <span class="d_keyword">return</span> arr.length;
+}
 <span class="d_keyword">int</span>[] a = [1, 2, 3];
 foo(a);
 <span class="d_keyword">assert</span>(a == [2, 3, 4]);
 </pre>
+            
+</div>
 <div class="blankline"></div>
         <p>A <i>strongly pure function</i> has no parameters with mutable indirections
             and cannot modify any program state external to the function.
         </p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> S { <span class="d_keyword">double</span> x; }
+
 <span class="d_keyword">pure</span> <span class="d_keyword">int</span> foo(<span class="d_keyword">immutable</span>(<span class="d_keyword">int</span>)[] arr, <span class="d_keyword">int</span> num, S val)
 {
     <span class="d_comment">//arr[num] = 1; // compile error
@@ -609,7 +645,7 @@ foo(a);
 <div class="blankline"></div>
         <p>A strongly pure function can call a weakly pure function.</p>
 <div class="blankline"></div>
-        <p>Pure functions can modify the local state of the function.</p>
+<h3><a class="anchor" title="Permalink to this section" id="pure-special-cases" href="#pure-special-cases">Special Cases</a></h3>
 <div class="blankline"></div>
         <p>A pure function can:</p>
 <div class="blankline"></div>
@@ -629,29 +665,15 @@ foo(a);
         controlled by a <a href="../spec/version.html#DebugCondition"><i>DebugCondition</i></a>.
         </p>
 <div class="blankline"></div>
-        <div class="spec-boxes best-practice"><b>Best Practices:</b> this relaxation of purity checks in DebugConditions is
+        <div class="spec-boxes best-practice"><b>Best Practices:</b> this relaxation of purity checks in <em>DebugCondition</em>s is
         intended solely to make debugging programs easier.</div>
 
 
 <div class="blankline"></div>
-        <p>A pure function can throw exceptions.</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio;
-<span class="d_keyword">int</span> x;
-<span class="d_keyword">immutable</span> <span class="d_keyword">int</span> y;
-<span class="d_keyword">const</span> <span class="d_keyword">int</span>* pz;
-
-<span class="d_keyword">pure</span> <span class="d_keyword">int</span> foo(<span class="d_keyword">int</span> i,
-             <span class="d_keyword">char</span>* p,
-             <span class="d_keyword">const</span> <span class="d_keyword">char</span>* q,
-             <span class="d_keyword">immutable</span> <span class="d_keyword">int</span>* s)
+<pre class="d_code notranslate"><span class="d_keyword">pure</span> <span class="d_keyword">int</span> foo(<span class="d_keyword">int</span> i)
 {
-    <span class="d_keyword">debug</span> writeln(<span class="d_string">"in foo()"</span>); <span class="d_comment">// ok, impure code allowed in debug statement
-</span>    x = i;   <span class="d_comment">// error, modifying global state
-</span>    i = x;   <span class="d_comment">// error, reading mutable global state
-</span>    i = y;   <span class="d_comment">// ok, reading immutable global state
-</span>    i = *pz; <span class="d_comment">// error, reading const global state
-</span>    <span class="d_keyword">return</span> i;
+    <span class="d_keyword">debug</span> writeln(<span class="d_string">"i = "</span>, i); <span class="d_comment">// ok, impure code allowed in debug statement
+</span>    ...
 }
 </pre>
 <div class="blankline"></div>
@@ -683,52 +705,70 @@ foo(a);
 }
 </pre>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="pure-factory-functions" href="#pure-factory-functions">Pure Factory Functions</a></h3>
+<div class="blankline"></div>
         <p>A <i>pure factory function</i> is a strongly pure function
         that returns a result that has mutable indirections.
         All mutable
-        memory returned by the call may not be referenced by any other part of the
+        memory returned by the call cannot be referenced by any other part of the
         program, i.e. it is newly allocated by the function.
-        Nor may the mutable
-        references of the result refer to any object that
-        existed before the function call. For example:</p>
+        The mutable
+        references of the result similarly cannot refer to any object that
+        existed before the function call.
+        This allows the result to be implicitly cast to any qualifier.
+        For example:</p>
 <div class="blankline"></div>
         <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> List { <span class="d_keyword">int</span> payload; List* next; }
+
 <span class="d_keyword">pure</span> List* make(<span class="d_keyword">int</span> a, <span class="d_keyword">int</span> b)
 {
     <span class="d_keyword">auto</span> result = <span class="d_keyword">new</span> List(a, <span class="d_keyword">null</span>);
     result.next = <span class="d_keyword">new</span> List(b, result);
     <span class="d_keyword">return</span> result;
 }
+
+<span class="d_keyword">void</span> main()
+{
+    <span class="d_keyword">auto</span> list = make(1, 2);
+    <span class="d_keyword">pragma</span>(msg, <span class="d_keyword">typeof</span>(list));       <span class="d_comment">// List*
+</span>
+    <span class="d_keyword">immutable</span> ilist = make(1, 2);
+    <span class="d_keyword">pragma</span>(msg, <span class="d_keyword">typeof</span>(ilist));      <span class="d_comment">// immutable List*
+</span>    <span class="d_keyword">pragma</span>(msg, <span class="d_keyword">typeof</span>(ilist.next)); <span class="d_comment">// immutable List*
+</span>}
 </pre>
         
 </div>
 <div class="blankline"></div>
-        <p>All references in <span class="d_inlinecode donthyphenate notranslate">make</span>'s result refer to other <span class="d_inlinecode donthyphenate notranslate">List</span>
+        <p>All references in <span class="d_inlinecode donthyphenate notranslate">make</span>'s result refer to <span class="d_inlinecode donthyphenate notranslate">List</span>
         objects created by <span class="d_inlinecode donthyphenate notranslate">make</span>, and no other part of the program refers to
-        any of these objects.
-        This restriction does not apply to any Exception or Error thrown from the function.
+        any of these objects. Hence the result can initialize an immutable
+        variable.</p>
+<div class="blankline"></div>
+        <p>This does not affect any <em>Exception</em> or <em>Error</em> thrown from the function.
         </p>
 <div class="blankline"></div>
-<div class="blankline"></div>
-        <p>Pure destructors do not benefit of special elision.</p>
+<h3><a class="anchor" title="Permalink to this section" id="pure-optimization" href="#pure-optimization">Optimization</a></h3>
 <div class="blankline"></div>
         <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b> An implementation may assume that a strongly pure
         function that returns a result
         without mutable indirections will have the same effect for all invocations
         with equivalent arguments. It is allowed to memoize the result of the
         function under the assumption that equivalent parameters always produce
-        equivalent results.
-        A strongly pure function may still have behavior
-        inconsistent with memoization by e.g. using <span class="d_inlinecode donthyphenate notranslate">cast</span>s or by changing behavior
-        depending on the address of its parameters. An implementation is currently
-        not required to enforce validity of memoization in all cases.
-        If a strongly pure function throws an Exception or an Error, the
-        assumptions related to memoization do not carry to the thrown
-        exception.</div>
+        equivalent results.</div>
 
 
 <div class="blankline"></div>
+        <p>        A strongly pure function may still have behavior
+        inconsistent with memoization by e.g. using <span class="d_inlinecode donthyphenate notranslate">cast</span>s or by changing behavior
+        depending on the address of its parameters. An implementation is currently
+        not required to enforce validity of memoization in all cases.
+        If a strongly pure function throws an <em>Exception</em> or an <em>Error</em>, the
+        assumptions related to memoization do not carry to the thrown
+        exception.</p>
+<div class="blankline"></div>
+        <p>Pure destructors do not benefit of special elision.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="nothrow-functions" href="#nothrow-functions">Nothrow 関数</a></h2>
@@ -1136,26 +1176,44 @@ foo(a);
 <div class="blankline"></div>
         <p>Virtual functions are class member functions that are called indirectly through a
         function pointer table, called a <span class="d_inlinecode donthyphenate notranslate">vtbl[]</span>, rather than directly.
+        Member functions that are virtual can be overridden in a derived class:
         </p>
 <div class="blankline"></div>
-        <p>Member functions that are virtual can be overridden, unless they are <span class="d_inlinecode donthyphenate notranslate">final</span>.
-        </p>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">class</span> A
+{
+    <span class="d_keyword">void</span> foo(<span class="d_keyword">int</span> x) {}
+}
+
+<span class="d_keyword">class</span> B : A
+{
+    <span class="d_keyword">override</span> <span class="d_keyword">void</span> foo(<span class="d_keyword">int</span> x) {}
+    <span class="d_comment">//override void foo() {} // error, no foo() in A
+</span>}
+
+<span class="d_keyword">void</span> test()
+{
+    A a = <span class="d_keyword">new</span> B();
+    a.foo(1);   <span class="d_comment">// calls B.foo(int)
+</span>}
+</pre>
+
+</div>
 <div class="blankline"></div>
-        <p>Struct and union member functions are not virtual.
-        </p>
+        <p>The <span class="d_inlinecode donthyphenate notranslate">override</span> attribute is required when overriding a function.
+        This is useful for catching errors when a base class's member function
+        has its parameters changed, and all derived classes need to have
+        their overriding functions updated.</p>
 <div class="blankline"></div>
-        <p>Static member functions are not virtual.
-        </p>
+        <p>The following are not virtual:</p>
+        <ul>        <li>Struct and union member functions</li>
+        <li><span class="d_inlinecode donthyphenate notranslate">final</span> member functions</li>
+        <li><a href="../spec/attribute.html#static"><span class="d_inlinecode donthyphenate notranslate">static</span></a> member functions</li>
+        <li>Member functions which are <span class="d_inlinecode donthyphenate notranslate">private</span> or <span class="d_inlinecode donthyphenate notranslate">package</span></li>
+        <li>Member template functions</li>
+        </ul>
 <div class="blankline"></div>
-        <p>Member functions which are <span class="d_inlinecode donthyphenate notranslate">private</span> or <span class="d_inlinecode donthyphenate notranslate">package</span> are not virtual.
-        </p>
-<div class="blankline"></div>
-        <p>Member template functions are not virtual.
-        </p>
-<div class="blankline"></div>
-        <p>Member functions with <span class="d_inlinecode donthyphenate notranslate">Objective-C</span> linkage are virtual even if marked
-        with <span class="d_inlinecode donthyphenate notranslate">final</span> or <span class="d_inlinecode donthyphenate notranslate">static</span>.
-        </p>
+        <p><b>Example:</b></p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">class</span> A
 {
@@ -1173,22 +1231,23 @@ foo(a);
 </span>    <span class="d_keyword">int</span> abc() { ... }  <span class="d_comment">// ok, A.abc is not virtual, B.abc is virtual
 </span>}
 
-<span class="d_keyword">void</span> test(A a)
+<span class="d_keyword">void</span> test()
 {
+    A a = <span class="d_keyword">new</span> B;
     a.def();    <span class="d_comment">// calls B.def
 </span>    a.foo();    <span class="d_comment">// calls A.foo
 </span>    a.bar();    <span class="d_comment">// calls A.bar
 </span>    a.abc();    <span class="d_comment">// calls A.abc
 </span>}
-
-<span class="d_keyword">void</span> func()
-{
-    B b = <span class="d_keyword">new</span> B();
-    test(b);
-}
 </pre>
 <div class="blankline"></div>
-        <p>The overriding function may be covariant with the overridden function.
+        <p>Member functions with <span class="d_inlinecode donthyphenate notranslate">Objective-C</span> linkage are virtual even if marked
+        with <span class="d_inlinecode donthyphenate notranslate">final</span> or <span class="d_inlinecode donthyphenate notranslate">static</span>, and can be overridden.
+        </p>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="covariance" href="#covariance">Covariance</a></h3>
+<div class="blankline"></div>
+        <p>An overriding function may be covariant with the overridden function.
         A covariant function has a type that is implicitly convertible to the
         type of the overridden function.
         </p>
@@ -1211,19 +1270,12 @@ foo(a);
 
 </div>
 <div class="blankline"></div>
-        <p>            Non-static (i.e., virtual functions and <span class="d_inlinecode donthyphenate notranslate">final</span> member
-            functions) all have a hidden parameter called the
-            <span class="d_inlinecode donthyphenate notranslate">this</span> reference, which refers to the class object for which
-            the function is called.
-        </p>
+<h3><a class="anchor" title="Permalink to this section" id="base-methods" href="#base-methods">Calling Base Class Methods</a></h3>
 <div class="blankline"></div>
-        <p>            Functions with <span class="d_inlinecode donthyphenate notranslate">Objective-C</span> linkage have an additional hidden,
-            unnamed, parameter which is the selector it was called with.
-        </p>
-<div class="blankline"></div>
-        <p>To directly call a base member function (i.e., avoid dynamic
-        binding on member function call), insert the base class name before
-        the member function name. For example:
+        <p>To directly call a member function of a base class <span class="d_inlinecode donthyphenate notranslate">Base</span>,
+        write <span class="d_inlinecode donthyphenate notranslate">Base.</span> before the function name.
+        This avoids dynamic dispatch through a function pointer. For
+        example:
         </p>
 <div class="blankline"></div>
 <div class="runnable-examples">
@@ -1269,31 +1321,6 @@ foo(a);
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="function-inheritance" href="#function-inheritance">関数の継承とオーバーライド</a></h3>
 <div class="blankline"></div>
-        <p>A function in a derived class with the same name and covariant
-        with a function in a base class overrides that function:</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">class</span> A
-{
-    <span class="d_keyword">int</span> foo(<span class="d_keyword">int</span> x) { ... }
-}
-
-<span class="d_keyword">class</span> B : A
-{
-    <span class="d_keyword">override</span> <span class="d_keyword">int</span> foo(<span class="d_keyword">int</span> x) { ... }
-}
-
-<span class="d_keyword">void</span> test()
-{
-    B b = <span class="d_keyword">new</span> B();
-    bar(b);
-}
-
-<span class="d_keyword">void</span> bar(A a)
-{
-    a.foo(1);   <span class="d_comment">// calls B.foo(int)
-</span>}
-</pre>
-<div class="blankline"></div>
         <p>When doing overload resolution, the functions in the base
         class are not considered, as they are not in the same
         <a href="#overload-sets">Overload Set</a>:
@@ -1313,9 +1340,9 @@ foo(a);
 <span class="d_keyword">void</span> test()
 {
     B b = <span class="d_keyword">new</span> B();
-    b.foo(1);  <span class="d_comment">// calls B.foo(long), since A.foo(int) not considered
-</span>    A a = b;
-
+    b.foo(1);  <span class="d_comment">// calls B.foo(long), since A.foo(int) is not considered
+</span>
+    A a = b;
     a.foo(1);  <span class="d_comment">// issues runtime error (instead of calling A.foo(int))
 </span>}
 </pre>
@@ -1338,12 +1365,7 @@ foo(a);
 
 <span class="d_keyword">void</span> test()
 {
-    B b = <span class="d_keyword">new</span> B();
-    bar(b);
-}
-
-<span class="d_keyword">void</span> bar(A a)
-{
+    A a = <span class="d_keyword">new</span> B();
     a.foo(1);      <span class="d_comment">// calls A.foo(int)
 </span>    B b = <span class="d_keyword">new</span> B();
     b.foo(1);      <span class="d_comment">// calls A.foo(int)
@@ -1358,6 +1380,8 @@ foo(a);
         implicit conversions to the base class, those other functions do
         get called:
         </p>
+<div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">class</span> A
 {
     <span class="d_keyword">void</span> <b><i>set</i></b>(<span class="d_keyword">long</span> i) { }
@@ -1365,22 +1389,20 @@ foo(a);
 }
 <span class="d_keyword">class</span> B : A
 {
-    <span class="d_keyword">void</span> set(<span class="d_keyword">long</span> i) { }
+    <span class="d_keyword">override</span> <span class="d_keyword">void</span> set(<span class="d_keyword">long</span> i) { }
 }
 
-<span class="d_keyword">void</span> foo(A a)
+<span class="d_keyword">void</span> test()
 {
-    <span class="d_keyword">int</span> i;
+    A a = <span class="d_keyword">new</span> B;
     a.set(3);   <span class="d_comment">// error, use of A.set(int) is hidden by B
 </span>                <span class="d_comment">// use 'alias set = A.set;' to introduce base class overload set
-</span>    <span class="d_keyword">assert</span>(i == 1);
-}
-
-<span class="d_keyword">void</span> main()
-{
-    foo(<span class="d_keyword">new</span> B);
-}
+</span>}
 </pre>
+
+</div>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="override-defaults" href="#override-defaults">デフォルト値</a></h3>
 <div class="blankline"></div>
         <p>A function parameter's default value is not inherited:</p>
 <div class="blankline"></div>
@@ -1412,6 +1434,8 @@ foo(a);
 </span>}
 </pre>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="inheriting-attributes" href="#inheriting-attributes">Inherited Attributes</a></h3>
+<div class="blankline"></div>
         <p>An overriding function inherits any unspecified <a href="#FunctionAttributes"><i>FunctionAttributes</i></a>
         from the attributes of the overridden function.</p>
 <div class="blankline"></div>
@@ -1433,6 +1457,8 @@ foo(a);
 </pre>
 
 </div>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="override-restrictions" href="#override-restrictions">Restrictions</a></h3>
 <div class="blankline"></div>
         <p>The attributes
         <a href="attribute.html#disable"><span class="d_inlinecode donthyphenate notranslate">@disable</span></a> and
@@ -1458,7 +1484,6 @@ foo(a);
 </span>}
 </pre>
 <div class="blankline"></div>
-    <p>Static functions with <span class="d_inlinecode donthyphenate notranslate">Objective-C</span> linkage are overridable.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="inline-functions" href="#inline-functions">Inline 関数</a></h2>
 <div class="blankline"></div>
@@ -2559,6 +2584,17 @@ Bar
 
 
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="this-reference" href="#this-reference"><span class="d_inlinecode donthyphenate notranslate">this</span> Reference</a></h3>
+<div class="blankline"></div>
+        <p>            Non-static member functions all have a hidden parameter called the
+            <span class="d_inlinecode donthyphenate notranslate">this</span> reference, which refers to the object for which
+            the function is called.
+        </p>
+<div class="blankline"></div>
+        <p>            Functions with <span class="d_inlinecode donthyphenate notranslate">Objective-C</span> linkage have an additional hidden,
+            unnamed, parameter which is the selector it was called with.
+        </p>
+<div class="blankline"></div>
 <div class="blankline"></div>
 <h2><span id="Local Variables"><a class="anchor" title="Permalink to this section" id="local-variables" href="#local-variables">ローカル変数</a></span></h2>
 <div class="blankline"></div>
@@ -3100,17 +3136,35 @@ Bar
 <h2><a class="anchor" title="Permalink to this section" id="main" href="#main"><span class="d_inlinecode donthyphenate notranslate">main()</span> 関数</a></h2>
 <div class="blankline"></div>
         <p>For console programs, <span class="d_inlinecode donthyphenate notranslate">main()</span> serves as the entry point.
-        It gets called after all the module initializers are run, and
-        after any unittests are run.
+        It gets called after all the <a href="../spec/module.html#staticorder">module initializers</a>
+        are run, and after any <a href="../spec/unittest.html">unittests</a> are run.
         After it returns, all the module destructors are run.
-        <span class="d_inlinecode donthyphenate notranslate">main()</span> must be declared using one of the following forms:
+        <span class="d_inlinecode donthyphenate notranslate">main()</span> must be declared as follows:
         </p>
 <div class="blankline"></div>
-        <ul>        <li><span class="d_inlinecode donthyphenate notranslate">void main() { ... }</span></li>
-        <li><span class="d_inlinecode donthyphenate notranslate">void main(string[] args) { ... }</span></li>
-        <li><span class="d_inlinecode donthyphenate notranslate">int main() { ... }</span></li>
-        <li><span class="d_inlinecode donthyphenate notranslate">int main(string[] args) { ... }</span></li>
+        <pre class="bnf notranslate">        <a id="MainFunction"><span class="gname">MainFunction</span></a>:
+            <a href="#MainReturnDecl"><i>MainReturnDecl</i></a> <span class="d_inlinecode donthyphenate notranslate">main()</span> <a href="../spec/statement.html#BlockStatement"><i>BlockStatement</i></a>
+            <a href="#MainReturnDecl"><i>MainReturnDecl</i></a> <span class="d_inlinecode donthyphenate notranslate">main(string[]</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a><span class="d_inlinecode donthyphenate notranslate">)</span> <a href="../spec/statement.html#BlockStatement"><i>BlockStatement</i></a>
+<div class="blankline"></div>
+        <a id="MainReturnDecl"><span class="gname">MainReturnDecl</span></a>:
+            <span class="d_inlinecode donthyphenate notranslate">void</span>
+            <span class="d_inlinecode donthyphenate notranslate">int</span>
+            <a href="../spec/type.html#noreturn"><i>noreturn</i></a>
+            <a href="#auto-functions"><span class="d_inlinecode donthyphenate notranslate">auto</span></a>
+        </pre>
+<div class="blankline"></div>
+        <ul>        <li>If <span class="d_inlinecode donthyphenate notranslate">main</span> returns <span class="d_inlinecode donthyphenate notranslate">void</span>, the OS will receive a zero value on success.</li>
+        <li>If <span class="d_inlinecode donthyphenate notranslate">main</span> returns <span class="d_inlinecode donthyphenate notranslate">void</span> or <span class="d_inlinecode donthyphenate notranslate">noreturn</span>, the OS will receive a non-zero
+        value on abnormal termination, such as an uncaught exception.</li>
+        <li>If <span class="d_inlinecode donthyphenate notranslate">main</span> is declared as <span class="d_inlinecode donthyphenate notranslate">auto</span>, the inferred return type must be
+        one of <span class="d_inlinecode donthyphenate notranslate">void</span>, <span class="d_inlinecode donthyphenate notranslate">int</span> and <span class="d_inlinecode donthyphenate notranslate">noreturn</span>.</li>
         </ul>
+<div class="blankline"></div>
+        <p>If the <span class="d_inlinecode donthyphenate notranslate">string[]</span> parameter is declared, the parameter will hold
+        arguments passed to the program by the OS. The first argument is typically
+        the executable name, followed by any command-line arguments.</p>
+<div class="blankline"></div>
+        <div class="spec-boxes note"><b>Note:</b> The runtime can remove any arguments prefixed <span class="d_inlinecode donthyphenate notranslate">--DRT-</span>.</div>
 <div class="blankline"></div>
         <p>The main function must have D linkage.</p>
 <div class="blankline"></div>
@@ -3192,7 +3246,7 @@ Bar
     <ol>    <li>Expressions may not reference any global or local
         static variables.</li>
 <div class="blankline"></div>
-    <li><a href="../iasm.html#asmstatements">AsmStatements</a> are not permitted</li>
+    <li><a href="../spec/iasm.html#asmstatements">AsmStatements</a> are not permitted</li>
 <div class="blankline"></div>
     <li>Non-portable casts (eg, from <span class="d_inlinecode donthyphenate notranslate">int[]</span> to <span class="d_inlinecode donthyphenate notranslate">float[]</span>), including
         casts which depend on endianness, are not permitted.
@@ -3321,14 +3375,14 @@ Bar
             These operations are not allowed in No-GC functions:
         </p>
 <div class="blankline"></div>
-        <ol>        <li><a href="../expression.html#ArrayLiteral">constructing an array</a> on the heap</li>
+        <ol>        <li><a href="../spec/expression.html#ArrayLiteral">constructing an array</a> on the heap</li>
         <li>resizing an array by writing to its <span class="d_inlinecode donthyphenate notranslate">.length</span> property</li>
-        <li><a href="../expression.html#CatExpression">array concatenation</a></li>
-        <li><a href="../expression.html#simple_assignment_expressions">array appending</a></li>
-        <li><a href="../expression.html#AssocArrayLiteral">constructing an associative array</a></li>
-        <li><a href="../expression.html#IndexExpression">indexing</a> an associative array
+        <li><a href="../spec/expression.html#CatExpression">array concatenation</a></li>
+        <li><a href="../spec/expression.html#simple_assignment_expressions">array appending</a></li>
+        <li><a href="../spec/expression.html#AssocArrayLiteral">constructing an associative array</a></li>
+        <li><a href="../spec/expression.html#IndexExpression">indexing</a> an associative array
             <div class="spec-boxes note"><b>Note:</b> because it may throw <span class="d_inlinecode donthyphenate notranslate">RangeError</span> if the specified key is not present</div></li>
-        <li><a href="../expression.html#NewExpression">allocating an object with <span class="d_inlinecode donthyphenate notranslate">new</span></a> on the heap</li>
+        <li><a href="../spec/expression.html#NewExpression">allocating an object with <span class="d_inlinecode donthyphenate notranslate">new</span></a> on the heap</li>
         <li>calling functions that are not <span class="d_inlinecode donthyphenate notranslate">@nogc</span>, unless the call is
             in a <a href="../spec/version.html#ConditionalStatement"><i>ConditionalStatement</i></a>
             controlled by a <a href="../spec/version.html#DebugCondition"><i>DebugCondition</i></a></li>
@@ -3898,7 +3952,7 @@ obj.prop;      <span class="d_comment">// if X does not have member prop, reinte
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:42 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:58 2022
 </div>
     </div>
 </div>

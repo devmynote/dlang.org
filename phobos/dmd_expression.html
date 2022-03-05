@@ -566,6 +566,134 @@
   <li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#Modifiable" id="Modifiable"><code class="code">Modifiable</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Modifiable"></span>enum <code class="code">Modifiable</code>: int;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Return value for <code class="code">checkModifiable</code>
+  </p>
+</div>
+
+</section>
+<ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Modifiable.no" id="Modifiable.no"><code class="code">no</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Modifiable.no"></span><code class="code">no</code>
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Not modifiable
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Modifiable.yes" id="Modifiable.yes"><code class="code">yes</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Modifiable.yes"></span><code class="code">yes</code>
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Modifiable (the type is mutable)
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Modifiable.initialization" id="Modifiable.initialization"><code class="code">initialization</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Modifiable.initialization"></span><code class="code">initialization</code>
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Modifiable because it is <code class="code">initialization</code>
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li>
+</ul>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#ModifyFlags" id="ModifyFlags"><code class="code">ModifyFlags</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -2271,7 +2399,14 @@ When this function returns <code class="code">true</code>, <code class="code">ch
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A compile-time known integer value
+  </p>
+</div>
+
+</section>
 <ul class="ddoc_members">
   <li class="ddoc_member">
   <div class="ddoc_member_header">
@@ -2396,7 +2531,13 @@ v = The value of the expression
   <div class="ddoc_summary">
   <p class="para">
     Use this expression for error recovery.
- It should behave as a 'sink' to prevent further cascaded error messages.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    It should behave as a 'sink' to prevent further cascaded error messages.
   </p>
 </div>
 
@@ -2430,6 +2571,13 @@ v = The value of the expression
   <p class="para">
     An uninitialized value,
  generated from void initializers.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    <a href="https://dlang.org/spec/declaration.html#void_init">https://dlang.org/spec/declaration.html#void_init</a>
   </p>
 </div>
 
@@ -2525,7 +2673,14 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A compile-time known floating point number
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -2550,7 +2705,14 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A compile-time complex number (deprecated)
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -2575,7 +2737,33 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    An identifier in the context of an expression (as opposed to a declaration)
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    
+<section class="code_listing">
+  <div class="code_sample">
+    <div class="dlang">
+      <ol class="code_lines">
+        <li><code class="code"><span class="keyword">int</span> x; <span class="comment">// VarDeclaration with Identifier
+</span>x++; <span class="comment">// PostExp with IdentifierExp
+</span></code></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -2600,7 +2788,21 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The dollar operator used when indexing or slicing an array. E.g <code class="code">a[$]</code>, <code class="code">a[1 .. $]</code> etc.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    <a href="https://dlang.org/spec/arrays.html#array-length">https://dlang.org/spec/arrays.html#array-length</a>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -2723,6 +2925,13 @@ v = The value of the expression
 <div class="ddoc_decl">
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
+  <p class="para">
+    A compile-time known <code class="code">null</code> value
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
   <p class="para">
     <a href="https://dlang.org/spec/expression.html#null">https://dlang.org/spec/expression.html#null</a>
   </p>
@@ -3306,7 +3515,33 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A sequence of expressions
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    
+<section class="code_listing">
+  <div class="code_sample">
+    <div class="dlang">
+      <ol class="code_lines">
+        <li><code class="code"><span class="keyword">alias</span> AliasSeq(T...) = T;
+<span class="keyword">alias</span> Tup = AliasSeq!(3, <span class="keyword">int</span>, <span class="string_literal">"abc"</span>);
+</code></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -4210,7 +4445,7 @@ v = The value of the expression
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    thisexp.new(newargs) newtype(arguments)
+    newtype(arguments)
   </p>
 </div>
 
@@ -4242,7 +4477,7 @@ v = The value of the expression
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    thisexp.new(newargs) class baseclasses { } (arguments)
+    class baseclasses { } (arguments)
   </p>
 </div>
 
@@ -4529,7 +4764,21 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Generates a halt instruction
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    <code class="code">assert(0)</code> gets rewritten to this with <code class="code">CHECKACTION.halt</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -4587,7 +4836,21 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Base class for unary operators
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    <a href="https://dlang.org/spec/expression.html#unary-expression">https://dlang.org/spec/expression.html#unary-expression</a>
+  </p>
+</div>
+
+</section>
 <ul class="ddoc_members">
   <li class="ddoc_member">
   <div class="ddoc_member_header">
@@ -4689,7 +4952,14 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Base class for binary operators
+  </p>
+</div>
+
+</section>
 <ul class="ddoc_members">
   <li class="ddoc_member">
   <div class="ddoc_member_header">
@@ -4791,7 +5061,14 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Binary operator assignment, <code class="code">+=</code> <code class="code">-=</code> <code class="code">*=</code> etc.
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -4818,6 +5095,13 @@ v = The value of the expression
 <div class="ddoc_decl">
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
+  <p class="para">
+    A string mixin, <code class="code">mixin("x")</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
   <p class="para">
     <a href="https://dlang.org/spec/expression.html#mixin_expressions">https://dlang.org/spec/expression.html#mixin_expressions</a>
   </p>
@@ -4848,7 +5132,23 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    An import expression, <code class="code">import("file.txt")</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    Not to be confused with module imports, <code class="code">import std.stdio</code>, which is an <code class="code">ImportStatement</code>
+<br><br>
+ <a href="https://dlang.org/spec/expression.html#import_expressions">https://dlang.org/spec/expression.html#import_expressions</a>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -4875,6 +5175,13 @@ v = The value of the expression
 <div class="ddoc_decl">
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
+  <p class="para">
+    An assert expression, <code class="code">assert(x == y)</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
   <p class="para">
     <a href="https://dlang.org/spec/expression.html#assert_expressions">https://dlang.org/spec/expression.html#assert_expressions</a>
   </p>
@@ -5367,7 +5674,14 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The 'address of' operator, <code class="code">&amp;p</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -5392,7 +5706,14 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The pointer dereference operator, <code class="code">*p</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -5417,7 +5738,14 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The negation operator, <code class="code">-x</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -5442,7 +5770,14 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The unary add operator, <code class="code">+x</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -5467,7 +5802,14 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The bitwise complement operator, <code class="code">~x</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -5492,7 +5834,14 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The logical not operator, <code class="code">!x</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -5517,7 +5866,21 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The delete operator, <code class="code">delete x</code> (deprecated)
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    <a href="https://dlang.org/spec/expression.html#delete_expressions">https://dlang.org/spec/expression.html#delete_expressions</a>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -5545,7 +5908,16 @@ v = The value of the expression
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Possible to cast to one type while painting to another type
+    The type cast operator, <code class="code">cast(T) x</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    It's possible to cast to one type while painting to another type
+<br><br>
+ <a href="https://dlang.org/spec/expression.html#cast_expressions">https://dlang.org/spec/expression.html#cast_expressions</a>
   </p>
 </div>
 
@@ -5705,7 +6077,14 @@ v = The value of the expression
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The <code class="code">.length</code> property of an array
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -5973,6 +6352,45 @@ Since most constructor calls are rewritting, the only place where
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#DelegatePtrExp" id="DelegatePtrExp"><code class="code">DelegatePtrExp</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="DelegatePtrExp"></span>class <code class="code">DelegatePtrExp</code>: <span class="ddoc_psuper_symbol">dmd.expression.UnaExp</span>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The <code class="code">dg.ptr</code> property, pointing to the delegate's 'context'
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    c.f.<code class="code">DelegateFuncptrExp</code> for the delegate's function pointer <code class="code">dg.funcptr</code>
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#DelegateFuncptrExp" id="DelegateFuncptrExp"><code class="code">DelegateFuncptrExp</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -5991,7 +6409,21 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The <code class="code">dg.funcptr</code> property, pointing to the delegate's function
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    c.f.<code class="code">DelegatePtrExp</code> for the delegate's function pointer <code class="code">dg.ptr</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6051,7 +6483,7 @@ Since most constructor calls are rewritting, the only place where
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    For both i++ and i--
+    The postfix increment/decrement operator, <code class="code">i++</code> / <code class="code">i--</code>
   </p>
 </div>
 
@@ -6083,7 +6515,7 @@ Since most constructor calls are rewritting, the only place where
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    For both ++i and --i
+    The prefix increment/decrement operator, <code class="code">++i</code> / <code class="code">--i</code>
   </p>
 </div>
 
@@ -6112,7 +6544,21 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The assignment / initialization operator, <code class="code">=</code>
+
+  </p>
+</div>
+<div class="ddoc_section">
+  <p class="para">
+    <span class="ddoc_section_h">Note:</span>
+operator assignment <code class="code">op=</code> has a different base class, <code class="code">BinAssignExp</code>
+  </p>
+</div>
+
+</section>
 <ul class="ddoc_members">
   <li class="ddoc_member">
   <div class="ddoc_member_header">
@@ -6190,7 +6636,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A bit-for-bit copy from <code class="code">e2</code> to <code class="code">e1</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6215,7 +6668,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">x += y</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6240,7 +6700,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">x -= y</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6265,7 +6732,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">x *= y</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6290,7 +6764,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">x /= y</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6315,7 +6796,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">x %= y</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6340,7 +6828,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">x &amp;= y</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6365,7 +6860,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">x |= y</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6390,7 +6892,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">x ^= y</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6415,7 +6924,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">x ^^= y</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6440,7 +6956,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">x &lt;&lt;= y</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6465,7 +6988,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">x &gt;&gt;= y</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6490,7 +7020,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">x &gt;&gt;&gt;= y</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6518,14 +7055,16 @@ Since most constructor calls are rewritting, the only place where
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    The ~= operator. It can have one of the following operators:
+    The <code class="code">~=</code> operator.
 
   </p>
 </div>
 <div class="ddoc_description">
   <h4>Discussion</h4>
   <p class="para">
-    EXP.concatenateAssign      - appending T[] to T[]
+    It can have one of the following operators:
+<br><br>
+ EXP.concatenateAssign      - appending T[] to T[]
  EXP.concatenateElemAssign  - appending T to T[]
  EXP.concatenateDcharAssign - appending dchar to T[]
 <br><br>
@@ -6559,7 +7098,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The <code class="code">~=</code> operator when appending a single element
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6584,7 +7130,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The <code class="code">~=</code> operator when appending a single <code class="code">dchar</code>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6611,6 +7164,13 @@ Since most constructor calls are rewritting, the only place where
 <div class="ddoc_decl">
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
+  <p class="para">
+    The addition operator, <code class="code">x + y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
   <p class="para">
     <a href="https://dlang.org/spec/expression.html#add_expressions">https://dlang.org/spec/expression.html#add_expressions</a>
   </p>
@@ -6641,7 +7201,21 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The minus operator, <code class="code">x - y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    <a href="https://dlang.org/spec/expression.html#add_expressions">https://dlang.org/spec/expression.html#add_expressions</a>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6668,6 +7242,13 @@ Since most constructor calls are rewritting, the only place where
 <div class="ddoc_decl">
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
+  <p class="para">
+    The concatenation operator, <code class="code">x ~ y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
   <p class="para">
     <a href="https://dlang.org/spec/expression.html#cat_expressions">https://dlang.org/spec/expression.html#cat_expressions</a>
   </p>
@@ -6701,6 +7282,13 @@ Since most constructor calls are rewritting, the only place where
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
+    The multiplication operator, <code class="code">x * y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
     <a href="https://dlang.org/spec/expression.html#mul_expressions">https://dlang.org/spec/expression.html#mul_expressions</a>
   </p>
 </div>
@@ -6732,6 +7320,13 @@ Since most constructor calls are rewritting, the only place where
 <div class="ddoc_decl">
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
+  <p class="para">
+    The division operator, <code class="code">x / y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
   <p class="para">
     <a href="https://dlang.org/spec/expression.html#mul_expressions">https://dlang.org/spec/expression.html#mul_expressions</a>
   </p>
@@ -6765,6 +7360,13 @@ Since most constructor calls are rewritting, the only place where
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
+    The modulo operator, <code class="code">x % y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
     <a href="https://dlang.org/spec/expression.html#mul_expressions">https://dlang.org/spec/expression.html#mul_expressions</a>
   </p>
 </div>
@@ -6797,6 +7399,13 @@ Since most constructor calls are rewritting, the only place where
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
+    The 'power' operator, <code class="code">x ^^ y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
     <a href="https://dlang.org/spec/expression.html#pow_expressions">https://dlang.org/spec/expression.html#pow_expressions</a>
   </p>
 </div>
@@ -6826,7 +7435,21 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The 'shift left' operator, <code class="code">x &lt;&lt; y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    <a href="https://dlang.org/spec/expression.html#shift_expressions">https://dlang.org/spec/expression.html#shift_expressions</a>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6851,7 +7474,21 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The 'shift right' operator, <code class="code">x &gt;&gt; y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    <a href="https://dlang.org/spec/expression.html#shift_expressions">https://dlang.org/spec/expression.html#shift_expressions</a>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6876,7 +7513,21 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The 'unsigned shift right' operator, <code class="code">x &gt;&gt;&gt; y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    <a href="https://dlang.org/spec/expression.html#shift_expressions">https://dlang.org/spec/expression.html#shift_expressions</a>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6901,7 +7552,21 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The bitwise 'and' operator, <code class="code">x &amp; y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    <a href="https://dlang.org/spec/expression.html#and_expressions">https://dlang.org/spec/expression.html#and_expressions</a>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6926,7 +7591,21 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The bitwise 'or' operator, <code class="code">x | y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    <a href="https://dlang.org/spec/expression.html#or_expressions">https://dlang.org/spec/expression.html#or_expressions</a>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6951,7 +7630,21 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The bitwise 'xor' operator, <code class="code">x ^ y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    <a href="https://dlang.org/spec/expression.html#xor_expressions">https://dlang.org/spec/expression.html#xor_expressions</a>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -6978,6 +7671,13 @@ Since most constructor calls are rewritting, the only place where
 <div class="ddoc_decl">
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
+  <p class="para">
+    The logical 'and' / 'or' operator, <code class="code">X &amp;&amp; Y</code> / <code class="code">X || Y</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
   <p class="para">
     <a href="https://dlang.org/spec/expression.html#andand_expressions">https://dlang.org/spec/expression.html#andand_expressions</a>
  <a href="https://dlang.org/spec/expression.html#oror_expressions">https://dlang.org/spec/expression.html#oror_expressions</a>
@@ -7012,15 +7712,17 @@ Since most constructor calls are rewritting, the only place where
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    <code class="code">op</code> is one of:
-      EXP.lessThan, EXP.lessOrEqual, EXP.greaterThan, EXP.greaterOrEqual
+    A comparison operator, <code class="code">&lt;</code> <code class="code">&lt;=</code> <code class="code">&gt;</code> <code class="code">&gt;=</code>
 
   </p>
 </div>
 <div class="ddoc_description">
   <h4>Discussion</h4>
   <p class="para">
-    <a href="https://dlang.org/spec/expression.html#relation_expressions">https://dlang.org/spec/expression.html#relation_expressions</a>
+    <code class="code">op</code> is one of:
+      EXP.lessThan, EXP.lessOrEqual, EXP.greaterThan, EXP.greaterOrEqual
+<br><br>
+ <a href="https://dlang.org/spec/expression.html#relation_expressions">https://dlang.org/spec/expression.html#relation_expressions</a>
   </p>
 </div>
 
@@ -7049,7 +7751,23 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The <code class="code">in</code> operator, <code class="code">"a" in ["a": 1]</code>
+
+  </p>
+</div>
+<div class="ddoc_section">
+  <p class="para">
+    <span class="ddoc_section_h">Note:</span>
+<code class="code">x !in y</code> is rewritten to <code class="code">!(x in y)</code> in the parser
+<br><br>
+ <a href="https://dlang.org/spec/expression.html#in_expressions">https://dlang.org/spec/expression.html#in_expressions</a>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -7076,6 +7794,13 @@ Since most constructor calls are rewritting, the only place where
 <div class="ddoc_decl">
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
+  <p class="para">
+    Associative array removal, <code class="code">aa.remove(arg)</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
   <p class="para">
     This deletes the key e1 from the associative array e2
   </p>
@@ -7191,7 +7916,7 @@ Since most constructor calls are rewritting, the only place where
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    <code class="code">econd ? e1 : e2</code>
+    The ternary operator, <code class="code">econd ? e1 : e2</code>
 
   </p>
 </div>
@@ -7260,7 +7985,38 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A special keyword when used as a function's default argument
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+     When possible, special keywords are resolved in the parser, but when
+ appearing as a default argument, they result in an expression deriving
+ from this base class that is resolved for each function call.
+<br><br>
+
+<section class="code_listing">
+  <div class="code_sample">
+    <div class="dlang">
+      <ol class="code_lines">
+        <li><code class="code"><span class="keyword">const</span> x = <span class="keyword">__LINE__</span>; <span class="comment">// resolved in the parser
+</span><span class="keyword">void</span> foo(string file = <span class="keyword">__FILE__</span>, <span class="keyword">int</span> line = <span class="keyword">__LINE__</span>); <span class="comment">// DefaultInitExp
+</span></code></li>
+      </ol>
+    </div>
+  </div>
+</section>
+<br><br>
+ <a href="https://dlang.org/spec/expression.html#specialkeywords">https://dlang.org/spec/expression.html#specialkeywords</a>
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -7285,7 +8041,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The <code class="code">__FILE__</code> token as a default argument
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -7310,7 +8073,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The <code class="code">__LINE__</code> token as a default argument
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -7335,7 +8105,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The <code class="code">__MODULE__</code> token as a default argument
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -7360,7 +8137,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The <code class="code">__FUNCTION__</code> token as a default argument
+  </p>
+</div>
+
+</section>
 
 </div>
 
@@ -7385,7 +8169,14 @@ Since most constructor calls are rewritting, the only place where
   </section>
 </div>
 <div class="ddoc_decl">
-  
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The <code class="code">__PRETTY_FUNCTION__</code> token as a default argument
+  </p>
+</div>
+
+</section>
 
 </div>
 

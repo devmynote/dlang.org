@@ -161,6 +161,7 @@
     <li><a href="#aliased-types">Aliase型</a><ol>        <li><a href="#size_t"><span class="d_inlinecode donthyphenate notranslate">size_t</span></a></li>
         <li><a href="#ptrdiff_t"><span class="d_inlinecode donthyphenate notranslate">ptrdiff_t</span></a></li>
         <li><a href="#string"><span class="d_inlinecode donthyphenate notranslate">string</span></a></li>
+        <li><a href="#noreturn"><span class="d_inlinecode donthyphenate notranslate">noreturn</span></a></li>
     </ol></li>
 </ol>
 </div>
@@ -293,9 +294,9 @@
 <div class="blankline"></div>
 <h2><span id="Derived Data Types"><a class="anchor" title="Permalink to this section" id="derived-data-types" href="#derived-data-types">派生データ型</a></span></h2>
 <div class="blankline"></div>
-    <ul>    <li><a href="../arrays.html#pointers">Pointer</a></li>
-    <li><a href="../arrays.html#static-arrays">Static Array</a></li>
-    <li><a href="../arrays.html#dynamic-arrays">Dynamic Array</a></li>
+    <ul>    <li><a href="../spec/arrays.html#pointers">Pointer</a></li>
+    <li><a href="../spec/arrays.html#static-arrays">Static Array</a></li>
+    <li><a href="../spec/arrays.html#dynamic-arrays">Dynamic Array</a></li>
     <li><a href="../spec/hash-map.html">Associative Array</a></li>
     <li><a href="../spec/function.html">Functions</a></li>
     <li><a href="#delegates">Delegates</a></li>
@@ -641,6 +642,14 @@ dg = &amp;o.member; <span class="d_comment">// dg is a delegate to object o and
 <span class="d_keyword">typeof</span>(S.foo) n;  <span class="d_comment">// n is declared to be an int
 </span></pre>
 <div class="blankline"></div>
+        <p>If the expression is a <a href="../.html">Template</a>,
+        <span class="d_inlinecode donthyphenate notranslate">typeof</span> gives the type <span class="d_inlinecode donthyphenate notranslate">void</span>.
+        </p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">template</span> t {}
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(t) == <span class="d_keyword">void</span>));
+</pre>
+<div class="blankline"></div>
         <div class="spec-boxes best-practice"><b>Best Practices:</b>         <ol>        <li><i>Typeof</i> is most useful in writing generic
         template code.</li>
         </ol>
@@ -684,6 +693,37 @@ dg = &amp;o.member; <span class="d_comment">// dg is a delegate to object o and
 <div class="blankline"></div>
     <p>A <a href="../spec/arrays.html#strings"><i>string</i> is a special case of an array.</a></p>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="noreturn" href="#noreturn"><span class="d_inlinecode donthyphenate notranslate">noreturn</span></a></h3>
+<div class="blankline"></div>
+    <p><span class="d_inlinecode donthyphenate notranslate">noreturn</span> is the <a href="https://en.wikipedia.org/wiki/Bottom_type">bottom type</a>
+    which can implicitly convert to any type, including <span class="d_inlinecode donthyphenate notranslate">void</span>.
+    A value of type <span class="d_inlinecode donthyphenate notranslate">noreturn</span> will never be produced and the compiler can
+    optimize such code accordingly.</p>
+<div class="blankline"></div>
+    <p>A function that never returns has the return type <span class="d_inlinecode donthyphenate notranslate">noreturn</span>. This can
+    occur due to an infinite loop or always throwing an exception.</p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate">noreturn abort(<span class="d_keyword">const</span>(<span class="d_keyword">char</span>)[] message);
+
+<span class="d_keyword">int</span> example(<span class="d_keyword">int</span> i)
+{
+    <span class="d_keyword">if</span> (i &lt; 0)
+    {
+        <span class="d_comment">// abort does not return, so it doesn't need to produce an int
+</span>        <span class="d_keyword">int</span> val = abort(<span class="d_string">"less than zero"</span>);
+    }
+    <span class="d_comment">// ternary expression's common type is still int
+</span>    <span class="d_keyword">return</span> i != 0 ? 1024 / i : abort(<span class="d_string">"calculation went awry."</span>);
+}
+</pre>
+
+</div>
+<div class="blankline"></div>
+    <p><span class="d_inlinecode donthyphenate notranslate">noreturn</span> is defined as <span class="d_inlinecode donthyphenate notranslate">typeof(*null)</span>. This is because
+    dereferencing a null literal halts execution.</p>
+<div class="blankline"></div>
+<div class="blankline"></div>
 
 <div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/declaration.html">宣言[Declarations]</a></div>
 <div style="float: right"><a href="../spec/property.html">プロパティ[Properties]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
@@ -692,7 +732,7 @@ dg = &amp;o.member; <span class="d_comment">// dg is a delegate to object o and
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:41 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:57 2022
 </div>
     </div>
 </div>

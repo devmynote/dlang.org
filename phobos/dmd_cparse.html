@@ -1200,6 +1200,7 @@ C11
     restrict
     volatile
     Atomic
+    _stdcall
   </p>
 </div>
 
@@ -1363,7 +1364,7 @@ C11
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="CParser.cparseStructDeclaration"></span>void <code class="code">cparseStructDeclaration</code>();
+            <span class="ddoc_anchor" id="CParser.cparseStructDeclaration"></span>void <code class="code">cparseStructDeclaration</code>(AST.Dsymbols* <code class="code">members</code>);
 
           </code>
         </p>
@@ -1393,7 +1394,30 @@ C11
  struct-declarator:
     declarator
     declarator (opt) : constant-expression
+
   </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">AST.Dsymbols* <code class="code">members</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      where to put the fields (<code class="code">members</code>)
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
 </div>
 
 </section>

@@ -166,6 +166,7 @@
     <li><a href="#インラインアセンブラ">インラインアセンブラ</a></li>
     <li><a href="#名前付き文字">名前付き文字</a></li>
     <li><a href="#abi[application binary interface]">ABI[Application Binary Interface]</a></li>
+    <li><a href="#cのインポート[import c]">Cのインポート[Import C]</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -189,8 +190,6 @@
     <a href="#Constructor"><i>Constructor</i></a>
     <a href="#Destructor"><i>Destructor</i></a>
     <a href="#Postblit"><i>Postblit</i></a>
-    <a href="#Allocator"><i>Allocator</i></a>
-    <a href="#Deallocator"><i>Deallocator</i></a>
     <a href="#Invariant"><i>Invariant</i></a>
     <a href="#UnitTest"><i>UnitTest</i></a>
     <a href="#AliasThis"><i>AliasThis</i></a>
@@ -279,6 +278,12 @@
     <a href="#StaticForeachDeclaration"><i>StaticForeachDeclaration</i></a>
     <a href="#StaticAssert"><i>StaticAssert</i></a>
 </pre>
+<pre class="bnf notranslate"><a id="AggregateDeclaration"><span class="gname">AggregateDeclaration</span></a>:
+    <a href="#ClassDeclaration"><i>ClassDeclaration</i></a>
+    <a href="#InterfaceDeclaration"><i>InterfaceDeclaration</i></a>
+    <a href="#StructDeclaration"><i>StructDeclaration</i></a>
+    <a href="#UnionDeclaration"><i>UnionDeclaration</i></a>
+</pre>
 <pre class="bnf notranslate"><a id="VarDeclarations"><span class="gname">VarDeclarations</span></a>:
     <a href="#StorageClasses"><i>StorageClasses</i></a><sub>opt</sub> <a href="#BasicType"><i>BasicType</i></a> <a href="#Declarators"><i>Declarators</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
     <a href="#AutoDeclaration"><i>AutoDeclaration</i></a>
@@ -290,56 +295,20 @@
 <a id="DeclaratorInitializer"><span class="gname">DeclaratorInitializer</span></a>:
     <a href="#VarDeclarator"><i>VarDeclarator</i></a>
     <a href="#VarDeclarator"><i>VarDeclarator</i></a> <a href="#TemplateParameters"><i>TemplateParameters</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="#Initializer"><i>Initializer</i></a>
-    <a href="#AltDeclarator"><i>AltDeclarator</i></a>
-    <a href="#AltDeclarator"><i>AltDeclarator</i></a> <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="#Initializer"><i>Initializer</i></a>
 <div class="blankline"></div>
 <a id="DeclaratorIdentifierList"><span class="gname">DeclaratorIdentifierList</span></a>:
     <a href="#DeclaratorIdentifier"><i>DeclaratorIdentifier</i></a>
     <a href="#DeclaratorIdentifier"><i>DeclaratorIdentifier</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span> <i>DeclaratorIdentifierList</i>
 <div class="blankline"></div>
-<a id="DeclaratorIdentifier"><span class="gname">DeclaratorIdentifier</span></a>:
-    <a href="#VarDeclaratorIdentifier"><i>VarDeclaratorIdentifier</i></a>
-    <a href="#AltDeclaratorIdentifier"><i>AltDeclaratorIdentifier</i></a>
-<div class="blankline"></div>
-<a id="VarDeclaratorIdentifier"><span class="gname">VarDeclaratorIdentifier</span></a>:
+<a id="DeclaratorIdentifier"><span class="gname">DeclaratorIdentifier</span></a>:<span id="VarDeclaratorIdentifier"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span>
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateParameters"><i>TemplateParameters</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="#Initializer"><i>Initializer</i></a>
 <div class="blankline"></div>
-<a id="AltDeclaratorIdentifier"><span class="gname">AltDeclaratorIdentifier</span></a>:
-    <a href="#TypeSuffixes"><i>TypeSuffixes</i></a> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AltDeclaratorSuffixes"><i>AltDeclaratorSuffixes</i></a><sub>opt</sub>
-    <a href="#TypeSuffixes"><i>TypeSuffixes</i></a> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AltDeclaratorSuffixes"><i>AltDeclaratorSuffixes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="#Initializer"><i>Initializer</i></a>
-    <a href="#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AltDeclaratorSuffixes"><i>AltDeclaratorSuffixes</i></a>
-    <a href="#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AltDeclaratorSuffixes"><i>AltDeclaratorSuffixes</i></a> <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="#Initializer"><i>Initializer</i></a>
-<div class="blankline"></div>
 <a id="Declarator"><span class="gname">Declarator</span></a>:
     <a href="#VarDeclarator"><i>VarDeclarator</i></a>
-    <a href="#AltDeclarator"><i>AltDeclarator</i></a>
 <div class="blankline"></div>
 <a id="VarDeclarator"><span class="gname">VarDeclarator</span></a>:
     <a href="#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
-<div class="blankline"></div>
-<a id="AltDeclarator"><span class="gname">AltDeclarator</span></a>:
-    <a href="#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AltDeclaratorSuffixes"><i>AltDeclaratorSuffixes</i></a>
-    <a href="#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#AltDeclaratorInner"><i>AltDeclaratorInner</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
-    <a href="#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#AltDeclaratorInner"><i>AltDeclaratorInner</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#AltFuncDeclaratorSuffix"><i>AltFuncDeclaratorSuffix</i></a>
-    <a href="#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#AltDeclaratorInner"><i>AltDeclaratorInner</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#AltDeclaratorSuffixes"><i>AltDeclaratorSuffixes</i></a>
-<div class="blankline"></div>
-<a id="AltDeclaratorInner"><span class="gname">AltDeclaratorInner</span></a>:
-    <a href="#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
-    <a href="#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AltFuncDeclaratorSuffix"><i>AltFuncDeclaratorSuffix</i></a>
-    <a href="#AltDeclarator"><i>AltDeclarator</i></a>
-<div class="blankline"></div>
-<a id="AltDeclaratorSuffixes"><span class="gname">AltDeclaratorSuffixes</span></a>:
-    <a href="#AltDeclaratorSuffix"><i>AltDeclaratorSuffix</i></a>
-    <a href="#AltDeclaratorSuffix"><i>AltDeclaratorSuffix</i></a> <i>AltDeclaratorSuffixes</i>
-<div class="blankline"></div>
-<a id="AltDeclaratorSuffix"><span class="gname">AltDeclaratorSuffix</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">[ ]</span>
-    <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
-    <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
-<div class="blankline"></div>
-<a id="AltFuncDeclaratorSuffix"><span class="gname">AltFuncDeclaratorSuffix</span></a>:
-    <a href="#Parameters"><i>Parameters</i></a> <a href="#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub>
 </pre>
 <pre class="bnf notranslate"><a id="StorageClasses"><span class="gname">StorageClasses</span></a>:
     <a href="#StorageClass"><i>StorageClass</i></a>
@@ -374,12 +343,9 @@
     <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
 <div class="blankline"></div>
 <a id="NonVoidInitializer"><span class="gname">NonVoidInitializer</span></a>:
-    <a href="#ExpInitializer"><i>ExpInitializer</i></a>
+    <a href="#AssignExpression"><i>AssignExpression</i></a><span id="ExpInitializer"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span>
     <a href="#ArrayInitializer"><i>ArrayInitializer</i></a>
-    <a href="#StructInitializer"><i>StructInitializer</i></a>
-<div class="blankline"></div>
-<a id="ExpInitializer"><span class="gname">ExpInitializer</span></a>:
-    <a href="#AssignExpression"><i>AssignExpression</i></a>
+    <a href="#StructInitializer"><i>StructInitializer</i></a><span id="StructInitializer"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span>
 <div class="blankline"></div>
 <a id="ArrayInitializer"><span class="gname">ArrayInitializer</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#ArrayMemberInitializations"><i>ArrayMemberInitializations</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">]</span>
@@ -392,18 +358,6 @@
 <a id="ArrayMemberInitialization"><span class="gname">ArrayMemberInitialization</span></a>:
     <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
     <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
-<div class="blankline"></div>
-<a id="StructInitializer"><span class="gname">StructInitializer</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">{</span> <a href="#StructMemberInitializers"><i>StructMemberInitializers</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">}</span>
-<div class="blankline"></div>
-<a id="StructMemberInitializers"><span class="gname">StructMemberInitializers</span></a>:
-    <a href="#StructMemberInitializer"><i>StructMemberInitializer</i></a>
-    <a href="#StructMemberInitializer"><i>StructMemberInitializer</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span>
-    <a href="#StructMemberInitializer"><i>StructMemberInitializer</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span> <i>StructMemberInitializers</i>
-<div class="blankline"></div>
-<a id="StructMemberInitializer"><span class="gname">StructMemberInitializer</span></a>:
-    <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
-    <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="AutoDeclaration"><span class="gname">AutoDeclaration</span></a>:
     <a href="#StorageClasses"><i>StorageClasses</i></a> <a href="#AutoAssignments"><i>AutoAssignments</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -735,19 +689,17 @@
     <a href="#ComplementExpression"><i>ComplementExpression</i></a>
     <a href="#DeleteExpression"><i>DeleteExpression</i></a>
     <a href="#CastExpression"><i>CastExpression</i></a>
+    <a href="#ThrowExpression"><i>ThrowExpression</i></a>
     <a href="#PowExpression"><i>PowExpression</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="ComplementExpression"><span class="gname">ComplementExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">~</span> <a href="#UnaryExpression"><i>UnaryExpression</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="NewExpression"><span class="gname">NewExpression</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="#AllocatorArguments"><i>AllocatorArguments</i></a><sub>opt</sub> <a href="#Type"><i>Type</i></a>
-    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="#AllocatorArguments"><i>AllocatorArguments</i></a><sub>opt</sub> <a href="#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
-    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="#AllocatorArguments"><i>AllocatorArguments</i></a><sub>opt</sub> <a href="#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span>
+    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="#Type"><i>Type</i></a>
+    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
+    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span>
     <a href="#NewAnonClassExpression"><i>NewAnonClassExpression</i></a>
-<div class="blankline"></div>
-<a id="AllocatorArguments"><span class="gname">AllocatorArguments</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span>
 <div class="blankline"></div>
 <a id="ArgumentList"><span class="gname">ArgumentList</span></a>:
     <a href="#AssignExpression"><i>AssignExpression</i></a>
@@ -759,7 +711,13 @@
 </pre>
 <pre class="bnf notranslate"><a id="CastExpression"><span class="gname">CastExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">cast (</span> <a href="#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#UnaryExpression"><i>UnaryExpression</i></a>
+    <a href="#CastQual"><i>CastQual</i></a>
+</pre>
+<pre class="bnf notranslate"><a id="CastQual"><span class="gname">CastQual</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">cast (</span> <a href="#TypeCtors"><i>TypeCtors</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#UnaryExpression"><i>UnaryExpression</i></a>
+</pre>
+<pre class="bnf notranslate"><a id="ThrowExpression"><span class="gname">ThrowExpression</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">throw</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
 </pre>
 <pre class="bnf notranslate"><a id="PowExpression"><span class="gname">PowExpression</span></a>:
     <a href="#PostfixExpression"><i>PostfixExpression</i></a>
@@ -970,7 +928,6 @@
     <a href="#SynchronizedStatement"><i>SynchronizedStatement</i></a>
     <a href="#TryStatement"><i>TryStatement</i></a>
     <a href="#ScopeGuardStatement"><i>ScopeGuardStatement</i></a>
-    <a href="#ThrowStatement"><i>ThrowStatement</i></a>
     <a href="#AsmStatement"><i>AsmStatement</i></a>
     <a href="#MixinStatement"><i>MixinStatement</i></a>
     <a href="#ForeachRangeStatement"><i>ForeachRangeStatement</i></a>
@@ -1161,9 +1118,6 @@
 <a id="FinallyStatement"><span class="gname">FinallyStatement</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">finally</span> <a href="#NoScopeNonEmptyStatement"><i>NoScopeNonEmptyStatement</i></a>
 </pre>
-<pre class="bnf notranslate"><a id="ThrowStatement"><span class="gname">ThrowStatement</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">throw</span> <a href="#Expression"><i>Expression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
-</pre>
 <pre class="bnf notranslate"><a id="ScopeGuardStatement"><span class="gname">ScopeGuardStatement</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">scope ( exit )</span> <a href="#NonEmptyOrScopeBlockStatement"><i>NonEmptyOrScopeBlockStatement</i></a>
     <span class="d_inlinecode donthyphenate notranslate">scope ( success )</span> <a href="#NonEmptyOrScopeBlockStatement"><i>NonEmptyOrScopeBlockStatement</i></a>
@@ -1180,17 +1134,11 @@
     <span class="d_inlinecode donthyphenate notranslate">mixin</span> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#ArgumentList"><i>ArgumentList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span> <span class="d_inlinecode donthyphenate notranslate">;</span>
 </pre>
 <h2><a class="anchor" title="Permalink to this section" id="構造体と共用体" href="#構造体と共用体">構造体と共用体</a></h2>
-<pre class="bnf notranslate"><a id="AggregateDeclaration"><span class="gname">AggregateDeclaration</span></a>:
-    <a href="#ClassDeclaration"><i>ClassDeclaration</i></a>
-    <a href="#InterfaceDeclaration"><i>InterfaceDeclaration</i></a>
-    <a href="#StructDeclaration"><i>StructDeclaration</i></a>
-    <a href="#UnionDeclaration"><i>UnionDeclaration</i></a>
-<div class="blankline"></div>
-<a id="StructDeclaration"><span class="gname">StructDeclaration</span></a>:
+<pre class="bnf notranslate"><a id="StructDeclaration"><span class="gname">StructDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">struct</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
     <span class="d_inlinecode donthyphenate notranslate">struct</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AggregateBody"><i>AggregateBody</i></a>
     <a href="#StructTemplateDeclaration"><i>StructTemplateDeclaration</i></a>
-    <a href="#AnonStructDeclaration"><i>AnonStructDeclaration</i></a>
+    <i>AnonStructDeclaration</i>
 <div class="blankline"></div>
 <a id="AnonStructDeclaration"><span class="gname">AnonStructDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">struct</span> <a href="#AggregateBody"><i>AggregateBody</i></a>
@@ -1199,13 +1147,25 @@
     <span class="d_inlinecode donthyphenate notranslate">union</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
     <span class="d_inlinecode donthyphenate notranslate">union</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AggregateBody"><i>AggregateBody</i></a>
     <a href="#UnionTemplateDeclaration"><i>UnionTemplateDeclaration</i></a>
-    <a href="#AnonUnionDeclaration"><i>AnonUnionDeclaration</i></a>
+    <i>AnonUnionDeclaration</i>
 <div class="blankline"></div>
 <a id="AnonUnionDeclaration"><span class="gname">AnonUnionDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">union</span> <a href="#AggregateBody"><i>AggregateBody</i></a>
 <div class="blankline"></div>
 <a id="AggregateBody"><span class="gname">AggregateBody</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">{</span> <a href="#DeclDefs"><i>DeclDefs</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">}</span>
+</pre>
+<pre class="bnf notranslate"><a id="StructInitializer"><span class="gname">StructInitializer</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">{</span> <i>StructMemberInitializers</i><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">}</span>
+<div class="blankline"></div>
+<a id="StructMemberInitializers"><span class="gname">StructMemberInitializers</span></a>:
+    <i>StructMemberInitializer</i>
+    <i>StructMemberInitializer</i> <span class="d_inlinecode donthyphenate notranslate">,</span>
+    <i>StructMemberInitializer</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <i>StructMemberInitializers</i>
+<div class="blankline"></div>
+<a id="StructMemberInitializer"><span class="gname">StructMemberInitializer</span></a>:
+    <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
+    <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="Postblit"><span class="gname">Postblit</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">this ( this )</span> <a href="#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -1264,21 +1224,18 @@
     <span class="d_inlinecode donthyphenate notranslate">invariant</span> <a href="#BlockStatement"><i>BlockStatement</i></a>
     <span class="d_inlinecode donthyphenate notranslate">invariant (</span> <a href="#AssertArguments"><i>AssertArguments</i></a> <span class="d_inlinecode donthyphenate notranslate">) ;</span>
 </pre>
-<pre class="bnf notranslate"><a id="Allocator"><span class="gname">Allocator</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="#Parameters"><i>Parameters</i></a> <a href="#FunctionBody"><i>FunctionBody</i></a>
-</pre>
 <pre class="bnf notranslate"><a id="AliasThis"><span class="gname">AliasThis</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">alias</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">this ;</span>
 </pre>
 <pre class="bnf notranslate"><a id="NewAnonClassExpression"><span class="gname">NewAnonClassExpression</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="#AllocatorArguments"><i>AllocatorArguments</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">class</span> <a href="#ConstructorArgs"><i>ConstructorArgs</i></a><sub>opt</sub> <a href="#SuperClassOrInterface"><i>SuperClassOrInterface</i></a><sub>opt</sub> <a href="#Interfaces"><i>Interfaces</i></a><sub>opt</sub> <a href="#AggregateBody"><i>AggregateBody</i></a>
+    <span class="d_inlinecode donthyphenate notranslate">new</span> <span class="d_inlinecode donthyphenate notranslate">class</span> <a href="#ConstructorArgs"><i>ConstructorArgs</i></a><sub>opt</sub> <a href="#SuperClassOrInterface"><i>SuperClassOrInterface</i></a><sub>opt</sub> <a href="#Interfaces"><i>Interfaces</i></a><sub>opt</sub> <a href="#AggregateBody"><i>AggregateBody</i></a>
 <div class="blankline"></div>
 <a id="ConstructorArgs"><span class="gname">ConstructorArgs</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span>
 </pre>
 <pre class="bnf notranslate"><span class="d_inlinecode donthyphenate notranslate">class</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <i>SuperClassOrInterface</i> <i>Interfaces</i> <i>AggregateBody</i>
 // ...
-<span class="d_inlinecode donthyphenate notranslate">new</span> <i>AllocatorArguments</i> <i>Identifier</i> <i>ConstructorArgs</i>
+<span class="d_inlinecode donthyphenate notranslate">new</span> <i>Identifier</i> <i>ConstructorArgs</i>
 </pre>
 <h2><a class="anchor" title="Permalink to this section" id="インターフェース[interfaces]" href="#インターフェース[interfaces]">インターフェース[Interfaces]</a></h2>
 <pre class="bnf notranslate"><a id="InterfaceDeclaration"><span class="gname">InterfaceDeclaration</span></a>:
@@ -1435,7 +1392,7 @@
     <a href="#FunctionContracts"><i>FunctionContracts</i></a><sub>opt</sub> <a href="#InOutStatement"><i>InOutStatement</i></a>
 <div class="blankline"></div>
 <a id="ShortenedFunctionBody"><span class="gname">ShortenedFunctionBody</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">=&gt;</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
+    <a href="#InOutContractExpressions"><i>InOutContractExpressions</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">=&gt;</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
 </pre>
 <pre class="bnf notranslate"><a id="FunctionContracts"><span class="gname">FunctionContracts</span></a>:
     <a href="#FunctionContract"><i>FunctionContract</i></a>
@@ -1444,6 +1401,10 @@
 <a id="FunctionContract"><span class="gname">FunctionContract</span></a>:
     <a href="#InOutContractExpression"><i>InOutContractExpression</i></a>
     <a href="#InOutStatement"><i>InOutStatement</i></a>
+<div class="blankline"></div>
+<a id="InOutContractExpressions"><span class="gname">InOutContractExpressions</span></a>:
+    <a href="#InOutContractExpression"><i>InOutContractExpression</i></a>
+    <a href="#InOutContractExpression"><i>InOutContractExpression</i></a> <i>InOutContractExpressions</i>
 <div class="blankline"></div>
 <a id="InOutContractExpression"><span class="gname">InOutContractExpression</span></a>:
     <a href="#InContractExpression"><i>InContractExpression</i></a>
@@ -1467,6 +1428,16 @@
     <span class="d_inlinecode donthyphenate notranslate">out</span> <a href="#BlockStatement"><i>BlockStatement</i></a>
     <span class="d_inlinecode donthyphenate notranslate">out</span> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#BlockStatement"><i>BlockStatement</i></a>
 </pre>
+<pre class="bnf notranslate">        <a id="MainFunction"><span class="gname">MainFunction</span></a>:
+            <a href="#MainReturnDecl"><i>MainReturnDecl</i></a> <span class="d_inlinecode donthyphenate notranslate">main()</span> <a href="#BlockStatement"><i>BlockStatement</i></a>
+            <a href="#MainReturnDecl"><i>MainReturnDecl</i></a> <span class="d_inlinecode donthyphenate notranslate">main(string[]</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a><span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#BlockStatement"><i>BlockStatement</i></a>
+<div class="blankline"></div>
+        <a id="MainReturnDecl"><span class="gname">MainReturnDecl</span></a>:
+            <span class="d_inlinecode donthyphenate notranslate">void</span>
+            <span class="d_inlinecode donthyphenate notranslate">int</span>
+            <a href="#noreturn"><i>noreturn</i></a>
+            <a href="#auto-functions"><span class="d_inlinecode donthyphenate notranslate">auto</span></a>
+        </pre>
 <h2><a class="anchor" title="Permalink to this section" id="テンプレート[templates]" href="#テンプレート[templates]">テンプレート[Templates]</a></h2>
 <pre class="bnf notranslate"><a id="TemplateDeclaration"><span class="gname">TemplateDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">template</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateParameters"><i>TemplateParameters</i></a> <a href="#Constraint"><i>Constraint</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">{</span> <a href="#DeclDefs"><i>DeclDefs</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">}</span>
@@ -1478,13 +1449,6 @@
     <a href="#TemplateParameter"><i>TemplateParameter</i></a>
     <a href="#TemplateParameter"><i>TemplateParameter</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span>
     <a href="#TemplateParameter"><i>TemplateParameter</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span> <i>TemplateParameterList</i>
-<div class="blankline"></div>
-<a id="TemplateParameter"><span class="gname">TemplateParameter</span></a>:
-    <a href="#TemplateTypeParameter"><i>TemplateTypeParameter</i></a>
-    <a href="#TemplateValueParameter"><i>TemplateValueParameter</i></a>
-    <a href="#TemplateAliasParameter"><i>TemplateAliasParameter</i></a>
-    <a href="#TemplateSequenceParameter"><i>TemplateSequenceParameter</i></a>
-    <a href="#TemplateThisParameter"><i>TemplateThisParameter</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="TemplateInstance"><span class="gname">TemplateInstance</span></a>:
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateArguments"><i>TemplateArguments</i></a>
@@ -1525,6 +1489,13 @@
     <span class="d_inlinecode donthyphenate notranslate">null</span>
     <span class="d_inlinecode donthyphenate notranslate">this</span>
     <a href="#SpecialKeyword"><i>SpecialKeyword</i></a>
+</pre>
+<pre class="bnf notranslate"><a id="TemplateParameter"><span class="gname">TemplateParameter</span></a>:
+    <a href="#TemplateTypeParameter"><i>TemplateTypeParameter</i></a>
+    <a href="#TemplateValueParameter"><i>TemplateValueParameter</i></a>
+    <a href="#TemplateAliasParameter"><i>TemplateAliasParameter</i></a>
+    <a href="#TemplateSequenceParameter"><i>TemplateSequenceParameter</i></a>
+    <a href="#TemplateThisParameter"><i>TemplateThisParameter</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="TemplateTypeParameter"><span class="gname">TemplateTypeParameter</span></a>:
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
@@ -2485,6 +2456,23 @@
 <a id="TypeTuple"><span class="gname">TypeTuple</span></a>:
     <b>B</b> <a href="#Parameters"><i>Parameters</i></a> <b>Z</b>
 </pre>
+<h2><a class="anchor" title="Permalink to this section" id="cのインポート[import c]" href="#cのインポート[import c]">Cのインポート[Import C]</a></h2>
+<pre class="bnf notranslate">#pragma STDC FENV_ACCESS on-off-switch
+<div class="blankline"></div>
+on-off-switch:
+    ON
+    OFF
+    DEFAULT
+</pre>
+<pre class="bnf notranslate"><a id="EnumDeclaration"><span class="gname">EnumDeclaration</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">enum</span> <a href="#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="#EnumBaseType"><i>EnumBaseType</i></a> <a href="#EnumBody"><i>EnumBody</i></a>
+<div class="blankline"></div>
+<a id="EnumBaseType"><span class="gname">EnumBaseType</span></a>:
+    <a href="#Type"><i>Type</i></a>
+</pre>
+<pre class="bnf notranslate"><a id="CImportDeclaration"><span class="gname">CImportDeclaration</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">__import</span> <a href="#ImportList"><i>ImportList</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
+</pre>
 
 <div class="blankline"></div>
 
@@ -2495,7 +2483,7 @@
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:41 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:57 2022
 </div>
     </div>
 </div>

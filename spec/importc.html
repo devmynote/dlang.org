@@ -158,10 +158,12 @@
     <li><a href="#predefined-macros">定義済みマクロ</a></li>
     <li><a href="#preprocessor-directives">プリプロセッサ指令</a><ol>        <li><a href="#line-control">Line control</a></li>
         <li><a href="#linemarker">ラインマーカー</a></li>
+        <li><a href="#pragma">pragma</a></li>
     </ol></li>
     <li><a href="#implementation">実装</a><ol>        <li><a href="#enums">Enums</a></li>
         <li><a href="#bitfields">ビットフィールド</a></li>
         <li><a href="#implicit-function-declaration">暗黙の関数宣言</a></li>
+        <li><a href="#pragma-STDC-FENV_ACCESS">#pragma STDC FENV_ACCESS</a></li>
     </ol></li>
     <li><a href="#limitations">制限事項</a><ol>        <li><a href="#exceptions">例外処理</a></li>
         <li><a href="#const">Const</a></li>
@@ -175,7 +177,9 @@
     <li><a href="#extensions">拡張機能</a><ol>        <li><a href="#forward-references">前方参照</a></li>
         <li><a href="#ctfe">コンパイル時関数実行</a></li>
         <li><a href="#inlining">Function Inlining</a></li>
+        <li><a href="#enumbasetype">Enum Base Types</a></li>
         <li><a href="#register">ストレージクラスの登録</a></li>
+        <li><a href="#__import">Import Declarations</a></li>
     </ol></li>
     <li><a href="#gnu-clang-extensions">Gnu や Clang の拡張機能</a><ol>        <li><a href="#noreturn"><span class="d_inlinecode donthyphenate notranslate">__attribute__((noreturn))</span></a></li>
     </ol></li>
@@ -311,6 +315,9 @@
     <p><a href="https://gcc.gnu.org/onlinedocs/gcc-11.1.0/cpp/Preprocessor-Output.html">linemarker</a>
     directives are normally embedded in the output of C preprocessors.</p>
 <div class="blankline"></div>
+    <h3><a class="anchor" title="Permalink to this section" id="pragma" href="#pragma">pragma</a></h3>
+<div class="blankline"></div>
+    <p>Pragma directives are ignored.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="implementation" href="#implementation">実装</a></h2>
 <div class="blankline"></div>
@@ -356,6 +363,21 @@
     to find bugs.</div>
 
 
+<div class="blankline"></div>
+    <h3><a class="anchor" title="Permalink to this section" id="pragma-STDC-FENV_ACCESS" href="#pragma-STDC-FENV_ACCESS">#pragma STDC FENV_ACCESS</a></h3>
+<div class="blankline"></div>
+    <p>This is described in C11 7.6.1</p>
+<div class="blankline"></div>
+<pre class="bnf notranslate">#pragma STDC FENV_ACCESS on-off-switch
+<div class="blankline"></div>
+on-off-switch:
+    ON
+    OFF
+    DEFAULT
+</pre>
+<div class="blankline"></div>
+    <p>It is completely ignored.</p>
+<div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="limitations" href="#limitations">制限事項</a></h2>
 <div class="blankline"></div>
@@ -415,15 +437,37 @@
     <p>Any declarations in scope can be accessed, not just
     declarations that lexically precede a reference.</p>
 <div class="blankline"></div>
+<div class="blankline"></div>
     <h3><a class="anchor" title="Permalink to this section" id="ctfe" href="#ctfe">コンパイル時関数実行</a></h3>
 <div class="blankline"></div>
     <p>Evaluating constant expressions includes executing functions in the
     same manner as D's CTFE can.</p>
 <div class="blankline"></div>
+<div class="blankline"></div>
     <h3><a class="anchor" title="Permalink to this section" id="inlining" href="#inlining">Function Inlining</a></h3>
 <div class="blankline"></div>
     <p>Functions for which the function body is present can
     be inlined by ImportC as well as by the D code that calls them.</p>
+<div class="blankline"></div>
+    <h3><a class="anchor" title="Permalink to this section" id="enumbasetype" href="#enumbasetype">Enum Base Types</a></h3>
+<div class="blankline"></div>
+    <p>Enums are extended with an optional <i>EnumBaseType</i>:</p>
+<div class="blankline"></div>
+<pre class="bnf notranslate"><a id="EnumDeclaration"><span class="gname">EnumDeclaration</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">enum</span> <a href="#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="#EnumBaseType"><i>EnumBaseType</i></a> <a href="#EnumBody"><i>EnumBody</i></a>
+<div class="blankline"></div>
+<a id="EnumBaseType"><span class="gname">EnumBaseType</span></a>:
+    <a href="#Type"><i>Type</i></a>
+</pre>
+<div class="blankline"></div>
+    <p>which, when supplied, causes the enum members to be implicitly cast to the
+    <i>EnumBaseType</i>.
+    </p>
+<div class="blankline"></div>
+<pre class="ccode notranslate">enum S : byte { A };
+_Static_assert(sizeof(A) == 1, "A should be size 1");
+</pre>
+<div class="blankline"></div>
 <div class="blankline"></div>
     <h3><a class="anchor" title="Permalink to this section" id="register" href="#register">ストレージクラスの登録</a></h3>
 <div class="blankline"></div>
@@ -433,6 +477,76 @@
 <div class="blankline"></div>
     <p>Arrays can have <span class="d_inlinecode donthyphenate notranslate">register</span> storage class, and may be enregistered by the compiler. C11 6.3.2.1-3</p>
 <div class="blankline"></div>
+<div class="blankline"></div>
+    <h3><a class="anchor" title="Permalink to this section" id="__import" href="#__import">Import Declarations</a></h3>
+<div class="blankline"></div>
+    <p>Modules can be imported with a <i>CImportDeclaration</i>:</p>
+<div class="blankline"></div>
+<pre class="bnf notranslate"><a id="CImportDeclaration"><span class="gname">CImportDeclaration</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">__import</span> <a href="../spec/module.html#ImportList"><i>ImportList</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
+</pre>
+<div class="blankline"></div>
+    <p>Imports enable ImportC code to directly access D declarations and functions
+    without the necessity of creating a <em class="tt">.h</em> file representing those declarations.
+    The tedium and brittleness of keeping the <em class="tt">.h</em> file up-to-date with the D
+    declarations is eliminated.
+    D functions are available to be inlined.
+    </p>
+<div class="blankline"></div>
+    <p>Imports also enable ImportC code to directly import other C files without
+    needing to create a .h file for them, either.
+    Imported C functions become available to be inlined.
+    </p>
+<div class="blankline"></div>
+    <p>The <i>ImportList</i> works the same as it does for D.</p>
+<div class="blankline"></div>
+    <p>The ordering of <i>CImportDeclaration</i>s has no significance.</p>
+<div class="blankline"></div>
+    <p>An ImportC file can be imported, the name of the C file to be
+    imported is derived from the module name.</p>
+<div class="blankline"></div>
+    <p>All the global symbols in the ImportC file become available to the
+    importing module.</p>
+<div class="blankline"></div>
+    <p>If a name is referred to in the importing file is not found,
+    the global symbols in each imported file are searched for the name.
+    If it is found in exactly one module, that becomes the resolution of the
+    name. If it is found in multiple modules, it is an error.</p>
+<div class="blankline"></div>
+    <div class="spec-boxes note"><b>Note:</b> Since ImportC has no scope resolution operator, only global symbols
+    can be found, and a qualification cannot be added to specifiy which module
+    a symbols is in.</div>
+<div class="blankline"></div>
+    <p>Preprocessor symbols in the imported module are not available to the
+    importing module, and preprocessing symbols in the importing file are not
+    available to the imported module.</p>
+<div class="blankline"></div>
+    <p>A D module can be imported, in the same manner as that
+    of a <a href="../spec/module.html#ImportDeclaration"><i>ImportDeclaration</i></a>.</p>
+<div class="blankline"></div>
+    <p>Imports can be circular.</p>
+<div class="blankline"></div>
+<pre class="ccode notranslate">__import core.stdc.stdarg; // get D declaration of va_list
+__import mycode;           // import mycode.c
+<div class="blankline"></div>
+int foo()
+{
+    va_list x;    // picks up va_list from core.stdc.stdarg
+    return 1 + A; // returns 4
+}</pre>
+<div class="blankline"></div>
+    <p><em class="tt">mycode.c</em> looks like:</p>
+<div class="blankline"></div>
+<pre class="ccode notranslate">enum E { A = 3; }
+</pre>
+<div class="blankline"></div>
+    <div class="spec-boxes best-practice"><b>Best Practices:</b> Avoid using preprocessor <em class="tt">#define</em>s like <em class="tt">#define A 3</em>.
+    Use the enum form shown in the above example.
+    Prefer <em class="tt">const</em> declarations over <em class="tt">#define</em>s.
+    Rewrite function-style preprocessor macros as inline functions.
+    </div>
+
+
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="gnu-clang-extensions" href="#gnu-clang-extensions">Gnu や Clang の拡張機能</a></h2>
 <div class="blankline"></div>
@@ -444,8 +558,8 @@
     <p><span class="d_inlinecode donthyphenate notranslate">__attribute__((noreturn))</span> marks a function as never returning.
     <span class="d_inlinecode donthyphenate notranslate">gcc</span> set this as an attribute of the function, it is
     not part of the function's type. In D, a function that never returns
-    has the return type <span class="d_inlinecode donthyphenate notranslate">noreturn</span>. The difference can be seen with the
-    code:</p>
+    has the return type <a href="../spec/type.html#noreturn"><i>noreturn</i></a>. The difference can be
+    seen with the code:</p>
     <pre class="ccode notranslate">    attribute((noreturn)) int foo();
     size_t x = sizeof(foo());
     </pre>
@@ -586,8 +700,21 @@
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="internals" href="#internals">ImportC の仕組み</a></h2>
 <div class="blankline"></div>
-    <p>This is a description of how ImportC is implemented, intended
-    to remove the mystery of various design choices.</p>
+    <p>ImportC's implementation is based on the idea that D's semantics are very similar
+    to C's. ImportC gets its own parser, which converts the C syntax into the same AST
+    (Abstract Syntax Tree) that D uses. The lexer for ImportC is the same as for D, but with
+    some modifications here and there, such as the keywords and integer literals being different.
+    Where the semantics of C differ from D, there are adjustments in the semantic analysis
+    code in the D compiler.</p>
+<div class="blankline"></div>
+    <p>This co-opting of the D semantic implementation allows ImportC to be able to do things
+    like handle forward references, CTFE (Compile Time Function Execution), and inlining of C functions
+    into D code. Being able to handle forward references means it is not necessary to even
+    write a .h file to be able to import C declarations into D. Being able to perform CTFE is
+    very handy for testing that ImportC is working without needing to generate an executable.
+    But, in general, the strong temptation to add D features to ImportC has been resisted.</p>
+<div class="blankline"></div>
+    <p>The optimizer and code generator are, of course, the same as D uses.</p>
 <div class="blankline"></div>
 
 <div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/betterc.html">Better C[Better C]</a></div>
@@ -597,7 +724,7 @@
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:44 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:59 2022
 </div>
     </div>
 </div>

@@ -153,15 +153,16 @@
     <li><a href="#declarations">配列の宣言</a></li>
     <li><a href="#literals">配列リテラル</a></li>
     <li><a href="#assignment">Array Assignment</a></li>
-    <li><a href="#indexing">インデックス</a></li>
+    <li><a href="#indexing">インデックス</a><ol>        <li><a href="#pointer-arithmetic">Pointer Arithmetic</a></li>
+    </ol></li>
     <li><a href="#slicing">スライス</a></li>
     <li><a href="#array-length">Array Length</a></li>
     <li><a href="#array-copying">配列のコピー</a><ol>        <li><a href="#overlapping-copying">重複するコピー</a></li>
     </ol></li>
     <li><a href="#array-setting">配列の設定</a></li>
     <li><a href="#array-concatenation">配列の連結</a></li>
+    <li><a href="#array-appending">Array Appending</a></li>
     <li><a href="#array-operations">配列の操作</a></li>
-    <li><a href="#pointer-arithmetic">ポインタの演算</a></li>
     <li><a href="#rectangular-arrays">長方形配列</a></li>
     <li><a href="#array-properties">配列のプロパティ</a><ol>        <li><a href="#resize">動的配列に長さを設定する</a></li>
         <li><a href="#func-as-property">配列プロパティとして関数</a></li>
@@ -193,12 +194,24 @@
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="pointers" href="#pointers">ポインタ</a></h3>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">int</span>* p;
-</pre>
-<div class="blankline"></div>
-        <p>A pointer to type <i>T</i> has a value which is a reference (address) to another
-        object of type <i>T</i>. It is commonly called a <i>pointer to T</i>.
+        <p>A pointer to type <span class="d_inlinecode donthyphenate notranslate">T</span> has a value which is a reference (address) to another
+        object of type <span class="d_inlinecode donthyphenate notranslate">T</span>. It is commonly called a <i>pointer to T</i> and its type is
+        <span class="d_inlinecode donthyphenate notranslate">T*</span>. To access the object value, use the <span class="d_inlinecode donthyphenate notranslate">*</span> dereference operator:
         </p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span>* p;
+
+<span class="d_keyword">assert</span>(p == <span class="d_keyword">null</span>);
+p = <span class="d_keyword">new</span> <span class="d_keyword">int</span>(5);
+<span class="d_keyword">assert</span>(p != <span class="d_keyword">null</span>);
+
+<span class="d_keyword">assert</span>(*p == 5);
+(*p)++;
+<span class="d_keyword">assert</span>(*p == 6);
+</pre>
+
+</div>
 <div class="blankline"></div>
         <p>If a pointer contains a <i>null</i> value, it is not pointing to a valid object.</p>
 <div class="blankline"></div>
@@ -217,13 +230,34 @@
 
 
 <div class="blankline"></div>
-        <div class="spec-boxes best-practice"><b>Best Practices:</b> These are simple pointers to data.
-        Pointers are provided for interfacing with C and for
+        <p>To set a pointer to point at an existing object, use the
+        <span class="d_inlinecode donthyphenate notranslate">&amp;</span> <em>address of</em> operator:</p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span> i = 2;
+<span class="d_keyword">int</span>* p = &amp;i;
+
+<span class="d_keyword">assert</span>(p == &amp;i);
+<span class="d_keyword">assert</span>(*p == 2);
+*p = 4;
+<span class="d_keyword">assert</span>(i == 4);
+</pre>
+
+</div>
+<div class="blankline"></div>
+        <p>These are simple pointers to data.
+        A pointer can manipulate a block of multiple values. Accessing more
+        than one value cannot be
+        <a href="../spec/memory-safe-d.html"><span class="d_inlinecode donthyphenate notranslate">@safe</span></a> as it
+        requires <a href="#pointer-arithmetic">pointer arithmetic</a>.
+        This is supported for interfacing with C and for
         specialized systems work.
-        There is no length associated with it, and so there is no way for the
+        A pointer has no length associated with it, so there is no way for the
         compiler or runtime to do bounds checking, etc., on it.
-        Most conventional uses for pointers can be replaced with
-        dynamic arrays, <span class="d_inlinecode donthyphenate notranslate">out</span> and <span class="d_inlinecode donthyphenate notranslate">ref</span> parameters,
+        </p>
+<div class="blankline"></div>
+        <div class="spec-boxes best-practice"><b>Best Practices:</b> Most conventional uses for pointers can be replaced with
+        dynamic arrays, <span class="d_inlinecode donthyphenate notranslate">ref</span> and <span class="d_inlinecode donthyphenate notranslate">out</span> <a href="../spec/function.html#parameters">parameters</a>,
         and reference types.
         </div>
 
@@ -305,7 +339,7 @@
 </pre>
     <p><span class="d_inlinecode donthyphenate notranslate">[]</span> is an empty array literal.</p>
 <div class="blankline"></div>
-    <p>See <a href="../expression.html#array_literals">Array Literals</a>.</p>
+    <p>See <a href="../spec/expression.html#array_literals">Array Literals</a>.</p>
 <div class="blankline"></div>
 <span id="usage"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span>
 <h2><a class="anchor" title="Permalink to this section" id="assignment" href="#assignment">Array Assignment</a></h2>
@@ -367,6 +401,29 @@ a[2] = 4;
 <div class="blankline"></div>
     <p>See also <a href="../spec/expression.html#IndexExpression"><i>IndexExpression</i></a>.</p>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="pointer-arithmetic" href="#pointer-arithmetic">Pointer Arithmetic</a></h3>
+<div class="blankline"></div>
+    <p>A pointer can also be indexed, but no bounds checks are done.
+    Unlike arrays, a pointer value can also be used in certain
+    arithmetic expressions to produce another pointer:</p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[] a = [1,2,3];
+<span class="d_keyword">int</span>* p = a.ptr;
+
+p[2] = 4;
+<span class="d_keyword">assert</span>(a[2] == 4);
+writeln(p[3]); <span class="d_comment">// undefined behaviour
+</span>
+<span class="d_keyword">assert</span>(p == &amp;a[0]);
+p++; <span class="d_comment">// point to a[1]
+</span><span class="d_keyword">assert</span>(*p == 2);
+</pre>
+
+</div>
+<div class="blankline"></div>
+    <p>See <a href="../spec/expression.html#pointer_arithmetic"><em>AddExpression</em></a> for details.</p>
+<div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="slicing" href="#slicing">スライス</a></h2>
 <div class="blankline"></div>
         <p><i>Slicing</i> an array means to specify a subarray of it.
@@ -405,12 +462,14 @@ foo(b[1]);   <span class="d_comment">// equivalent to foo(3)
 <pre class="d_code notranslate"><span class="d_keyword">int</span>[10] a = [ 1,2,3,4,5,6,7,8,9,10 ];
 
 <span class="d_keyword">int</span>* p = &amp;a[2];
-<span class="d_keyword">int</span>[] b = p[0..8];
-writeln(b);
 writeln(p[7]);      <span class="d_comment">// 10
 </span>writeln(p[8]);      <span class="d_comment">// undefined behaviour
-</span>writeln(b[7]);      <span class="d_comment">// 10
-</span><span class="d_comment">//writeln(b[8]);    // range error
+</span>
+<span class="d_keyword">int</span>[] b = p[0..8];  <span class="d_comment">// convert pointer elements to dynamic array
+</span><span class="d_keyword">assert</span>(b <span class="d_keyword">is</span> a[2..10]);
+writeln(b);
+writeln(b[7]);      <span class="d_comment">// 10
+</span><span class="d_comment">//writeln(b[8]);    // runtime error (unless bounds checks turned off)
 </span></pre>
 
 </div>
@@ -528,18 +587,17 @@ s[] = 3;     <span class="d_comment">// same as s[0] = 3, s[1] = 3, s[2] = 3
         </p>
 <div class="blankline"></div>
 <div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">int</span>[] a;
-<span class="d_keyword">int</span>[] b;
-<span class="d_keyword">int</span>[] c;
-
-a = b ~ c; <span class="d_comment">// Create an array from the concatenation
-</span>           <span class="d_comment">// of the b and c arrays
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[] a = [1, 2];
+<span class="d_keyword">assert</span>(a ~ 3 == [1, 2, 3]); <span class="d_comment">// concatenate array with a single value
+</span>
+<span class="d_keyword">int</span>[] b = a ~ [3, 4];
+<span class="d_keyword">assert</span>(b == [1, 2, 3, 4]); <span class="d_comment">// concatenate two arrays
 </span></pre>
 
 </div>
 <div class="blankline"></div>
-        <p>Many languages overload the + operator to mean concatenation.
-        This confusingly leads to, does:
+        <p>Many languages overload the + operator for concatenation.
+        This confusingly leads to a dilemma - does:
         </p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_string">"10"</span> + 3 + 4
@@ -553,18 +611,30 @@ a = b ~ c; <span class="d_comment">// Create an array from the concatenation
         concatenation.
         </p>
 <div class="blankline"></div>
-        <p>Similarly, the ~= operator means append, as in:
-        </p>
-<div class="blankline"></div>
-<pre class="d_code notranslate">a ~= b; <span class="d_comment">// a becomes the concatenation of a and b
-</span></pre>
-<div class="blankline"></div>
         <p>Concatenation always creates a copy of its operands, even
         if one of the operands is a 0 length array, so:
         </p>
 <div class="blankline"></div>
-<pre class="d_code notranslate">a = b;           <span class="d_comment">// a refers to b
-</span>a = b ~ c[0..0]; <span class="d_comment">// a refers to a copy of b
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">auto</span> b = [7];
+<span class="d_keyword">auto</span> a = b;      <span class="d_comment">// a refers to b
+</span><span class="d_keyword">assert</span>(a <span class="d_keyword">is</span> b);
+
+a = b ~ []; <span class="d_comment">// a refers to a copy of b
+</span><span class="d_keyword">assert</span>(a !<span class="d_keyword">is</span> b);
+<span class="d_keyword">assert</span>(a == b);
+</pre>
+
+</div>
+<div class="blankline"></div>
+        <p>See also: <a href="../spec/expression.html#identity_expressions"><span class="d_inlinecode donthyphenate notranslate">is</span> operator</a>.</p>
+<div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="array-appending" href="#array-appending">Array Appending</a></h2>
+<div class="blankline"></div>
+        <p>Similarly, the ~= operator means append, as in:
+        </p>
+<div class="blankline"></div>
+<pre class="d_code notranslate">a ~= b; <span class="d_comment">// a becomes the concatenation of a and b
 </span></pre>
 <div class="blankline"></div>
         <p>Appending does not always create a copy, see <a href="#resize">        setting dynamic array length</a> for details.
@@ -620,30 +690,6 @@ a[] -= (b[] + 4) * c[];
         the target computer.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="pointer-arithmetic" href="#pointer-arithmetic">ポインタの演算</a></h2>
-<div class="blankline"></div>
-<div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">void</span> dibb(<span class="d_keyword">int</span>* array)
-{
-    array[2];     <span class="d_comment">// means same thing as *(array + 2)
-</span>    *(array + 2); <span class="d_comment">// get 3rd element
-</span>}
-
-<span class="d_keyword">void</span> diss(<span class="d_keyword">int</span>[] array)
-{
-    array[2];     <span class="d_comment">// ok
-</span>    *(array + 2); <span class="d_comment">// error, array is not a pointer
-</span>}
-
-<span class="d_keyword">void</span> ditt(<span class="d_keyword">int</span>[3] array)
-{
-    array[2];     <span class="d_comment">// ok
-</span>    *(array + 2); <span class="d_comment">// error, array is not a pointer
-</span>}
-</pre>
-
-</div>
-<div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="rectangular-arrays" href="#rectangular-arrays">長方形配列</a></h2>
 <div class="blankline"></div>
         <p>Experienced FORTRAN numerics programmers know that multidimensional
@@ -687,6 +733,8 @@ matrix[2][5] = 3.14; <span class="d_comment">// Assignment to bottom right eleme
 </span></pre>
 
 </div>
+<div class="blankline"></div>
+<p>More information can be found at <a href="https://wiki.dlang.org/Dense_multidimensional_arrays">Dlang Wiki - Dense Multidimensional Arrays</a>.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="array-properties" href="#array-properties">配列のプロパティ</a></h2>
 <div class="blankline"></div>
@@ -865,7 +913,7 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="func-as-property" href="#func-as-property">配列プロパティとして関数</a></h3>
 <div class="blankline"></div>
-        <p>See <a href="../function.html#pseudo-member">Uniform Function Call Syntax (UFCS)</a>.</p>
+        <p>See <a href="../spec/function.html#pseudo-member">Uniform Function Call Syntax (UFCS)</a>.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="bounds" href="#bounds">配列の境界チェック</a></h2>
 <div class="blankline"></div>
@@ -930,7 +978,7 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
 
 
 <div class="blankline"></div>
-        <p>See also <a href="../function.html#safe-functions">Safe Functions</a>.</p>
+        <p>See also <a href="../spec/function.html#safe-functions">Safe Functions</a>.</p>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="disable-bounds-check" href="#disable-bounds-check">配列の境界チェックを無効にする</a></h3>
 <div class="blankline"></div>
@@ -1296,7 +1344,7 @@ writefln(<span class="d_string">"the string is '%s'"</span>, str);
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:42 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:57 2022
 </div>
     </div>
 </div>

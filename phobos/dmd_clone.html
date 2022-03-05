@@ -987,9 +987,9 @@ __swap = <span class="keyword">this</span>;   <span class="comment">// bit copy
   <div class="ddoc_summary">
   <p class="para">
     Build __xopEquals for TypeInfo_Struct
-      static bool __xopEquals(ref const S p, ref const S q)
+      bool __xopEquals(ref const S p) const
       {
-          return p == q;
+          return this == p;
       }
 
   </p>
@@ -1031,9 +1031,9 @@ __swap = <span class="keyword">this</span>;   <span class="comment">// bit copy
   <div class="ddoc_summary">
   <p class="para">
     Build __xopCmp for TypeInfo_Struct
-      static bool __xopCmp(ref const S p, ref const S q)
+      int __xopCmp(ref const S p) const
       {
-          return p.opCmp(q);
+          return this.opCmp(p);
       }
 
   </p>

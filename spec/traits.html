@@ -875,9 +875,7 @@ S test2();
 <span class="d_keyword">struct</span> S
 {
     <span class="d_keyword">int</span> m;
-
-    <span class="d_keyword">import</span> std.stdio; <span class="d_comment">// imports write
-</span>}
+}
 
 <span class="d_keyword">void</span> main()
 {
@@ -886,7 +884,7 @@ S test2();
     writeln(<span class="d_keyword">__traits</span>(hasMember, S, <span class="d_string">"m"</span>)); <span class="d_comment">// true
 </span>    writeln(<span class="d_keyword">__traits</span>(hasMember, s, <span class="d_string">"m"</span>)); <span class="d_comment">// true
 </span>    writeln(<span class="d_keyword">__traits</span>(hasMember, S, <span class="d_string">"y"</span>)); <span class="d_comment">// false
-</span>    writeln(<span class="d_keyword">__traits</span>(hasMember, S, <span class="d_string">"write"</span>)); <span class="d_comment">// true
+</span>    writeln(<span class="d_keyword">__traits</span>(hasMember, S, <span class="d_string">"write"</span>)); <span class="d_comment">// false, but callable like a member via UFCS
 </span>    writeln(<span class="d_keyword">__traits</span>(hasMember, <span class="d_keyword">int</span>, <span class="d_string">"sizeof"</span>)); <span class="d_comment">// true
 </span>}
 </pre>
@@ -990,7 +988,7 @@ S test2();
 <h2><a id="getAliasThis"><span class="gname">getAliasThis</span></a></h2>
 <div class="blankline"></div>
     <p>Takes one argument, a type. If the type has <span class="d_inlinecode donthyphenate notranslate">alias this</span> declarations,
-        returns a sequence of the names (as <span class="d_inlinecode donthyphenate notranslate">string</span>s) of the members used in
+        returns a <em>ValueSeq</em> of the names (as <span class="d_inlinecode donthyphenate notranslate">string</span>s) of the members used in
         those declarations. Otherwise returns an empty sequence.
     </p>
 <div class="blankline"></div>
@@ -1017,8 +1015,8 @@ S test2();
 tuple()
 </pre>
 <div class="blankline"></div>
-<h2><a id="getAttributes"><span class="gname">getAttributes</span></a></h2>    <p>        Takes one argument, a symbol. Returns a tuple of all attached user-defined attributes.
-        If no UDAs exist it will return an empty tuple.
+<h2><a id="getAttributes"><span class="gname">getAttributes</span></a></h2>    <p>        Takes one argument, a symbol. Returns a sequence of all attached user-defined attributes.
+        If no UDAs exist it will return an empty sequence
     </p>
 <div class="blankline"></div>
     <p>        For more information, see: <a href="../spec/attribute.html#uda">User-Defined Attributes</a>
@@ -1082,14 +1080,14 @@ tuple((Foo))
 
 <div class="blankline"></div>
 <h2><a id="getFunctionAttributes"><span class="gname">getFunctionAttributes</span></a></h2>    <p>        Takes one argument which must either be a function symbol, function literal,
-        or a function pointer. It returns a string tuple of all the attributes of
+        or a function pointer. It returns a string <em>ValueSeq</em> of all the attributes of
         that function <b>excluding</b> any user-defined attributes (UDAs can be
         retrieved with the <a href="#get-attributes">getAttributes</a> trait).
-        If no attributes exist it will return an empty tuple.
+        If no attributes exist it will return an empty sequence.
     </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-        <b>Note:</b> The order of the attributes in the returned tuple is
+        <b>Note:</b> The order of the attributes in the returned sequence is
         implementation-defined and should not be relied upon.
 <div class="blankline"></div>
         <p>            A list of currently supported attributes are:</p>
@@ -1179,7 +1177,7 @@ tuple("const", "@system")
 <h2><a id="getLocation"><span class="gname">getLocation</span></a></h2>
         <p>Takes one argument which is a symbol.
         To disambiguate between overloads, pass the result of <a href="#getOverloads"><i>getOverloads</i></a> with the desired index, to <span class="d_inlinecode donthyphenate notranslate">getLocation</span>.
-        Returns a <span class="d_inlinecode donthyphenate notranslate">tuple(string, int, int)</span> whose entries correspond to the filename, line number and column number where the argument
+        Returns a <em>ValueSeq</em> of a string and two <span class="d_inlinecode donthyphenate notranslate">int</span>s which correspond to the filename, line number and column number where the argument
         was declared.
         </p>
 <div class="blankline"></div>
@@ -1221,7 +1219,7 @@ tuple("const", "@system")
         the member(s) to return.
         The third argument is a <span class="d_inlinecode donthyphenate notranslate">bool</span>, and is optional.  If <span class="d_inlinecode donthyphenate notranslate">true</span>, the
         result will also include template overloads.
-        The result is a tuple of all the overloads of the supplied name.
+        The result is a symbol sequence of all the overloads of the supplied name.
         </p>
 <div class="blankline"></div>
 <div class="runnable-examples">
@@ -1276,7 +1274,7 @@ bar(int n)
         that is a function, delegate or a function pointer.
         The second is an integer identifying which parameter, where the first parameter is
         0.
-        It returns a tuple of strings representing the storage classes of that parameter.
+        It returns a <em>ValueSeq</em> of strings representing the storage classes of that parameter.
     </p>
 <div class="blankline"></div>
 <div class="runnable-examples">
@@ -1342,7 +1340,7 @@ bar(int n)
 <div class="blankline"></div>
 <h2><a id="getCppNamespaces"><span class="gname">getCppNamespaces</span></a></h2>
     <p>The argument is a symbol.
-    The result is a tuple of strings, possibly empty, that correspond to the namespaces the symbol resides in.
+    The result is a <em>ValueSeq</em> of strings, possibly empty, that correspond to the namespaces the symbol resides in.
     </p>
 <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">extern</span>(C++, <span class="d_string">"ns"</span>)
@@ -1434,7 +1432,7 @@ public
         class type.
         The second argument is a string that matches the name of
         one of the functions of that class.
-        The result is a tuple of the virtual overloads of that function.
+        The result is a symbol sequence of the virtual overloads of that function.
         It does not include final functions that do not override anything.
         </p>
 <div class="blankline"></div>
@@ -1479,7 +1477,7 @@ int()
 <h2><a id="getUnitTests"><span class="gname">getUnitTests</span></a></h2>
 <div class="blankline"></div>
         <p>                Takes one argument, a symbol of an aggregate (e.g. struct/class/module).
-                The result is a tuple of all the unit test functions of that aggregate.
+                The result is a symbol sequence of all the unit test functions of that aggregate.
                 The functions returned are like normal nested static functions,
                 <a href="../glossary.html#ctfe">CTFE</a> will work and
                 <a href="../spec/attribute.html#uda">UDAs</a> will be accessible.
@@ -1489,7 +1487,7 @@ int()
 <div class="blankline"></div>
         <p>                The -unittest flag needs to be passed to the compiler. If the flag
                 is not passed <span class="d_inlinecode donthyphenate notranslate">__traits(getUnitTests)</span> will always return an
-                empty tuple.
+                empty sequence.
         </p>
 <div class="blankline"></div>
 <div class="runnable-examples">
@@ -1631,7 +1629,7 @@ foo.Foo.unittest
         a module, a struct, a union, a class, an interface, or a
         template instantiation.
 <div class="blankline"></div>
-        A tuple of string literals is returned, each of which
+        A sequence of string literals is returned, each of which
         is the name of a member of that argument combined with all
         of the members of its base classes (if the argument is a class).
         No name is repeated.
@@ -1667,7 +1665,7 @@ foo.Foo.unittest
 <div class="blankline"></div>
         <p>Takes a single argument, which must evaluate to either
         a type or an expression of type.
-        A tuple of string literals is returned, each of which
+        A sequence of string literals is returned, each of which
         is the name of a member of that type.
         No name is repeated.
         Base class member names are not included.
@@ -1870,7 +1868,7 @@ foo.Foo.unittest
 <h2><a id="toType"><span class="gname">toType</span></a></h2>
 <div class="blankline"></div>
         <p>Takes a single argument, which must evaluate to an expression of type <span class="d_inlinecode donthyphenate notranslate">string</span>.
-        The contents of the string must correspond to the <a href="../abi.html#name_mangling">mangled contents of a type</a>
+        The contents of the string must correspond to the <a href="../spec/abi.html#name_mangling">mangled contents of a type</a>
         that has been seen by the implementation.</p>
 <div class="blankline"></div>
         <p>Only D mangling is supported. Other manglings, such as C++ mangling, are not.</p>
@@ -1886,7 +1884,7 @@ Type!(<span class="d_keyword">__traits</span>(toType, <span class="d_string">"i"
 <span class="d_keyword">__traits</span>(toType, <span class="d_string">"i"</span>) x = 4; <span class="d_comment">// x is also declared as type `int`
 </span></pre>
 <div class="blankline"></div>
-        <div class="spec-boxes rationale"><b>Rationale:</b> Provides the inverse operation of the <a href="../property.html#mangleof"><span class="d_inlinecode donthyphenate notranslate">.mangleof</span></a> property.</div>
+        <div class="spec-boxes rationale"><b>Rationale:</b> Provides the inverse operation of the <a href="../spec/property.html#mangleof"><span class="d_inlinecode donthyphenate notranslate">.mangleof</span></a> property.</div>
 
 
 <div class="blankline"></div>
@@ -1939,7 +1937,7 @@ Type!(<span class="d_keyword">__traits</span>(toType, <span class="d_string">"i"
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:43 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:58 2022
 </div>
     </div>
 </div>

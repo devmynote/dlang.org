@@ -146,12 +146,17 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#interface-contracts">契約付きインターフェース</a></li>
-    <li><a href="#const-interface">Const, Immutable インターフェース</a></li>
+    <ol>    <li><a href="#declarations">Interface Declarations</a><ol>        <li><a href="#method-bodies">Interface Method Bodies</a></li>
+        <li><a href="#implementing-interfaces">Implementing Interfaces</a></li>
+        <li><a href="#interface-contracts">契約付きインターフェース</a></li>
+        <li><a href="#const-interface">Const, Immutable インターフェース</a></li>
+    </ol></li>
     <li><a href="#com-interfaces">COM インターフェース</a></li>
     <li><a href="#cpp-interfaces">C++ インターフェース</a></li>
 </ol>
 </div>
+<div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="declarations" href="#declarations">Interface Declarations</a></h2>
 <div class="blankline"></div>
     <p>An <i>Interface</i> describes a list of functions that a class which inherits
     from the interface must implement.</p>
@@ -191,34 +196,35 @@
     Classes cannot derive from an interface multiple times.
     </p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">interface</span> D
+<pre class="d_code notranslate"><span class="d_keyword">interface</span> I
 {
     <span class="d_keyword">void</span> foo();
 }
 
-<span class="d_keyword">class</span> A : D, D  <span class="d_comment">// error, duplicate interface
+<span class="d_keyword">class</span> A : I, I  <span class="d_comment">// error, duplicate interface
 </span>{
 }
 </pre>
 <div class="blankline"></div>
 <p>An instance of an interface cannot be created.</p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">interface</span> D
+<pre class="d_code notranslate"><span class="d_keyword">interface</span> I
 {
     <span class="d_keyword">void</span> foo();
 }
 
 ...
 
-D d = <span class="d_keyword">new</span> D();  <span class="d_comment">// error, cannot create instance of interface
+I iface = <span class="d_keyword">new</span> I();  <span class="d_comment">// error, cannot create instance of interface
 </span></pre>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="method-bodies" href="#method-bodies">Interface Method Bodies</a></h3>
 <div class="blankline"></div>
     <p>Virtual interface member functions do not have implementations.
     Interfaces are expected to implement static or final functions.
     </p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">interface</span> D
+<pre class="d_code notranslate"><span class="d_keyword">interface</span> I
 {
     <span class="d_keyword">void</span> bar() { }  <span class="d_comment">// error, implementation not allowed
 </span>    <span class="d_keyword">static</span> <span class="d_keyword">void</span> foo() { } <span class="d_comment">// ok
@@ -230,7 +236,7 @@ D d = <span class="d_keyword">new</span> D();  <span class="d_comment">// error,
          All instantiated functions are implicitly <span class="d_inlinecode donthyphenate notranslate">final</span>.
      </p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">interface</span> D
+<pre class="d_code notranslate"><span class="d_keyword">interface</span> I
 {
     <span class="d_keyword">void</span> foo(T)() { }  <span class="d_comment">// ok, it's implicitly final
 </span>}
@@ -239,115 +245,121 @@ D d = <span class="d_keyword">new</span> D();  <span class="d_comment">// error,
     <p>Classes that inherit from an interface may not override final or
     static interface member functions.</p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">interface</span> D
+<pre class="d_code notranslate"><span class="d_keyword">interface</span> I
 {
     <span class="d_keyword">void</span> bar();
     <span class="d_keyword">static</span> <span class="d_keyword">void</span> foo() { }
     <span class="d_keyword">final</span> <span class="d_keyword">void</span> abc() { }
 }
 
-<span class="d_keyword">class</span> C : D
+<span class="d_keyword">class</span> C : I
 {
     <span class="d_keyword">void</span> bar() { } <span class="d_comment">// ok
-</span>    <span class="d_keyword">void</span> foo() { } <span class="d_comment">// error, cannot override static D.foo()
-</span>    <span class="d_keyword">void</span> abc() { } <span class="d_comment">// error, cannot override final D.abc()
+</span>    <span class="d_keyword">void</span> foo() { } <span class="d_comment">// error, cannot override static I.foo()
+</span>    <span class="d_keyword">void</span> abc() { } <span class="d_comment">// error, cannot override final I.abc()
 </span>}
 </pre>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="implementing-interfaces" href="#implementing-interfaces">Implementing Interfaces</a></h3>
 <div class="blankline"></div>
-    <p>All interface functions must be defined in a class that inherits
+    <p>All virtual interface functions must be defined in a class that inherits
     from that interface:
     </p>
-<pre class="d_code notranslate"><span class="d_keyword">interface</span> D
+<pre class="d_code notranslate"><span class="d_keyword">interface</span> I
 {
     <span class="d_keyword">void</span> foo();
 }
 
-<span class="d_keyword">class</span> A : D
+<span class="d_keyword">class</span> A : I
 {
     <span class="d_keyword">void</span> foo() { }  <span class="d_comment">// ok, provides implementation
 </span>}
 
-<span class="d_keyword">class</span> B : D
+<span class="d_keyword">class</span> B : I
 {
-    <span class="d_keyword">int</span> foo() { }   <span class="d_comment">// error, no void foo() implementation
+    <span class="d_keyword">int</span> foo() { }   <span class="d_comment">// error, no `void foo()` implementation
 </span>}
 </pre>
 <div class="blankline"></div>
-<p>Interfaces can be inherited and functions overridden:</p>
+<p>Interfaces can be inherited from a base class, and interface functions overridden:</p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">interface</span> D
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">interface</span> I
 {
     <span class="d_keyword">int</span> foo();
 }
 
-<span class="d_keyword">class</span> A : D
+<span class="d_keyword">class</span> A : I
 {
     <span class="d_keyword">int</span> foo() { <span class="d_keyword">return</span> 1; }
 }
 
 <span class="d_keyword">class</span> B : A
 {
-    <span class="d_keyword">override</span>
-    <span class="d_keyword">int</span> foo() { <span class="d_keyword">return</span> 2; }
+    <span class="d_keyword">override</span> <span class="d_keyword">int</span> foo() { <span class="d_keyword">return</span> 2; }
 }
 
-...
-
 B b = <span class="d_keyword">new</span> B();
-b.foo();            <span class="d_comment">// returns 2
-</span>D d = b;    <span class="d_comment">// ok since B inherits A's D implementation
-</span>d.foo();            <span class="d_comment">// returns 2;
-</span></pre>
+<span class="d_keyword">assert</span>(b.foo() == 2);
+
+I i = b;    <span class="d_comment">// ok since B inherits A's I implementation
+</span><span class="d_keyword">assert</span>(i.foo() == 2);
+</pre>
+
+</div>
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="reimplementing-interfaces" href="#reimplementing-interfaces">Reimplementing Interfaces</a></h4>
 <div class="blankline"></div>
     <p>Interfaces can be reimplemented in derived classes:</p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">interface</span> D
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">interface</span> I
 {
     <span class="d_keyword">int</span> foo();
 }
 
-<span class="d_keyword">class</span> A : D
+<span class="d_keyword">class</span> A : I
 {
     <span class="d_keyword">int</span> foo() { <span class="d_keyword">return</span> 1; }
 }
 
-<span class="d_keyword">class</span> B : A, D
+<span class="d_keyword">class</span> B : A, I
 {
-    <span class="d_keyword">int</span> foo() { <span class="d_keyword">return</span> 2; }
+    <span class="d_keyword">override</span> <span class="d_keyword">int</span> foo() { <span class="d_keyword">return</span> 2; }
 }
 
-...
-
 B b = <span class="d_keyword">new</span> B();
-b.foo();            <span class="d_comment">// returns 2
-</span>D d = b;
-d.foo();            <span class="d_comment">// returns 2
-</span>A a = b;
-D d2 = a;
-d2.foo();           <span class="d_comment">// returns 2, even though it is A's D, not B's D
+<span class="d_keyword">assert</span>(b.foo() == 2);
+I i = b;
+<span class="d_keyword">assert</span>(i.foo() == 2);
+
+A a = b;
+I i2 = a;
+<span class="d_keyword">assert</span>(i2.foo() == 2); <span class="d_comment">// i2 has A's virtual pointer for foo which points to B.foo
 </span></pre>
+
+</div>
 <div class="blankline"></div>
     <p>A reimplemented interface must implement all the interface
     functions, it does not inherit them from a super class:
     </p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">interface</span> D
+<pre class="d_code notranslate"><span class="d_keyword">interface</span> I
 {
     <span class="d_keyword">int</span> foo();
 }
 
-<span class="d_keyword">class</span> A : D
+<span class="d_keyword">class</span> A : I
 {
     <span class="d_keyword">int</span> foo() { <span class="d_keyword">return</span> 1; }
 }
 
-<span class="d_keyword">class</span> B : A, D
+<span class="d_keyword">class</span> B : A, I
 {
-}       <span class="d_comment">// error, no foo() for interface D
+}       <span class="d_comment">// error, no foo() for interface I
 </span></pre>
 <div class="blankline"></div>
-<h2><span id="InterfaceContracts"><a class="anchor" title="Permalink to this section" id="interface-contracts" href="#interface-contracts">契約付きインターフェース</a></span></h2><div class="blankline"></div>
+<h3><span id="InterfaceContracts"><a class="anchor" title="Permalink to this section" id="interface-contracts" href="#interface-contracts">契約付きインターフェース</a></span></h3><div class="blankline"></div>
     <p>Interface member functions can have contracts even though there
     is no body for the function. The contracts are inherited by any
     class member function that implements that interface member function.
@@ -364,7 +376,7 @@ d2.foo();           <span class="d_comment">// returns 2, even though it is A's 
 </pre>
 
 <div class="blankline"></div>
-<h2><span id="ConstInterface"><a class="anchor" title="Permalink to this section" id="const-interface" href="#const-interface">Const, Immutable インターフェース</a></span></h2>    <p>If an interface has <span class="d_inlinecode donthyphenate notranslate">const</span> or <span class="d_inlinecode donthyphenate notranslate">immutable</span> storage
+<h3><span id="ConstInterface"><a class="anchor" title="Permalink to this section" id="const-interface" href="#const-interface">Const, Immutable インターフェース</a></span></h3>    <p>If an interface has <span class="d_inlinecode donthyphenate notranslate">const</span> or <span class="d_inlinecode donthyphenate notranslate">immutable</span> storage
     class, then all members of the interface are
     <span class="d_inlinecode donthyphenate notranslate">const</span> or <span class="d_inlinecode donthyphenate notranslate">immutable</span>.
     This storage class is not inherited.
@@ -487,7 +499,7 @@ which is meant to correspond with the following C++ declaration:
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:42 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:58 2022
 </div>
     </div>
 </div>

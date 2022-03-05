@@ -166,7 +166,6 @@
     <li><a href="#shared_static_constructors">shared な静的コンストラクタ</a></li>
     <li><a href="#shared_static_destructors">shared な静的デストラクタ</a></li>
     <li><a href="#invariants">クラスの不変条件</a></li>
-    <li><a href="#allocators">クラスアロケータ</a></li>
     <li><a href="#alias-this">Alias This</a></li>
     <li><a href="#auto">Scope クラス</a></li>
     <li><a href="#final">Final クラス</a></li>
@@ -241,7 +240,6 @@
             <li><a href="#SharedStaticDestructor"><i>SharedStaticDestructor</i></a>s</li>
             <li><a href="#invariants">Class Invariants</a></li>
             <li><a href="../spec/unittest.html#unittest">Unit Tests</a></li>
-            <li><a href="#allocators">Class Allocators</a></li>
             <li><a href="#alias-this">Alias This</a></li>
         </ul>
         </li>
@@ -1136,69 +1134,6 @@ on thread termination.</p>
 
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="allocators" href="#allocators">クラスアロケータ</a></h2>
-<b>Note</b>: Class allocators are deprecated in D2.
-<pre class="bnf notranslate"><a id="Allocator"><span class="gname">Allocator</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="../spec/function.html#Parameters"><i>Parameters</i></a> <a href="../spec/function.html#FunctionBody"><i>FunctionBody</i></a>
-</pre>
-<div class="blankline"></div>
-<p>A class member function of the form:</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">new</span>(size_t size)
-{
-    ...
-}
-</pre>
-<div class="blankline"></div>
-        is called a class allocator.
-        The class allocator can have any number of parameters, provided
-        the first one is of type <span class="d_inlinecode donthyphenate notranslate">size_t</span>.
-        Any number can be defined for a class, the correct one is
-        determined by the usual function overloading rules.
-        When a new expression:
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">new</span> Foo;
-</pre>
-<div class="blankline"></div>
-        is executed, and Foo is a class that has
-        an allocator, the allocator is called with the first argument
-        set to the size in bytes of the memory to be allocated for the
-        instance.
-        The allocator must allocate the memory and return it as a
-        <span class="d_inlinecode donthyphenate notranslate">void*</span>.
-        If the allocator fails, it must not return a <span class="d_inlinecode donthyphenate notranslate">null</span>, but
-        must throw an exception.
-        If there is more than one parameter to the allocator, the
-        additional arguments are specified within parentheses after
-        the <span class="d_inlinecode donthyphenate notranslate">new</span> in the <i>NewExpression</i>:
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">class</span> Foo
-{
-    <span class="d_keyword">this</span>(string a) { ... }
-
-    <span class="d_keyword">new</span>(size_t size, <span class="d_keyword">int</span> x, <span class="d_keyword">int</span> y)
-    {
-        ...
-    }
-}
-
-...
-
-<span class="d_keyword">new</span>(1,2) Foo(a);        <span class="d_comment">// calls new(Foo.sizeof,1,2)
-</span></pre>
-<div class="blankline"></div>
-        <p>Derived classes inherit any allocator from their base class,
-        if one is not specified.
-        </p>
-<div class="blankline"></div>
-        <p>The class allocator is not called if the instance is created
-        on the stack.
-        </p>
-<div class="blankline"></div>
-        <p>See also
-        <a href="https://wiki.dlang.org/Memory_Management#Explicit_Class_Instance_Allocation">        Explicit Class Instance Allocation</a>.
-        </p>
-<div class="blankline"></div>
 <h2><span id="AliasThis"><a class="anchor" title="Permalink to this section" id="alias-this" href="#alias-this">Alias This</a></span></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="AliasThis"><span class="gname">AliasThis</span></a>:
@@ -1590,7 +1525,7 @@ if it is nested inside a class.</p>
         </p>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="NewAnonClassExpression"><span class="gname">NewAnonClassExpression</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="../spec/expression.html#AllocatorArguments"><i>AllocatorArguments</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">class</span> <a href="#ConstructorArgs"><i>ConstructorArgs</i></a><sub>opt</sub> <a href="#SuperClassOrInterface"><i>SuperClassOrInterface</i></a><sub>opt</sub> <a href="#Interfaces"><i>Interfaces</i></a><sub>opt</sub> <a href="../spec/struct.html#AggregateBody"><i>AggregateBody</i></a>
+    <span class="d_inlinecode donthyphenate notranslate">new</span> <span class="d_inlinecode donthyphenate notranslate">class</span> <a href="#ConstructorArgs"><i>ConstructorArgs</i></a><sub>opt</sub> <a href="#SuperClassOrInterface"><i>SuperClassOrInterface</i></a><sub>opt</sub> <a href="#Interfaces"><i>Interfaces</i></a><sub>opt</sub> <a href="../spec/struct.html#AggregateBody"><i>AggregateBody</i></a>
 <div class="blankline"></div>
 <a id="ConstructorArgs"><span class="gname">ConstructorArgs</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="../spec/expression.html#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span>
@@ -1600,7 +1535,7 @@ which is equivalent to:
 <div class="blankline"></div>
 <pre class="bnf notranslate"><span class="d_inlinecode donthyphenate notranslate">class</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <i>SuperClassOrInterface</i> <i>Interfaces</i> <i>AggregateBody</i>
 // ...
-<span class="d_inlinecode donthyphenate notranslate">new</span> <i>AllocatorArguments</i> <i>Identifier</i> <i>ConstructorArgs</i>
+<span class="d_inlinecode donthyphenate notranslate">new</span> <i>Identifier</i> <i>ConstructorArgs</i>
 </pre>
 <div class="blankline"></div>
 where <i>Identifier</i> is the name generated for the anonymous nested class.
@@ -1639,7 +1574,7 @@ obj.foo();
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:42 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:57 2022
 </div>
     </div>
 </div>

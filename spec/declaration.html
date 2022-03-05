@@ -146,7 +146,12 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#declaration_syntax">宣言の構文</a><ol>        <li><a href="#pointers-to-functions">関数ポインタ</a></li>
+    <ol>    <li><a href="#grammar">Grammar</a><ol>        <li><a href="#aggregates">Aggregates</a></li>
+        <li><a href="#variable-declarations">Variable Declarations</a></li>
+        <li><a href="#storage-classes">Storage Classes</a></li>
+        <li><a href="#initializers">Initializers</a></li>
+    </ol></li>
+    <li><a href="#declaration_syntax">宣言の構文</a><ol>        <li><a href="#pointers-to-functions">関数ポインタ</a></li>
         <li><a href="#c-style-declarations">C スタイルな宣言</a></li>
         <li><a href="#declaring-multiple-symbols">複数シンボルの宣言</a></li>
     </ol></li>
@@ -166,18 +171,34 @@
 </ol>
 </div>
 <div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="grammar" href="#grammar">Grammar</a></h2>
+<div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Declaration"><span class="gname">Declaration</span></a>:
     <a href="../spec/function.html#FuncDeclaration"><i>FuncDeclaration</i></a>
     <a href="#VarDeclarations"><i>VarDeclarations</i></a>
     <a href="#AliasDeclaration"><i>AliasDeclaration</i></a>
     <a href="#AliasAssign"><i>AliasAssign</i></a>
-    <a href="../spec/struct.html#AggregateDeclaration"><i>AggregateDeclaration</i></a>
+    <a href="#AggregateDeclaration"><i>AggregateDeclaration</i></a>
     <a href="../spec/enum.html#EnumDeclaration"><i>EnumDeclaration</i></a>
     <a href="../spec/module.html#ImportDeclaration"><i>ImportDeclaration</i></a>
     <a href="../spec/version.html#ConditionalDeclaration"><i>ConditionalDeclaration</i></a>
     <a href="../spec/version.html#StaticForeachDeclaration"><i>StaticForeachDeclaration</i></a>
     <a href="../spec/version.html#StaticAssert"><i>StaticAssert</i></a>
 </pre>
+<div class="blankline"></div>
+<p>See also <a href="../spec/module.html#DeclDef"><i>DeclDef</i></a>.
+</p>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="aggregates" href="#aggregates">Aggregates</a></h3>
+<div class="blankline"></div>
+<pre class="bnf notranslate"><a id="AggregateDeclaration"><span class="gname">AggregateDeclaration</span></a>:
+    <a href="../spec/class.html#ClassDeclaration"><i>ClassDeclaration</i></a>
+    <a href="../spec/interface.html#InterfaceDeclaration"><i>InterfaceDeclaration</i></a>
+    <a href="../spec/struct.html#StructDeclaration"><i>StructDeclaration</i></a>
+    <a href="../spec/struct.html#UnionDeclaration"><i>UnionDeclaration</i></a>
+</pre>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="variable-declarations" href="#variable-declarations">Variable Declarations</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="VarDeclarations"><span class="gname">VarDeclarations</span></a>:
     <a href="#StorageClasses"><i>StorageClasses</i></a><sub>opt</sub> <a href="../spec/type.html#BasicType"><i>BasicType</i></a> <a href="#Declarators"><i>Declarators</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -190,57 +211,23 @@
 <a id="DeclaratorInitializer"><span class="gname">DeclaratorInitializer</span></a>:
     <a href="#VarDeclarator"><i>VarDeclarator</i></a>
     <a href="#VarDeclarator"><i>VarDeclarator</i></a> <a href="../spec/template.html#TemplateParameters"><i>TemplateParameters</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="#Initializer"><i>Initializer</i></a>
-    <a href="#AltDeclarator"><i>AltDeclarator</i></a>
-    <a href="#AltDeclarator"><i>AltDeclarator</i></a> <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="#Initializer"><i>Initializer</i></a>
 <div class="blankline"></div>
 <a id="DeclaratorIdentifierList"><span class="gname">DeclaratorIdentifierList</span></a>:
     <a href="#DeclaratorIdentifier"><i>DeclaratorIdentifier</i></a>
     <a href="#DeclaratorIdentifier"><i>DeclaratorIdentifier</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span> <i>DeclaratorIdentifierList</i>
 <div class="blankline"></div>
-<a id="DeclaratorIdentifier"><span class="gname">DeclaratorIdentifier</span></a>:
-    <a href="#VarDeclaratorIdentifier"><i>VarDeclaratorIdentifier</i></a>
-    <a href="#AltDeclaratorIdentifier"><i>AltDeclaratorIdentifier</i></a>
-<div class="blankline"></div>
-<a id="VarDeclaratorIdentifier"><span class="gname">VarDeclaratorIdentifier</span></a>:
+<a id="DeclaratorIdentifier"><span class="gname">DeclaratorIdentifier</span></a>:<span id="VarDeclaratorIdentifier"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span>
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="../spec/template.html#TemplateParameters"><i>TemplateParameters</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="#Initializer"><i>Initializer</i></a>
 <div class="blankline"></div>
-<a id="AltDeclaratorIdentifier"><span class="gname">AltDeclaratorIdentifier</span></a>:
-    <a href="../spec/type.html#TypeSuffixes"><i>TypeSuffixes</i></a> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AltDeclaratorSuffixes"><i>AltDeclaratorSuffixes</i></a><sub>opt</sub>
-    <a href="../spec/type.html#TypeSuffixes"><i>TypeSuffixes</i></a> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AltDeclaratorSuffixes"><i>AltDeclaratorSuffixes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="#Initializer"><i>Initializer</i></a>
-    <a href="../spec/type.html#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AltDeclaratorSuffixes"><i>AltDeclaratorSuffixes</i></a>
-    <a href="../spec/type.html#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AltDeclaratorSuffixes"><i>AltDeclaratorSuffixes</i></a> <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="#Initializer"><i>Initializer</i></a>
-<div class="blankline"></div>
 <a id="Declarator"><span class="gname">Declarator</span></a>:
     <a href="#VarDeclarator"><i>VarDeclarator</i></a>
-    <a href="#AltDeclarator"><i>AltDeclarator</i></a>
 <div class="blankline"></div>
 <a id="VarDeclarator"><span class="gname">VarDeclarator</span></a>:
     <a href="../spec/type.html#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
-<div class="blankline"></div>
-<a id="AltDeclarator"><span class="gname">AltDeclarator</span></a>:
-    <a href="../spec/type.html#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AltDeclaratorSuffixes"><i>AltDeclaratorSuffixes</i></a>
-    <a href="../spec/type.html#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#AltDeclaratorInner"><i>AltDeclaratorInner</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
-    <a href="../spec/type.html#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#AltDeclaratorInner"><i>AltDeclaratorInner</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#AltFuncDeclaratorSuffix"><i>AltFuncDeclaratorSuffix</i></a>
-    <a href="../spec/type.html#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#AltDeclaratorInner"><i>AltDeclaratorInner</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#AltDeclaratorSuffixes"><i>AltDeclaratorSuffixes</i></a>
-<div class="blankline"></div>
-<a id="AltDeclaratorInner"><span class="gname">AltDeclaratorInner</span></a>:
-    <a href="../spec/type.html#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
-    <a href="../spec/type.html#TypeSuffixes"><i>TypeSuffixes</i></a><sub>opt</sub> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#AltFuncDeclaratorSuffix"><i>AltFuncDeclaratorSuffix</i></a>
-    <a href="#AltDeclarator"><i>AltDeclarator</i></a>
-<div class="blankline"></div>
-<a id="AltDeclaratorSuffixes"><span class="gname">AltDeclaratorSuffixes</span></a>:
-    <a href="#AltDeclaratorSuffix"><i>AltDeclaratorSuffix</i></a>
-    <a href="#AltDeclaratorSuffix"><i>AltDeclaratorSuffix</i></a> <i>AltDeclaratorSuffixes</i>
-<div class="blankline"></div>
-<a id="AltDeclaratorSuffix"><span class="gname">AltDeclaratorSuffix</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">[ ]</span>
-    <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
-    <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
-<div class="blankline"></div>
-<a id="AltFuncDeclaratorSuffix"><span class="gname">AltFuncDeclaratorSuffix</span></a>:
-    <a href="../spec/function.html#Parameters"><i>Parameters</i></a> <a href="../spec/function.html#MemberFunctionAttributes"><i>MemberFunctionAttributes</i></a><sub>opt</sub>
 </pre>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="storage-classes" href="#storage-classes">Storage Classes</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="StorageClasses"><span class="gname">StorageClasses</span></a>:
     <a href="#StorageClass"><i>StorageClass</i></a>
@@ -271,17 +258,16 @@
     <span class="d_inlinecode donthyphenate notranslate">ref</span>
 </pre>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="initializers" href="#initializers">Initializers</a></h3>
+<div class="blankline"></div>
 <pre class="bnf notranslate"><a id="Initializer"><span class="gname">Initializer</span></a>:
     <a href="#VoidInitializer"><i>VoidInitializer</i></a>
     <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
 <div class="blankline"></div>
 <a id="NonVoidInitializer"><span class="gname">NonVoidInitializer</span></a>:
-    <a href="#ExpInitializer"><i>ExpInitializer</i></a>
+    <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a><span id="ExpInitializer"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span>
     <a href="#ArrayInitializer"><i>ArrayInitializer</i></a>
-    <a href="#StructInitializer"><i>StructInitializer</i></a>
-<div class="blankline"></div>
-<a id="ExpInitializer"><span class="gname">ExpInitializer</span></a>:
-    <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a>
+    <a href="../spec/struct.html#StructInitializer"><i>StructInitializer</i></a><span id="StructInitializer"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span>
 <div class="blankline"></div>
 <a id="ArrayInitializer"><span class="gname">ArrayInitializer</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#ArrayMemberInitializations"><i>ArrayMemberInitializations</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">]</span>
@@ -294,18 +280,6 @@
 <a id="ArrayMemberInitialization"><span class="gname">ArrayMemberInitialization</span></a>:
     <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
     <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
-<div class="blankline"></div>
-<a id="StructInitializer"><span class="gname">StructInitializer</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">{</span> <a href="#StructMemberInitializers"><i>StructMemberInitializers</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">}</span>
-<div class="blankline"></div>
-<a id="StructMemberInitializers"><span class="gname">StructMemberInitializers</span></a>:
-    <a href="#StructMemberInitializer"><i>StructMemberInitializer</i></a>
-    <a href="#StructMemberInitializer"><i>StructMemberInitializer</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span>
-    <a href="#StructMemberInitializer"><i>StructMemberInitializer</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span> <i>StructMemberInitializers</i>
-<div class="blankline"></div>
-<a id="StructMemberInitializer"><span class="gname">StructMemberInitializer</span></a>:
-    <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
-    <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
 </pre>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="declaration_syntax" href="#declaration_syntax">宣言の構文</a></h2>
@@ -960,7 +934,7 @@ ImmutableInt z;     <span class="d_comment">// typeof(z) == immutable(int)
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:41 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:57 2022
 </div>
     </div>
 </div>

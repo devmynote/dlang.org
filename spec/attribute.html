@@ -665,11 +665,11 @@ runtime error.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="safe" href="#safe"><span class="d_inlinecode donthyphenate notranslate">@safe</span>, <span class="d_inlinecode donthyphenate notranslate">@trusted</span>, <span class="d_inlinecode donthyphenate notranslate">@system</span> 属性</a></h2>
 <div class="blankline"></div>
-    <p>See <a href="../function.html#function-safety">Function Safety</a>.</p>
+    <p>See <a href="../spec/function.html#function-safety">Function Safety</a>.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="nogc" href="#nogc"><span class="d_inlinecode donthyphenate notranslate">@nogc</span> 属性</a></h2>
 <div class="blankline"></div>
-    <p>See <a href="../function.html#nogc-functions">No-GC Functions</a>.</p>
+    <p>See <a href="../spec/function.html#nogc-functions">No-GC Functions</a>.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="property" href="#property"><span class="d_inlinecode donthyphenate notranslate">@property</span> 属性</a></h2>
 <div class="blankline"></div>
@@ -693,29 +693,7 @@ runtime error.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="override" href="#override"><span class="d_inlinecode donthyphenate notranslate">override</span> 属性</a></h2>
 <div class="blankline"></div>
-        <p>The <span class="d_inlinecode donthyphenate notranslate">override</span> attribute applies to virtual functions.
-        It means that the function must override a function with the
-        same name and parameters in a base class. The override attribute
-        is useful for catching errors when a base class's member function
-        gets its parameters changed, and all derived classes need to have
-        their overriding functions updated.
-        </p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">class</span> Foo
-{
-    <span class="d_keyword">int</span> bar();
-    <span class="d_keyword">int</span> abc(<span class="d_keyword">int</span> x);
-}
-
-<span class="d_keyword">class</span> Foo2 : Foo
-{
-    <span class="d_keyword">override</span>
-    {
-        <span class="d_keyword">int</span> bar(<span class="d_keyword">char</span> c); <span class="d_comment">// error, no bar(char) in Foo
-</span>        <span class="d_keyword">int</span> abc(<span class="d_keyword">int</span> x);  <span class="d_comment">// ok
-</span>    }
-}
-</pre>
+    <p>See <a href="../spec/function.html#virtual-functions">Virtual Functions</a>.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="static" href="#static"><span class="d_inlinecode donthyphenate notranslate">static</span> 属性</a></h2>
 <div class="blankline"></div>
@@ -766,7 +744,7 @@ Foo.bar();      <span class="d_comment">// produces 6
 </span></pre>
 <div class="blankline"></div>
     <p>For functions, the <span class="d_inlinecode donthyphenate notranslate">auto</span> attribute means return type inference.
-        See <a href="../function.html#auto-functions">Auto Functions</a>.
+        See <a href="../spec/function.html#auto-functions">Auto Functions</a>.
     </p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="scope" href="#scope"><span class="d_inlinecode donthyphenate notranslate">scope</span> 属性</a></h2>
@@ -902,6 +880,40 @@ A user-defined attribute looks like:
             attributes accumulate or override earlier ones is also up to how the user
             interprets them.
         </p>
+<div class="blankline"></div>
+        <p>            If a UDA is attached to a template declaration, then it will be automatically
+            attached to all direct members of instances of that template. If any of those
+            members are templates themselves, this rule applies recursively:
+        </p>
+<div class="blankline"></div>
+<pre class="d_code notranslate">@(<span class="d_string">"foo"</span>) <span class="d_keyword">template</span> Outer(T)
+{
+    <span class="d_keyword">struct</span> S
+    {
+        <span class="d_keyword">int</span> x;
+    }
+    <span class="d_keyword">int</span> y;
+    <span class="d_keyword">void</span> fun() {}
+    @(<span class="d_string">"bar"</span>) <span class="d_keyword">template</span> Inner(U)
+    {
+        <span class="d_keyword">int</span> z;
+    }
+}
+
+<span class="d_keyword">pragma</span>(msg, <span class="d_keyword">__traits</span>(getAttributes, Outer!<span class="d_keyword">int</span>.S));
+<span class="d_comment">// prints tuple("foo")
+</span><span class="d_keyword">pragma</span>(msg, <span class="d_keyword">__traits</span>(getAttributes, Outer!<span class="d_keyword">int</span>.S.x));
+<span class="d_comment">// prints tuple()
+</span><span class="d_keyword">pragma</span>(msg, <span class="d_keyword">__traits</span>(getAttributes, Outer!<span class="d_keyword">int</span>.y));
+<span class="d_comment">// prints tuple("foo")
+</span><span class="d_keyword">pragma</span>(msg, <span class="d_keyword">__traits</span>(getAttributes, Outer!<span class="d_keyword">int</span>.fun));
+<span class="d_comment">// prints tuple("foo")
+</span><span class="d_keyword">pragma</span>(msg, <span class="d_keyword">__traits</span>(getAttributes, Outer!<span class="d_keyword">int</span>.Inner));
+<span class="d_comment">// prints tuple("foo", "bar")
+</span><span class="d_keyword">pragma</span>(msg, <span class="d_keyword">__traits</span>(getAttributes, Outer!<span class="d_keyword">int</span>.Inner!<span class="d_keyword">int</span>.z));
+<span class="d_comment">// prints tuple("foo", "bar")
+</span></pre>
+<div class="blankline"></div>
         <p>            UDAs cannot be attached to template parameters.
         </p>
 
@@ -912,7 +924,7 @@ A user-defined attribute looks like:
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:41 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:57 2022
 </div>
     </div>
 </div>

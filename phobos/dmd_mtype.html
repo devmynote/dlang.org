@@ -722,6 +722,39 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#trustToString" id="trustToString"><code class="code">trustToString</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="trustToString"></span>pure nothrow @nogc @safe string <code class="code">trustToString</code>(TRUST <code class="code">trust</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Pick off one of the <code class="code">trust</code> flags from <code class="code">trust</code>,
+ and return a string representation of it.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#ModToStc" id="ModToStc"><code class="code">ModToStc</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -777,6 +810,85 @@
   <p class="para">
     Returns <code class="code">true</code> if <code class="code">ty</code> is char, wchar, or dchar
   </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#mutabilityOfType" id="mutabilityOfType"><code class="code">mutabilityOfType</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="mutabilityOfType"></span>int <code class="code">mutabilityOfType</code>(bool <code class="code">isref</code>, Type <code class="code">t</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Determine mutability of indirections in (ref) <code class="code">t</code>.
+
+  </p>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    When the type has any mutable indirections, returns 0.
+ When all indirections are immutable, returns 2.
+ Otherwise, when the type has const/inout indirections, returns 1.
+
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">bool <code class="code">isref</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      if <code class="code">true</code>, check <code class="code">ref <code class="code">t</code></code>; otherwise, check just <code class="code"><code class="code">t</code></code>
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Type <code class="code">t</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      the type that is being checked
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
 </div>
 
 </section>
@@ -4724,6 +4836,38 @@ pure nothrow @nogc @safe void <code class="code">isctor</code>(bool <code class=
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#TypeTag.base" id="TypeTag.base"><code class="code">base</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="TypeTag.base"></span>Type <code class="code">base</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">base</code> type for enums otherwise <code class="code">null</code>
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#TypeTag.members" id="TypeTag.members"><code class="code">members</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -4797,7 +4941,7 @@ pure nothrow @nogc @safe void <code class="code">isctor</code>(bool <code class=
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="TypeTag.this"></span>this(const ref Loc <code class="code">loc</code>, TOK <code class="code">tok</code>, Identifier <code class="code">id</code>, Dsymbols* <code class="code">members</code>);
+            <span class="ddoc_anchor" id="TypeTag.this"></span>this(const ref Loc <code class="code">loc</code>, TOK <code class="code">tok</code>, Identifier <code class="code">id</code>, Type <code class="code">base</code>, Dsymbols* <code class="code">members</code>);
 
           </code>
         </p>

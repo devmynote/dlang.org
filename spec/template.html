@@ -147,21 +147,19 @@
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
     <ol>    <li><a href="#declarations">テンプレートの宣言</a></li>
-    <li><a href="#explicit_tmp_instantiation">明示的なテンプレートのインスタンス化</a><ol>        <li><a href="#copy_example">実例</a></li>
+    <li><a href="#template_instantiation">Template Instantiation</a><ol>        <li><a href="#explicit_tmp_instantiation">明示的なテンプレートのインスタンス化</a></li>
+        <li><a href="#common_instantiation">Common Instantiation</a></li>
+        <li><a href="#copy_example">実例</a></li>
+        <li><a href="#instantiation_scope">インスタンス化のスコープ</a></li>
     </ol></li>
-    <li><a href="#instantiation_scope">インスタンス化のスコープ</a></li>
-    <li><a href="#argument_deduction">引数の推定</a></li>
-    <li><a href="#template_type_parameters">テンプレート型引数</a><ol>        <li><a href="#parameters_specialization">特殊化</a></li>
+    <li><a href="#parameters">Template Parameters</a><ol>        <li><a href="#argument_deduction">引数の推定</a></li>
+        <li><a href="#template_type_parameters">テンプレート型引数</a></li>
+        <li><a href="#template_this_parameter">テンプレート This 引数</a></li>
+        <li><a href="#template_value_parameter">テンプレート 値引数</a></li>
+        <li><a href="#aliasparameters">テンプレート Alias 引数</a></li>
+        <li><a href="#variadic-templates">テンプレート シーケンス引数</a></li>
+        <li><a href="#template_parameter_def_values">テンプレート引数のデフォルト値</a></li>
     </ol></li>
-    <li><a href="#template_this_parameter">テンプレート This 引数</a></li>
-    <li><a href="#template_value_parameter">テンプレート 値引数</a></li>
-    <li><a href="#aliasparameters">テンプレート Alias 引数</a><ol>        <li><a href="#typed_alias_op">型付けされた alias 引数</a></li>
-        <li><a href="#alias_parameter_specialization">特殊化</a></li>
-    </ol></li>
-    <li><a href="#variadic-templates">テンプレート シーケンス引数</a><ol>        <li><a href="#typeseq_deduction">型シーケンスの推論</a></li>
-        <li><a href="#variadic_template_specialization">特殊化</a></li>
-    </ol></li>
-    <li><a href="#template_parameter_def_values">テンプレート引数のデフォルト値</a></li>
     <li><a href="#implicit_template_properties">メンバに由来する名前のテンプレート</a></li>
     <li><a href="#aggregate_templates">集約テンプレート</a></li>
     <li><a href="#function-templates">関数テンプレート</a><ol>        <li><a href="#ifti">暗黙の関数テンプレートのインスタンス化 (IFTI)</a></li>
@@ -197,13 +195,6 @@
     <a href="#TemplateParameter"><i>TemplateParameter</i></a>
     <a href="#TemplateParameter"><i>TemplateParameter</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span>
     <a href="#TemplateParameter"><i>TemplateParameter</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span> <i>TemplateParameterList</i>
-<div class="blankline"></div>
-<a id="TemplateParameter"><span class="gname">TemplateParameter</span></a>:
-    <a href="#TemplateTypeParameter"><i>TemplateTypeParameter</i></a>
-    <a href="#TemplateValueParameter"><i>TemplateValueParameter</i></a>
-    <a href="#TemplateAliasParameter"><i>TemplateAliasParameter</i></a>
-    <a href="#TemplateSequenceParameter"><i>TemplateSequenceParameter</i></a>
-    <a href="#TemplateThisParameter"><i>TemplateThisParameter</i></a>
 </pre>
 <div class="blankline"></div>
     <p>The <em>DeclDefs</em> body of the template must be syntactically correct
@@ -213,8 +204,8 @@
         enums, variables, functions, and other templates.
     </p>
 <div class="blankline"></div>
-    <p>Template parameters can take types, values, symbols, or sequences.
-        Type parameters can take any type.</p>
+    <p><a href="#parameters">Template parameters</a> can take types,
+        values, symbols, or sequences.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">template</span> t(T) <span class="d_comment">// declare type parameter T
 </span>{
@@ -222,19 +213,15 @@
 </span>}
 </pre>
 <div class="blankline"></div>
-    <p>Value parameters can take any expression which can be statically
-        evaluated at compile time.
-        Alias parameters can take almost any symbol.
-        Sequence parameters can take zero or more types, values or symbols.
-    </p>
+    <p>A template parameter can have a <em>specialization</em> which
+        constrains an argument the <i>TemplateParameter</i> can
+        accept.</p>
 <div class="blankline"></div>
-    <p>Template parameter specializations
-        constrain the values or types the <i>TemplateParameter</i> can
-        accept.
-    </p>
-    <p>Template parameter defaults are the value or type to use for the
-        <i>TemplateParameter</i> in case one is not supplied.
-    </p>
+<pre class="d_code notranslate"><span class="d_keyword">template</span> t(T : <span class="d_keyword">int</span>) <span class="d_comment">// type T must implicitly convert to int
+</span>{
+    ...
+}
+</pre>
 <div class="blankline"></div>
     <p>If multiple templates with the same <i>Identifier</i> are
         declared, they are distinct if they have different parameters
@@ -249,7 +236,19 @@
         template declarations instead.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="explicit_tmp_instantiation" href="#explicit_tmp_instantiation">明示的なテンプレートのインスタンス化</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="template_instantiation" href="#template_instantiation">Template Instantiation</a></h2>
+<div class="blankline"></div>
+    <p>A template must be instantiated before use. This means
+    passing an argument list to the template.
+    Those arguments are typically then substituted
+    into the template body, which becomes a new scoped entity.</p>
+<div class="blankline"></div>
+    <p><a href="#function-templates">Function templates</a> can
+    be implicitly instantiated if the compiler can infer the template
+    arguments from a function call. Otherwise the template must be
+    instantiated explicitly.</p>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="explicit_tmp_instantiation" href="#explicit_tmp_instantiation">明示的なテンプレートのインスタンス化</a></h3>
 <div class="blankline"></div>
     <p>Templates are explicitly instantiated with:
     </p>
@@ -316,6 +315,8 @@ TFoo!(<span class="d_keyword">int</span>).Ptr x; <span class="d_comment">// decl
 foo.Ptr x;        <span class="d_comment">// declare x to be of type int*
 </span></pre>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="common_instantiation" href="#common_instantiation">Common Instantiation</a></h3>
+<div class="blankline"></div>
     <p>Multiple instantiations of a <i>TemplateDeclaration</i> with the same
         <i>TemplateArgumentList</i> will all refer to the same instantiation.
         For example:</p>
@@ -334,7 +335,7 @@ a.f = 3;
 <div class="blankline"></div>
     <p>Even if template arguments are implicitly converted to the same
         template parameter type, they still refer to the same instance.
-        This example uses a
+        This example uses a <a href="#TemplateValueParameter"><i>TemplateValueParameter</i></a> and a
         <a href="#aggregate_templates"><span class="d_inlinecode donthyphenate notranslate">struct</span> template</a>:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> TFoo(<span class="d_keyword">int</span> x) { }
@@ -370,35 +371,33 @@ TCopy!(<span class="d_keyword">int</span>).copy(i, 3);
 </pre>
     <p>See also <a href="#function-templates">function templates</a>.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="instantiation_scope" href="#instantiation_scope">インスタンス化のスコープ</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="instantiation_scope" href="#instantiation_scope">インスタンス化のスコープ</a></h3>
 <div class="blankline"></div>
     <p><i>TemplateInstance</i>s are always instantiated in the scope of where
         the <i>TemplateDeclaration</i> is declared, with the addition of the
         template parameters being declared as aliases for their deduced types.
     </p>
-    <p>For example:</p>
+    <p><b>Example:</b></p>
 <div class="blankline"></div>
-        <br><br>
-        <em class="u">module a</em>
+        <em class="u">module a:</em>
 <pre class="d_code notranslate"><span class="d_keyword">template</span> TFoo(T) { <span class="d_keyword">void</span> bar() { func(); } }
 </pre>
 <div class="blankline"></div>
-        <em class="u">module b</em>
+        <em class="u">module b:</em>
 <pre class="d_code notranslate"><span class="d_keyword">import</span> a;
 
 <span class="d_keyword">void</span> func() { }
 <span class="d_keyword">alias</span> f = TFoo!(<span class="d_keyword">int</span>); <span class="d_comment">// error: func not defined in module a
 </span></pre>
 <div class="blankline"></div>
-    and:
+    <p><b>Example:</b></p>
 <div class="blankline"></div>
-        <br><br>
-        <em class="u">module a</em>
+        <em class="u">module a:</em>
 <pre class="d_code notranslate"><span class="d_keyword">template</span> TFoo(T) { <span class="d_keyword">void</span> bar() { func(1); } }
 <span class="d_keyword">void</span> func(<span class="d_keyword">double</span> d) { }
 </pre>
 <div class="blankline"></div>
-        <em class="u">module b</em>
+        <em class="u">module b:</em>
 <pre class="d_code notranslate"><span class="d_keyword">import</span> a;
 
 <span class="d_keyword">void</span> func(<span class="d_keyword">int</span> i) { }
@@ -408,10 +407,35 @@ f.bar();  <span class="d_comment">// will call a.func(double)
 </span></pre>
 <div class="blankline"></div>
     <p><i>TemplateParameter</i> specializations and default
-        values are evaluated in the scope of the <i>TemplateDeclaration</i>.
+        arguments are evaluated in the scope of the <i>TemplateDeclaration</i>.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="argument_deduction" href="#argument_deduction">引数の推定</a></h2>
+<div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="parameters" href="#parameters">Template Parameters</a></h2>
+<div class="blankline"></div>
+<pre class="bnf notranslate"><a id="TemplateParameter"><span class="gname">TemplateParameter</span></a>:
+    <a href="#TemplateTypeParameter"><i>TemplateTypeParameter</i></a>
+    <a href="#TemplateValueParameter"><i>TemplateValueParameter</i></a>
+    <a href="#TemplateAliasParameter"><i>TemplateAliasParameter</i></a>
+    <a href="#TemplateSequenceParameter"><i>TemplateSequenceParameter</i></a>
+    <a href="#TemplateThisParameter"><i>TemplateThisParameter</i></a>
+</pre>
+<div class="blankline"></div>
+    <p>Template parameters can take types, values, symbols, or sequences.</p>
+<div class="blankline"></div>
+    <ul>    <li>Type parameters can take any type.</li>
+    <li>Value parameters can take any expression which can be statically
+        evaluated at compile time.</li>
+    <li>Alias parameters can take almost any symbol.</li>
+    <li>Sequence parameters can take zero or more types, values or symbols.</li>
+    </ul>
+<div class="blankline"></div>
+    <p><a href="#template_parameter_def_values">A default argument</a>
+        specifies the type, value or symbol to use for the
+        <i>TemplateParameter</i> when a matching argument is not supplied.
+    </p>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="argument_deduction" href="#argument_deduction">引数の推定</a></h3>
 <div class="blankline"></div>
     <p>The types of template parameters are deduced for a particular
         template instantiation by comparing the template argument with
@@ -481,7 +505,7 @@ Foo!(<span class="d_keyword">int</span>[<span class="d_keyword">long</span>])  <
 </span>                           <span class="d_comment">// (3) U is B
 </span></pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="template_type_parameters" href="#template_type_parameters">テンプレート型引数</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="template_type_parameters" href="#template_type_parameters">テンプレート型引数</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TemplateTypeParameter"><span class="gname">TemplateTypeParameter</span></a>:
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
@@ -496,7 +520,7 @@ Foo!(<span class="d_keyword">int</span>[<span class="d_keyword">long</span>])  <
     <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="../spec/type.html#Type"><i>Type</i></a>
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="parameters_specialization" href="#parameters_specialization">特殊化</a></h3>
+<h4><a class="anchor" title="Permalink to this section" id="parameters_specialization" href="#parameters_specialization">特殊化</a></h4>
 <div class="blankline"></div>
     <p>Templates may be specialized for particular types of arguments
         by following the template parameter identifier with a : and the
@@ -521,7 +545,7 @@ Foo!(<span class="d_keyword">int</span>[<span class="d_keyword">long</span>])  <
     </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="template_this_parameter" href="#template_this_parameter">テンプレート This 引数</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="template_this_parameter" href="#template_this_parameter">テンプレート This 引数</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TemplateThisParameter"><span class="gname">TemplateThisParameter</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">this</span> <a href="#TemplateTypeParameter"><i>TemplateTypeParameter</i></a>
@@ -535,7 +559,7 @@ Foo!(<span class="d_keyword">int</span>[<span class="d_keyword">long</span>])  <
         <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> S
 {
-    <span class="d_keyword">void</span> foo(<span class="d_keyword">this</span> T)(<span class="d_keyword">int</span> i) <span class="d_keyword">const</span>
+    <span class="d_keyword">void</span> foo(<span class="d_keyword">this</span> T)() <span class="d_keyword">const</span>
     {
         <span class="d_keyword">pragma</span>(msg, T);
     }
@@ -544,11 +568,11 @@ Foo!(<span class="d_keyword">int</span>[<span class="d_keyword">long</span>])  <
 <span class="d_keyword">void</span> main()
 {
     <span class="d_keyword">const</span>(S) s;
-    (&amp;s).foo(1);
+    (&amp;s).foo();
     S s2;
-    s2.foo(2);
+    s2.foo();
     <span class="d_keyword">immutable</span>(S) s3;
-    s3.foo(3);
+    s3.foo();
 }
 </pre>
         
@@ -561,7 +585,9 @@ S
 immutable(S)
 </pre>
 <div class="blankline"></div>
-    <p>This is especially useful when used with inheritance. For example,
+<h4><a class="anchor" title="Permalink to this section" id="this_rtti" href="#this_rtti">Avoiding Runtime Type Checks</a></h4>
+<div class="blankline"></div>
+    <p><em>TemplateThisParameter</em> is especially useful when used with inheritance. For example,
         consider the implementation of a final base method which returns a derived
         class type. Typically this would return a base type, but that would prohibit
         calling or accessing derived properties of the type:</p>
@@ -590,8 +616,9 @@ immutable(S)
 </pre>
 <div class="blankline"></div>
     <p>Here the method <span class="d_inlinecode donthyphenate notranslate">add</span> returns the base type, which doesn't implement the
-        <span class="d_inlinecode donthyphenate notranslate">remove</span> method. The <span class="d_inlinecode donthyphenate notranslate">template this</span> parameter can be used for this purpose:</p>
+        <span class="d_inlinecode donthyphenate notranslate">remove</span> method. The template <span class="d_inlinecode donthyphenate notranslate">this</span> parameter can be used for this purpose:</p>
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">interface</span> Addable(T)
 {
     <span class="d_keyword">final</span> R add(<span class="d_keyword">this</span> R)(T t)
@@ -611,11 +638,18 @@ immutable(S)
 <span class="d_keyword">void</span> main()
 {
     <span class="d_keyword">auto</span> list = <span class="d_keyword">new</span> List!<span class="d_keyword">int</span>;
-    list.add(1).remove(1);  <span class="d_comment">// ok
-</span>}
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(list.add(1)) == List!<span class="d_keyword">int</span>));
+    list.add(1).remove(1);  <span class="d_comment">// ok, List.add
+</span>
+    Addable!<span class="d_keyword">int</span> a = list;
+    <span class="d_comment">// a.add calls Addable.add
+</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(a.add(1)) == Addable!<span class="d_keyword">int</span>));
+}
 </pre>
+        
+</div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="template_value_parameter" href="#template_value_parameter">テンプレート 値引数</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="template_value_parameter" href="#template_value_parameter">テンプレート 値引数</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TemplateValueParameter"><span class="gname">TemplateValueParameter</span></a>:
     <a href="../spec/type.html#BasicType"><i>BasicType</i></a> <a href="../spec/declaration.html#Declarator"><i>Declarator</i></a>
@@ -653,12 +687,15 @@ immutable(S)
         
 </div>
 <div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="value_specialization" href="#value_specialization">Specialization</a></h4>
+<div class="blankline"></div>
     <p>Any specialization or default expression provided must be evaluatable
         at compile-time.</p>
 <div class="blankline"></div>
-    <p>This example of template foo has a value parameter that
-        is specialized for 10:</p>
+    <p>In this example, template <span class="d_inlinecode donthyphenate notranslate">foo</span> has a value parameter that
+        is specialized for <span class="d_inlinecode donthyphenate notranslate">10</span>:</p>
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">template</span> foo(U : <span class="d_keyword">int</span>, <span class="d_keyword">int</span> v : 10)
 {
     U x = v;
@@ -667,10 +704,16 @@ immutable(S)
 <span class="d_keyword">void</span> main()
 {
     <span class="d_keyword">assert</span>(foo!(<span class="d_keyword">int</span>, 10).x == 10);
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, foo!(<span class="d_keyword">int</span>, 11)));
 }
 </pre>
+        
+</div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="aliasparameters" href="#aliasparameters">テンプレート Alias 引数</a></h2>
+    <p>This can be useful when a different template body is required for a specific value.
+        Another template overload would be defined to take other integer literal values.</p>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="aliasparameters" href="#aliasparameters">テンプレート Alias 引数</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TemplateAliasParameter"><span class="gname">TemplateAliasParameter</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">alias</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateAliasParameterSpecialization"><i>TemplateAliasParameterSpecialization</i></a><sub>opt</sub> <a href="#TemplateAliasParameterDefault"><i>TemplateAliasParameterDefault</i></a><sub>opt</sub>
@@ -875,7 +918,7 @@ immutable(S)
 </div></li>
     </ul>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="typed_alias_op" href="#typed_alias_op">型付けされた alias 引数</a></h3>
+<h4><a class="anchor" title="Permalink to this section" id="typed_alias_op" href="#typed_alias_op">型付けされた alias 引数</a></h4>
 <div class="blankline"></div>
     <p>Alias parameters can also be typed.
         These parameters will accept symbols of that type:</p>
@@ -888,7 +931,7 @@ Foo!x;  <span class="d_comment">// ok
 </span>Foo!f;  <span class="d_comment">// fails to instantiate
 </span></pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="alias_parameter_specialization" href="#alias_parameter_specialization">特殊化</a></h3>
+<h4><a class="anchor" title="Permalink to this section" id="alias_parameter_specialization" href="#alias_parameter_specialization">特殊化</a></h4>
 <div class="blankline"></div>
     <p>Alias parameters can accept both literals and user-defined type symbols,
         but they are less specialized than the matches to type parameters and
@@ -914,7 +957,7 @@ Foo!x;  <span class="d_comment">// ok
 <span class="d_keyword">alias</span> bar = Bar!(C!<span class="d_keyword">int</span>);    <span class="d_comment">// instantiates #5
 </span></pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="variadic-templates" href="#variadic-templates">テンプレート シーケンス引数</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="variadic-templates" href="#variadic-templates">テンプレート シーケンス引数</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TemplateSequenceParameter"><span class="gname">TemplateSequenceParameter</span></a>:
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">...</span>
@@ -977,7 +1020,7 @@ Foo!x;  <span class="d_comment">// ok
         to dynamically change, add, or remove elements either at compile-time or run-time.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="typeseq_deduction" href="#typeseq_deduction">型シーケンスの推論</a></h3>
+<h4><a class="anchor" title="Permalink to this section" id="typeseq_deduction" href="#typeseq_deduction">型シーケンスの推論</a></h4>
 <div class="blankline"></div>
     <p>Type sequences can be deduced from the trailing parameters
         of an <a href="#ifti">implicitly instantiated</a> function template:</p>
@@ -1043,7 +1086,7 @@ R <span class="d_keyword">delegate</span>(Args) partial(R, T, Args...)(R <span c
 </div>
         See also: <a href="../phobos/std_functional.html#.partial"><span class="d_inlinecode donthyphenate notranslate">std.functional.partial</span></a>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="variadic_template_specialization" href="#variadic_template_specialization">特殊化</a></h3>
+<h4><a class="anchor" title="Permalink to this section" id="variadic_template_specialization" href="#variadic_template_specialization">特殊化</a></h4>
 <div class="blankline"></div>
     <p>If both a template with a sequence parameter and a template
         without a sequence parameter exactly match a template instantiation,
@@ -1064,9 +1107,9 @@ R <span class="d_keyword">delegate</span>(Args) partial(R, T, Args...)(R <span c
 <span class="d_keyword">alias</span> foo4 = Foo!(<span class="d_keyword">int</span>, 3, std);  <span class="d_comment">// instantiates #4
 </span></pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="template_parameter_def_values" href="#template_parameter_def_values">テンプレート引数のデフォルト値</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="template_parameter_def_values" href="#template_parameter_def_values">テンプレート引数のデフォルト値</a></h3>
 <div class="blankline"></div>
-    <p>Trailing template parameters can be given default values:</p>
+    <p>Trailing template parameters can be given default arguments:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">template</span> Foo(T, U = <span class="d_keyword">int</span>) { ... }
 Foo!(<span class="d_keyword">uint</span>,<span class="d_keyword">long</span>); <span class="d_comment">// instantiate Foo with T as uint, and U as long
@@ -1155,7 +1198,7 @@ Foo!(<span class="d_keyword">uint</span>);      <span class="d_comment">// insta
 }
 </pre>
 <div class="blankline"></div>
-    <p>See also: <a href="#template_this_parameter">Template This Parameters</a>.
+    <p>See also: <a href="#template_this_parameter">This Parameters</a>.
     </p>
 <div class="blankline"></div>
     <p>Analogously to class templates, struct, union and interfaces
@@ -1190,8 +1233,8 @@ Foo!(<span class="d_keyword">uint</span>);      <span class="d_comment">// insta
 }
 </pre>
 <div class="blankline"></div>
-    <p>Function templates can be explicitly instantiated with a
-        !(<i>TemplateArgumentList</i>):</p>
+    <p>Function templates can be explicitly instantiated with
+        <em>Identifier</em><span class="d_inlinecode donthyphenate notranslate">!(</span><em>TemplateArgumentList</em><span class="d_inlinecode donthyphenate notranslate">)</span>:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate">writefln(<span class="d_string">"The square of %s is %s"</span>, 3, square!(<span class="d_keyword">int</span>)(3));
 </pre>
@@ -1309,7 +1352,7 @@ foo(mptr);  <span class="d_comment">// T == int*
     <p>Function templates can have their return types deduced based on the
         <a href="../spec/statement.html#ReturnStatement"><i>ReturnStatement</i></a>s in the function, just as with
         normal functions.
-        See <a href="../function.html#auto-functions">Auto Functions</a>.
+        See <a href="../spec/function.html#auto-functions">Auto Functions</a>.
     </p>
 <div class="blankline"></div>
     <div class="runnable-examples">
@@ -1741,7 +1784,7 @@ foo!(3)();  <span class="d_comment">// OK, matches
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:43 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:58 2022
 </div>
     </div>
 </div>

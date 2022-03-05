@@ -120,11 +120,11 @@
     <li><a href="#AliasSeq">AliasSeq</a></li>
     <li><a href="#available-operations">Available operations</a><ol>        <li><a href="#checking-length">Checking the length</a></li>
         <li><a href="#indexing-slicing">Indexing and slicing</a></li>
-        <li><a href="#assignment">Assignment</a></li>
-        <li><a href="#loops">Loops</a></li>
+        <li><a href="#loops"><span class="d_inlinecode donthyphenate notranslate">foreach</span></a></li>
     </ol></li>
     <li><a href="#auto-expansion">Auto-expansion</a></li>
     <li><a href="#homogenous-sequences">Homogenous sequences</a><ol>        <li><a href="#type-seq">Type sequences</a></li>
+        <li><a href="#type-seq-instantiation">Type sequence instantiation</a></li>
         <li><a href="#value-seq">Value sequences</a></li>
         <li><a href="#symbol-seq">Symbol sequences</a></li>
     </ol></li>
@@ -161,22 +161,23 @@
 
 <pre class="d_code notranslate"><span class="d_keyword">template</span> Variadic(T...)
 {
-    <span class="d_keyword">static</span> <span class="d_keyword">assert</span> (T.length &gt; 1);
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(T.length &gt; 1);
     <span class="d_keyword">pragma</span>(msg, T[0]);
     <span class="d_keyword">pragma</span>(msg, T[1]);
 }
 
 <span class="d_keyword">alias</span> dummy = Variadic!(<span class="d_keyword">int</span>, 42);
-<span class="d_comment">// prints during compilation:
-</span><span class="d_comment">// int
-</span><span class="d_comment">// 42
-</span></pre>
+</pre>
+    <p>Output during compilation:</p>
+<pre class="console notranslate">int
+42
+</pre>
 
     <h2><a class="anchor" title="Permalink to this section" id="AliasSeq" href="#AliasSeq">AliasSeq</a></h2>
 
     <p>The language itself does not provide any means to define such sequences outside of
         a template parameter declaration. Instead, there is a
-        <a href="../phobos/std_meta.html">simple utility</a> provided by the standard
+        <a href="../phobos/std_meta.html#.AliasSeq">simple template</a> provided by the standard
         library:
     </p>
 
@@ -201,7 +202,7 @@
     <h3><a class="anchor" title="Permalink to this section" id="checking-length" href="#checking-length">Checking the length</a></h3>
 
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.meta;
-<span class="d_keyword">static</span> <span class="d_keyword">assert</span> (AliasSeq!(1, 2, 3, 4).length == 4);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(AliasSeq!(1, 2, 3, 4).length == 4);
 </pre>
 
     <h3><a class="anchor" title="Permalink to this section" id="indexing-slicing" href="#indexing-slicing">Indexing and slicing</a></h3>
@@ -209,13 +210,17 @@
         <p>Indexes must be known at compile-time</p>
 
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.meta;
-<span class="d_keyword">alias</span> Numbers = AliasSeq!(1, 2, 3, 4);
-<span class="d_keyword">static</span> <span class="d_keyword">assert</span> (Numbers[1] == 2);
-<span class="d_keyword">alias</span> SubNumbers = Numbers[1 .. $];
-<span class="d_keyword">static</span> <span class="d_keyword">assert</span> (SubNumbers[0] == 2);
+
+<span class="d_keyword">alias</span> nums = AliasSeq!(1, 2, 3, 4);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(nums[1] == 2);
+
+<span class="d_comment">// slice last 3 elements
+</span><span class="d_keyword">alias</span> tail = nums[1 .. $];
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(tail[0] == 2);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(tail.length == 3);
 </pre>
 
-    <h3><a class="anchor" title="Permalink to this section" id="assignment" href="#assignment">Assignment</a></h3>
+    <h4><a class="anchor" title="Permalink to this section" id="assignment" href="#assignment">Element assignment</a></h4>
 
         <p>Works only if the sequence element is a symbol that refers to a mutable variable</p>
 
@@ -226,12 +231,12 @@
     <span class="d_keyword">int</span> x;
     <span class="d_keyword">alias</span> seq = AliasSeq!(10, x);
     seq[1] = 42;
-    <span class="d_keyword">assert</span> (x == 42);
+    <span class="d_keyword">assert</span>(x == 42);
     <span class="d_comment">// seq[0] = 42; // won't compile, can't assign to a constant
 </span>}
 </pre>
 
-    <h3><a class="anchor" title="Permalink to this section" id="loops" href="#loops">Loops</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="loops" href="#loops"><span class="d_inlinecode donthyphenate notranslate">foreach</span></a></h3>
 
         <p>D's <a href="../spec/statement.html#ForeachStatement">foreach statement</a> has special
             semantics when iterating over compile-time sequences. It repeats the body of the loop
@@ -251,15 +256,14 @@
             <span class="d_keyword">pragma</span> (msg, <span class="d_keyword">typeof</span>(sym));
     }
 }
-
-<span class="d_comment">/* Prints:
-int
+</pre>
+        <p>Output during compilation:</p>
+<pre class="console notranslate">int
 string
 void()
-*/</span>
 </pre>
 
-        <p><b>Note:</b> <a href="../version.html#staticforeach">Static foreach</a>
+        <p><b>Note:</b> <a href="../spec/version.html#staticforeach">Static foreach</a>
         should be preferred in new code.</p>
 
 <h2><a class="anchor" title="Permalink to this section" id="auto-expansion" href="#auto-expansion">Auto-expansion</a></h2>
@@ -299,9 +303,11 @@ void()
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.meta;
 <span class="d_keyword">alias</span> Params = AliasSeq!(<span class="d_keyword">int</span>, <span class="d_keyword">double</span>, string);
 <span class="d_keyword">void</span> foo(Params); <span class="d_comment">// void foo(int, double, string);
-</span></pre>
+</span>
+foo(7, 6.5, <span class="d_string">"hi"</span>);
+</pre>
 
-<h4><a class="anchor" title="Permalink to this section" id="type-seq-instantiation" href="#type-seq-instantiation">Type sequence instantiation</a></h4>
+<h3><a class="anchor" title="Permalink to this section" id="type-seq-instantiation" href="#type-seq-instantiation">Type sequence instantiation</a></h3>
 
     <p>D supports a special variable declaration syntax where a type sequence acts as a type:</p>
 
@@ -326,7 +332,7 @@ string __var3;
     variables, known as an <i>lvalue sequence</i>.</p>
 
     <p><a href="../spec/template.html#variadic-templates">Variadic template functions</a>
-    use a type sequence instance for a function parameter:</p>
+    use a type sequence instance to declare function parameters:</p>
 
 <pre class="d_code notranslate"><span class="d_keyword">void</span> foo(T...)(T args)
 {
@@ -336,9 +342,6 @@ string __var3;
     args[0] = T[0].init;
 }
 </pre>
-
-    <p><b>Note:</b> <a href="../phobos/std_typecons.html#.Tuple"><span class="d_inlinecode donthyphenate notranslate">std.typecons.Tuple</span></a> wraps a type sequence instance,
-    preventing auto-expansion, and allowing it to be returned from functions.</p>
 
 <h3><a class="anchor" title="Permalink to this section" id="value-seq" href="#value-seq">Value sequences</a></h3>
 
@@ -360,13 +363,16 @@ string __var3;
 swap(pair);
 <span class="d_keyword">assert</span>(x == 7 &amp;&amp; y == 3);
 </pre>
-    <p>As above, such sequences may use <a href="#assignment">assignment</a>.</p>
-
-<h4><a class="anchor" title="Permalink to this section" id="tupleof" href="#tupleof">Aggregate field sequences</a></h4>
+    <p>As above, such sequences may use
+    <a href="#assignment">element assignment</a>.</p>
 
     <p><a href="../spec/class.html#class_properties"><span class="d_inlinecode donthyphenate notranslate">.tupleof</span></a> is a
     class/struct instance property that provides an lvalue sequence
     of each field.</p>
+
+    <p>A function cannot return a value sequence. Instead,
+    <a href="../phobos/std_typecons.html#.Tuple"><span class="d_inlinecode donthyphenate notranslate">std.typecons.Tuple</span></a> can be used. It wraps an lvalue
+    sequence in a struct, preventing auto-expansion.</p>
 
 <h3><a class="anchor" title="Permalink to this section" id="symbol-seq" href="#symbol-seq">Symbol sequences</a></h3>
 
@@ -374,11 +380,27 @@ swap(pair);
 but not literals.
 Like an alias sequence, the kind of elements can be mixed.</p>
 
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.meta : AliasSeq;
+
+<span class="d_keyword">void</span> f(T)(T v)
+{
+    <span class="d_keyword">pragma</span>(msg, T);
+}
+<span class="d_keyword">alias</span> syms = AliasSeq!(f, f!<span class="d_keyword">byte</span>);
+syms[0](42); <span class="d_comment">// call f!int with IFTI
+</span>syms[1](42); <span class="d_comment">// call f!byte
+</span></pre>
+<p>Output during compilation:</p>
+<pre class="console notranslate">byte
+int
+</pre>
+<p>Note that function <span class="d_inlinecode donthyphenate notranslate">f!byte</span> is instantiated when the sequence is
+created, not at the call-site.</p>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Jan 22 16:36:44 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar  5 07:33:59 2022
 </div>
     </div>
 </div>
