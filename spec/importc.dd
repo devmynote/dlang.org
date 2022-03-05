@@ -55,9 +55,9 @@ $(H2 $(LNAME2 command-line, ImportCを呼び出す))
     $(LI indirectly via importing a C file)
     )
 
-    $(H3 $(LNAME2 command-line, ImportC Files on the Command Line))
+    $(H3 $(LNAME2 command-line, コマンドライン上の ImportCファイル))
 
-    $(H3 $(LNAME2 importing, Importing C Files))
+    $(H3 $(LNAME2 importing, Cファイルのインポート))
 
 
 $(H2 $(LNAME2 preprocessor, プリプロセッサ))
@@ -65,7 +65,7 @@ $(H2 $(LNAME2 preprocessor, プリプロセッサ))
     $(P ImportC does not have a preprocessor. It is designed to compile C
     files after they have been first run through the C preprocessor.)
 
-    $(H3 $(LNAME2 spp,Digital Mars C Preprocessor sppn.exe))
+    $(H3 $(LNAME2 spp,Digital Mars C プリプロセッサ sppn.exe))
 
     $(P $(LINK2 https://www.digitalmars.com/ctg/sc.html, $(TT sppn.exe)) runs on Win32 and is invoked as:)
 
@@ -113,7 +113,7 @@ $(H2 $(LNAME2 preprocessor-directives, プリプロセッサ指令))
 
     $(P Nevertheless, ImportC supports these preprocessor directives:)
 
-    $(H3 $(LNAME2 line-control, Line control))
+    $(H3 $(LNAME2 line-control, 行コントロール))
 
     $(P C11 6.10.4)
 
@@ -122,7 +122,7 @@ $(H2 $(LNAME2 preprocessor-directives, プリプロセッサ指令))
     $(P $(LINK2 https://gcc.gnu.org/onlinedocs/gcc-11.1.0/cpp/Preprocessor-Output.html, linemarker)
     directives are normally embedded in the output of C preprocessors.)
 
-    $(H3 $(LNAME2 pragma, pragma))
+    $(H3 $(LNAME2 pragma, プラグマ))
 
     $(P Pragma directives are ignored.)
 
@@ -130,7 +130,7 @@ $(H2 $(LNAME2 implementation, 実装))
 
     $(P The implementation defined characteristics of ImportC are:)
 
-    $(H3 $(LNAME2 enums, Enums))
+    $(H3 $(LNAME2 enums, 列挙型))
 
     $(P $(I enumeration-constants) are always typed as `int`.)
 
@@ -216,11 +216,11 @@ $(H2 $(LNAME2 limitations, 制限事項))
     $(P The `_Atomic` type-qualifier (C11 6.7.3) is ignored.
     To do atomic operations, use an externally compiled function for that, or the inline assembler.)
 
-    $(H3 $(LNAME2 compatible_types, 互換性のある型))
+    $(H3 $(LNAME2 compatible_types, 互換タイプ))
 
     $(P $(I Compatible Types) (C11 6.7.2) are identical types in ImportC.)
 
-    $(H3 $(LNAME2 same_only_different, Same only Different Types))
+    $(H3 $(LNAME2 same_only_different, 異なる型でも同じく扱う))
 
     $(P On some platforms, C `long` and `unsigned long` are the same size as `int` and `unsigned int`, respectively.
     On other platforms, C `long` and `unsigned long` are the same size as `long long` and `unsigned long long`.
@@ -252,12 +252,12 @@ $(H2 $(LNAME2 extensions, 拡張機能))
     same manner as D's CTFE can.)
 
 
-    $(H3 $(LNAME2 inlining, Function Inlining))
+    $(H3 $(LNAME2 inlining, 関数のインライン化))
 
     $(P Functions for which the function body is present can
     be inlined by ImportC as well as by the D code that calls them.)
 
-    $(H3 $(LNAME2 enumbasetype, Enum Base Types))
+    $(H3 $(LNAME2 enumbasetype, 列挙型の基本型))
 
     $(P Enums are extended with an optional $(I EnumBaseType):)
 
@@ -288,7 +288,7 @@ _Static_assert(sizeof(A) == 1, "A should be size 1");
     $(P Arrays can have `register` storage class, and may be enregistered by the compiler. C11 6.3.2.1-3)
 
 
-    $(H3 $(LNAME2 __import, Import Declarations))
+    $(H3 $(LNAME2 __import, インポート宣言))
 
     $(P Modules can be imported with a $(I CImportDeclaration):)
 
@@ -473,7 +473,7 @@ $(H2 $(LNAME2 importcpp, C++ のインポート))
 
 $(H2 $(LNAME2 other-solutions, その他の解決策))
 
-    $(H3 $(LNAME2 dpp, dpp by Atila Neves))
+    $(H3 $(LNAME2 dpp, Atila Neves による dpp))
 
     $(P $(LINK2 https://code.dlang.org/packages/dpp/0.2.1, dpp code))
 
@@ -489,7 +489,7 @@ $(H2 $(LNAME2 other-solutions, その他の解決策))
     $(P Like DStep, dpp relies on libclang.)
 
 
-    $(H3 $(LNAME2 dstep, DStep by Jacob Carlborg))
+    $(H3 $(LNAME2 dstep, Jacob Carlborg による DStep))
 
     $(P $(LINK2 https://code.dlang.org/packages/dstep, DStep code))
 

@@ -64,7 +64,7 @@ $(GNAME TemplateParameterList):
         template declarations instead.)
 
 
-$(H2 $(LNAME2 template_instantiation, Template Instantiation))
+$(H2 $(LNAME2 template_instantiation, テンプレートのインスタンス化))
 
     $(P A template must be instantiated before use. This means
     passing an argument list to the template.
@@ -147,7 +147,7 @@ $(GNAME TemplateSingleArgument):
         foo.Ptr x;        // declare x to be of type int*
         ------
 
-$(H3 $(LNAME2 common_instantiation, Common Instantiation))
+$(H3 $(LNAME2 common_instantiation, 一般的なインスタンス化))
 
     $(P Multiple instantiations of a $(I TemplateDeclaration) with the same
         $(I TemplateArgumentList) will all refer to the same instantiation.
@@ -251,7 +251,7 @@ $(H3 $(LNAME2 instantiation_scope, インスタンス化のスコープ))
     )
 
 
-$(H2 $(LNAME2 parameters, Template Parameters))
+$(H2 $(LNAME2 parameters, テンプレートパラメータ))
 
 $(GRAMMAR
 $(GNAME TemplateParameter):
