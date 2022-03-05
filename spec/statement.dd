@@ -1894,7 +1894,7 @@ done
         This restriction may be relaxed in future versions.
         )
 
-$(H2 $(LEGACY_LNAME2 ScopeGuardStatement, scope-guard-statement, Scope Guard Statement))
+$(H2 $(LEGACY_LNAME2 ScopeGuardStatement, scope-guard-statement, Scope ガード文))
 
 $(GRAMMAR
 $(GNAME ScopeGuardStatement):

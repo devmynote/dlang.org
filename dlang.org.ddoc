@@ -472,7 +472,7 @@ $(SUBNAV_TEMPLATE
         $(ROOT_DIR)articles/pretod.html, C プリプロセッサ vs D,
         $(ROOT_DIR)articles/code_coverage.html, コードカバレッジ分析,
         $(ROOT_DIR)articles/exception-safe.html, 例外の安全性,
-        $(ROOT_DIR)articles/hijack.html, ハイジャック,,
+        $(ROOT_DIR)articles/hijack.html, ハイジャック,
         $(ROOT_DIR)articles/intro-to-datetime.html, std.datetime の紹介,
         $(ROOT_DIR)articles/lazy-evaluation.html, 遅延評価,
         $(ROOT_DIR)articles/migrate-to-shared.html, 共有[shared]への移行,
