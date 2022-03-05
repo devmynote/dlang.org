@@ -21,7 +21,7 @@ The syntax, order of evaluation, and semantics of expressions are as follows.)
 
 $(H2 $(LNAME2 definitions-and-terms, 定義と用語))
 
-$(H3 $(LNAME2 .define-full-expression, Full Expression))
+$(H3 $(LNAME2 .define-full-expression, 完全式))
 
 $(P For any expression
 $(I expr), the full expression of $(I expr) is defined as follows. If $(I expr) parses as a
@@ -46,7 +46,7 @@ return (() => x + f())() * g();
 $(P The full expression of `f()` above is `x + f()`, not the expression passed
 to `return`. This is because the parent of `x + f()` has function literal type, not expression type.)
 
-$(H3 $(LNAME2 .define-lvalue, Lvalue))
+$(H3 $(LNAME2 .define-lvalue, 左辺値))
 
 $(P The following expressions, and no others, are called *lvalue expressions* or *lvalues*:)
 $(OL
@@ -74,14 +74,14 @@ $(LI `cast(U)` expressions applied to lvalues of type `T` when `T*` is implicitl
 $(LI `cast()` and `cast(`$(I qualifier list)`)` when applied to an lvalue.)
 )))
 
-$(H3 $(LNAME2 .define-rvalue, Rvalue))
+$(H3 $(LNAME2 .define-rvalue, 右辺値))
 
 $(P Expressions that are not lvalues are *rvalues*. Rvalues include all literals, special value keywords such as `__FILE__` and `__LINE__`,
 `enum` values, and the result of expressions not defined as lvalues above.)
 
 $(P The built-in address-of operator (unary `&`) may only be applied to lvalues.)
 
-$(H3 $(LNAME2 .define-smallest-short-circuit, Smallest Short-Circuit Expression))
+$(H3 $(LNAME2 .define-smallest-short-circuit, 最小の短絡式))
 
 $(P Given an expression $(I expr) that is a subexpression of a full
 expression $(I fullexpr), the *smallest short-circuit expression*, if any, is the shortest
@@ -1337,7 +1337,7 @@ rather than $(LINK2 $(ROOT_DIR)library/object#.Error, Error) to report program b
 and abort the program.
 )
 
-$(H2 $(LNAME2 pow_expressions, Pow Expressions))
+$(H2 $(LNAME2 pow_expressions, べき乗式))
 
 $(GRAMMAR
 $(GNAME PowExpression):
@@ -1456,7 +1456,7 @@ $(GNAME Slice):
 
     $(P A $(I SliceExpression) is not a modifiable lvalue.)
 
-$(H3 $(LNAME2 slice_to_static_array, Slice Conversion to Static Array))
+$(H3 $(LNAME2 slice_to_static_array, 静的配列へのスライス変換))
 
     $(P If the slice bounds can be known at compile time, the slice expression
     may be implicitly convertible to an lvalue of static array. For example:)
@@ -1754,7 +1754,7 @@ $(GNAME ArrayLiteral):
         }
         ---
 
-$(H3 $(LNAME2 cast_array_literal, Casting))
+$(H3 $(LNAME2 cast_array_literal, キャスト))
 
     $(P When array literals are cast to another array type, each
         element of the array is cast to the new element type.

@@ -444,7 +444,7 @@ $(H2 $(LNAME2 pure-functions, Pure 関数))
 
         $(P A strongly pure function can call a weakly pure function.)
 
-$(H3 $(LNAME2 pure-special-cases, Special Cases))
+$(H3 $(LNAME2 pure-special-cases, 特殊なケース))
 
         $(P A pure function can:)
 
@@ -503,7 +503,7 @@ $(H3 $(LNAME2 pure-special-cases, Special Cases))
         }
         ---
 
-$(H3 $(LNAME2 pure-factory-functions, Pure Factory Functions))
+$(H3 $(LNAME2 pure-factory-functions, Pure ファクトリ関数))
 
         $(P A $(I pure factory function) is a strongly pure function
         that returns a result that has mutable indirections.
@@ -547,7 +547,7 @@ $(H3 $(LNAME2 pure-factory-functions, Pure Factory Functions))
         $(P This does not affect any *Exception* or *Error* thrown from the function.
         )
 
-$(H3 $(LNAME2 pure-optimization, Optimization))
+$(H3 $(LNAME2 pure-optimization, 最適化))
 
         $(IMPLEMENTATION_DEFINED An implementation may assume that a strongly pure
         function that returns a result
@@ -1054,7 +1054,7 @@ void test()
         with `final` or `static`, and can be overridden.
         )
 
-$(H3 $(LNAME2 covariance, Covariance))
+$(H3 $(LNAME2 covariance, 共変性))
 
         $(P An overriding function may be covariant with the overridden function.
         A covariant function has a type that is implicitly convertible to the
@@ -1079,7 +1079,7 @@ class Bar : Foo
 ------
 )
 
-$(H3 $(LNAME2 base-methods, Calling Base Class Methods))
+$(H3 $(LNAME2 base-methods, 基本クラスのメソッド呼び出し))
 
         $(P To directly call a member function of a base class `Base`,
         write `Base.` before the function name.
@@ -1244,7 +1244,7 @@ void test()
 }
 ------
 
-$(H3 $(LNAME2 inheriting-attributes, Inherited Attributes))
+$(H3 $(LNAME2 inheriting-attributes, 継承された属性))
 
         $(P An overriding function inherits any unspecified $(GLINK FunctionAttributes)
         from the attributes of the overridden function.)
@@ -1268,7 +1268,7 @@ void main()
 ------
 )
 
-$(H3 $(LNAME2 override-restrictions, Restrictions))
+$(H3 $(LNAME2 override-restrictions, 制限))
 
         $(P The attributes
         $(LINK2 attribute.html#disable, $(D @disable)) and

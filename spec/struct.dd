@@ -4,7 +4,7 @@ $(SPEC_S 構造体と共用体,
 
 $(HEADERNAV_TOC)
 
-$(H2 $(LNAME2 intro, Introduction))
+$(H2 $(LNAME2 intro, はじめに))
 
     $(P Whereas classes are reference types, structs are value types.
     Structs and unions are simple aggregations of data and their

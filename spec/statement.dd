@@ -1316,7 +1316,7 @@ switch (i)
 }
 --------------
 
-$(H3 $(LNAME2 no-implicit-fallthrough, No Implicit Fall-Through))
+$(H3 $(LNAME2 no-implicit-fallthrough, 暗黙のフォールスルー))
 
 
         $(P A $(GLINK ScopeStatementList) must either be empty, or be ended with
@@ -1371,7 +1371,7 @@ writeln(message);
 --------------
 )
 
-$(H3 $(LNAME2 string-switch, String Switch))
+$(H3 $(LNAME2 string-switch, 文字列の Switch))
 
         $(P Strings can be used in switch expressions.
         For example:

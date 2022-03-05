@@ -4,7 +4,7 @@ $(SPEC_S 宣言,
 
 $(HEADERNAV_TOC)
 
-$(H2 $(LNAME2 grammar, Grammar))
+$(H2 $(LNAME2 grammar, 文法))
 
 $(GRAMMAR
 $(GNAME Declaration):
@@ -23,7 +23,7 @@ $(GNAME Declaration):
 $(P See also $(GLINK2 module, DeclDef).
 )
 
-$(H3 $(LNAME2 aggregates, Aggregates))
+$(H3 $(LNAME2 aggregates, 集合体))
 
 $(GRAMMAR
 $(GNAME AggregateDeclaration):
@@ -33,7 +33,7 @@ $(GNAME AggregateDeclaration):
     $(GLINK2 struct, UnionDeclaration)
 )
 
-$(H3 $(LNAME2 variable-declarations, Variable Declarations))
+$(H3 $(LNAME2 variable-declarations, 変数の宣言))
 
 $(GRAMMAR
 $(GNAME VarDeclarations):
@@ -63,7 +63,7 @@ $(GNAME VarDeclarator):
     $(GLINK2 type, TypeSuffixes)$(OPT) $(GLINK_LEX Identifier)
 )
 
-$(H3 $(LNAME2 storage-classes, Storage Classes))
+$(H3 $(LNAME2 storage-classes, ストレージクラス))
 
 $(GRAMMAR
 $(GNAME StorageClasses):
@@ -95,7 +95,7 @@ $(MULTICOLS 5,     $(GLINK2 attribute, LinkageAttribute)
     $(D ref))
 )
 
-$(H3 $(LNAME2 initializers, Initializers))
+$(H3 $(LNAME2 initializers, 初期化子))
 
 $(GRAMMAR
 $(GNAME Initializer):
@@ -255,7 +255,7 @@ $(GNAME AliasAssignment):
         That symbol name can be used anywhere that the aliased symbol may appear.
     )
 
-$(H3 $(LNAME2 alias-type, Type Aliases))
+$(H3 $(LNAME2 alias-type, 型のエイリアス))
 
 --------------------
 alias myint = abc.Foo.bar;
@@ -286,7 +286,7 @@ alias abc = foo.bar; // is it a type or a symbol?
         $(BEST_PRACTICE Other than when aliasing simple basic type names,
         type alias names should be Capitalized.)
 
-$(H3 $(LNAME2 alias-symbol, Symbol Aliases))
+$(H3 $(LNAME2 alias-symbol, シンボルのエイリアス))
 
     $(P A symbol can be declared as an $(I alias) of another symbol.
         For example:
@@ -343,7 +343,7 @@ version (linux)
 alias strlen = string.strlen;
 --------------------
 
-$(H3 $(LNAME2 alias-overload, Aliasing an Overload Set))
+$(H3 $(LNAME2 alias-overload, オーバーロード集合のエイリアス))
 
         $(P
         Aliases can also `import` a set of overloaded functions, that can
@@ -376,7 +376,7 @@ void main()
 --------------------
 )
 
-$(H3 $(LNAME2 alias-variable, Aliasing Variables))
+$(H3 $(LNAME2 alias-variable, 変数のエイリアス))
 
         $(P Aliases cannot be used for expressions:)
 
@@ -398,7 +398,7 @@ assert(S.j == 4);
 -----------
 )
 
-$(H3 $(LNAME2 alias-function, Aliasing a Function Type))
+$(H3 $(LNAME2 alias-function, 変数タイプのエイリアス))
 
         $(P Function types can be aliased:)
 ---

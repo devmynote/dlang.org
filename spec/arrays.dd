@@ -165,7 +165,7 @@ int[2] = [1, 2];
     $(P See $(DDSUBLINK spec/expression, array_literals, Array Literals).)
 
 $(LEGACY_LNAME2 usage)
-$(H2 $(LNAME2 assignment, Array Assignment))
+$(H2 $(LNAME2 assignment, 配列の割り当て))
 
         $(P There are two broad kinds of operations to do on dynamic arrays and
         pointer arrays - those affecting the handle to the array,
@@ -224,7 +224,7 @@ assert(b[1] == 2);
 
     $(P See also $(GLINK2 expression, IndexExpression).)
 
-$(H3 $(LNAME2 pointer-arithmetic, Pointer Arithmetic))
+$(H3 $(LNAME2 pointer-arithmetic, ポインタ演算))
 
     $(P A pointer can also be indexed, but no bounds checks are done.
     Unlike arrays, a pointer value can also be used in certain
@@ -300,7 +300,7 @@ writeln(b[7]);      // 10
     $(P See also $(GLINK2 expression, SliceExpression).)
 
 
-$(H2 $(LNAME2 array-length, Array Length))
+$(H2 $(LNAME2 array-length, 配列の長さ))
 
         $(P When indexing or slicing a static or dynamic array,
         the symbol $(D $) represents the length of the array.
@@ -453,7 +453,7 @@ assert(a == b);
 
         $(P See also: $(DDSUBLINK spec/expression, identity_expressions, `is` operator).)
 
-$(H2 $(LNAME2 array-appending, Array Appending))
+$(H2 $(LNAME2 array-appending, 配列の追加))
 
         $(P Similarly, the ~= operator means append, as in:
         )
