@@ -845,38 +845,6 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#Lexer.packalign" id="Lexer.packalign"><code class="code">packalign</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="Lexer.packalign"></span>structalign_t <code class="code">packalign</code>;
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    current state of #pragma pack alignment (ImportC)
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
   <a href="#Lexer.this" id="Lexer.this"><code class="code">this</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -1155,6 +1123,165 @@
   <p class="para">
     <code class="code">tk</code> is on the opening (.
  Look ahead and return token that is past the closing ).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Lexer.parseSpecialTokenSequence" id="Lexer.parseSpecialTokenSequence"><code class="code">parseSpecialTokenSequence</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Lexer.parseSpecialTokenSequence"></span>nothrow bool <code class="code">parseSpecialTokenSequence</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Parse special token sequence:
+
+  </p>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    <code class="code">true</code> if the special token sequence was handled
+
+  </p>
+</div>
+<div class="ddoc_section">
+  <p class="para">
+    <span class="ddoc_section_h">References:</span>
+<a href="https://dlang.org/spec/lex.html#special-token-sequence">https://dlang.org/spec/lex.html#special-token-sequence</a>
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Lexer.poundLine" id="Lexer.poundLine"><code class="code">poundLine</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Lexer.poundLine"></span>final nothrow void <code class="code">poundLine</code>(ref Token <code class="code">tok</code>, bool <code class="code">linemarker</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Parse line/file preprocessor directive:
+    #line linnum [filespec]
+ Allow __LINE__ for linnum, and __FILE__ for filespec.
+ Accept <code class="code">linemarker</code> format:
+<h1>linnum [filespec] {flags}</h1>
+ There can be zero or more flags, which are one of the digits 1..4, and
+ must be in ascending order. The flags are ignored.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Token <code class="code">tok</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      token we're on, which is linnum of <code class="code">linemarker</code>
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">bool <code class="code">linemarker</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      <code class="code">true</code> if line marker format and lexer is on linnum
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_section">
+  <p class="para">
+    <span class="ddoc_section_h">References:</span>
+<code class="code">linemarker</code> <a href="https://gcc.gnu.org/onlinedocs/gcc-11.1.0/cpp/Preprocessor-Output.html">https://gcc.gnu.org/onlinedocs/gcc-11.1.0/cpp/Preprocessor-Output.html</a>
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Lexer.skipToNextLine" id="Lexer.skipToNextLine"><code class="code">skipToNextLine</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Lexer.skipToNextLine"></span>final nothrow void <code class="code">skipToNextLine</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Scan forward to start of next line.
   </p>
 </div>
 
