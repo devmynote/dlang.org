@@ -17,10 +17,7 @@
 <link rel="stylesheet" href="../css/print.css" media="print">
 <link rel="shortcut icon" href="../favicon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
-<style>    .changelog-source-edit-btn {
-        float: right;
-    }
-</style>
+
 </head>
 <body id='Change Log: 2.099.0' class='changelog'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
@@ -100,7 +97,7 @@ Log</option>
     </p>
     </div>
     <ul><li><a id="pending" href="pending.html">Nightly</a> <span class="hide-from-nav"> (preview) - upcoming changes from <span class="d_inlinecode donthyphenate notranslate">master</span></span></li>
-<li><a id="2.099.0" href="2.099.0.html" style="display: inline-block">2.099.0</a> (preview) <span class="hide-from-nav"> - scheduled for Mar 01, 2022</span></li>
+<li><a id="2.099.0" href="2.099.0.html">2.099.0</a><span class="hide-from-nav"> (Mar 06, 2022)</span></li>
 <li><a id="2.098.1" href="2.098.1.html">2.098.1</a><span class="hide-from-nav"> (Dec 19, 2021)</span></li>
 <li><a id="2.098.0" href="2.098.0.html">2.098.0</a><span class="hide-from-nav"> (Oct 10, 2021)</span></li>
 <li><a id="2.097.2" href="2.097.2.html">2.097.2</a><span class="hide-from-nav"> (Aug 09, 2021)</span></li>
@@ -245,7 +242,7 @@ Log</option>
 <li><a id="2.000" href="2.000.html">2.000</a><span class="hide-from-nav"> (Jun 17, 2007)</span></li></ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://github.com/devmynote/dlang.org/edit/master/changelog/2.099.0_pre.dd">ページの改善</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://github.com/devmynote/dlang.org/edit/master/changelog/2.099.0.dd">ページの改善</a>
 		<div >		    いますぐフォークしてオンライン編集し、このページのプルリクエストを送信します。
 			Github へのログインが必要です。 これは小さな変更に適しています。
 			大きな変更を加えたい場合は、通常の cloneの使用をお勧めします。
@@ -265,13 +262,13 @@ Log</option>
 <div class="changelog-nav">previous version: <a href="2.098.1.html">2.098.1</a></div>
 
 
-<div class="version"><p><b><font size="4"><a href="http://downloads.dlang.org/pre-releases/2.x/2.099.0">Download D 2.099.0 Beta</a></font></b><br>
-<small>to be released Mar 01, 2022</small>
+<div class="version"><p><b><font size="4"><a href="http://downloads.dlang.org/releases/2.x/2.099.0">Download D 2.099.0</a></font></b><br>
+<small>released Mar 06, 2022</small>
 </p>
 
-<div class="changelog-header-stats">2.099.0 comes with 20 major changes and 216 fixed Bugzilla issues.
+<div class="changelog-header-stats">2.099.0 comes with 20 major changes and 221 fixed Bugzilla issues.
         A huge thanks goes to the
-        <a href="#contributors">99 contributors</a>
+        <a href="#contributors">100 contributors</a>
         who made 2.099.0 possible.</div>
 
 <div class="bugsfixed"><h4>Compiler changes</h4> <ol>
@@ -316,7 +313,7 @@ Log</option>
 
 <div class="bugsfixed"><h4>Compiler changes</h4> <ol>
 <li><a class="anchor" title="Permalink to this section" id="22541" href="#22541">When <span class="d_inlinecode donthyphenate notranslate">ref scope return</span> attributes are used on a parameter, and <span class="d_inlinecode donthyphenate notranslate">return scope</span> appears, the <span class="d_inlinecode donthyphenate notranslate">return</span> applies to the <span class="d_inlinecode donthyphenate notranslate">scope</span>, not the <span class="d_inlinecode donthyphenate notranslate">ref</span>.</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/22541.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Formerly, the <span class="d_inlinecode donthyphenate notranslate">return</span> sometimes applied to the <span class="d_inlinecode donthyphenate notranslate">ref</span> instead, which can be
 confusing. If <span class="d_inlinecode donthyphenate notranslate">return scope</span> does not appear adjacent and in that order, the <span class="d_inlinecode donthyphenate notranslate">return</span>
 will apply to the <span class="d_inlinecode donthyphenate notranslate">ref</span>.
@@ -324,7 +321,7 @@ will apply to the <span class="d_inlinecode donthyphenate notranslate">ref</span
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="TraitsParameters" href="#TraitsParameters"><span class="d_inlinecode donthyphenate notranslate">__traits(parameters)</span> has been added to the compiler.</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/TraitsParameters.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>If used inside a function, this trait yields a
 tuple of the parameters to that function for example:
 </p>
@@ -407,7 +404,7 @@ the parameters to the delegate and not the function the foreach appears within.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="__import" href="#__import">Add ability to import modules to ImportC</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/__import.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>ImportC can now import modules with the __import keyword, with the C code:
 </p>
 
@@ -435,7 +432,7 @@ __import test2;            // import an ImportC file
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="allow_casting_from_typetuple_to_typetuple" href="#allow_casting_from_typetuple_to_typetuple">Casting between compatible sequences</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/allow_casting_from_typetuple_to_typetuple.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Prior to this release, casting between built-in sequences of the same type was not allowed.
 </p>
 
@@ -458,7 +455,7 @@ __import test2;            // import an ImportC file
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="disasm" href="#disasm">New command line switch -vasm which outputs assembler code per function</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/disasm.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>The new -vasm compiler switch will print to the console the generated assembler
 code for each function. As opossed to a typical dissasembler, it will omit all
 the boilerplate and output just the assembly code for each function. For example,
@@ -483,7 +480,7 @@ compiling the following code:
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="fix16997" href="#fix16997">The '-preview=intpromote' switch is now set by default.</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/fix16997.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Integer promotions now follow C integral promotions rules consistently
 It affects the unary <span class="d_inlinecode donthyphenate notranslate">-</span> and <span class="d_inlinecode donthyphenate notranslate">~</span> operators with operands of type <span class="d_inlinecode donthyphenate notranslate">byte</span>, <span class="d_inlinecode donthyphenate notranslate">ubyte</span>, <span class="d_inlinecode donthyphenate notranslate">short</span>, <span class="d_inlinecode donthyphenate notranslate">ushort</span>, <span class="d_inlinecode donthyphenate notranslate">char</span>, or <span class="d_inlinecode donthyphenate notranslate">wchar</span>.
 The operands are promoted to <span class="d_inlinecode donthyphenate notranslate">int</span> before the operator is applied, and the resulting type will now be <span class="d_inlinecode donthyphenate notranslate">int</span>.
@@ -504,7 +501,7 @@ The operands are promoted to <span class="d_inlinecode donthyphenate notranslate
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="fix18964" href="#fix18964"><span class="d_inlinecode donthyphenate notranslate">-m32</span> now produces MS Coff objects when targeting windows</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/fix18964.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>The <span class="d_inlinecode donthyphenate notranslate">-m32mscoff</span> switch is deprecated and <span class="d_inlinecode donthyphenate notranslate">-m32</span> should be used in its place.
 A new switch <span class="d_inlinecode donthyphenate notranslate">-m32omf</span> has been added to produce code for OMF. Use of this switch
 is discouraged because OMF will soon be unsupported.
@@ -512,7 +509,7 @@ is discouraged because OMF will soon be unsupported.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="ignore_nonroot_ut" href="#ignore_nonroot_ut">Ignore unittests in non-root modules</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/ignore_nonroot_ut.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>This mainly means that unittests <em>inside templates</em> are now only instantiated if
 the module lexically declaring the template is one of the root modules.
 </p>
@@ -542,7 +539,7 @@ in root modules.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="main_return_type" href="#main_return_type"><span class="d_inlinecode donthyphenate notranslate">main</span> can now return type <span class="d_inlinecode donthyphenate notranslate">noreturn</span> and supports return inference</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/main_return_type.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>If <span class="d_inlinecode donthyphenate notranslate">main</span> never returns (due to an infinite loop or always throwing an
 exception), it can now be declared as returning <span class="d_inlinecode donthyphenate notranslate">noreturn</span>.
 See https://dlang.org/spec/type.html#noreturn.
@@ -554,7 +551,7 @@ one of <span class="d_inlinecode donthyphenate notranslate">void</span>, <span c
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="switch_fallthrough_error" href="#switch_fallthrough_error">Falling through switch cases is now an error</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/switch_fallthrough_error.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>This was deprectated in 2.072.2 because it is a common mistake to forget a <span class="d_inlinecode donthyphenate notranslate">break</span> statement at the end of a switch case.
 The deprecation warning has now been turned into an error.
 </p>
@@ -584,7 +581,7 @@ The deprecation warning has now been turned into an error.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="throw_expression" href="#throw_expression">Throw expression as proposed by DIP 1034 have been implemented</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/throw_expression.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Prior to this release, <span class="d_inlinecode donthyphenate notranslate">throw</span> was considered as a statement and hence was not
 allowed to appear inside of other expressions. This was cumbersome e.g. when
 wanting to throw an expression from a lambda:
@@ -619,7 +616,7 @@ result.match!(
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="traits_initSymbol" href="#traits_initSymbol">Added __traits(initSymbol) to obtain aggregate initializers</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/traits_initSymbol.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Using <span class="d_inlinecode donthyphenate notranslate">__traits(initSymbol, A)</span> where <span class="d_inlinecode donthyphenate notranslate">A</span> is either a <span class="d_inlinecode donthyphenate notranslate">class</span> or a <span class="d_inlinecode donthyphenate notranslate">struct</span>
 will yield a <span class="d_inlinecode donthyphenate notranslate">const(void)[]</span> that holds the initial state of an instance
 of <span class="d_inlinecode donthyphenate notranslate">A</span>. The slice either points to the initializer symbol of <span class="d_inlinecode donthyphenate notranslate">A</span> or <span class="d_inlinecode donthyphenate notranslate">null</span>
@@ -655,13 +652,13 @@ relying on <span class="d_inlinecode donthyphenate notranslate">TypeInfo</span>:
 
 <div class="bugsfixed"><h4>Runtime changes</h4> <ol>
 <li><a class="anchor" title="Permalink to this section" id="openbsd_ioctls" href="#openbsd_ioctls">Add support for OpenBSD ioctls</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/druntime/edit/stable/changelog/openbsd_ioctls.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Support OpenBSD ioctls as found in OpenBSD's <a href="https://github.com/openbsd/src/blob/master/sys/sys/filio.h">/usr/include/sys/filio.h</a>, <a href="https://github.com/openbsd/src/blob/master/sys/sys/ioccom.h">/usr/include/sys/ioccom.h</a>, <a href="https://github.com/openbsd/src/blob/master/sys/sys/ioctl.h">/usr/include/sys/ioctl.h</a>, and <a href="https://github.com/openbsd/src/blob/master/sys/sys/ttycom.h">/usr/include/sys/ttycom.h</a>.
 </p>
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="safe_opequals" href="#safe_opequals">Add support for <span class="d_inlinecode donthyphenate notranslate">@safe</span> class <span class="d_inlinecode donthyphenate notranslate">opEquals</span></a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/druntime/edit/stable/changelog/safe_opequals.dd"><i class="fa fa-edit"></i></a></div>
+
 <p><span class="d_inlinecode donthyphenate notranslate">object.opEquals</span> is now <span class="d_inlinecode donthyphenate notranslate">@safe</span> if the static types being compared provide an <span class="d_inlinecode donthyphenate notranslate">opEquals</span> method that is also <span class="d_inlinecode donthyphenate notranslate">@safe</span>.
 </p>
 </li>
@@ -671,7 +668,7 @@ relying on <span class="d_inlinecode donthyphenate notranslate">TypeInfo</span>:
 
 <div class="bugsfixed"><h4>Library changes</h4> <ol>
 <li><a class="anchor" title="Permalink to this section" id="checkedint" href="#checkedint">Move checkedint out of experimental.</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/phobos/edit/stable/changelog/checkedint.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>std.experimental.checkedint is now std.checkedint. The old name
 is still available and publicly imports the new one, and is also
 deprecated.
@@ -679,7 +676,7 @@ deprecated.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="chunkBy_mostly_safe" href="#chunkBy_mostly_safe"><span class="d_inlinecode donthyphenate notranslate">chunkBy</span> <span class="d_inlinecode donthyphenate notranslate">@safe</span> with forward ranges and <span class="d_inlinecode donthyphenate notranslate">splitWhen</span> fully <span class="d_inlinecode donthyphenate notranslate">@safe</span></a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/phobos/edit/stable/changelog/chunkBy_mostly_safe.dd"><i class="fa fa-edit"></i></a></div>
+
 <p><span class="d_inlinecode donthyphenate notranslate">std.algorithm.iteration.splitWhen</span> now infers safety from the underlying range,
 as most Phobos ranges do. <span class="d_inlinecode donthyphenate notranslate">std.algorithm.iteration.chunkBy</span> also does that when
 instantiated with a forward range. Inference for <span class="d_inlinecode donthyphenate notranslate">chunkBy</span> with a non-forward
@@ -716,7 +713,7 @@ input range is not yet implemented, though.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="csv_un_equal_separator_count" href="#csv_un_equal_separator_count"><span class="d_inlinecode donthyphenate notranslate">std.csv</span> can now optionally handle csv files with variable number of columns.</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/phobos/edit/stable/changelog/csv_un_equal_separator_count.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>By default <span class="d_inlinecode donthyphenate notranslate">std.csv</span> will throw if the number of columns on a line
 is not equal to the number of columns of the first line.
 To allow, or disallow, a variable amount of columns a <span class="d_inlinecode donthyphenate notranslate">bool</span> can be passed to
@@ -735,14 +732,14 @@ all overloads of the <span class="d_inlinecode donthyphenate notranslate">csvRea
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="logger_default_warning" href="#logger_default_warning">Change default log level for std.experimental.logger to LogLevel.warning</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/phobos/edit/stable/changelog/logger_default_warning.dd"><i class="fa fa-edit"></i></a></div>
+
 <p><span class="d_inlinecode donthyphenate notranslate">std.experimental.logger.core.sharedLog</span> now returns by default a
 logger with its log level set to LogLevel.warning.
 </p>
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="support_for_tuples" href="#support_for_tuples"><span class="d_inlinecode donthyphenate notranslate">std.conv.to</span> accepts <span class="d_inlinecode donthyphenate notranslate">std.typecons</span> tuples</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/phobos/edit/stable/changelog/support_for_tuples.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>The previous version of <span class="d_inlinecode donthyphenate notranslate">to</span> did not support
 conversions to <span class="d_inlinecode donthyphenate notranslate">std.typecons</span> tuples. Starting
 with this release, tuples are now supported as
@@ -765,7 +762,7 @@ highlighted in the following example:
 
 <div class="bugsfixed"><h4>Dub changes</h4> <ol>
 <li><a class="anchor" title="Permalink to this section" id="pdb" href="#pdb">Windows: Copy PDB files to <span class="d_inlinecode donthyphenate notranslate">targetPath</span>, alongside executable/DLL</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dub/edit/stable/changelog/pdb.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>If the default PDB file is generated when linking an executable or DLL
 (e.g., no <span class="d_inlinecode donthyphenate notranslate">/PDB:my\path.pdb</span> lflag), it is now copied to the target
 directory too.
@@ -799,6 +796,7 @@ directory too.
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22804">Bugzilla 22804</a>: [REG 2.099] compiling multiple files without linking produces broken object files</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22816">Bugzilla 22816</a>: [REG 2.099] Parser reads files with other extensions</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22817">Bugzilla 22817</a>: [REG 2.099] Missing file gives misleading error message</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=22826">Bugzilla 22826</a>: [REG 2.098] #line accepts importC linemarker flags</li>
  </ol></div>
 <div class="bugsfixed"><h4>DMD Compiler bug fixes</h4> <ol>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=2">Bugzilla 2</a>: Hook up new dmd command line arguments</li>
@@ -819,6 +817,7 @@ directory too.
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=20777">Bugzilla 20777</a>: User defined type as enum base type fails to compile.</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=20904">Bugzilla 20904</a>: dip1000 implicit conversion delegates error</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=21431">Bugzilla 21431</a>: Incorrect maximum and actual number of cases in a switch case range is reported</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=21844">Bugzilla 21844</a>: makedeps option adds spurious/incorrect dependency</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=21969">Bugzilla 21969</a>: importC: Error: bit fields are not supported</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22124">Bugzilla 22124</a>: Corrupted closure when compiling with -preview=dip1000</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22127">Bugzilla 22127</a>: compiler assertion failure parser on UDA and function literal</li>
@@ -877,6 +876,7 @@ directory too.
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22698">Bugzilla 22698</a>: ImportC: nested struct tag stored in wrong scope</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22699">Bugzilla 22699</a>: importC: assignment cannot be used as a condition</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22703">Bugzilla 22703</a>: importC: C++11 unscoped enums with underlying type rejects some C types.</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=22708">Bugzilla 22708</a>: switch statement with an undefined symbol results in many errors</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22709">Bugzilla 22709</a>: [dip1000] slice of static array can be escaped in @safe using ref arguments</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22710">Bugzilla 22710</a>: CTFE on bitfields does not account for field width</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22713">Bugzilla 22713</a>: ImportC: op= not correctly implemented for bit fields</li>
@@ -956,6 +956,7 @@ directory too.
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22683">Bugzilla 22683</a>: core.math.rndtonl can't be linked</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22695">Bugzilla 22695</a>: std.traits.isBuiltinType is false for typeof(null)</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22704">Bugzilla 22704</a>: Linker error when running the public unittests</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=22838">Bugzilla 22838</a>: std.bitmanip.BitArray.count() reads beyond data when data size is integer size_t multiple</li>
  </ol></div>
 <div class="bugsfixed"><h4>Phobos enhancements</h4> <ol>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=13551">Bugzilla 13551</a>: std.conv.to for std.typecons tuples too</li>
@@ -983,6 +984,7 @@ directory too.
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22735">Bugzilla 22735</a>: __builtins.di does not implement __builtin_bswap64 correctly</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22741">Bugzilla 22741</a>: importC: Error: bswap isn’t a template</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22744">Bugzilla 22744</a>: ImportC: builtins defined in __builtins.di cause undefined symbol linker errors.</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=22777">Bugzilla 22777</a>: stat struct in core.sys.windows.stat assumes CRuntime_DigitalMars</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22779">Bugzilla 22779</a>: druntime: Calling __delete with null pointer-to-struct segfaults</li>
  </ol></div>
 <div class="bugsfixed"><h4>Druntime enhancements</h4> <ol>
@@ -1017,7 +1019,7 @@ directory too.
  </ol></div>
 
 </div>
-<h3><a class="anchor" title="Permalink to this section" id="contributors" href="#contributors">Contributors to this release (99)</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="contributors" href="#contributors">Contributors to this release (100)</a></h3>
 <p>A huge thanks goes to all the awesome people who made this release possible.</p>
 <ul>    <li>12345swordy</li>
     <li>Adam D. Ruppe</li>
@@ -1057,6 +1059,7 @@ directory too.
     <li>Harry T. Vennik</li>
     <li>Hasan Kashi</li>
     <li>Hiroki Noda</li>
+    <li>human</li>
     <li>Iain Buclaw</li>
     <li>Ilya Yaroshenko</li>
     <li>Imperatorn</li>
@@ -1125,7 +1128,7 @@ directory too.
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Mar  7 00:45:23 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sun Mar 13 09:20:31 2022
 </div>
     </div>
 </div>

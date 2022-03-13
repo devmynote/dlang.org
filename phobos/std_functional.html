@@ -90,7 +90,7 @@
 
 <div class="container">    
 <div class="subnav-helper"></div> <div class="subnav">    <div class="head">        <h2>Library Reference</h2>
-        <p><span class="smallprint">version 2.098.1 <span class="separator"><br></span>
+        <p><span class="smallprint">version 2.099.0 <span class="separator"><br></span>
             </span>
         </p>
         <p><a href="index.html">overview</a></p>
@@ -651,10 +651,74 @@ writeln(myNum); <span class="d_comment">// 1
 </div></div>
 
 </dd>
+<dt class="d_decl"><div ><span class="def-anchor" id=".bind"></span><div class="quickindex" id="quickindex.bind"></div>template <span class="def-anchor" id="bind"></span><code class="ddoc_psymbol">bind</code>(alias fun)<br></div></dt>
+<dd><div class="summary">Passes the fields of a struct as arguments to a function.
+</div><div class="description">Can be used with a <a href="https://dlang.org/spec/expression.html#function_literals"> function literal</a> to give temporary names to the fields of a struct or
+ tuple.
+
+</div>
+<div class="keyval Parameters"><span class="key keyParameters">Parameters:</span> <div class="val valParameters"><table class="params"><tr class="param"><td class="param_id">fun</td>
+<td class="param_desc">Callable that the struct's fields will be passed to.</td></tr>
+</table></div></div>
+<div class="keyval Returns"><span class="key keyReturns">Returns:</span> <div class="val valReturns">A function that accepts a single struct as an argument and passes its
+   fields to <span class="d_inlinecode donthyphenate notranslate">fun</span> when called.</div></div>
+<span class="dlang_runnable"></span><div class="keyval Examples"><span class="key keyExamples">Examples:</span> <div class="val valExamples">Giving names to tuple elements
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.typecons : tuple;
+
+<span class="d_keyword">auto</span> name = tuple(<span class="d_string">"John"</span>, <span class="d_string">"Doe"</span>);
+string full = name.<span class="d_psymbol">bind</span>!((first, last) =&gt; first ~ <span class="d_string">" "</span> ~ last);
+writeln(full); <span class="d_comment">// "John Doe"
+</span></pre>
+</div></div>
+<span class="dlang_runnable"></span><div class="keyval Examples"><span class="key keyExamples">Examples:</span> <div class="val valExamples">Passing struct fields to a function
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm.comparison : min, max;
+
+<span class="d_keyword">struct</span> Pair
+{
+    <span class="d_keyword">int</span> a;
+    <span class="d_keyword">int</span> b;
+}
+
+<span class="d_keyword">auto</span> p = Pair(123, 456);
+<span class="d_keyword">assert</span>(p.<span class="d_psymbol">bind</span>!min == 123); <span class="d_comment">// min(p.a, p.b)
+</span><span class="d_keyword">assert</span>(p.<span class="d_psymbol">bind</span>!max == 456); <span class="d_comment">// max(p.a, p.b)
+</span></pre>
+</div></div>
+<span class="dlang_runnable"></span><div class="keyval Examples"><span class="key keyExamples">Examples:</span> <div class="val valExamples">In a range pipeline
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.algorithm.iteration : map, filter;
+<span class="d_keyword">import</span> std.algorithm.comparison : equal;
+<span class="d_keyword">import</span> std.typecons : tuple;
+
+<span class="d_keyword">auto</span> ages = [
+    tuple(<span class="d_string">"Alice"</span>, 35),
+    tuple(<span class="d_string">"Bob"</span>,   64),
+    tuple(<span class="d_string">"Carol"</span>, 21),
+    tuple(<span class="d_string">"David"</span>, 39),
+    tuple(<span class="d_string">"Eve"</span>,   50)
+];
+
+<span class="d_keyword">auto</span> overForty = ages
+    .filter!(<span class="d_psymbol">bind</span>!((name, age) =&gt; age &gt; 40))
+    .map!(<span class="d_psymbol">bind</span>!((name, age) =&gt; name));
+
+<span class="d_keyword">assert</span>(overForty.equal([<span class="d_string">"Bob"</span>, <span class="d_string">"Eve"</span>]));
+</pre>
+</div></div>
+
+<dl><dt class="d_decl"><div ><span class="def-anchor" id=".bind.bind"></span><div class="quickindex" id="quickindex.bind.bind"></div>ref auto <span class="def-anchor" id="bind"></span><code class="ddoc_psymbol">bind</code><span class="template_param_list" title="Template parameter list">(T)</span>(auto ref T <code class="ddoc_param">args</code>)<br><span class="constraint">if (is(T == struct))</span>;
+<br></div></dt>
+<dd><div class="keyval Parameters"><span class="key keyParameters">Parameters:</span> <div class="val valParameters"><table class="params"><tr class="param"><td class="param_id">T <code class="ddoc_param">args</code></td>
+<td class="param_desc">The struct or tuple whose fields will be used as arguments.</td></tr>
+</table></div></div>
+<div class="keyval Returns"><span class="key keyReturns">Returns:</span> <div class="val valReturns"><span class="d_inlinecode donthyphenate notranslate">fun(<code class="ddoc_param">args</code>.tupleof)</span></div></div>
+
+</dd>
+</dl>
+</dd>
 </dl>
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Mar  7 00:47:20 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sun Mar 13 09:22:34 2022
 </div>
     </div>
 </div>

@@ -154,12 +154,11 @@
     <li><a href="#comment">コメント</a></li>
     <li><a href="#tokens">トークン</a></li>
     <li><a href="#identifiers">識別子</a></li>
-    <li><a href="#string_literals">文字列リテラル</a><ol>        <li><a href="#wysiwyg">Wysiwyg Strings</a></li>
-        <li><a href="#double_quoted_strings">Double Quoted Strings</a></li>
-        <li><a href="#hex_strings">Hex Strings</a></li>
-        <li><a href="#delimited_strings">Delimited Strings</a></li>
-        <li><a href="#token_strings">Token Strings</a></li>
-        <li><a href="#string_postfix">String Postfix</a></li>
+    <li><a href="#string_literals">文字列リテラル</a><ol>        <li><a href="#wysiwyg">Wysiwyg 文字列</a></li>
+        <li><a href="#double_quoted_strings">二重引用符で囲まれた文字列</a></li>
+        <li><a href="#delimited_strings">区切り文字列</a></li>
+        <li><a href="#token_strings">トークン文字列</a></li>
+        <li><a href="#string_postfix">文字列の接尾辞</a></li>
     </ol></li>
     <li><a href="#escape_sequences">エスケープシーケンス</a></li>
     <li><a href="#characterliteral">文字リテラル</a></li>
@@ -436,7 +435,6 @@ Identifiers can be arbitrarily long, and are case sensitive.</p>
     <a href="#AlternateWysiwygString"><i>AlternateWysiwygString</i></a>
     <a href="#DoubleQuotedString"><i>DoubleQuotedString</i></a>
 <div class="blankline"></div>
-    <a href="#HexString"><i>HexString</i></a>
     <a href="#DelimitedString"><i>DelimitedString</i></a>
     <a href="#TokenString"><i>TokenString</i></a>
 </pre>
@@ -486,18 +484,6 @@ Identifiers can be arbitrarily long, and are case sensitive.</p>
     <b>\u</b> <a href="#HexDigit"><i>HexDigit</i></a> <a href="#HexDigit"><i>HexDigit</i></a> <a href="#HexDigit"><i>HexDigit</i></a> <a href="#HexDigit"><i>HexDigit</i></a>
     <b>\U</b> <a href="#HexDigit"><i>HexDigit</i></a> <a href="#HexDigit"><i>HexDigit</i></a> <a href="#HexDigit"><i>HexDigit</i></a> <a href="#HexDigit"><i>HexDigit</i></a> <a href="#HexDigit"><i>HexDigit</i></a> <a href="#HexDigit"><i>HexDigit</i></a> <a href="#HexDigit"><i>HexDigit</i></a> <a href="#HexDigit"><i>HexDigit</i></a>
     <b>\</b> <a href="../spec/entity.html#NamedCharacterEntity"><i>NamedCharacterEntity</i></a>
-<div class="blankline"></div>
-<a id="HexString"><span class="gname">HexString</span></a>:
-    <b>x"</b> <a href="#HexStringChars"><i>HexStringChars</i></a><sub>opt</sub> <b>"</b> <a href="#StringPostfix"><i>StringPostfix</i></a><sub>opt</sub>
-<div class="blankline"></div>
-<a id="HexStringChars"><span class="gname">HexStringChars</span></a>:
-    <a href="#HexStringChar"><i>HexStringChar</i></a>
-    <a href="#HexStringChar"><i>HexStringChar</i></a> <i>HexStringChars</i>
-<div class="blankline"></div>
-<a id="HexStringChar"><span class="gname">HexStringChar</span></a>:
-    <a href="#HexDigit"><i>HexDigit</i></a>
-    <a href="#WhiteSpace"><i>WhiteSpace</i></a>
-    <a href="#EndOfLine"><i>EndOfLine</i></a>
 <div class="blankline"></div>
 <a id="StringPostfix"><span class="gname">StringPostfix</span></a>:
     <b>c</b>
@@ -550,7 +536,7 @@ Identifiers can be arbitrarily long, and are case sensitive.</p>
 </pre>
 <div class="blankline"></div>
         <p>        A string literal is either a double quoted string, a wysiwyg quoted
-        string, a delimited string, a token string, or a hex string.
+        string, a delimited string, or a token string.
         </p>
 <div class="blankline"></div>
         <p>In all string literal forms, an <a href="#EndOfLine"><i>EndOfLine</i></a> is regarded as a single
@@ -563,7 +549,7 @@ Identifiers can be arbitrarily long, and are case sensitive.</p>
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="wysiwyg" href="#wysiwyg">Wysiwyg Strings</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="wysiwyg" href="#wysiwyg">Wysiwyg 文字列</a></h3>
 <div class="blankline"></div>
         <p>        Wysiwyg ("what you see is what you get") quoted strings can be defined
         using either of two syntaxes.
@@ -592,7 +578,7 @@ Identifiers can be arbitrarily long, and are case sensitive.</p>
 </span>         <span class="d_comment">// 'a', '"', 'b', '\', 'n'
 </span></pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="double_quoted_strings" href="#double_quoted_strings">Double Quoted Strings</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="double_quoted_strings" href="#double_quoted_strings">二重引用符で囲まれた文字列</a></h3>
 <div class="blankline"></div>
         <p>Double quoted strings are enclosed by "". <a href="#EscapeSequence"><i>EscapeSequence</i></a>s can be
         embedded in them.</p>
@@ -606,23 +592,7 @@ Identifiers can be arbitrarily long, and are case sensitive.</p>
 </span>         <span class="d_comment">// 'a', 'b', and a linefeed
 </span></pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="hex_strings" href="#hex_strings">Hex Strings</a></h3>
-<div class="blankline"></div>
-        <p>Hex strings allow string literals to be created using hex data.
-        The hex data need not form valid UTF characters.
-        </p>
-<div class="blankline"></div>
-<pre class="d_code notranslate">x"0A"              // same as "\x0A"
-x"00 FBCD 32FD 0A" // same as
-                   // "\x00\xFB\xCD\x32\xFD\x0A"
-</pre>
-<div class="blankline"></div>
-<p>Whitespace and newlines are ignored, so the hex data can be easily
-formatted. The number of hex characters must be a multiple of 2.</p>
-<div class="blankline"></div>
-<p>Note: Hex Strings are <b>deprecated</b>. Please use <a href="../phobos/std_conv.html#.hexString"><span class="d_inlinecode donthyphenate notranslate">std.conv.hexString</span></a> instead.</p>
-<div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="delimited_strings" href="#delimited_strings">Delimited Strings</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="delimited_strings" href="#delimited_strings">区切り文字列</a></h3>
 <div class="blankline"></div>
         <p>Delimited strings use various forms of delimiters.
         The delimiter, whether a character or identifier,
@@ -669,7 +639,7 @@ EOS"</span>
 </span><span class="d_comment">// q"/abc/def/"    // error
 </span></pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="token_strings" href="#token_strings">Token Strings</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="token_strings" href="#token_strings">トークン文字列</a></h3>
 <div class="blankline"></div>
         <p>Token strings open with the characters <span class="d_inlinecode donthyphenate notranslate">q</span><span class="d_inlinecode donthyphenate notranslate">{</span> and close with
         the token <span class="d_inlinecode donthyphenate notranslate">}</span>. In between must be valid D tokens.
@@ -687,7 +657,7 @@ EOS"</span>
 </span>                        <span class="d_comment">// __EOF__ is not a token, it's end of file
 </span></pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="string_postfix" href="#string_postfix">String Postfix</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="string_postfix" href="#string_postfix">文字列の接尾辞</a></h3>
 <div class="blankline"></div>
         <p>The optional <i>StringPostfix</i> character gives a specific type
         to the string, rather than it being inferred from the context.
@@ -714,10 +684,10 @@ EOS"</span>
 <div class="blankline"></div>
     <p>The escape sequences listed in <a href="#EscapeSequence"><i>EscapeSequence</i></a> are:</p>
 <div class="blankline"></div>
-    <center><table><caption>Escape Sequences</caption>    <tr><th class="donthyphenate"><b>Sequence</b></th><th class="donthyphenate"><b>Meaning</b></th></tr>     <tr><td><span class="d_inlinecode donthyphenate notranslate">'</span></td><td>Literal single-quote: <span class="d_inlinecode donthyphenate notranslate">'</span></td></tr>
-    <tr><td><span class="d_inlinecode donthyphenate notranslate">"</span></td><td>Literal double-quote: <span class="d_inlinecode donthyphenate notranslate">"</span></td></tr>
-    <tr><td><span class="d_inlinecode donthyphenate notranslate">?</span></td><td>Literal question mark: <span class="d_inlinecode donthyphenate notranslate">?</span></td></tr>
-    <tr><td><span class="d_inlinecode donthyphenate notranslate">\</span></td><td>Literal backslash: <span class="d_inlinecode donthyphenate notranslate"></span></td></tr>
+    <center><table><caption>Escape Sequences</caption>    <tr><th class="donthyphenate"><b>Sequence</b></th><th class="donthyphenate"><b>Meaning</b></th></tr>     <tr><td><span class="d_inlinecode donthyphenate notranslate">\'</span></td><td>Literal single-quote: <span class="d_inlinecode donthyphenate notranslate">'</span></td></tr>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">\"</span></td><td>Literal double-quote: <span class="d_inlinecode donthyphenate notranslate">"</span></td></tr>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">\?</span></td><td>Literal question mark: <span class="d_inlinecode donthyphenate notranslate">?</span></td></tr>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">\\</span></td><td>Literal backslash: <span class="d_inlinecode donthyphenate notranslate">\</span></td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">\0</span></td><td>Binary zero (NUL, U+0000).</td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">\a</span></td><td>BEL (alarm) character (U+0007).</td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">\b</span></td><td>Backspace (U+0008).</td></tr>
@@ -728,12 +698,14 @@ EOS"</span>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">\v</span></td><td>Vertical tab (U+000B).</td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">\x</span><i>nn</i></td><td>Byte value in hexadecimal, where <i>nn</i> is
         specified as two hexadecimal digits.<br>For example: <span class="d_inlinecode donthyphenate notranslate">\xFF</span>
-        represents the character with the value 255.</td></tr>
-    <tr><td><span class="d_inlinecode donthyphenate notranslate"></span><i>n</i><br><span class="d_inlinecode donthyphenate notranslate"></span><i>nn</i><br><span class="d_inlinecode donthyphenate notranslate"></span><i>nnn</i></td><td>Byte value in
+        represents the character with the value 255.<br>
+        See also: <a href="../phobos/std_conv.html#.hexString"><span class="d_inlinecode donthyphenate notranslate">std.conv.hexString</span></a>.</td></tr>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">\</span><i>n</i><br><span class="d_inlinecode donthyphenate notranslate">\</span><i>nn</i><br><span class="d_inlinecode donthyphenate notranslate">\</span><i>nnn</i></td><td>Byte value in
         octal.<br>For example: <span class="d_inlinecode donthyphenate notranslate">\101</span> represents the character with the
         value 65 (<span class="d_inlinecode donthyphenate notranslate">'A'</span>). Analogous to hexadecimal characters,
         the largest byte value is <span class="d_inlinecode donthyphenate notranslate">\377</span> (= <span class="d_inlinecode donthyphenate notranslate">\xFF</span> in hexadecimal
-        or <span class="d_inlinecode donthyphenate notranslate">255</span> in decimal)</td></tr>
+        or <span class="d_inlinecode donthyphenate notranslate">255</span> in decimal)<br>
+        See also: <a href="../phobos/std_conv.html#.octal"><span class="d_inlinecode donthyphenate notranslate">std.conv.octal</span></a>.</td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">\u</span><i>nnnn</i></td><td>Unicode character U+<i>nnnn</i>, where
         <i>nnnn</i> are four hexadecimal digits.<br>For example,
         <span class="d_inlinecode donthyphenate notranslate">\u03B3</span> represents the Unicode character &gamma; (U+03B3 - GREEK SMALL LETTER GAMMA).</td></tr>
@@ -741,8 +713,9 @@ EOS"</span>
         where <i>nnnnnnnn</i> are 8 hexadecimal digits.<br>For example,
         <span class="d_inlinecode donthyphenate notranslate">\U0001F603</span> represents the Unicode character U+1F603 (SMILING FACE
         WITH OPEN MOUTH).</td></tr>
-    <tr><td><span class="d_inlinecode donthyphenate notranslate"></span><i>name</i></td><td>Named character entity from the HTML5
-        specification. These names begin with <span class="d_inlinecode donthyphenate notranslate">&amp;</span> and end with <span class="d_inlinecode donthyphenate notranslate">;</span></td><td>e.g., <span class="d_inlinecode donthyphenate notranslate">&amp;euro;</span>.
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">\</span><i>name</i></td><td>Named character entity from the HTML5
+        specification. <br>
+        These names begin with <span class="d_inlinecode donthyphenate notranslate">&amp;</span> and end with <span class="d_inlinecode donthyphenate notranslate">;</span>, e.g., <span class="d_inlinecode donthyphenate notranslate">&amp;euro;</span>.
         See <a href="../spec/entity.html#NamedCharacterEntity"><i>NamedCharacterEntity</i></a>.</td></tr>
     </table></center>
 <div class="blankline"></div>
@@ -1122,7 +1095,7 @@ single quotes.</p>
     <a href="expression.html#CastExpression"><span class="d_inlinecode donthyphenate notranslate">cast</span></a>
     <a href="statement.html#TryStatement"><span class="d_inlinecode donthyphenate notranslate">catch</span></a>
     <del title="deprecated"><a href="type.html"><span class="d_inlinecode donthyphenate notranslate">cdouble</span></a></del>
-    <a href="type.html"><span class="d_inlinecode donthyphenate notranslate">cent</span></a>
+    <del title="deprecated"><a href="type.html"><span class="d_inlinecode donthyphenate notranslate">cent</span></a></del>
     <del title="deprecated"><a href="type.html"><span class="d_inlinecode donthyphenate notranslate">cfloat</span></a></del>
     <a href="type.html"><span class="d_inlinecode donthyphenate notranslate">char</span></a>
     <a href="class.html"><span class="d_inlinecode donthyphenate notranslate">class</span></a>
@@ -1211,7 +1184,7 @@ single quotes.</p>
     <a href="type.html#Typeof"><span class="d_inlinecode donthyphenate notranslate">typeof</span></a>
 <div class="blankline"></div>
     <a href="type.html"><span class="d_inlinecode donthyphenate notranslate">ubyte</span></a>
-    <a href="type.html"><span class="d_inlinecode donthyphenate notranslate">ucent</span></a>
+    <del title="deprecated"><a href="type.html"><span class="d_inlinecode donthyphenate notranslate">ucent</span></a></del>
     <a href="type.html"><span class="d_inlinecode donthyphenate notranslate">uint</span></a>
     <a href="type.html"><span class="d_inlinecode donthyphenate notranslate">ulong</span></a>
     <a href="struct.html"><span class="d_inlinecode donthyphenate notranslate">union</span></a>
@@ -1315,7 +1288,7 @@ x;  <span class="d_comment">// this is now line 6 of file pkg/mod.d
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Mar  7 00:45:19 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sun Mar 13 09:20:26 2022
 </div>
     </div>
 </div>

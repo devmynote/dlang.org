@@ -2020,6 +2020,110 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#Dsymbol.comment" id="Dsymbol.comment"><code class="code">comment</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Dsymbol.comment"></span>final const(char)* <code class="code">comment</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    get documentation <code class="code">comment</code> for this Dsymbol
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Dsymbol.ddocUnittest" id="Dsymbol.ddocUnittest"><code class="code">ddocUnittest</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Dsymbol.ddocUnittest"></span>final UnitTestDeclaration <code class="code">ddocUnittest</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Get ddoc unittest associated with this symbol.
+ (only use this with ddoc)
+
+  </p>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    ddoc unittest, <code class="code">null</code> if none
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Dsymbol.ddocUnittest" id="Dsymbol.ddocUnittest"><code class="code">ddocUnittest</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Dsymbol.ddocUnittest.2"></span>final void <code class="code">ddocUnittest</code>(UnitTestDeclaration <code class="code">utd</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Set ddoc unittest associated with this symbol.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#Dsymbol.inNonRoot" id="Dsymbol.inNonRoot"><code class="code">inNonRoot</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -2042,6 +2146,46 @@
   <div class="ddoc_summary">
   <p class="para">
     Returns <code class="code">true</code> if this symbol is defined in a non-root module without instantiation.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Dsymbol.deinitialize" id="Dsymbol.deinitialize"><code class="code">deinitialize</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Dsymbol.deinitialize"></span>static void <code class="code">deinitialize</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Deinitializes the global state of the compiler.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    This can be used to restore the state set by <code class="code">_init</code> to its original
+ state.
   </p>
 </div>
 

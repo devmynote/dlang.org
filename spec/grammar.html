@@ -344,20 +344,8 @@
 <div class="blankline"></div>
 <a id="NonVoidInitializer"><span class="gname">NonVoidInitializer</span></a>:
     <a href="#AssignExpression"><i>AssignExpression</i></a><span id="ExpInitializer"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span>
-    <a href="#ArrayInitializer"><i>ArrayInitializer</i></a>
+    <a href="#ArrayLiteral"><i>ArrayLiteral</i></a><span id="ArrayInitializer"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span>
     <a href="#StructInitializer"><i>StructInitializer</i></a><span id="StructInitializer"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span>
-<div class="blankline"></div>
-<a id="ArrayInitializer"><span class="gname">ArrayInitializer</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#ArrayMemberInitializations"><i>ArrayMemberInitializations</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">]</span>
-<div class="blankline"></div>
-<a id="ArrayMemberInitializations"><span class="gname">ArrayMemberInitializations</span></a>:
-    <a href="#ArrayMemberInitialization"><i>ArrayMemberInitialization</i></a>
-    <a href="#ArrayMemberInitialization"><i>ArrayMemberInitialization</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span>
-    <a href="#ArrayMemberInitialization"><i>ArrayMemberInitialization</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span> <i>ArrayMemberInitializations</i>
-<div class="blankline"></div>
-<a id="ArrayMemberInitialization"><span class="gname">ArrayMemberInitialization</span></a>:
-    <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
-    <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="AutoDeclaration"><span class="gname">AutoDeclaration</span></a>:
     <a href="#StorageClasses"><i>StorageClasses</i></a> <a href="#AutoAssignments"><i>AutoAssignments</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -788,7 +776,16 @@
     <i>StringLiterals</i> <a href="../spec/lex.html#StringLiteral"><i>StringLiteral</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="ArrayLiteral"><span class="gname">ArrayLiteral</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">]</span>
+    <span class="d_inlinecode donthyphenate notranslate">[</span> <i>ArrayMemberInitializations</i><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">]</span>
+<div class="blankline"></div>
+<a id="ArrayMemberInitializations"><span class="gname">ArrayMemberInitializations</span></a>:
+    <i>ArrayMemberInitialization</i>
+    <i>ArrayMemberInitialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span>
+    <i>ArrayMemberInitialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <i>ArrayMemberInitializations</i>
+<div class="blankline"></div>
+<a id="ArrayMemberInitialization"><span class="gname">ArrayMemberInitialization</span></a>:
+    <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
+    <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="#NonVoidInitializer"><i>NonVoidInitializer</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="AssocArrayLiteral"><span class="gname">AssocArrayLiteral</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#KeyValuePairs"><i>KeyValuePairs</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
@@ -872,6 +869,11 @@
     <span class="d_inlinecode donthyphenate notranslate">__parameters</span>
     <span class="d_inlinecode donthyphenate notranslate">module</span>
     <span class="d_inlinecode donthyphenate notranslate">package</span>
+</pre>
+<pre class="bnf notranslate"><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <span class="d_inlinecode donthyphenate notranslate">:</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="#TemplateParameterList"><i>TemplateParameterList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
+<span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <span class="d_inlinecode donthyphenate notranslate">==</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="#TemplateParameterList"><i>TemplateParameterList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
+<span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <i>Identifier</i> <span class="d_inlinecode donthyphenate notranslate">:</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="#TemplateParameterList"><i>TemplateParameterList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
+<span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <i>Identifier</i> <span class="d_inlinecode donthyphenate notranslate">==</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="#TemplateParameterList"><i>TemplateParameterList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
 </pre>
 <pre class="bnf notranslate"><a id="SpecialKeyword"><span class="gname">SpecialKeyword</span></a>:
     <a href="#specialkeywords"><span class="d_inlinecode donthyphenate notranslate">__FILE__</span></a>
@@ -1699,6 +1701,7 @@
     <a href="#compiles"><span class="d_inlinecode donthyphenate notranslate">compiles</span></a>
     <a href="#toType"><span class="d_inlinecode donthyphenate notranslate">toType</span></a>
     <a href="#initSymbol"><span class="d_inlinecode donthyphenate notranslate">initSymbol</span></a>
+    <a href="#parameters"><span class="d_inlinecode donthyphenate notranslate">parameters</span></a>
 <div class="blankline"></div>
 <a id="TraitsArguments"><span class="gname">TraitsArguments</span></a>:
     <a href="#TraitsArgument"><i>TraitsArgument</i></a>
@@ -2483,7 +2486,7 @@ on-off-switch:
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Mar  7 00:45:19 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sun Mar 13 09:20:26 2022
 </div>
     </div>
 </div>

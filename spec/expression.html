@@ -1837,15 +1837,24 @@ and abort the program.
 <h3><a class="anchor" title="Permalink to this section" id="array_literals" href="#array_literals">配列リテラル</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="ArrayLiteral"><span class="gname">ArrayLiteral</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">]</span>
+    <span class="d_inlinecode donthyphenate notranslate">[</span> <i>ArrayMemberInitializations</i><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">]</span>
+<div class="blankline"></div>
+<a id="ArrayMemberInitializations"><span class="gname">ArrayMemberInitializations</span></a>:
+    <i>ArrayMemberInitialization</i>
+    <i>ArrayMemberInitialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span>
+    <i>ArrayMemberInitialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <i>ArrayMemberInitializations</i>
+<div class="blankline"></div>
+<a id="ArrayMemberInitialization"><span class="gname">ArrayMemberInitialization</span></a>:
+    <a href="../spec/declaration.html#NonVoidInitializer"><i>NonVoidInitializer</i></a>
+    <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="../spec/declaration.html#NonVoidInitializer"><i>NonVoidInitializer</i></a>
 </pre>
 <div class="blankline"></div>
-    <p>Array literals are a comma-separated list of <a href="#AssignExpression"><i>AssignExpression</i></a>s
+    <p>An array literal is a comma-separated list of expressions
         between square brackets <span class="d_inlinecode donthyphenate notranslate">[</span> and <span class="d_inlinecode donthyphenate notranslate">]</span>.
-        The <i>AssignExpression</i>s form the elements of a dynamic array,
-        the length of the array is the number of elements.
-        The common type of the all elements is taken to be the type of
-        the array element, and all elements are implicitly converted
+        The expressions form the elements of a dynamic array.
+        The length of the array is the number of elements.
+        The common type of all the elements is taken to be the
+        array element type, and each expression is implicitly converted
         to that type.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">auto</span> a1 = [1,2,3];  <span class="d_comment">// type is int[], with elements 1, 2 and 3
@@ -1853,41 +1862,19 @@ and abort the program.
 </span></pre>
 <div class="blankline"></div>
     <p>By default, an array literal is typed as a dynamic array, but the element
-        count is known at compile time. So all array literals can be
-        implicitly converted to static array types. Slicing a dynamic array with
-        statically known bounds also allows conversion to a static array.</p>
+        count is known at compile time. Therefore, an array literal can be
+        implicitly converted to a static array of the same length.</p>
 <div class="blankline"></div>
-        <div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">void</span> foo(<span class="d_keyword">long</span>[2] a)
-{
-    <span class="d_keyword">assert</span>(a == [2, 3]);
-}
-<span class="d_keyword">void</span> bar(<span class="d_keyword">ref</span> <span class="d_keyword">long</span>[2] a)
-{
-    <span class="d_keyword">assert</span>(a == [2, 3]);
-    a = [4, 5];
-    <span class="d_keyword">assert</span>(a == [4, 5]);
-}
-
-<span class="d_keyword">void</span> main()
-{
-    <span class="d_keyword">long</span>[] arr = [1, 2, 3];
-
-    foo(arr[1 .. 3]);
-    <span class="d_keyword">assert</span>(arr == [1, 2, 3]);
-
-    bar(arr[1 .. 3]);
-    <span class="d_keyword">assert</span>(arr == [1, 4, 5]);
-
-    <span class="d_comment">//foo(arr[0 .. 3]); // cannot match length
-</span>}
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[2] sa = [1, 2];
 </pre>
-        
-</div>
 <div class="blankline"></div>
-    <p>If any of the arguments in the <a href="#ArgumentList"><i>ArgumentList</i></a> are
-        a <i>ValueSeq</i>, then the elements of the <i>ValueSeq</i>
-        are inserted as arguments in place of the sequence.
+    <div class="spec-boxes note"><b>Note:</b> Slicing a dynamic array with a statically known slice length also
+        <a href="#slice_to_static_array">allows conversion</a> to a static array.</div>
+<div class="blankline"></div>
+    <p>If any <i>ArrayMemberInitialization</i> is a
+        <a href="../spec/template.html#TemplateParameterSequence">ValueSeq</a>,
+        then the elements of the <i>ValueSeq</i>
+        are inserted as expressions in place of the sequence.
     </p>
 <div class="blankline"></div>
     <p>Escaping array literals are allocated on the memory managed heap.
@@ -1898,6 +1885,27 @@ and abort the program.
     <span class="d_keyword">return</span> [1, 2, 3];
 }
 </pre>
+<div class="blankline"></div>
+    <p>To initialize an element at a particular index, use the
+        <em>AssignExpression</em> <span class="d_inlinecode donthyphenate notranslate">:</span> <em>NonVoidInitializer</em> syntax.
+        The <em>AssignExpression</em> must be known at compile-time.
+        Any missing elements will be initialized to the default value
+        of the element type.
+        Note that if the array type is not specified, the literal will
+        be parsed as an
+        <a href="#associative_array_literals">associative array</a>.</p>
+<div class="blankline"></div>
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span> n = 4;
+<span class="d_keyword">auto</span> aa = [0:1, 3:n]; <span class="d_comment">// associative array `int[int]`
+</span>
+<span class="d_keyword">int</span>[] a = [1, 3:n, 5];
+<span class="d_keyword">assert</span>(a == [1, 0, 0, n, 5]);
+
+<span class="d_comment">//int[] e = [n:2]; // error, n not known at compile-time
+</span></pre>
+        
+</div>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="cast_array_literal" href="#cast_array_literal">キャスト</a></h3>
 <div class="blankline"></div>
@@ -2414,10 +2422,13 @@ and abort the program.
 </pre>
 <div class="blankline"></div>
     <p><i>IsExpression</i>s are evaluated at compile time and are
-        used for checking for valid types, comparing types for equivalence,
-        determining if one type can be implicitly converted to another,
-        and deducing the subtypes of a type.
-        The result of an <i>IsExpression</i> is a boolean of value <span class="d_inlinecode donthyphenate notranslate">true</span>
+        used for:</p>
+    <ul>    <li>checking for valid types</li>
+    <li>comparing types for equivalence</li>
+    <li>determining if one type can be implicitly converted to another</li>
+    <li>deducing the subtypes of a type</li>
+    </ul>
+    <p>        The result of an <i>IsExpression</i> is a boolean of value <span class="d_inlinecode donthyphenate notranslate">true</span>
         if the condition is satisfied. If the condition is not satisfied,
         the result is a boolean of value <span class="d_inlinecode donthyphenate notranslate">false</span>.
     </p>
@@ -2427,28 +2438,21 @@ and abort the program.
         If it is not semantically correct, the condition is not satisfied.
     </p>
 <div class="blankline"></div>
-    <p><a href="../spec/lex.html#Identifier"><i>Identifier</i></a> is declared to be an alias of the resulting
-        type if the condition is satisfied. The <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> forms
-        can only be used if the <i>IsExpression</i> appears in a
-        <a href="../spec/version.html#StaticIfCondition"><i>StaticIfCondition</i></a>.
-    </p>
-<div class="blankline"></div>
     <p><i>TypeSpecialization</i> is the type that <i>Type</i> is being
         compared against.
     </p>
 <div class="blankline"></div>
-    <p>The forms of the <i>IsExpression</i> are:
-    </p>
+<h4><a class="anchor" title="Permalink to this section" id="basic-forms" href="#basic-forms">Basic Forms</a></h4>
 <div class="blankline"></div>
-    <ol><div class="blankline"></div>
-        <li><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <span class="d_inlinecode donthyphenate notranslate">)</span><br>
-        The condition is satisfied if <span class="d_inlinecode donthyphenate notranslate">Type</span> is semantically
+        <h5><a class="anchor" title="Permalink to this section" id="is-type" href="#is-type"><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <span class="d_inlinecode donthyphenate notranslate">)</span></a></h5>
+<div class="blankline"></div>
+        <p>        The condition is satisfied if <span class="d_inlinecode donthyphenate notranslate">Type</span> is semantically
         correct (it must be syntactically correct regardless).
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">alias</span> <span class="d_keyword">int</span> func(<span class="d_keyword">int</span>);    <span class="d_comment">// func is a alias to a function type
+        </p>
+<pre class="d_code notranslate"><span class="d_keyword">alias</span> <span class="d_keyword">int</span> Func(<span class="d_keyword">int</span>);    <span class="d_comment">// Func is a alias to a function type
 </span><span class="d_keyword">void</span> foo()
 {
-    <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(func[]))     <span class="d_comment">// not satisfied because arrays of
+    <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Func[]))     <span class="d_comment">// not satisfied because arrays of
 </span>                        <span class="d_comment">// functions are not allowed
 </span>        writeln(<span class="d_string">"satisfied"</span>);
     <span class="d_keyword">else</span>
@@ -2458,14 +2462,14 @@ and abort the program.
 </span>        ...
 }
 </pre>
-        </li>
 <div class="blankline"></div>
-        <li><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <span class="d_inlinecode donthyphenate notranslate">:</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">)</span><br>
-        The condition is satisfied if <i>Type</i> is semantically
+        <h5><a class="anchor" title="Permalink to this section" id="is-type-convert" href="#is-type-convert"><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <span class="d_inlinecode donthyphenate notranslate">:</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">)</span></a></h5>
+<div class="blankline"></div>
+        <p>        The condition is satisfied if <i>Type</i> is semantically
         correct and it is the same as
         or can be implicitly converted to <i>TypeSpecialization</i>.
         <i>TypeSpecialization</i> is only allowed to be a <i>Type</i>.
-<div class="blankline"></div>
+        </p>
 <pre class="d_code notranslate"><span class="d_keyword">alias</span> Bar = <span class="d_keyword">short</span>;
 <span class="d_keyword">void</span> foo()
 {
@@ -2476,31 +2480,12 @@ and abort the program.
         writeln(<span class="d_string">"not satisfied"</span>);
 }
 </pre>
-        </li>
 <div class="blankline"></div>
-        <li><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <span class="d_inlinecode donthyphenate notranslate">==</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">)</span><br>
+        <h5><a class="anchor" title="Permalink to this section" id="is-type-equal" href="#is-type-equal"><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <span class="d_inlinecode donthyphenate notranslate">==</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">)</span></a></h5>
 <div class="blankline"></div>
-        The condition is satisfied if <i>Type</i> is semantically correct and is
+        <p>        The condition is satisfied if <i>Type</i> is semantically correct and is
         the same type as <i>TypeSpecialization</i>.
-<div class="blankline"></div>
-        If <i>TypeSpecialization</i> is one of
-<div class="blankline"></div>
-                <span class="d_inlinecode donthyphenate notranslate">struct</span>
-                <span class="d_inlinecode donthyphenate notranslate">union</span>
-                <span class="d_inlinecode donthyphenate notranslate">class</span>
-                <span class="d_inlinecode donthyphenate notranslate">interface</span>
-                <span class="d_inlinecode donthyphenate notranslate">enum</span>
-                <span class="d_inlinecode donthyphenate notranslate">function</span>
-                <span class="d_inlinecode donthyphenate notranslate">delegate</span>
-                <span class="d_inlinecode donthyphenate notranslate">const</span>
-                <span class="d_inlinecode donthyphenate notranslate">immutable</span>
-                <span class="d_inlinecode donthyphenate notranslate">shared</span>
-                <span class="d_inlinecode donthyphenate notranslate">module</span>
-                <span class="d_inlinecode donthyphenate notranslate">package</span>
-<div class="blankline"></div>
-        then the condition is satisfied if <i>Type</i> is one of those. <a href="../        spec/module.html#package-module">Package modules</a> are considered to be both
-        packages and modules.
-<div class="blankline"></div>
+        </p>
 <pre class="d_code notranslate"><span class="d_keyword">alias</span> Bar = <span class="d_keyword">short</span>;
 <span class="d_keyword">void</span> foo()
 {
@@ -2511,13 +2496,50 @@ and abort the program.
         writeln(<span class="d_string">"not satisfied"</span>);
 }
 </pre>
-        </li>
+        <p>        If <i>TypeSpecialization</i> is one of
 <div class="blankline"></div>
-        <li><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <i>Identifier</i> <span class="d_inlinecode donthyphenate notranslate">)</span><br>
-        The condition is satisfied if <i>Type</i> is semantically
+                <span class="d_inlinecode donthyphenate notranslate">struct</span>
+                <span class="d_inlinecode donthyphenate notranslate">union</span>
+                <span class="d_inlinecode donthyphenate notranslate">class</span>
+                <span class="d_inlinecode donthyphenate notranslate">interface</span>
+                <span class="d_inlinecode donthyphenate notranslate">enum</span>
+                <span class="d_inlinecode donthyphenate notranslate">__vector</span>
+                <span class="d_inlinecode donthyphenate notranslate">function</span>
+                <span class="d_inlinecode donthyphenate notranslate">delegate</span>
+                <span class="d_inlinecode donthyphenate notranslate">const</span>
+                <span class="d_inlinecode donthyphenate notranslate">immutable</span>
+                <span class="d_inlinecode donthyphenate notranslate">shared</span>
+                <span class="d_inlinecode donthyphenate notranslate">module</span>
+                <span class="d_inlinecode donthyphenate notranslate">package</span>
+<div class="blankline"></div>
+        then the condition is satisfied if <i>Type</i> is one of those.
+        </p>
+<pre class="d_code notranslate"><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Object == <span class="d_keyword">class</span>));
+
+<span class="d_keyword">int</span> i;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(i == <span class="d_keyword">const</span>));
+</pre>
+        <p><a href="../        spec/module.html#package-module">Package modules</a> are considered to be both
+        packages and modules.
+        </p>
+        <p><b>See also:</b> <a href="../spec/traits.html">Traits</a>.</p>
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="is-identifier" href="#is-identifier">Identifier Forms</a></h4>
+<div class="blankline"></div>
+    <p><em>Identifier</em> is declared to be an alias of the resulting
+        type if the condition is satisfied. The <em>Identifier</em> forms
+        can only be used if the <i>IsExpression</i> appears in a
+        <a href="../spec/version.html#StaticIfCondition"><i>StaticIfCondition</i></a> or <a href="../spec/version.html#StaticAssert"><i>StaticAssert</i></a>.
+    </p>
+<div class="blankline"></div>
+        <h5><a class="anchor" title="Permalink to this section" id="is-type-identifier" href="#is-type-identifier"><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <i>Identifier</i> <span class="d_inlinecode donthyphenate notranslate">)</span></a></h5>
+<div class="blankline"></div>
+        <p>        The condition is satisfied if <i>Type</i> is semantically
         correct. If so, <i>Identifier</i>
         is declared to be an alias of <i>Type</i>.
+        </p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">alias</span> Bar = <span class="d_keyword">short</span>;
 <span class="d_keyword">void</span> foo()
 {
@@ -2526,71 +2548,93 @@ and abort the program.
     <span class="d_keyword">else</span>
         <span class="d_keyword">alias</span> S = <span class="d_keyword">long</span>;
 
-    writeln(<span class="d_keyword">typeid</span>(S)); <span class="d_comment">// prints "short"
-</span>    <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Bar T))      <span class="d_comment">// error, Identifier T form can
-</span>                        <span class="d_comment">// only be in StaticIfConditions
-</span>        ...
-}
+    <span class="d_keyword">pragma</span>(msg, S); <span class="d_comment">// short
+</span>
+    <span class="d_comment">// if T was defined, it remains in scope
+</span>    <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(T))
+        <span class="d_keyword">pragma</span>(msg, T); <span class="d_comment">// short
+</span>
+    <span class="d_comment">//if (is(Bar U)) {} // error, cannot declare U here
+</span>}
 </pre>
-        </li>
+
+</div>
 <div class="blankline"></div>
-        <li><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <i>Identifier</i> <span class="d_inlinecode donthyphenate notranslate">:</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">)</span><br>
+        <h5><a class="anchor" title="Permalink to this section" id="is-identifier-convert" href="#is-identifier-convert"><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <i>Identifier</i> <span class="d_inlinecode donthyphenate notranslate">:</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">)</span>
+        </a>
 <div class="blankline"></div>
-        The condition is satisfied if <i>Type</i> is semantically
+        <p>        The condition is satisfied if <i>Type</i> is semantically
         correct and it is the same as
         or can be implicitly converted to <i>TypeSpecialization</i>.
         <i>TypeSpecialization</i> is only allowed to be a <i>Type</i>.
         The <i>Identifier</i> is declared to be either an alias of the
         <i>TypeSpecialization</i> or, if <i>TypeSpecialization</i> is
         dependent on <i>Identifier</i>, the deduced type.
+        </p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">alias</span> Bar = <span class="d_keyword">int</span>;
-<span class="d_keyword">alias</span> Abc = <span class="d_keyword">long</span>*;
-<span class="d_keyword">void</span> foo()
-{
-    <span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Bar T : <span class="d_keyword">int</span>))
-        <span class="d_keyword">alias</span> S = T;
-    <span class="d_keyword">else</span>
-        <span class="d_keyword">alias</span> S = <span class="d_keyword">long</span>;
 
-    writeln(<span class="d_keyword">typeid</span>(S));  <span class="d_comment">// prints "int"
-</span>
-    <span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Abc U : U*))
-    {
-        U u;
-        writeln(<span class="d_keyword">typeid</span>(<span class="d_keyword">typeof</span>(u)));  <span class="d_comment">// prints "long"
-</span>    }
-}
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Bar T : <span class="d_keyword">int</span>))
+    <span class="d_keyword">alias</span> S = T;
+<span class="d_keyword">else</span>
+    <span class="d_keyword">alias</span> S = <span class="d_keyword">long</span>;
+
+writeln(<span class="d_keyword">typeid</span>(S));  <span class="d_comment">// prints "int"
+</span></pre>
+<pre class="d_code notranslate"><span class="d_keyword">alias</span> Abc = <span class="d_keyword">long</span>*;
+
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Abc U : U*))
+{
+    U u;
+    writeln(<span class="d_keyword">typeid</span>(<span class="d_keyword">typeof</span>(u)));  <span class="d_comment">// prints "long"
+</span>}
 </pre>
 <div class="blankline"></div>
-        The way the type of <i>Identifier</i> is determined is analogous
+        <p>        The way the type of <i>Identifier</i> is determined is analogous
         to the way template parameter types are determined by
         <a href="../spec/template.html#TemplateTypeParameterSpecialization"><i>TemplateTypeParameterSpecialization</i></a>.
-        </li>
+        </p>
 <div class="blankline"></div>
-        <li><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <i>Identifier</i> <span class="d_inlinecode donthyphenate notranslate">==</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">)</span><br>
+        <h5><a class="anchor" title="Permalink to this section" id="is-identifier-equal" href="#is-identifier-equal"><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <i>Identifier</i> <span class="d_inlinecode donthyphenate notranslate">==</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">)</span></a></h5>
 <div class="blankline"></div>
-<div class="blankline"></div>
-        The condition is satisfied if <i>Type</i> is semantically
+        <p>        The condition is satisfied if <i>Type</i> is semantically
         correct and is the same as <i>TypeSpecialization</i>.
         The <i>Identifier</i> is declared to be either an alias of the
         <i>TypeSpecialization</i> or, if <i>TypeSpecialization</i> is
         dependent on <i>Identifier</i>, the deduced type.
+        </p>
 <div class="blankline"></div>
-        If <i>TypeSpecialization</i> is one of
-               <span class="d_inlinecode donthyphenate notranslate">struct</span>
+<pre class="d_code notranslate"><span class="d_keyword">alias</span> Bar = <span class="d_keyword">short</span>;
+
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Bar T == <span class="d_keyword">int</span>))   <span class="d_comment">// not satisfied, short is not int
+</span>    <span class="d_keyword">alias</span> S = T;
+
+<span class="d_keyword">alias</span> U = T;                   <span class="d_comment">// error, T is not defined
+</span></pre>
+<div class="blankline"></div>
+        <p>        If <i>TypeSpecialization</i> is one of
+                <span class="d_inlinecode donthyphenate notranslate">struct</span>
                 <span class="d_inlinecode donthyphenate notranslate">union</span>
                 <span class="d_inlinecode donthyphenate notranslate">class</span>
                 <span class="d_inlinecode donthyphenate notranslate">interface</span>
                 <span class="d_inlinecode donthyphenate notranslate">enum</span>
+                <span class="d_inlinecode donthyphenate notranslate">__vector</span>
                 <span class="d_inlinecode donthyphenate notranslate">function</span>
                 <span class="d_inlinecode donthyphenate notranslate">delegate</span>
-           <span class="d_inlinecode donthyphenate notranslate">const</span>
+                <span class="d_inlinecode donthyphenate notranslate">const</span>
                 <span class="d_inlinecode donthyphenate notranslate">immutable</span>
                 <span class="d_inlinecode donthyphenate notranslate">shared</span>
 <div class="blankline"></div>
         then the condition is satisfied if <i>Type</i> is one of those.
-        Furthermore, <i>Identifier</i> is set to be an alias of the type:
+        <em>TypeSpecialization</em> can also match the following keywords:
+        </p>
+        <table>        <tr><th class="donthyphenate"><b>keyword</b></th><th class="donthyphenate"><b>condition</b></th></tr>
+        <tr><td><span class="d_inlinecode donthyphenate notranslate">super</span></td><td><span class="d_inlinecode donthyphenate notranslate">true</span> if <em>Type</em> is a class or interface</td></tr>
+        <tr><td><span class="d_inlinecode donthyphenate notranslate">return</span></td><td>            <span class="d_inlinecode donthyphenate notranslate">true</span> is <em>Type</em> is a function, delegate or function pointer</td></tr>
+        <tr><td><span class="d_inlinecode donthyphenate notranslate">__parameters</span></td><td>            <span class="d_inlinecode donthyphenate notranslate">true</span> is <em>Type</em> is a function, delegate or function pointer</td></tr>
+        </table>
+        <p>        Furthermore, <i>Identifier</i> is set to be an alias of the type:
+        </p>
 <div class="blankline"></div>
         <center><table><caption></caption>        <tr><th class="donthyphenate"><b>keyword</b></th><th class="donthyphenate"><b>alias type for <i>Identifier</i></b></th></tr>
 <div class="blankline"></div>
@@ -2600,6 +2644,7 @@ and abort the program.
         <tr><td><span class="d_inlinecode donthyphenate notranslate">interface</span></td><td><i>Type</i></td></tr>
         <tr><td><span class="d_inlinecode donthyphenate notranslate">super</span></td><td><i>TypeSeq</i> of base classes and interfaces</td></tr>
         <tr><td><span class="d_inlinecode donthyphenate notranslate">enum</span></td><td>the base type of the enum</td></tr>
+        <tr><td><span class="d_inlinecode donthyphenate notranslate">__vector</span></td><td>the static array type of the vector</td></tr>
         <tr><td><span class="d_inlinecode donthyphenate notranslate">function</span></td><td><i>TypeSeq</i> of the function parameter types.
              For C- and D-style variadic functions,
              only the non-variadic parameters are included.
@@ -2616,73 +2661,80 @@ and abort the program.
 <div class="blankline"></div>
         </table></center>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">alias</span> Bar = <span class="d_keyword">short</span>;
-<span class="d_keyword">enum</span> E : <span class="d_keyword">byte</span> { Emember }
-<span class="d_keyword">void</span> foo()
-{
-    <span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Bar T == <span class="d_keyword">int</span>))   <span class="d_comment">// not satisfied, short is not int
-</span>        <span class="d_keyword">alias</span> S = T;
-    <span class="d_keyword">alias</span> U = T;                   <span class="d_comment">// error, T is not defined
+<pre class="d_code notranslate"><span class="d_keyword">enum</span> E : <span class="d_keyword">byte</span> { Emember }
+
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(E V == <span class="d_keyword">enum</span>))    <span class="d_comment">// satisfied, E is an enum
+</span>    V v;                       <span class="d_comment">// v is declared to be a byte
 </span>
-    <span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(E V == <span class="d_keyword">enum</span>))    <span class="d_comment">// satisfied, E is an enum
-</span>        V v;                       <span class="d_comment">// v is declared to be a byte
-</span>}
+<span class="d_keyword">pragma</span>(msg, V); <span class="d_comment">// byte
+</span></pre>
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="is-parameter-list" href="#is-parameter-list">Parameter List Forms</a></h4>
+<div class="blankline"></div>
+<pre class="bnf notranslate"><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <span class="d_inlinecode donthyphenate notranslate">:</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="../spec/template.html#TemplateParameterList"><i>TemplateParameterList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
+<span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <span class="d_inlinecode donthyphenate notranslate">==</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="../spec/template.html#TemplateParameterList"><i>TemplateParameterList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
+<span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <i>Identifier</i> <span class="d_inlinecode donthyphenate notranslate">:</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="../spec/template.html#TemplateParameterList"><i>TemplateParameterList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
+<span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <i>Identifier</i> <span class="d_inlinecode donthyphenate notranslate">==</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="../spec/template.html#TemplateParameterList"><i>TemplateParameterList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
 </pre>
 <div class="blankline"></div>
-        </li>
-<div class="blankline"></div>
-        <li><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <span class="d_inlinecode donthyphenate notranslate">:</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="../spec/template.html#TemplateParameterList"><i>TemplateParameterList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span><br>
-             <span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <span class="d_inlinecode donthyphenate notranslate">==</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="../spec/template.html#TemplateParameterList"><i>TemplateParameterList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span><br>
-             <span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <i>Identifier</i> <span class="d_inlinecode donthyphenate notranslate">:</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="../spec/template.html#TemplateParameterList"><i>TemplateParameterList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span><br>
-             <span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <i>Identifier</i> <span class="d_inlinecode donthyphenate notranslate">==</span> <i>TypeSpecialization</i> <span class="d_inlinecode donthyphenate notranslate">,</span> <a href="../spec/template.html#TemplateParameterList"><i>TemplateParameterList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
-<div class="blankline"></div>
-        More complex types can be pattern matched; the
-        <a href="../spec/template.html#TemplateParameterList"><i>TemplateParameterList</i></a> declares symbols based on the
+        <p>        More complex types can be pattern matched; the
+        <i>TemplateParameterList</i> declares symbols based on the
         parts of the pattern that are matched, analogously to the
         way implied template parameters are matched.
+        </p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio, std.typecons;
-
-<span class="d_keyword">void</span> main()
+<p><b>Example:</b> Matching a Template Instantiation</p></h5>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">struct</span> Tuple(T...)
 {
-    <span class="d_keyword">alias</span> Tup = Tuple!(<span class="d_keyword">int</span>, string);
-    <span class="d_keyword">alias</span> AA = <span class="d_keyword">long</span>[string];
+    <span class="d_comment">// ...
+</span>}
+<span class="d_keyword">alias</span> Tup = Tuple!(<span class="d_keyword">int</span>, string);
 
-    <span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Tup : Template!Args, <span class="d_keyword">alias</span> Template, Args...))
-    {
-        writeln(<span class="d_keyword">__traits</span>(isSame, Template, Tuple)); <span class="d_comment">// true
-</span>        writeln(<span class="d_keyword">is</span>(Template!(<span class="d_keyword">int</span>, string) == Tup));  <span class="d_comment">// true
-</span>        writeln(<span class="d_keyword">typeid</span>(Args[0]));  <span class="d_comment">// int
-</span>        writeln(<span class="d_keyword">typeid</span>(Args[1]));  <span class="d_comment">// immutable(char)[]
-</span>    }
-
-    <span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(AA T : T[U], U : string))
-    {
-        writeln(<span class="d_keyword">typeid</span>(T));  <span class="d_comment">// long
-</span>        writeln(<span class="d_keyword">typeid</span>(U));  <span class="d_comment">// string
-</span>    }
-
-    <span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(AA A : A[B], B : <span class="d_keyword">int</span>))
-    {
-        <span class="d_keyword">assert</span>(0);  <span class="d_comment">// should not match, as B is not an int
-</span>    }
-
-    <span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(<span class="d_keyword">int</span>[10] W : W[len], <span class="d_keyword">int</span> len))
-    {
-        writeln(<span class="d_keyword">typeid</span>(W));  <span class="d_comment">// int
-</span>        writeln(len);        <span class="d_comment">// 10
-</span>    }
-
-    <span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(<span class="d_keyword">int</span>[10] X : X[len], <span class="d_keyword">int</span> len : 5))
-    {
-        <span class="d_keyword">assert</span>(0);  <span class="d_comment">// should not match, len should be 10
-</span>    }
-}
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Tup : Template!Args, <span class="d_keyword">alias</span> Template, Args...))
+{
+    writeln(<span class="d_keyword">__traits</span>(isSame, Template, Tuple)); <span class="d_comment">// true
+</span>    writeln(<span class="d_keyword">is</span>(Template!(<span class="d_keyword">int</span>, string) == Tup));  <span class="d_comment">// true, same struct
+</span>    writeln(<span class="d_keyword">typeid</span>(Args[0]));  <span class="d_comment">// int
+</span>    writeln(<span class="d_keyword">typeid</span>(Args[1]));  <span class="d_comment">// immutable(char)[]
+</span>}
 </pre>
+
+</div>
 <div class="blankline"></div>
-        </li>
+<p><b>Example:</b> Matching an Associative Array</p>
 <div class="blankline"></div>
-    </ol>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">alias</span> AA = <span class="d_keyword">long</span>[string];
+
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(AA T : T[U], U : string))
+{
+    <span class="d_keyword">pragma</span>(msg, T);  <span class="d_comment">// long
+</span>    <span class="d_keyword">pragma</span>(msg, U);  <span class="d_comment">// string
+</span>}
+
+<span class="d_comment">// no match, B is not an int
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(AA A : A[B], B : <span class="d_keyword">int</span>));
+</pre>
+
+</div>
+<div class="blankline"></div>
+<p><b>Example:</b> Matching a Static Array</p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(<span class="d_keyword">int</span>[10] W : W[len], <span class="d_keyword">int</span> len))
+{
+    writeln(<span class="d_keyword">typeid</span>(W));  <span class="d_comment">// int
+</span>    writeln(len);        <span class="d_comment">// 10
+</span>}
+
+<span class="d_comment">// no match, len should be 10
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(<span class="d_keyword">int</span>[10] X : X[len], <span class="d_keyword">int</span> len : 5));
+</pre>
+
+</div>
+<div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="specialkeywords" href="#specialkeywords">特殊なキーワード</a></h2>
 <div class="blankline"></div>
@@ -2761,7 +2813,7 @@ file full path: '/example/test.d'
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Mon Mar  7 00:45:19 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sun Mar 13 09:20:27 2022
 </div>
     </div>
 </div>

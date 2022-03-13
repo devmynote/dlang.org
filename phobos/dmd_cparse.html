@@ -653,6 +653,50 @@ C11
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#CParser.funcTypeIds" id="CParser.funcTypeIds"><code class="code">funcTypeIds</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="CParser.funcTypeIds"></span>AST.Identifiers <code class="code">funcTypeIds</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    C allows declaring a function with a typedef:
+   typedef int (myfunc)(); myfunc fun;
+ but we need to distinguish <code class="code">fun</code> being a function as opposed to a variable in the
+ parse pass. This is accomplished by having a simple symbol table of typedefs
+ where we know, by syntax, if they are function types or non-function types.
+ <code class="code">funcTypeIds</code> is the symbol table, of the identifiers of typedefs of function types.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    Identifiers in this are typedefs of function types
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#CParser.parseModule" id="CParser.parseModule"><code class="code">parseModule</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -2148,6 +2192,68 @@ C11
   <p class="para">
     After encountering an error, scan forward until a right brace or ; is found
  or the end of the file.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#CParser.isFunctionTypedef" id="CParser.isFunctionTypedef"><code class="code">isFunctionTypedef</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="CParser.isFunctionTypedef"></span>bool <code class="code">isFunctionTypedef</code>(AST.Type <code class="code">t</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Determines if type <code class="code">t</code> is a function type.
+ Make this work without needing semantic analysis.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">AST.Type <code class="code">t</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      type to test
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    <code class="code">true</code> if it represents a function
   </p>
 </div>
 
