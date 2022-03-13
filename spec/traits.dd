@@ -4,7 +4,7 @@ $(SPEC_S 特性,
 
 $(HEADERNAV_TOC)
 
-$(H2 $(LNAME2 grammar, Grammar))
+$(H2 $(LNAME2 grammar, 文法))
 
         $(P Traits are extensions to the language to enable
         programs, at compile time, to get at information
@@ -92,7 +92,7 @@ $(GNAME TraitsArgument):
 )
 
 
-$(H2 $(LNAME2 types, Type Traits))
+$(H2 $(LNAME2 types, 型の特性))
 
 $(H3 $(GNAME isArithmetic))
 
@@ -625,7 +625,7 @@ $(H3 $(GNAME initSymbol))
         ---
 
 
-$(H2 $(LNAME2 functions, Function Traits))
+$(H2 $(LNAME2 functions, 関数の特性))
 
 $(H3 $(GNAME isDisabled))
 
@@ -964,7 +964,7 @@ tuple("pure", "nothrow", "@nogc", "@trusted")
 )
 
 
-$(H2 $(LNAME2 function-parameters, Function Parameter Traits))
+$(H2 $(LNAME2 function-parameters, 関数パラメータの特性))
 
 $(H3 $(GNAME isRef), $(GNAME isOut), $(GNAME isLazy))
 
@@ -1029,7 +1029,7 @@ static assert(__traits(getParameterStorageClasses, foo(p, a, b, c), 3)[0] == "la
 ---
 )
 
-$(H3 $(GNAME parameters))
+$(H3 $(GNAME パラメータ))
 
         $(P May only be used inside a function. Takes no arguments, and returns
         a sequence of the enclosing function's parameters.)
@@ -1089,7 +1089,7 @@ $(H3 $(GNAME parameters))
         ---
 
 
-$(H2 $(LNAME2 symbols, Symbol Traits))
+$(H2 $(LNAME2 symbols, シンボルの特性))
 
 $(H3 $(GNAME isNested))
 
@@ -1465,7 +1465,7 @@ $(H3 $(GNAME getUnitTests))
                 $(DDSUBLINK spec/attribute, uda, UDAs) will be accessible.
         )
 
-        $(H4 Note:)
+        $(H4 備考:)
 
         $(P
                 The -unittest flag needs to be passed to the compiler. If the flag

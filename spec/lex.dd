@@ -405,7 +405,7 @@ $(GNAME TokenStringToken):
         $(UNDEFINED_BEHAVIOR Writes to string literals
         cannot always be detected, but cause undefined behavior.)
 
-$(H3 $(LNAME2 wysiwyg, Wysiwyg Strings))
+$(H3 $(LNAME2 wysiwyg, Wysiwyg 文字列))
 
         $(P
         Wysiwyg ("what you see is what you get") quoted strings can be defined
@@ -439,7 +439,7 @@ $(H3 $(LNAME2 wysiwyg, Wysiwyg Strings))
                  // 'a', '"', 'b', '\', 'n'
         ---
 
-$(H3 $(LNAME2 double_quoted_strings, Double Quoted Strings))
+$(H3 $(LNAME2 double_quoted_strings, 二重引用符で囲まれた文字列))
 
         $(P Double quoted strings are enclosed by "". $(GLINK EscapeSequence)s can be
         embedded in them.)
@@ -454,7 +454,7 @@ $(H3 $(LNAME2 double_quoted_strings, Double Quoted Strings))
                  // 'a', 'b', and a linefeed
         ---
 
-$(H3 $(LNAME2 delimited_strings, Delimited Strings))
+$(H3 $(LNAME2 delimited_strings, 区切り文字列))
 
         $(P Delimited strings use various forms of delimiters.
         The delimiter, whether a character or identifier,
@@ -505,7 +505,7 @@ q"/foo]/"          // "foo]"
 // q"/abc/def/"    // error
 ---
 
-$(H3 $(LNAME2 token_strings, Token Strings))
+$(H3 $(LNAME2 token_strings, トークン文字列))
 
         $(P Token strings open with the characters $(D q)$(CODE_LCURL) and close with
         the token $(CODE_RCURL). In between must be valid D tokens.
@@ -524,7 +524,7 @@ $(H3 $(LNAME2 token_strings, Token Strings))
                                 // __EOF__ is not a token, it's end of file
         ---
 
-$(H3 $(LNAME2 string_postfix, String Postfix))
+$(H3 $(LNAME2 string_postfix, 文字列の接尾辞))
 
         $(P The optional $(I StringPostfix) character gives a specific type
         to the string, rather than it being inferred from the context.
