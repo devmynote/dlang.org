@@ -210,8 +210,6 @@
         <li><a href="#isSame">isSame</a></li>
         <li><a href="#compiles">compiles</a></li>
     </ol></li>
-    <li><a href="#toType">toType</a></li>
-    <li><a href="#initSymbol">initSymbol</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -2011,71 +2009,6 @@ foo.Foo.unittest
         partial specialization allows for.</li>
         </ul>
 <div class="blankline"></div>
-<h2><a id="toType"><span class="gname">toType</span></a></h2>
-<div class="blankline"></div>
-        <p>Takes a single argument, which must evaluate to an expression of type <span class="d_inlinecode donthyphenate notranslate">string</span>.
-        The contents of the string must correspond to the <a href="../spec/abi.html#name_mangling">mangled contents of a type</a>
-        that has been seen by the implementation.</p>
-<div class="blankline"></div>
-        <p>Only D mangling is supported. Other manglings, such as C++ mangling, are not.</p>
-<div class="blankline"></div>
-        <p>The value returned is a type.</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">template</span> Type(T) { <span class="d_keyword">alias</span> Type = T; }
-
-Type!(<span class="d_keyword">__traits</span>(toType, <span class="d_string">"i"</span>)) j = 3; <span class="d_comment">// j is declared as type `int`
-</span>
-<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Type!(<span class="d_keyword">__traits</span>(toType, (<span class="d_keyword">int</span>*).mangleof)) == <span class="d_keyword">int</span>*));
-
-<span class="d_keyword">__traits</span>(toType, <span class="d_string">"i"</span>) x = 4; <span class="d_comment">// x is also declared as type `int`
-</span></pre>
-<div class="blankline"></div>
-        <div class="spec-boxes rationale"><b>Rationale:</b> Provides the inverse operation of the <a href="../spec/property.html#mangleof"><span class="d_inlinecode donthyphenate notranslate">.mangleof</span></a> property.</div>
-
-
-<div class="blankline"></div>
-<h2><a id="initSymbol"><span class="gname">initSymbol</span></a></h2>
-<div class="blankline"></div>
-        <p>Takes a single argument, which must evaluate to a <span class="d_inlinecode donthyphenate notranslate">class</span>, <span class="d_inlinecode donthyphenate notranslate">struct</span> or <span class="d_inlinecode donthyphenate notranslate">union</span> type.
-            Returns a <span class="d_inlinecode donthyphenate notranslate">const(void)[]</span> that holds the initial state of any instance of the supplied type.
-            The slice is constructed for any type <span class="d_inlinecode donthyphenate notranslate">T</span> as follows:
-
-<ul><li><span class="d_inlinecode donthyphenate notranslate">ptr</span> points to either the initializer symbol of <span class="d_inlinecode donthyphenate notranslate">T</span>
-               or <span class="d_inlinecode donthyphenate notranslate">null</span> if <span class="d_inlinecode donthyphenate notranslate">T</span> is a zero-initialized struct / unions.
-</li>
-<li><span class="d_inlinecode donthyphenate notranslate">length</span> is equal to the size of an instance, i.e. <span class="d_inlinecode donthyphenate notranslate">T.sizeof</span> for structs / unions and
-              <a href="#classInstanceSize"><span class="d_inlinecode donthyphenate notranslate">__traits(classInstanceSize, T)`</span></a> for classes.</li>
-</ul>
-        </p>
-<div class="blankline"></div>
-        <p>            This trait matches the behaviour of <span class="d_inlinecode donthyphenate notranslate">TypeInfo.initializer()</span> but can also be used when
-            <span class="d_inlinecode donthyphenate notranslate">TypeInfo</span> is not available.
-        </p>
-<div class="blankline"></div>
-        <p>            This traits is not available during <a href="../glossary.html#ctfe">CTFE</a> because the actual address
-            of the initializer symbol will be set by the linker and hence is not available at compile time.
-        </p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">class</span> C
-{
-    <span class="d_keyword">int</span> i = 4;
-}
-
-<span class="d_comment">/// Initializes a malloc'ed instance of `C`
-</span><span class="d_keyword">void</span> main()
-{
-    <span class="d_keyword">const</span> <span class="d_keyword">void</span>[] initSym = <span class="d_keyword">__traits</span>(initSymbol, C);
-
-    <span class="d_keyword">void</span>* ptr = malloc(initSym.length);
-    <span class="d_keyword">scope</span> (exit) free(ptr);
-
-    ptr[0..initSym.length] = initSym[];
-
-    C c = <span class="d_keyword">cast</span>(C) ptr;
-    <span class="d_keyword">assert</span>(c.i == 4);
-}
-</pre>
-<div class="blankline"></div>
 
 <div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/version.html">条件コンパイル[Conditional Compilation]</a></div>
 <div style="float: right"><a href="../spec/errors.html">エラー処理[Error Handling]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
@@ -2083,7 +2016,7 @@ Type!(<span class="d_keyword">__traits</span>(toType, <span class="d_string">"i"
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sun Mar 13 09:20:28 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sun Mar 13 15:36:01 2022
 </div>
     </div>
 </div>
