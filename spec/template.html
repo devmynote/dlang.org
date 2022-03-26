@@ -154,11 +154,11 @@
     </ol></li>
     <li><a href="#parameters">テンプレートパラメータ</a><ol>        <li><a href="#argument_deduction">引数の推定</a></li>
         <li><a href="#template_type_parameters">テンプレート型引数</a></li>
-        <li><a href="#template_this_parameter">テンプレート This 引数</a></li>
+        <li><a href="#template_this_parameter">this 引数</a></li>
         <li><a href="#template_value_parameter">テンプレート 値引数</a></li>
-        <li><a href="#aliasparameters">テンプレート Alias 引数</a></li>
-        <li><a href="#variadic-templates">テンプレート シーケンス引数</a></li>
-        <li><a href="#template_parameter_def_values">テンプレート引数のデフォルト値</a></li>
+        <li><a href="#aliasparameters">Alias 引数</a></li>
+        <li><a href="#variadic-templates">シーケンス引数</a></li>
+        <li><a href="#template_parameter_def_values">引数のデフォルト値</a></li>
     </ol></li>
     <li><a href="#implicit_template_properties">メンバに由来する名前のテンプレート</a></li>
     <li><a href="#aggregate_templates">集約テンプレート</a></li>
@@ -545,7 +545,7 @@ Foo!(<span class="d_keyword">int</span>[<span class="d_keyword">long</span>])  <
     </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="template_this_parameter" href="#template_this_parameter">テンプレート This 引数</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="template_this_parameter" href="#template_this_parameter">this 引数</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TemplateThisParameter"><span class="gname">TemplateThisParameter</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">this</span> <a href="#TemplateTypeParameter"><i>TemplateTypeParameter</i></a>
@@ -713,7 +713,7 @@ immutable(S)
     <p>This can be useful when a different template body is required for a specific value.
         Another template overload would be defined to take other integer literal values.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="aliasparameters" href="#aliasparameters">テンプレート Alias 引数</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="aliasparameters" href="#aliasparameters">Alias 引数</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TemplateAliasParameter"><span class="gname">TemplateAliasParameter</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">alias</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateAliasParameterSpecialization"><i>TemplateAliasParameterSpecialization</i></a><sub>opt</sub> <a href="#TemplateAliasParameterDefault"><i>TemplateAliasParameterDefault</i></a><sub>opt</sub>
@@ -957,7 +957,7 @@ Foo!x;  <span class="d_comment">// ok
 <span class="d_keyword">alias</span> bar = Bar!(C!<span class="d_keyword">int</span>);    <span class="d_comment">// instantiates #5
 </span></pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="variadic-templates" href="#variadic-templates">テンプレート シーケンス引数</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="variadic-templates" href="#variadic-templates">シーケンス引数</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TemplateSequenceParameter"><span class="gname">TemplateSequenceParameter</span></a>:
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">...</span>
@@ -1167,7 +1167,7 @@ R <span class="d_keyword">delegate</span>(Args) partial(R, T, Args...)(R <span c
 <span class="d_keyword">alias</span> foo4 = Foo!(<span class="d_keyword">int</span>, 3, std);  <span class="d_comment">// instantiates #4
 </span></pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="template_parameter_def_values" href="#template_parameter_def_values">テンプレート引数のデフォルト値</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="template_parameter_def_values" href="#template_parameter_def_values">引数のデフォルト値</a></h3>
 <div class="blankline"></div>
     <p>Trailing template parameters can be given default arguments:</p>
 <div class="blankline"></div>
@@ -1329,13 +1329,13 @@ writefln(<span class="d_string">"The square of %s is %s"</span>, 3, square(3)); 
 <h4><a class="anchor" title="Permalink to this section" id="ifti-restrictions" href="#ifti-restrictions">制限</a></h4>
 <div class="blankline"></div>
     <p>Function template type parameters that are to be implicitly
-        deduced may not have specializations:</p>
+        deduced must appear in the type of at least one function parameter:</p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">void</span> <b><i>foo</i></b>(T : T*)(T t) { ... }
+<pre class="d_code notranslate"><span class="d_keyword">void</span> foo(T : U*, U)(U t) { ... }
 
-<span class="d_keyword">int</span> x,y;
-foo!(<span class="d_keyword">int</span>*)(x);   <span class="d_comment">// ok, T is not deduced from function argument
-</span>foo(&amp;y);         <span class="d_comment">// error, T has specialization
+<span class="d_keyword">int</span> x;
+foo!(<span class="d_keyword">int</span>*)(x);   <span class="d_comment">// ok, U is deduced and T is specified explicitly
+</span>foo(x);         <span class="d_comment">// error, only U can be deduced, not T
 </span></pre>
 <div class="blankline"></div>
         <p>When the template parameters must be deduced, the
@@ -1844,7 +1844,7 @@ foo!(3)();  <span class="d_comment">// OK, matches
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sun Mar 13 15:36:00 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar 26 13:39:08 2022
 </div>
     </div>
 </div>
