@@ -393,7 +393,7 @@ $(H4 $(LNAME2 parameters_specialization, 特殊化))
     )
 
 
-$(H3 $(LNAME2 template_this_parameter, テンプレート This 引数))
+$(H3 $(LNAME2 template_this_parameter, this 引数))
 
 $(GRAMMAR
 $(GNAME TemplateThisParameter):
@@ -565,7 +565,7 @@ $(H4 $(LNAME2 value_specialization, Specialization))
     $(P This can be useful when a different template body is required for a specific value.
         Another template overload would be defined to take other integer literal values.)
 
-$(H3 $(LNAME2 aliasparameters, テンプレート Alias 引数))
+$(H3 $(LNAME2 aliasparameters, Alias 引数))
 
 $(GRAMMAR
 $(GNAME TemplateAliasParameter):
@@ -821,7 +821,7 @@ $(H4 $(LNAME2 alias_parameter_specialization, 特殊化))
         alias bar = Bar!(C!int);    // instantiates #5
         ------
 
-$(H3 $(LNAME2 variadic-templates, テンプレート シーケンス引数))
+$(H3 $(LNAME2 variadic-templates, シーケンス引数))
 
 $(GRAMMAR
 $(GNAME TemplateSequenceParameter):
@@ -1038,7 +1038,7 @@ $(H4 $(LNAME2 variadic_template_specialization, 特殊化))
         alias foo4 = Foo!(int, 3, std);  // instantiates #4
         ----
 
-$(H3 $(LNAME2 template_parameter_def_values, テンプレート引数のデフォルト値))
+$(H3 $(LNAME2 template_parameter_def_values, 引数のデフォルト値))
 
     $(P Trailing template parameters can be given default arguments:)
 
@@ -1209,14 +1209,14 @@ $(H3 $(LNAME2 ifti, 暗黙の関数テンプレートのインスタンス化 (I
 $(H4 $(LNAME2 ifti-restrictions, 制限))
 
     $(P Function template type parameters that are to be implicitly
-        deduced may not have specializations:)
+        deduced must appear in the type of at least one function parameter:)
 
         ------
-        void $(CODE_HIGHLIGHT foo)(T : T*)(T t) { ... }
+        void foo(T : U*, U)(U t) { ... }
 
-        int x,y;
-        foo!(int*)(x);   // ok, T is not deduced from function argument
-        foo(&y);         // error, T has specialization
+        int x;
+        foo!(int*)(x);   // ok, U is deduced and T is specified explicitly
+        foo(x);         // error, only U can be deduced, not T
         ------
 
         $(P When the template parameters must be deduced, the
