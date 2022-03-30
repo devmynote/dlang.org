@@ -66,8 +66,8 @@ Macros:
 
     DMDV2=$(LATEST)
 
-    BETA=$(COMMENT $0)
-    _=BETA=$0
+    _=BETA=$(COMMENT $0)
+    BETA=$0
     B_DMDV2=2.099.1
     B_SUFFIX=beta.1
 
