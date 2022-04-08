@@ -147,9 +147,10 @@
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
     <ol>    <li><a href="#access_control">アクセスコントロール</a></li>
-    <li><a href="#fields">フィールド</a></li>
-    <li><a href="#field_properties">フィールドのプロパティ</a></li>
-    <li><a href="#class_properties">クラスのプロパティ</a></li>
+    <li><a href="#fields">フィールド</a><ol>        <li><a href="#field_properties">フィールドのプロパティ</a></li>
+    </ol></li>
+    <li><a href="#class_properties">クラスのプロパティ</a><ol>        <li><a href="#hidden-fields">隠しフィールドへのアクセス</a></li>
+    </ol></li>
     <li><a href="#super_class">スーパークラス</a></li>
     <li><a href="#member-functions">メンバ関数 (a.k.a. Methods)</a><ol>        <li><a href="#objc-member-functions">Objective-C リンケージ</a></li>
     </ol></li>
@@ -312,7 +313,7 @@ Foo var;
         without the subclasses needing to recompile or relink.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="field_properties" href="#field_properties">フィールドのプロパティ</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="field_properties" href="#field_properties">フィールドのプロパティ</a></h3>
 <div class="blankline"></div>
         <p>The <span class="d_inlinecode donthyphenate notranslate">.offsetof</span> property gives the offset in bytes of the field
         from the beginning of the class instantiation.
@@ -340,29 +341,45 @@ Foo var;
 <h2><a class="anchor" title="Permalink to this section" id="class_properties" href="#class_properties">クラスのプロパティ</a></h2>
 <div class="blankline"></div>
         <p>The <span class="d_inlinecode donthyphenate notranslate">.tupleof</span> property is an
-        <a href="../spec/template.html#variadic-templates">expression sequence</a>
-        of all the fields in the class, excluding the hidden fields and
-        the fields in the base class.
-        <span class="d_inlinecode donthyphenate notranslate">.tupleof</span> is not available for <span class="d_inlinecode donthyphenate notranslate">extern(Objective-C)</span> classes due to
+        <a href="../spec/template.html#homogeneous_sequences">lvalue sequence</a>
+        of all the non-static fields in the class, excluding the hidden fields and
+        the fields in the base class.</p>
+        <div class="spec-boxes note"><b>Note:</b> <span class="d_inlinecode donthyphenate notranslate">.tupleof</span> is not available for <span class="d_inlinecode donthyphenate notranslate">extern(Objective-C)</span> classes due to
         their fields having a dynamic offset.
-        </p>
+        </div>
 <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">class</span> Foo { <span class="d_keyword">int</span> x; <span class="d_keyword">long</span> y; }
 
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">__traits</span>(identifier, Foo.tupleof[0]) == <span class="d_string">"x"</span>);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(Foo.tupleof)[1] == <span class="d_keyword">long</span>));
+
 <span class="d_keyword">void</span> main()
 {
-    <span class="d_keyword">auto</span> foo = <span class="d_keyword">new</span> Foo;
     <span class="d_keyword">import</span> std.stdio;
-    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">typeof</span>(foo.tupleof).stringof == <span class="d_string">`(int, long)`</span>);
 
+    <span class="d_keyword">auto</span> foo = <span class="d_keyword">new</span> Foo;
     foo.tupleof[0] = 1; <span class="d_comment">// set foo.x to 1
 </span>    foo.tupleof[1] = 2; <span class="d_comment">// set foo.y to 2
-</span>    <span class="d_keyword">foreach</span> (x; foo.tupleof)
-        write(x);       <span class="d_comment">// prints 12
-</span>}
+</span>    <span class="d_keyword">foreach</span> (<span class="d_keyword">ref</span> x; foo.tupleof)
+        x++;
+    <span class="d_keyword">assert</span>(foo.x == 2);
+    <span class="d_keyword">assert</span>(foo.y == 3);
+
+    <span class="d_keyword">auto</span> bar = <span class="d_keyword">new</span> Foo;
+    bar.tupleof = foo.tupleof; <span class="d_comment">// copy fields
+</span>    <span class="d_keyword">assert</span>(bar.x == 2);
+    <span class="d_keyword">assert</span>(bar.y == 3);
+}
 </pre>
 
 </div>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="hidden-fields" href="#hidden-fields">隠しフィールドへのアクセス</a></h3>
+<div class="blankline"></div>
+        <p>The <a href="#outer-property"><span class="d_inlinecode donthyphenate notranslate">.outer</span> property</a> for
+        a nested class instance provides either the parent class instance,
+        or the parent function's context pointer when there is no parent
+        class.</p>
 <div class="blankline"></div>
         <p>The properties <span class="d_inlinecode donthyphenate notranslate">.__vptr</span> and <span class="d_inlinecode donthyphenate notranslate">.__monitor</span> give access
         to the class object's vtbl[] and monitor, respectively, but
@@ -1398,6 +1415,7 @@ if it is nested inside a class.</p>
         A non-static nested class can only be instantiated when the necessary
         context pointer information is available:</p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">class</span> Outer
 {
     <span class="d_keyword">class</span> Inner { }
@@ -1405,17 +1423,31 @@ if it is nested inside a class.</p>
     <span class="d_keyword">static</span> <span class="d_keyword">class</span> SInner { }
 }
 
-<span class="d_keyword">void</span> func()
+<span class="d_keyword">void</span> main()
+{
+    Outer o = <span class="d_keyword">new</span> Outer;        <span class="d_comment">// Ok
+</span>    <span class="d_comment">//Outer.Inner oi = new Outer.Inner; // Error, no 'this' for Outer
+</span>    Outer.SInner os = <span class="d_keyword">new</span> Outer.SInner; <span class="d_comment">// Ok
+</span>}
+</pre>
+
+</div>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">void</span> main()
 {
     <span class="d_keyword">class</span> Nested { }
 
-    Outer o = <span class="d_keyword">new</span> Outer;        <span class="d_comment">// Ok
-</span>    Outer.Inner oi = <span class="d_keyword">new</span> Outer.Inner;   <span class="d_comment">// Error, no 'this' for Outer
-</span>    Outer.SInner os = <span class="d_keyword">new</span> Outer.SInner; <span class="d_comment">// Ok
-</span>
     Nested n = <span class="d_keyword">new</span> Nested;      <span class="d_comment">// Ok
-</span>}
+</span>
+    <span class="d_keyword">static</span> f()
+    {
+        <span class="d_comment">//Nested sn = new Nested; // Error, no 'this' for Nested
+</span>    }
+}
 </pre>
+
+</div>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="nested-explicit" href="#nested-explicit">明示的なインスタンス化</a></h3>
 <div class="blankline"></div>
@@ -1423,6 +1455,7 @@ if it is nested inside a class.</p>
         inner class instance by prefixing it to the <i>NewExpression</i>:
         </p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">class</span> Outer
 {
     <span class="d_keyword">int</span> a;
@@ -1436,14 +1469,16 @@ if it is nested inside a class.</p>
     }
 }
 
-<span class="d_keyword">int</span> bar()
+<span class="d_keyword">void</span> main()
 {
     Outer o = <span class="d_keyword">new</span> Outer;
     o.a = 3;
-    Outer.Inner oi = <b><i>o</i></b>.<span class="d_keyword">new</span> Inner;
-    <span class="d_keyword">return</span> oi.foo();    <span class="d_comment">// returns 3
-</span>}
+    Outer.Inner oi = o.<span class="d_keyword">new</span> Inner;
+    <span class="d_keyword">assert</span>(oi.foo() == 3);
+}
 </pre>
+
+</div>
 <div class="blankline"></div>
         <p>Here <span class="d_inlinecode donthyphenate notranslate">o</span> supplies the <span class="d_inlinecode donthyphenate notranslate">this</span> reference to the inner class
         instance of <span class="d_inlinecode donthyphenate notranslate">Outer</span>.
@@ -1451,11 +1486,10 @@ if it is nested inside a class.</p>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="outer-property" href="#outer-property"><span class="d_inlinecode donthyphenate notranslate">outer</span> プロパティ</a></h3>
 <div class="blankline"></div>
-        <p>For a nested class instance, the <span class="d_inlinecode donthyphenate notranslate">.outer</span> property is the
-        <span class="d_inlinecode donthyphenate notranslate">this</span> reference for the enclosing class's instance. If there
-        is no enclosing class context, <span class="d_inlinecode donthyphenate notranslate">.outer</span> would be a <span class="d_inlinecode donthyphenate notranslate">void*</span>
-        to the enclosing function frame.
-        </p>
+        <p>For a nested class instance, the <span class="d_inlinecode donthyphenate notranslate">.outer</span> property provides
+        the <span class="d_inlinecode donthyphenate notranslate">this</span> reference of the enclosing class's instance.
+        If there is no accessible parent class instance, the property
+        provides a <span class="d_inlinecode donthyphenate notranslate">void*</span> to the enclosing function frame.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">class</span> Outer
 {
@@ -1472,7 +1506,10 @@ if it is nested inside a class.</p>
         Inner1 i = <span class="d_keyword">new</span> Inner1;
         <span class="d_keyword">assert</span>(i.getOuter() <span class="d_keyword">is</span> <span class="d_keyword">this</span>);
     }
-
+}
+</pre>
+<pre class="d_code notranslate"><span class="d_keyword">class</span> Outer
+{
     <span class="d_keyword">void</span> bar()
     {
         <span class="d_comment">// x is referenced from nested scope, so
@@ -1494,7 +1531,10 @@ if it is nested inside a class.</p>
         Inner2 i = <span class="d_keyword">new</span> Inner2;
         <span class="d_keyword">assert</span>(i.getOuter() <span class="d_keyword">is</span> <span class="d_keyword">this</span>);
     }
-
+}
+</pre>
+<pre class="d_code notranslate"><span class="d_keyword">class</span> Outer
+{
     <span class="d_comment">// baz cannot access an instance of Outer
 </span>    <span class="d_keyword">static</span> <span class="d_keyword">void</span> baz()
     {
@@ -1574,7 +1614,7 @@ obj.foo();
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar 26 13:39:07 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Fri Apr  8 14:13:59 2022
 </div>
     </div>
 </div>

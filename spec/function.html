@@ -191,7 +191,7 @@
     <li><a href="#nested">関数のネスト</a></li>
     <li><a href="#closures">デリゲート, 関数ポインタ, クロージャ</a><ol>        <li><a href="#anonymous">無名関数、無名デリゲート</a></li>
     </ol></li>
-    <li><a href="#main"><span class="d_inlinecode donthyphenate notranslate">main()</span> 関数</a><ol>        <li><a href="#betterc-main">BetterC <span class="d_inlinecode donthyphenate notranslate">main()</span> 関数</a></li>
+    <li><a href="#main"><span class="d_inlinecode donthyphenate notranslate">main()</span> 関数</a><ol>        <li><a href="#betterc-main"><span class="d_inlinecode donthyphenate notranslate">extern(C) main()</span> 関数</a></li>
     </ol></li>
     <li><a href="#function-templates">関数テンプレート</a></li>
     <li><a href="#interpretation">コンパイル時の関数実行 (CTFE)</a><ol>        <li><a href="#string-mixins">文字列ミックスインとコンパイル時関数実行</a></li>
@@ -3158,28 +3158,58 @@ Bar
 <div class="blankline"></div>
         <div class="spec-boxes note"><b>Note:</b> The runtime can remove any arguments prefixed <span class="d_inlinecode donthyphenate notranslate">--DRT-</span>.</div>
 <div class="blankline"></div>
+        <div class="spec-boxes note"><b>Note:</b> The aforementioned return / parameter types may be annotated with <span class="d_inlinecode donthyphenate notranslate">const</span>,
+        <span class="d_inlinecode donthyphenate notranslate">immutable</span>. They may also be replaced by <span class="d_inlinecode donthyphenate notranslate">enum</span>'s with matching base types.</div>
+<div class="blankline"></div>
         <p>The main function must have D linkage.</p>
 <div class="blankline"></div>
         <p>Attributes may be added as needed, e.g. <span class="d_inlinecode donthyphenate notranslate">@safe</span>, <span class="d_inlinecode donthyphenate notranslate">@nogc</span>, <span class="d_inlinecode donthyphenate notranslate">nothrow</span>, etc.</p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="betterc-main" href="#betterc-main">BetterC <span class="d_inlinecode donthyphenate notranslate">main()</span> 関数</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="betterc-main" href="#betterc-main"><span class="d_inlinecode donthyphenate notranslate">extern(C) main()</span> 関数</a></h3>
 <div class="blankline"></div>
-        <p>For <b>BetterC</b> programs, the main function is declared using
-        one of the following forms:</p>
+        <p>Programs may define an <span class="d_inlinecode donthyphenate notranslate">extern(C) main</span> function as an alternative to the
+        standard <a href="#main">entry point</a>. This form is required for
+        <a href="../spec/betterc.html"><b>BetterC</b></a> programs.</p>
 <div class="blankline"></div>
-        <ul>        <li><span class="d_inlinecode donthyphenate notranslate">extern (C) int main() { ... }</span></li>
-        <li><span class="d_inlinecode donthyphenate notranslate">extern (C) int main(int argc, char** argv) { ... }</span></li>
-        </ul>
+        <p>A C <span class="d_inlinecode donthyphenate notranslate">main</span> function must be declared as follows:</p>
 <div class="blankline"></div>
-        <p>This takes the place of the C main function and serves the identical purpose.</p>
+        <pre class="bnf notranslate">        <a id="CMainFunction"><span class="gname">CMainFunction</span></a>:
+            <span class="d_inlinecode donthyphenate notranslate">extern (C)</span> <a href="#MainReturnDecl"><i>MainReturnDecl</i></a> <span class="d_inlinecode donthyphenate notranslate">main(<a href="#CmainParameters"><i>CmainParameters</i></a><sub>opt</sub>)</span> <a href="../spec/statement.html#BlockStatement"><i>BlockStatement</i></a>
 <div class="blankline"></div>
-        <p>Module constructors, module destructors, and unittests are not run.</p>
+        <a id="CmainParameters"><span class="gname">CmainParameters</span></a>:
+            <span class="d_inlinecode donthyphenate notranslate">int</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>, <span class="d_inlinecode donthyphenate notranslate">char**</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
+            <span class="d_inlinecode donthyphenate notranslate">int</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>, <span class="d_inlinecode donthyphenate notranslate">char**</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>, <span class="d_inlinecode donthyphenate notranslate">char**</span> <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
+        </pre>
+<div class="blankline"></div>
+        <p>When defined, the first two parameters denote a C-style array (length + pointer)
+        that holds the arguments passed to the program by the OS. The third parameter is a POSIX
+        extension called <span class="d_inlinecode donthyphenate notranslate">environ</span> and holds information about the current environment variables.</p>
+<div class="blankline"></div>
+        <div class="spec-boxes note"><b>Note:</b> The exemption for storage classes / <span class="d_inlinecode donthyphenate notranslate">enum</span>'s defined for a D <span class="d_inlinecode donthyphenate notranslate">main</span> function
+        also applies to C <span class="d_inlinecode donthyphenate notranslate">main</span> functions.</div>
+<div class="blankline"></div>
+        <p>This function takes the place of the C main function and is executed immediately without
+        any setup or teardown associated with a D <span class="d_inlinecode donthyphenate notranslate">main</span> function. Programs reliant on module
+        constructors, module destructors, or unittests need to manually perform (de)initialization
+        using the appropriate <a href="../phobos/core_runtime.html#Runtime">runtime functions</a>.</p>
 <div class="blankline"></div>
         <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b> Other system-specific entry points may exist, such as
         <span class="d_inlinecode donthyphenate notranslate">WinMain</span> and <span class="d_inlinecode donthyphenate notranslate">DllMain</span> on Windows systems.
         </div>
 
 
+<div class="blankline"></div>
+        <div class="spec-boxes note"><b>Note:</b> Programs targeting platforms which require a different signature for <span class="d_inlinecode donthyphenate notranslate">main</span> can use
+        a function with <a href="../spec/pragma.html#mangle">explicit mangling</a>:
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">pragma</span>(mangle, <span class="d_string">"main"</span>)
+<span class="d_keyword">int</span> myMain(<span class="d_keyword">int</span> a, <span class="d_keyword">int</span> b, <span class="d_keyword">int</span> c)
+{
+    <span class="d_keyword">return</span> 0;
+}
+</pre>
+<div class="blankline"></div>
+        </div>
 <div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="function-templates" href="#function-templates">関数テンプレート</a></h2>
@@ -3944,7 +3974,7 @@ obj.prop;      <span class="d_comment">// if X does not have member prop, reinte
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Mar 26 13:39:07 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Fri Apr  8 14:13:59 2022
 </div>
     </div>
 </div>

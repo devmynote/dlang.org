@@ -726,7 +726,7 @@ a contiguous array or a memory-mapped file.
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="OutBuffer.this.2"></span>@trusted this(const(char)* <code class="code">filename</code>);
+            <span class="ddoc_anchor" id="OutBuffer.this.2"></span>nothrow @trusted this(const(char)* <code class="code">filename</code>);
 
           </code>
         </p>
@@ -1607,7 +1607,7 @@ pure nothrow void <code class="code">writeString</code>(string <code class="code
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="OutBuffer.moveToFile"></span>bool <code class="code">moveToFile</code>(const char* <code class="code">filename</code>);
+            <span class="ddoc_anchor" id="OutBuffer.moveToFile"></span>nothrow bool <code class="code">moveToFile</code>(const char* <code class="code">filename</code>);
 
           </code>
         </p>

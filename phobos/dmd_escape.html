@@ -1022,7 +1022,7 @@ DIP 1021
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="checkParamArgumentReturn"></span>bool <code class="code">checkParamArgumentReturn</code>(Scope* <code class="code">sc</code>, Expression <code class="code">firstArg</code>, Expression <code class="code">arg</code>, bool <code class="code">gag</code>);
+            <span class="ddoc_anchor" id="checkParamArgumentReturn"></span>bool <code class="code">checkParamArgumentReturn</code>(Scope* <code class="code">sc</code>, Expression <code class="code">firstArg</code>, Expression <code class="code">arg</code>, Parameter <code class="code">param</code>, bool <code class="code">gag</code>);
 
           </code>
         </p>
@@ -1082,6 +1082,20 @@ DIP 1021
   <div class="ddoc_param_desc">
     <p class="para">
       initializer for parameter
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Parameter <code class="code">param</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      parameter declaration corresponding to <code class="code"><code class="code">arg</code></code>
     </p>
   </div>
 </td>
@@ -1218,7 +1232,7 @@ DIP 1021
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="checkAssignEscape"></span>bool <code class="code">checkAssignEscape</code>(Scope* <code class="code">sc</code>, Expression <code class="code">e</code>, bool <code class="code">gag</code>);
+            <span class="ddoc_anchor" id="checkAssignEscape"></span>bool <code class="code">checkAssignEscape</code>(Scope* <code class="code">sc</code>, Expression <code class="code">e</code>, bool <code class="code">gag</code>, bool <code class="code">byRef</code>);
 
           </code>
         </p>
@@ -1280,6 +1294,20 @@ DIP 1021
   <div class="ddoc_param_desc">
     <p class="para">
       do not print error messages
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">bool <code class="code">byRef</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      set to <code class="code">true</code> if <code class="code">e1</code> of <code class="code"><code class="code">e</code></code> gets assigned a reference to <code class="code">e2</code>
     </p>
   </div>
 </td>
