@@ -2615,15 +2615,6 @@ or the default if <code class="code">ealign</code> is <code class="code">null</c
 
   </p>
 </div>
-<div class="ddoc_description">
-  <h4>Discussion</h4>
-  <p class="para">
-    If <code class="code"><code class="code">dg</code></code> returns <code class="code">!= 0</code>, it will stop the iteration and return that
- value, otherwise it will return 0.
-
-
-  </p>
-</div>
 <div class="ddoc_params">
   <h4>Parameters</h4>
   <table cellspacing="0" cellpadding="5" border="0" class="graybox">
@@ -2665,8 +2656,7 @@ or the default if <code class="code">ealign</code> is <code class="code">null</c
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      called once for each UDA. If <code class="code"><code class="code">dg</code></code> returns <code class="code">!= 0</code>, it will stop the
-      iteration and return that value, otherwise it will return <code class="code">0</code>.
+      called once for each UDA
     </p>
   </div>
 </td>
@@ -2674,6 +2664,99 @@ or the default if <code class="code">ealign</code> is <code class="code">null</c
 
     </tbody>
   </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    If <code class="code"><code class="code">dg</code></code> returns <code class="code">!= 0</code>, stops the iteration and returns that value.
+  Otherwise, returns 0.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#foreachUdaNoSemantic" id="foreachUdaNoSemantic"><code class="code">foreachUdaNoSemantic</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="foreachUdaNoSemantic"></span>int <code class="code">foreachUdaNoSemantic</code>(Dsymbol <code class="code">sym</code>, int delegate(Expression) <code class="code">dg</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Iterates the UDAs attached to the given symbol, without performing semantic
+ analysis.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    Use this function instead of <code class="code">foreachUda</code> if semantic analysis of <code class="code"><code class="code">sym</code></code> is
+ still in progress.
+
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Dsymbol <code class="code">sym</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      the symbol to get the UDAs from
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">int delegate(Expression) <code class="code">dg</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      called once for each UDA
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    If <code class="code"><code class="code">dg</code></code> returns <code class="code">!= 0</code>, stops the iteration and returns that value.
+  Otherwise, returns 0.
+  </p>
 </div>
 
 </section>

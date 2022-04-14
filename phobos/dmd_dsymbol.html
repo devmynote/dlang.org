@@ -2332,7 +2332,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="ScopeDsymbol.symtabInsert"></span>Dsymbol <code class="code">symtabInsert</code>(Dsymbol <code class="code">s</code>);
+            <span class="ddoc_anchor" id="ScopeDsymbol.symtabInsert"></span>nothrow Dsymbol <code class="code">symtabInsert</code>(Dsymbol <code class="code">s</code>);
 
           </code>
         </p>
@@ -2393,7 +2393,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="ScopeDsymbol.symtabLookup"></span>Dsymbol <code class="code">symtabLookup</code>(Dsymbol <code class="code">s</code>, Identifier <code class="code">id</code>);
+            <span class="ddoc_anchor" id="ScopeDsymbol.symtabLookup"></span>nothrow Dsymbol <code class="code">symtabLookup</code>(Dsymbol <code class="code">s</code>, Identifier <code class="code">id</code>);
 
           </code>
         </p>
@@ -2747,7 +2747,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="ForwardingScopeDsymbol.symtabLookup"></span>Dsymbol <code class="code">symtabLookup</code>(Dsymbol <code class="code">s</code>, Identifier <code class="code">id</code>);
+            <span class="ddoc_anchor" id="ForwardingScopeDsymbol.symtabLookup"></span>nothrow Dsymbol <code class="code">symtabLookup</code>(Dsymbol <code class="code">s</code>, Identifier <code class="code">id</code>);
 
           </code>
         </p>
@@ -2950,7 +2950,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="AliasAssign.this"></span>this(const ref Loc <code class="code">loc</code>, Identifier <code class="code">ident</code>, Type <code class="code">type</code>, Dsymbol <code class="code">aliassym</code>);
+            <span class="ddoc_anchor" id="AliasAssign.this"></span>nothrow this(const ref Loc <code class="code">loc</code>, Identifier <code class="code">ident</code>, Type <code class="code">type</code>, Dsymbol <code class="code">aliassym</code>);
 
           </code>
         </p>
@@ -3017,7 +3017,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="DsymbolTable.lookup"></span>Dsymbol <code class="code">lookup</code>(const Identifier <code class="code">ident</code>);
+            <span class="ddoc_anchor" id="DsymbolTable.lookup"></span>nothrow Dsymbol <code class="code">lookup</code>(const Identifier <code class="code">ident</code>);
 
           </code>
         </p>
@@ -3078,7 +3078,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="DsymbolTable.update"></span>void <code class="code">update</code>(Dsymbol <code class="code">s</code>);
+            <span class="ddoc_anchor" id="DsymbolTable.update"></span>nothrow void <code class="code">update</code>(Dsymbol <code class="code">s</code>);
 
           </code>
         </p>
@@ -3134,7 +3134,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="DsymbolTable.insert"></span>Dsymbol <code class="code">insert</code>(Dsymbol <code class="code">s</code>);
+            <span class="ddoc_anchor" id="DsymbolTable.insert"></span>nothrow Dsymbol <code class="code">insert</code>(Dsymbol <code class="code">s</code>);
 
           </code>
         </p>
@@ -3195,7 +3195,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="DsymbolTable.insert.2"></span>Dsymbol <code class="code">insert</code>(const Identifier <code class="code">ident</code>, Dsymbol <code class="code">s</code>);
+            <span class="ddoc_anchor" id="DsymbolTable.insert.2"></span>nothrow Dsymbol <code class="code">insert</code>(const Identifier <code class="code">ident</code>, Dsymbol <code class="code">s</code>);
 
           </code>
         </p>
@@ -3270,7 +3270,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="DsymbolTable.length"></span>const pure size_t <code class="code">length</code>();
+            <span class="ddoc_anchor" id="DsymbolTable.length"></span>const pure nothrow size_t <code class="code">length</code>();
 
           </code>
         </p>

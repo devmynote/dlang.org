@@ -168,6 +168,8 @@
     <li><a href="#auto"><span class="d_inlinecode donthyphenate notranslate">auto</span> 属性</a></li>
     <li><a href="#scope"><span class="d_inlinecode donthyphenate notranslate">scope</span> 属性</a></li>
     <li><a href="#abstract"><span class="d_inlinecode donthyphenate notranslate">abstract</span> 属性</a></li>
+    <li><a href="#final"><span class="d_inlinecode donthyphenate notranslate">final</span> 属性</a></li>
+    <li><a href="#mustuse-attribute"><span class="d_inlinecode donthyphenate notranslate">@mustuse</span> 属性</a></li>
     <li><a href="#uda">ユーザー定義属性</a></li>
 </ol>
 </div>
@@ -185,7 +187,7 @@
     <a href="#static"><span class="d_inlinecode donthyphenate notranslate">static</span></a>
     <a href="#linkage"><span class="d_inlinecode donthyphenate notranslate">extern</span></a>
     <a href="#abstract"><span class="d_inlinecode donthyphenate notranslate">abstract</span></a>
-    <span class="d_inlinecode donthyphenate notranslate">final</span>
+    <a href="#final"><span class="d_inlinecode donthyphenate notranslate">final</span></a>
     <a href="#override"><span class="d_inlinecode donthyphenate notranslate">override</span></a>
     <span class="d_inlinecode donthyphenate notranslate">synchronized</span>
     <a href="#auto"><span class="d_inlinecode donthyphenate notranslate">auto</span></a>
@@ -524,7 +526,8 @@ attributes in documents predating <a href="http://wiki.dlang.org/DIP22">DIP22</a
 <div class="blankline"></div>
         <p>Symbols with <span class="d_inlinecode donthyphenate notranslate">private</span> visibility can only be accessed from
         within the same module.
-        Private member functions are implicitly final and cannot be overridden.
+        Private member functions are implicitly <a href="../spec/function.html#final"><span class="d_inlinecode donthyphenate notranslate">final</span></a>
+        and cannot be overridden.
         </p>
 <div class="blankline"></div>
         <p><span class="d_inlinecode donthyphenate notranslate">package</span> extends private so that package members can be accessed
@@ -795,6 +798,64 @@ Foo.bar();      <span class="d_comment">// produces 6
         Note that the class is still abstract and cannot be instantiated directly.
 </p>
 <div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="final" href="#final"><span class="d_inlinecode donthyphenate notranslate">final</span> 属性</a></h2>
+<div class="blankline"></div>
+<ul><li>A class can be declared <a href="../spec/class.html#final"><span class="d_inlinecode donthyphenate notranslate">final</span></a> to prevent
+    subclassing.</li>
+<li>A class method can be declared <a href="../spec/function.html#final"><span class="d_inlinecode donthyphenate notranslate">final</span></a>
+    to prevent a derived class overriding it.</li>
+<li>Interfaces can define <a href="../spec/interface.html#method-bodies"><span class="d_inlinecode donthyphenate notranslate">final</span> methods</a>.</li>
+</ul>
+<div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="mustuse-attribute" href="#mustuse-attribute"><span class="d_inlinecode donthyphenate notranslate">@mustuse</span> 属性</a></h2>
+<div class="blankline"></div>
+    <p>        The <span class="d_inlinecode donthyphenate notranslate">@mustuse</span> attribute is a compiler-recognized <a href="#uda">        UDA</a> defined in the D runtime module <a href="../phobos/core_attribute.html">       <span class="d_inlinecode donthyphenate notranslate">core.attribute</span></a>.
+    </p>
+<div class="blankline"></div>
+<div class="blankline"></div>
+    <p>        An expression is considered to be discarded if and only if either of the
+        following is true:
+    </p>
+<div class="blankline"></div>
+    <ul>        <li>            it is the top-level <a href="../spec/expression.html#Expression"><i>Expression</i></a> in an <a href="../spec/            statement.html#ExpressionStatement"><i>ExpressionStatement</i></a>, or
+        </li>
+        <li>            it is the <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a> on the left-hand
+            side of the comma in a <a href="../spec/expression.html#CommaExpression"><i>CommaExpression</i></a>.
+        </li>
+    </ul>
+<div class="blankline"></div>
+    <p>        It is a compile-time error to discard an expression if all of the
+        following are true:
+    </p>
+<div class="blankline"></div>
+    <ul>        <li>            it is not an assignment expression, an increment expression, or a
+            decrement expression; and
+        </li>
+<div class="blankline"></div>
+        <li>            its type is a <span class="d_inlinecode donthyphenate notranslate">struct</span> or <span class="d_inlinecode donthyphenate notranslate">union</span> type whose declaration is
+            annotated with <span class="d_inlinecode donthyphenate notranslate">@mustuse</span>.
+        </li>
+    </ul>
+<div class="blankline"></div>
+    <p>        "Assignment expression" means either a <a href="../spec/expression.html#        simple_assignment_expressions">simple assignment expression</a> or an
+        <a href="../spec/expression.html#assignment_operator_expression">assignment
+        operator expression</a>.
+    </p>
+<div class="blankline"></div>
+    <p>        "Increment expression" means a <a href="../spec/expression.html#UnaryExpression"><i>UnaryExpression</i></a> or
+        <a href="../spec/expression.html#PostfixExpression"><i>PostfixExpression</i></a> whose operator is <span class="d_inlinecode donthyphenate notranslate">++</span>.
+    </p>
+<div class="blankline"></div>
+    <p>        "Decrement expression" means a <a href="../spec/expression.html#UnaryExpression"><i>UnaryExpression</i></a> or
+        <a href="../spec/expression.html#PostfixExpression"><i>PostfixExpression</i></a> whose operator is <span class="d_inlinecode donthyphenate notranslate">--</span>.
+    </p>
+<div class="blankline"></div>
+    <p>        It is a compile-time error to attach <span class="d_inlinecode donthyphenate notranslate">@mustuse</span> to a function
+        declaration or to any aggregate declaration other than a <span class="d_inlinecode donthyphenate notranslate">struct</span> or
+        <span class="d_inlinecode donthyphenate notranslate">union</span> declaration. The purpose of this rule is to reserve such usage
+        for possible future expansion.
+    </p>
+<div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="uda" href="#uda">ユーザー定義属性</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="UserDefinedAttribute"><span class="gname">UserDefinedAttribute</span></a>:
@@ -924,7 +985,7 @@ A user-defined attribute looks like:
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Fri Apr  8 14:13:58 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Thu Apr 14 13:18:43 2022
 </div>
     </div>
 </div>
