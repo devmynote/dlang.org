@@ -2377,6 +2377,78 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#FatalErrorHandler" id="FatalErrorHandler"><code class="code">FatalErrorHandler</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="FatalErrorHandler"></span>alias <code class="code">FatalErrorHandler</code> = bool delegate() nothrow;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The type of the fatal error handler
+
+  </p>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    <code class="code">true</code> if error handling is done, <code class="code">false</code> to do exit(EXIT_FAILURE)
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#fatalErrorHandler" id="fatalErrorHandler"><code class="code">fatalErrorHandler</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="fatalErrorHandler"></span>FatalErrorHandler <code class="code">fatalErrorHandler</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The fatal error handler.
+ If non-<code class="code">null</code> it will be called for every fatal() call issued by the compiler.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#fatal" id="fatal"><code class="code">fatal</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -2398,8 +2470,8 @@
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Call this after printing out <code class="code">fatal</code> error messages to clean up and exit
- the compiler.
+    Call this after printing out <code class="code">fatal</code> error messages to clean up and exit the
+ compiler. You can also set a fatalErrorHandler to override this behaviour.
   </p>
 </div>
 
