@@ -182,9 +182,10 @@
         <li><a href="#scope-parameters">Scope 引数</a></li>
         <li><a href="#return-scope-parameters">Return Scope 引数</a></li>
         <li><a href="#ref-return-scope-parameters">Ref Return Scope 引数</a></li>
+        <li><a href="#pure-scope-inference"><span class="d_inlinecode donthyphenate notranslate">pure</span>関数で推測される<span class="d_inlinecode donthyphenate notranslate">scope</span>パラメータ</a></li>
         <li><a href="#udas-parameters">引数のユーザー定義属性</a></li>
         <li><a href="#variadic">可変長引数関数</a></li>
-        <li><a href="#this-reference"><span class="d_inlinecode donthyphenate notranslate">this</span> Reference</a></li>
+        <li><a href="#this-reference"><span class="d_inlinecode donthyphenate notranslate">this</span> の参照</a></li>
     </ol></li>
     <li><a href="#local-variables">ローカル変数</a><ol>        <li><a href="#local-static-variables">ローカル静的変数</a></li>
     </ol></li>
@@ -2112,77 +2113,129 @@ C balin(<span class="d_keyword">return</span> <span class="d_keyword">scope</spa
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="ref-return-scope-parameters" href="#ref-return-scope-parameters">Ref Return Scope 引数</a></h3>
 <div class="blankline"></div>
-        <p>Parameters marked as <span class="d_inlinecode donthyphenate notranslate">ref return scope</span> come in two forms:</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate">U xerxes(<span class="d_keyword">ref</span> <span class="d_keyword">return</span> <span class="d_keyword">scope</span> V v);      <span class="d_comment">// (1) ref and return scope
-</span><span class="d_keyword">ref</span> U sargon(<span class="d_keyword">ref</span> <span class="d_keyword">return</span> <span class="d_keyword">scope</span> V v);  <span class="d_comment">// (2) return ref and scope
-</span></pre>
-<div class="blankline"></div>
-        <p>The first form attaches the <span class="d_inlinecode donthyphenate notranslate">return</span> to the <span class="d_inlinecode donthyphenate notranslate">scope</span>, and has
-        <a href="#return-scope-parameters">return scope parameter</a> semantics
-        for the value of the <span class="d_inlinecode donthyphenate notranslate">ref</span> parameter.</p>
-<div class="blankline"></div>
-        <p>The second form attaches the <span class="d_inlinecode donthyphenate notranslate">return</span> to the <span class="d_inlinecode donthyphenate notranslate">ref</span>, and has
-        <a href="#return-ref-parameters">return ref parameter</a> semantics
-        with additional
-        <a href="https://dlang.org/spec/memory-safe-d.html#scope-return-params">scope parameter</a>
-        semantics.</p>
-<div class="blankline"></div>
-        <p>Although a struct constructor returns a reference to the instance
-        being constructed, it is treated as form (1).</p>
-<div class="blankline"></div>
-        <p>The lexical order of the attributes <span class="d_inlinecode donthyphenate notranslate">ref</span>, <span class="d_inlinecode donthyphenate notranslate">return</span>, and <span class="d_inlinecode donthyphenate notranslate">scope</span> is not significant.</p>
-<div class="blankline"></div>
         <p>It is not possible to have both <span class="d_inlinecode donthyphenate notranslate">return ref</span> and <span class="d_inlinecode donthyphenate notranslate">return scope</span> semantics
-        for the same parameter.</p>
+        for the same parameter.
+        When a parameter is passed by <span class="d_inlinecode donthyphenate notranslate">ref</span> and has both the <span class="d_inlinecode donthyphenate notranslate">return</span> and <span class="d_inlinecode donthyphenate notranslate">scope</span> storage classes,
+        it gets <a href="#return-scope-parameters"><span class="d_inlinecode donthyphenate notranslate">return scope</span></a> semantics if and only if the <span class="d_inlinecode donthyphenate notranslate">return</span> and <span class="d_inlinecode donthyphenate notranslate">scope</span>
+        keywords appear adjacent to each other, in that order.
+        In all other cases, the parameter has <a href="#return-ref-parameters"><span class="d_inlinecode donthyphenate notranslate">return ref</span></a> semantics
+        and regular <a href="#scope-parameters"><span class="d_inlinecode donthyphenate notranslate">scope</span></a> semantics:</p>
 <div class="blankline"></div>
+<pre class="d_code notranslate">U xerxes(       <span class="d_keyword">ref</span> <span class="d_keyword">return</span> <span class="d_keyword">scope</span> V v) <span class="d_comment">// (1) ref and return scope
+</span>U sargon(<span class="d_keyword">return</span> <span class="d_keyword">ref</span>        <span class="d_keyword">scope</span> V v) <span class="d_comment">// (2) return ref and scope
+</span>
+<span class="d_keyword">struct</span> S
+{
+    <span class="d_comment">// note: in struct member functions, the implicit `this` parameter
+</span>    <span class="d_comment">// is passed by `ref`
+</span>
+    U xerxes() <span class="d_keyword">return</span> <span class="d_keyword">scope</span>;        <span class="d_comment">// return scope
+</span>    U sargon()        <span class="d_keyword">scope</span> <span class="d_keyword">return</span>; <span class="d_comment">// return ref, `return` comes after `scope`
+</span>    U xerxes() <span class="d_keyword">return</span> <span class="d_keyword">const</span> <span class="d_keyword">scope</span>;  <span class="d_comment">// return ref, `return` and `scope` are not adjacent
+</span>}
+</pre>
+<div class="blankline"></div>
+<p>Example of combinations of <span class="d_inlinecode donthyphenate notranslate">return scope</span>, <span class="d_inlinecode donthyphenate notranslate">return ref</span>, and <span class="d_inlinecode donthyphenate notranslate">scope</span> semantics:</p>
 <pre class="d_code notranslate">@safe:
+
+<span class="d_keyword">int</span>* globalPtr;
 
 <span class="d_keyword">struct</span> S
 {
-    <span class="d_keyword">this</span>(<span class="d_keyword">return</span> <span class="d_keyword">scope</span> <span class="d_keyword">ref</span> <span class="d_keyword">int</span>* p) { ptr = p; }
-
     <span class="d_keyword">int</span>  val;
     <span class="d_keyword">int</span>* ptr;
+
+    <span class="d_keyword">this</span>(<span class="d_keyword">return</span> <span class="d_keyword">scope</span> <span class="d_keyword">ref</span> <span class="d_keyword">int</span>* p) { ptr = p; }
+
+    <span class="d_comment">// note: `this` is passed by `ref` in structs
+</span>
+    <span class="d_keyword">int</span>* retRefA() <span class="d_keyword">scope</span> <span class="d_keyword">return</span>
+    {
+        globalPtr = <span class="d_keyword">this</span>.ptr; <span class="d_comment">// disallowed, `this` is `scope`
+</span>        <span class="d_keyword">return</span> &amp;<span class="d_keyword">this</span>.val; <span class="d_comment">// allowed, `return` means `return ref`
+</span>    }
+
+    <span class="d_keyword">ref</span> <span class="d_keyword">int</span> retRefB() <span class="d_keyword">scope</span> <span class="d_keyword">return</span>
+    {
+        globalPtr = <span class="d_keyword">this</span>.ptr; <span class="d_comment">// disallowed, `this` is `scope`
+</span>        <span class="d_keyword">return</span>  <span class="d_keyword">this</span>.val; <span class="d_comment">// allowed, `return` means `return ref`
+</span>    }
+
+    <span class="d_keyword">int</span>* retScopeA() <span class="d_keyword">return</span> <span class="d_keyword">scope</span>
+    {
+        <span class="d_keyword">return</span> &amp;<span class="d_keyword">this</span>.val; <span class="d_comment">// disallowed, escaping a reference to `this`
+</span>        <span class="d_keyword">return</span> <span class="d_keyword">this</span>.ptr;  <span class="d_comment">// allowed, returning a `return scope` pointer
+</span>    }
+
+    <span class="d_keyword">ref</span> <span class="d_keyword">int</span> retScopeB() <span class="d_keyword">return</span> <span class="d_keyword">scope</span>
+    {
+        <span class="d_keyword">return</span> <span class="d_keyword">this</span>.val;  <span class="d_comment">// disallowed, escaping a reference to `this`
+</span>        <span class="d_keyword">return</span> *<span class="d_keyword">this</span>.ptr; <span class="d_comment">// allowed, returning a `return scope` pointer
+</span>    }
 }
 
-<span class="d_keyword">int</span>* foo1(<span class="d_keyword">ref</span> <span class="d_keyword">return</span> <span class="d_keyword">scope</span> S s);
-<span class="d_keyword">int</span>  foo2(<span class="d_keyword">ref</span> <span class="d_keyword">return</span> <span class="d_keyword">scope</span> S s);
-
-<span class="d_keyword">ref</span> <span class="d_keyword">int</span>* foo3(<span class="d_keyword">ref</span> <span class="d_keyword">return</span> <span class="d_keyword">scope</span> S s);
-<span class="d_keyword">ref</span> <span class="d_keyword">int</span>  foo4(<span class="d_keyword">ref</span> <span class="d_keyword">return</span> <span class="d_keyword">scope</span> S s);
-
-<span class="d_keyword">int</span>* test1(<span class="d_keyword">scope</span> S s)
+<span class="d_keyword">int</span>* retRefA(<span class="d_keyword">return</span> <span class="d_keyword">ref</span> <span class="d_keyword">scope</span> S s)
 {
-    <span class="d_keyword">return</span> foo1(s);  <span class="d_comment">// Error: scope variable `s` may not be returned
-</span>    <span class="d_keyword">return</span> foo3(s);  <span class="d_comment">// Error: scope variable `s` may not be returned
+    globalPtr = s.ptr; <span class="d_comment">// disallowed, `s` is `scope`
+</span>    <span class="d_keyword">return</span> &amp;s.val; <span class="d_comment">// allowed, returning a reference to `return ref s`
 </span>}
 
-<span class="d_keyword">int</span> test2(S s)
+<span class="d_keyword">ref</span> <span class="d_keyword">int</span> retRefB(<span class="d_keyword">return</span> <span class="d_keyword">ref</span> <span class="d_keyword">scope</span> S s)
 {
-    <span class="d_keyword">return</span> foo2(s);
-    <span class="d_keyword">return</span> foo4(s);
+    globalPtr = s.ptr; <span class="d_comment">// disallowed, `s` is `scope`
+</span>    <span class="d_keyword">return</span> s.val;
 }
 
-<span class="d_keyword">ref</span> <span class="d_keyword">int</span>* test3(S s)
+<span class="d_keyword">int</span>* retScopeA(<span class="d_keyword">ref</span> <span class="d_keyword">return</span> <span class="d_keyword">scope</span> S s)
 {
-    <span class="d_keyword">return</span> foo3(s);  <span class="d_comment">// Error: returning `foo3(s)` escapes a reference to parameter `s`
+    <span class="d_keyword">return</span> &amp;s.val; <span class="d_comment">// disallowed, escaping a reference to `s`
+</span>    <span class="d_keyword">return</span> s.ptr;  <span class="d_comment">// allowed, returning a `return scope` pointer
 </span>}
 
-<span class="d_keyword">ref</span> <span class="d_keyword">int</span> test4(S s)
+<span class="d_keyword">ref</span> <span class="d_keyword">int</span> retScopeB(<span class="d_keyword">ref</span> <span class="d_keyword">return</span> <span class="d_keyword">scope</span> S s)
 {
-    <span class="d_keyword">return</span> foo4(s);  <span class="d_comment">// Error: returning `foo4(s)` escapes a reference to parameter `s`
+    <span class="d_keyword">return</span> s.val;  <span class="d_comment">// disallowed, escaping a reference to `s`
+</span>    <span class="d_keyword">return</span> *s.ptr; <span class="d_comment">// allowed, returning a `return scope` pointer
 </span>}
+</pre>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="pure-scope-inference" href="#pure-scope-inference"><span class="d_inlinecode donthyphenate notranslate">pure</span>関数で推測される<span class="d_inlinecode donthyphenate notranslate">scope</span>パラメータ</a></h3>
+<div class="blankline"></div>
+    When a parameter is not marked or inferred <span class="d_inlinecode donthyphenate notranslate">scope</span>, it may still be <span class="d_inlinecode donthyphenate notranslate">@safe</span> to assign it a <span class="d_inlinecode donthyphenate notranslate">scope</span> pointer in a function call.
+    The following conditions need to be met:
+<div class="blankline"></div>
+    <ul>    <li>The function is <a href="#pure-functions"><span class="d_inlinecode donthyphenate notranslate">pure</span></a>, hence the argument cannot be assigned to a global variable</li>
+    <li>The function is <a href="#nothrow-functions"><span class="d_inlinecode donthyphenate notranslate">nothrow</span></a>, hence the argument cannot be assigned to a thrown <span class="d_inlinecode donthyphenate notranslate">Exception</span> object</li>
+    <li>None of the other parameters have mutable indirections, hence the argument cannot be assigned to a longer-lived variable</li>
+    </ul>
+<div class="blankline"></div>
+    Then, the parameter is still treated as <span class="d_inlinecode donthyphenate notranslate">scope</span> or <span class="d_inlinecode donthyphenate notranslate">return scope</span> depending on the return type of the function:
+    <ul>    <li>If the function returns by <span class="d_inlinecode donthyphenate notranslate">ref</span> or has a return type that contains pointers, the argument could be returned, so it is treated as <span class="d_inlinecode donthyphenate notranslate">return scope</span></li>
+    <li>Otherwise, the argument cannot escape the function, so it is treated as <span class="d_inlinecode donthyphenate notranslate">scope</span></li>
+    </ul>
+<div class="blankline"></div>
+<pre class="d_code notranslate">@safe:
 
-S test5(<span class="d_keyword">ref</span> <span class="d_keyword">scope</span> <span class="d_keyword">int</span>* p)
+<span class="d_keyword">int</span> dereference(<span class="d_keyword">int</span>* x) <span class="d_keyword">pure</span> <span class="d_keyword">nothrow</span>;
+<span class="d_keyword">int</span>* identity(<span class="d_keyword">int</span>* x) <span class="d_keyword">pure</span> <span class="d_keyword">nothrow</span>;
+<span class="d_keyword">int</span>* identityThrow(<span class="d_keyword">int</span>* x) <span class="d_keyword">pure</span>;
+<span class="d_keyword">void</span> assignToRef(<span class="d_keyword">int</span>* x, <span class="d_keyword">ref</span> <span class="d_keyword">int</span>* escapeHatch) <span class="d_keyword">pure</span> <span class="d_keyword">nothrow</span>;
+<span class="d_keyword">void</span> assignToPtr(<span class="d_keyword">int</span>* x, <span class="d_keyword">int</span>** escapeHatch) <span class="d_keyword">pure</span> <span class="d_keyword">nothrow</span>;
+<span class="d_keyword">void</span> cannotAssignTo(<span class="d_keyword">int</span>* x, <span class="d_keyword">const</span> <span class="d_keyword">ref</span> <span class="d_keyword">int</span>* noEscapeHatch) <span class="d_keyword">pure</span> <span class="d_keyword">nothrow</span>;
+
+<span class="d_keyword">int</span>* globalPtr;
+
+<span class="d_keyword">int</span>* test(<span class="d_keyword">scope</span> <span class="d_keyword">int</span>* ptr)
 {
-    <span class="d_keyword">return</span> S(p); <span class="d_comment">// Error: scope variable `p` may not be returned
+    <span class="d_keyword">int</span> result = dereference(ptr); <span class="d_comment">// allowed, treated as `scope`
+</span>    <span class="d_keyword">int</span>* ptr2 = identity(ptr); <span class="d_comment">// allowed, treated as `return scope`
+</span>    <span class="d_keyword">int</span>* ptr3 = identityThrow(ptr); <span class="d_comment">// not allowed, can throw an `Exception`
+</span>    assignToRef(ptr, globalPtr); <span class="d_comment">// not allowed, mutable second parameter
+</span>    assignToPtr(ptr, &amp;globalPtr); <span class="d_comment">// not allowed, mutable second parameter
+</span>    cannotAssignTo(ptr, globalPtr); <span class="d_comment">// allowed
+</span>
+    <span class="d_keyword">return</span> ptr2; <span class="d_comment">// not allowed, ptr2 is inferred `scope` now
 </span>}
-
-S test6(<span class="d_keyword">ref</span> <span class="d_keyword">return</span> <span class="d_keyword">scope</span> <span class="d_keyword">int</span>* p)
-{
-    <span class="d_keyword">return</span> S(p);
-}
 </pre>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="udas-parameters" href="#udas-parameters">引数のユーザー定義属性</a></h3>
@@ -2579,7 +2632,7 @@ Bar
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="this-reference" href="#this-reference"><span class="d_inlinecode donthyphenate notranslate">this</span> Reference</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="this-reference" href="#this-reference"><span class="d_inlinecode donthyphenate notranslate">this</span> の参照</a></h3>
 <div class="blankline"></div>
         <p>            Non-static member functions all have a hidden parameter called the
             <span class="d_inlinecode donthyphenate notranslate">this</span> reference, which refers to the object for which
@@ -3977,7 +4030,7 @@ obj.prop;      <span class="d_comment">// if X does not have member prop, reinte
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Apr 23 02:45:45 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Apr 30 08:50:42 2022
 </div>
     </div>
 </div>

@@ -147,7 +147,8 @@
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
     <ol>    <li><a href="#linkage">リンケージ属性</a></li>
-    <li><a href="#align"><span class="d_inlinecode donthyphenate notranslate">align</span> 属性</a></li>
+    <li><a href="#align"><span class="d_inlinecode donthyphenate notranslate">align</span> 属性</a><ol>        <li><a href="#align_gc">GC の互換性</a></li>
+    </ol></li>
     <li><a href="#deprecated"><span class="d_inlinecode donthyphenate notranslate">deprecated</span> 属性</a></li>
     <li><a href="#visibility_attributes">可視性属性</a></li>
     <li><a href="#const"><span class="d_inlinecode donthyphenate notranslate">const</span> 属性</a></li>
@@ -166,7 +167,8 @@
     <li><a href="#override"><span class="d_inlinecode donthyphenate notranslate">override</span> 属性</a></li>
     <li><a href="#static"><span class="d_inlinecode donthyphenate notranslate">static</span> 属性</a></li>
     <li><a href="#auto"><span class="d_inlinecode donthyphenate notranslate">auto</span> 属性</a></li>
-    <li><a href="#scope"><span class="d_inlinecode donthyphenate notranslate">scope</span> 属性</a></li>
+    <li><a href="#scope"><span class="d_inlinecode donthyphenate notranslate">scope</span> 属性</a><ol>        <li><a href="#scope-class-var"><span class="d_inlinecode donthyphenate notranslate">class</span> 型の <span class="d_inlinecode donthyphenate notranslate">scope</span> 変数</a></li>
+    </ol></li>
     <li><a href="#abstract"><span class="d_inlinecode donthyphenate notranslate">abstract</span> 属性</a></li>
     <li><a href="#final"><span class="d_inlinecode donthyphenate notranslate">final</span> 属性</a></li>
     <li><a href="#mustuse-attribute"><span class="d_inlinecode donthyphenate notranslate">@mustuse</span> 属性</a></li>
@@ -385,6 +387,7 @@ N.M.R.foo();
         sets it to the default, which matches the default member alignment
         of the companion C compiler.</p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> S
 {
   <span class="d_keyword">align</span>:
@@ -393,10 +396,12 @@ N.M.R.foo();
 </span>    <span class="d_keyword">long</span> c;   <span class="d_comment">// placed at offset 8
 </span>}
 <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(S.alignof == 8);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(S.c.offsetof == 8);
 <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(S.sizeof == 16);
 </pre>
-<div class="blankline"></div>
-        <p><i>AssignExpression</i> specifies the alignment
+
+</div>
+        <p>The <i>AssignExpression</i> specifies the alignment
         which matches the behavior of the companion C compiler when non-default
         alignments are used. It must be a positive power of 2.
         </p>
@@ -405,6 +410,7 @@ N.M.R.foo();
         fields are packed together.
         </p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> S
 {
   <span class="d_keyword">align</span> (1):
@@ -413,13 +419,16 @@ N.M.R.foo();
 </span>    <span class="d_keyword">long</span> c;   <span class="d_comment">// placed at offset 5
 </span>}
 <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(S.alignof == 1);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(S.c.offsetof == 5);
 <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(S.sizeof == 13);
 </pre>
-<div class="blankline"></div>
+
+</div>
         <p>The natural alignment of an aggregate is the maximum alignment of its
         fields. It can be overridden by setting the alignment outside of the
         aggregate.</p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">align</span> (2) <span class="d_keyword">struct</span> S
 {
   <span class="d_keyword">align</span> (1):
@@ -428,12 +437,15 @@ N.M.R.foo();
 </span>    <span class="d_keyword">long</span> c;   <span class="d_comment">// placed at offset 5
 </span>}
 <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(S.alignof == 2);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(S.c.offsetof == 5);
 <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(S.sizeof == 14);
 </pre>
-<div class="blankline"></div>
+
+</div>
         <p>Setting the alignment of a field aligns it to that power of 2, regardless
         of the size of the field.</p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> S
 {
                <span class="d_keyword">byte</span> a;  <span class="d_comment">// placed at offset 0
@@ -441,9 +453,20 @@ N.M.R.foo();
 </span>    <span class="d_keyword">align</span> (16) <span class="d_keyword">short</span> c; <span class="d_comment">// placed at offset 16
 </span>}
 <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(S.alignof == 16);
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(S.c.offsetof == 16);
 <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(S.sizeof == 32);
 </pre>
+
+</div>
+        <p>The <i>AlignAttribute</i> is reset to the default when
+        entering a function scope or a non-anonymous struct, union, class, and restored
+        when exiting that scope.
+        It is not inherited from a base class.
+        </p>
 <div class="blankline"></div>
+        <p>See also: <a href="../spec/struct.html#struct_layout">Struct Layout</a>.</p>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="align_gc" href="#align_gc">GC の互換性</a></h3>
 <div class="blankline"></div>
         <p>Do not align references or pointers that were allocated
         using <a href="../spec/expression.html#NewExpression"><i>NewExpression</i></a> on boundaries that are not
@@ -452,17 +475,28 @@ N.M.R.foo();
         byte boundaries.
         </p>
 <div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">struct</span> S
+{
+  <span class="d_keyword">align</span>(1):
+    <span class="d_keyword">byte</span> b;
+    <span class="d_keyword">int</span>* p;
+}
+
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(S.p.offsetof == 1);
+
+@safe <span class="d_keyword">void</span> main()
+{
+    S s;
+    s.p = <span class="d_keyword">new</span> <span class="d_keyword">int</span>; <span class="d_comment">// error: can't modify misaligned pointer in @safe code
+</span>}
+</pre>
+
+</div>
         <div class="spec-boxes undefined-behavior"><b>Undefined Behavior:</b> If any pointers and references to GC
         allocated objects are not aligned on <span class="d_inlinecode donthyphenate notranslate">size_t</span> byte boundaries.</div>
 
 
-<div class="blankline"></div>
-        <p>The <i>AlignAttribute</i> is reset to the default when
-        entering a function scope or a non-anonymous struct, union, class, and restored
-        when exiting that scope.
-        It is not inherited from a base class.
-        </p>
-<div class="blankline"></div>
 <div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="deprecated" href="#deprecated"><span class="d_inlinecode donthyphenate notranslate">deprecated</span> 属性</a></h2>
@@ -662,11 +696,11 @@ runtime error.</p>
 <pre class="d_code notranslate"><span class="d_keyword">void</span> main() { foo(); <span class="d_comment">/* error, foo is disabled */</span> }
 </pre>
 <div class="blankline"></div>
-        <p><a href="../spec/struct.html#Struct-Constructor">Disabling struct no-arg constructor</a>
-        disallows default construction of the struct.
+        <p><a href="../spec/struct.html#disable_default_construction"><span class="d_inlinecode donthyphenate notranslate">@disable this();</span></a>
+        inside a struct disallows default construction.
         </p>
 <div class="blankline"></div>
-        <p><a href="../spec/struct.html#StructPostblit">Disabling struct postblit</a>
+        <p><a href="../spec/struct.html#disable-copy">Disabling a struct copy constructor</a>
         makes the struct not copyable.
         </p>
 <div class="blankline"></div>
@@ -756,24 +790,167 @@ Foo.bar();      <span class="d_comment">// produces 6
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="scope" href="#scope"><span class="d_inlinecode donthyphenate notranslate">scope</span> 属性</a></h2>
 <div class="blankline"></div>
-<p>        The <span class="d_inlinecode donthyphenate notranslate">scope</span> attribute is used for local variables and implements the
-        RAII (Resource Acquisition Is Initialization) protocol.
+<p>        The <span class="d_inlinecode donthyphenate notranslate">scope</span> attribute signifies a variable's pointer values will not escape the scope that the variable is declared in.
+</p>
+<div class="blankline"></div>
+<p>        If the variable has a type that does not contain any indirections, the <span class="d_inlinecode donthyphenate notranslate">scope</span> attribute is ignored.
+</p>
+<div class="blankline"></div>
+<p>        When applied to a global variable, <span class="d_inlinecode donthyphenate notranslate">scope</span> is also ignored, since there is no scope larger than global scope that pointers could escape to.
+</p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">scope</span> <span class="d_keyword">int</span>* x; <span class="d_comment">// scope ignored, global variable
+</span>
+<span class="d_keyword">void</span> main()
+{
+    <span class="d_keyword">static</span> <span class="d_keyword">int</span>* x; <span class="d_comment">// scope ignored, global variable
+</span>    <span class="d_keyword">scope</span> <span class="d_keyword">float</span> y;  <span class="d_comment">// scope ignored, no indirections
+</span>    <span class="d_keyword">scope</span> <span class="d_keyword">int</span>[2] z; <span class="d_comment">// scope ignored, static array is value type
+</span>    <span class="d_keyword">scope</span> <span class="d_keyword">int</span>[] w;  <span class="d_comment">// scope dynamic array
+</span>}
+</pre>
+
+</div>
+<div class="blankline"></div>
+<p>        When applied to a local variable with a type that has indirections,
+        its value may not be assigned to a variable with longer lifetime:
+<div class="blankline"></div>
+        <ul>            <li>Variables outside the <a href="../spec/statement.html#scope-statement">scope statement</a> that the variable is declared in</li>
+            <li>Variables declared before the <span class="d_inlinecode donthyphenate notranslate">scope</span> variable, since local variables are destructed in the reverse order that they are declared in.</li>
+            <li><span class="d_inlinecode donthyphenate notranslate">__gshared</span> or <span class="d_inlinecode donthyphenate notranslate">static</span> variables</li>
+        </ul>
+<div class="blankline"></div>
+        Other operations implicitly assigning them to variables with longer lifetime are also disallowed:
+<div class="blankline"></div>
+        <ul>            <li>Returning a <span class="d_inlinecode donthyphenate notranslate">scope</span> variable from a function</li>
+            <li>Assigning a <span class="d_inlinecode donthyphenate notranslate">scope</span> variable to a non-scope parameter by calling a function</li>
+            <li>Putting a <span class="d_inlinecode donthyphenate notranslate">scope</span> variable in an array literal</li>
+        </ul>
+</p>
+<div class="blankline"></div>
+<p>        The <span class="d_inlinecode donthyphenate notranslate">scope</span> attribute is part of the variable declaration, not of the type, and it only applies to the first level of indirection.
+        For example, it is impossible to declare a variable as a dynamic array of scope pointers, because <span class="d_inlinecode donthyphenate notranslate">scope</span> only applies to the <span class="d_inlinecode donthyphenate notranslate">.ptr</span>
+        of the array itself, not its elements. <span class="d_inlinecode donthyphenate notranslate">scope</span> affects various types as follows:
+<div class="blankline"></div>
+        <center><table><caption></caption>        <tr><th class="donthyphenate"><b>Type of local variable</b></th><th class="donthyphenate"><b>What <span class="d_inlinecode donthyphenate notranslate">scope</span> applies to</b></th></tr>
+<div class="blankline"></div>
+        <tr><td>Any <a href="../spec/type.html#basic-data-types">Basic Data Type</a></td><td>nothing</td></tr>
+        <tr><td><a href="../spec/arrays.html#pointers">Pointer</a> <span class="d_inlinecode donthyphenate notranslate">T*</span></td><td>the pointer value</td></tr>
+        <tr><td><a href="../spec/arrays.html#dynamic-arrays">Dynamic Array</a> <span class="d_inlinecode donthyphenate notranslate">T[]</span></td><td>the <span class="d_inlinecode donthyphenate notranslate">.ptr</span> to the elements</td></tr>
+        <tr><td><a href="../spec/arrays.html#static-arrays">Static Array</a> <span class="d_inlinecode donthyphenate notranslate">T[n]</span></td><td>each element <span class="d_inlinecode donthyphenate notranslate">T</span></td></tr>
+        <tr><td><a href="../spec/hash-map.html#Associative Array"><i>Associative Array</i></a> <span class="d_inlinecode donthyphenate notranslate">K[V]</span></td><td>the pointer to the implementation defined structure</td></tr>
+        <tr><td><span class="d_inlinecode donthyphenate notranslate">struct</span> or <span class="d_inlinecode donthyphenate notranslate">union</span></td><td>each of its member variables</td></tr>
+        <tr><td><span class="d_inlinecode donthyphenate notranslate">function</span> pointer</td><td>the pointer value</td></tr>
+        <tr><td><a href="../spec/function.html#closures">delegate</a></td><td>both the <span class="d_inlinecode donthyphenate notranslate">.funcptr</span> and <span class="d_inlinecode donthyphenate notranslate">.ptr</span> (closure context) pointer values</td></tr>
+        <tr><td><span class="d_inlinecode donthyphenate notranslate">class</span> or <span class="d_inlinecode donthyphenate notranslate">interface</span></td><td>the class reference</td></tr>
+        <tr><td><a href="../spec/enum.html#enum"><i>enum</i></a></td><td>the base type</td></tr>
+        </table></center>
+<div class="blankline"></div>
+        Example:
+</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">struct</span> S
+{
+    string str; <span class="d_comment">// note: string = immutable(char)[]
+</span>    string* strPtr;
+}
+
+string escape(<span class="d_keyword">scope</span> S s, <span class="d_keyword">scope</span> S* sPtr, string[2] sarray, <span class="d_keyword">scope</span> string[] darray)
+{
+    <span class="d_keyword">return</span> s.str;        <span class="d_comment">// invalid, scope applies to struct members
+</span>    <span class="d_keyword">return</span> *s.strPtr;    <span class="d_comment">// valid, scope struct member is dereferenced
+</span>    <span class="d_keyword">return</span> sPtr.str;     <span class="d_comment">// valid, struct pointer is dereferenced
+</span>    <span class="d_keyword">return</span> *sPtr.strPtr; <span class="d_comment">// valid, two pointers are dereferenced
+</span>    <span class="d_keyword">return</span> sarray[0];    <span class="d_comment">// invalid, scope applies to static array elements
+</span>    <span class="d_keyword">return</span> sarray[1];    <span class="d_comment">// invalid, ditto
+</span>    <span class="d_keyword">return</span> darray[0];    <span class="d_comment">// valid, scope applies to array pointer, not elements
+</span>}
+</pre>
+<div class="blankline"></div>
+<p>    A "<span class="d_inlinecode donthyphenate notranslate">scope</span> value" is the value of a <span class="d_inlinecode donthyphenate notranslate">scope</span> variable, or any generated value that is (or could be) allocated on the stack:
+    <ul>        <li>The address of a function local variable / parameter</li>
+        <li>A struct member accessed through the implicit <span class="d_inlinecode donthyphenate notranslate">this</span> parameter</li>
+        <li>The return value of a <a href="../spec/function.html#ref-functions">Ref Function</a></li>
+        <li>The variadic parameter from  <a href="../spec/function.html#typesafe_variadic_functions">Typesafe Variadic Functions</a></li>
+    </ul>
+<div class="blankline"></div>
+    When a local variable is assigned a <span class="d_inlinecode donthyphenate notranslate">scope</span> value, it is inferred <span class="d_inlinecode donthyphenate notranslate">scope</span>, even when the variable has an explicit type and does not use the <span class="d_inlinecode donthyphenate notranslate">auto</span> keyword.
+</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">int</span>* escape(<span class="d_keyword">ref</span> <span class="d_keyword">int</span> x, <span class="d_keyword">int</span> y, <span class="d_keyword">scope</span> <span class="d_keyword">int</span>* z)
+{
+    <span class="d_keyword">scope</span> <span class="d_keyword">int</span>* w;
+
+    <span class="d_keyword">auto</span> xPtr = &amp;x; <span class="d_comment">// inferred `scope int*`
+</span>    <span class="d_keyword">int</span>* yPtr = &amp;y; <span class="d_comment">// also inferred `scope int*`
+</span>    <span class="d_keyword">int</span>* zCopy = z; <span class="d_comment">// inferred `scope int*`
+</span>    <span class="d_keyword">int</span>* wCopy = w; <span class="d_comment">// inferred `scope int*`
+</span>
+    <span class="d_keyword">return</span> yPtr; <span class="d_comment">// error
+</span>}
+
+<span class="d_keyword">void</span> variadic(<span class="d_keyword">int</span>[] a...)
+{
+    <span class="d_keyword">int</span>[] x = a; <span class="d_comment">// inferred `scope int[]`
+</span>}
+
+<span class="d_keyword">struct</span> S
+{
+    <span class="d_keyword">int</span> x;
+
+    <span class="d_comment">// this method may be called on a stack-allocated instance of S
+</span>    <span class="d_keyword">void</span> f()
+    {
+        <span class="d_keyword">int</span>* p = &amp;x; <span class="d_comment">// inferred `scope int* p`
+</span>        <span class="d_keyword">int</span>* q = &amp;<span class="d_keyword">this</span>.x; <span class="d_comment">// equivalent
+</span>    }
+}
+</pre>
+<div class="blankline"></div>
+<p>    <a href="../spec/function.html#scope-parameters">scope parameters</a> are treated the same as scope local variables,
+    except that returning them is allowed when the function has <a href="../spec/function.html#function-attribute-inference">Function Attribute Inference</a>.
+    In that case, they are inferred as <a href="../spec/function.html#return-scope-parameters">return scope parameters</a>.
+</p>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="scope-class-var" href="#scope-class-var"><span class="d_inlinecode donthyphenate notranslate">class</span> 型の <span class="d_inlinecode donthyphenate notranslate">scope</span> 変数</a></h3>
+<p>        When used on variables with a <span class="d_inlinecode donthyphenate notranslate">class</span> type, <span class="d_inlinecode donthyphenate notranslate">scope</span> signifies the RAII
+        (Resource Acquisition Is Initialization) protocol.
         This means that the destructor for an object is automatically called when the
         reference to it goes out of scope. The destructor is called even
         if the scope is exited via a thrown exception, thus <span class="d_inlinecode donthyphenate notranslate">scope</span>
         is used to guarantee cleanup.
 </p>
-<p>        If there is more than one <span class="d_inlinecode donthyphenate notranslate">scope</span> variable going out of scope
+<p>        When a class is constructed with <span class="d_inlinecode donthyphenate notranslate">new</span> and assigned to a local <span class="d_inlinecode donthyphenate notranslate">scope</span> variable,
+        it may be allocated on the stack and permitted in a <span class="d_inlinecode donthyphenate notranslate">@nogc</span> context.
+</p>
+<p>        If there is more than one <span class="d_inlinecode donthyphenate notranslate">scope</span> class variable going out of scope
         at the same point, then the destructors are called in the reverse
         order that the variables were constructed.
 </p>
-<p>        <span class="d_inlinecode donthyphenate notranslate">scope</span> cannot be applied to globals, statics, data members, ref
-        or out parameters. Arrays of <span class="d_inlinecode donthyphenate notranslate">scope</span>s are not allowed, and <span class="d_inlinecode donthyphenate notranslate">scope</span>
-        function return values are not allowed. Assignment to a <span class="d_inlinecode donthyphenate notranslate">scope</span>,
-        other than initialization, is not allowed.
-        <span class="d_inlinecode donthyphenate notranslate">Rationale:</span> These restrictions may get relaxed in the future
-        if a compelling reason to appears.
+<p>        If there is more than one <span class="d_inlinecode donthyphenate notranslate">scope</span> class variable going out of scope
+        at the same point, then the destructors are called in the reverse
+        order that the variables were constructed.
 </p>
+<p>        Assignment to a <span class="d_inlinecode donthyphenate notranslate">scope</span> variable with class type,
+        other than initialization, is not allowed, because that would complicate
+        proper destruction of the variable.
+</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">class</span> C {}
+
+<span class="d_keyword">void</span> main() @nogc
+{
+    {
+        <span class="d_keyword">scope</span> c0 = <span class="d_keyword">new</span> C(); <span class="d_comment">// allocated on the stack
+</span>        <span class="d_keyword">scope</span> c1 = <span class="d_keyword">new</span> C();
+
+        c1 = c0; <span class="d_comment">// not allowed
+</span>
+        <span class="d_comment">// destructor of `c1` and `c0` are called here in that order
+</span>    }
+}
+</pre>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="abstract" href="#abstract"><span class="d_inlinecode donthyphenate notranslate">abstract</span> 属性</a></h2>
 <div class="blankline"></div>
@@ -820,7 +997,6 @@ Foo.bar();      <span class="d_comment">// produces 6
     <p>        An expression is considered to be discarded if and only if either of the
         following is true:
     </p>
-<div class="blankline"></div>
     <ul>        <li>            it is the top-level <a href="../spec/expression.html#Expression"><i>Expression</i></a> in an <a href="../spec/            statement.html#ExpressionStatement"><i>ExpressionStatement</i></a>, or
         </li>
         <li>            it is the <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a> on the left-hand
@@ -989,7 +1165,7 @@ A user-defined attribute looks like:
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Apr 23 02:45:44 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Sat Apr 30 08:50:40 2022
 </div>
     </div>
 </div>
