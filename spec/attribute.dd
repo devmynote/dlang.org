@@ -586,38 +586,52 @@ $(H2 $(LNAME2 override, $(D override) 属性))
 
 $(H2 $(LNAME2 static, $(D static) 属性))
 
-        $(P The $(D static) attribute applies to functions and data.
-        It means that the declaration does not apply to a particular
+        $(P The $(D static) attribute applies to types, functions and data.
+        $(D static) is ignored when applied to other declarations.)
+
+        $(P Inside an aggregate type, a `static`
+        declaration does not apply to a particular
         instance of an object, but to the type of the object. In
         other words, it means there is no $(D this) reference.
-        $(D static) is ignored when applied to other declarations.
         )
 
+$(SPEC_RUNNABLE_EXAMPLE_COMPILE
 ---------------
 class Foo
 {
-    static int bar() { return 6; }
+    static int x;
+    static int bar() { return x; }
     int foobar() { return 7; }
 }
 
-...
+Foo.x = 6; // no instance needed
+assert(Foo.bar() == 6);
+//Foo.foobar(); // error, no instance of Foo
 
 Foo f = new Foo;
-Foo.bar();      // produces 6
-Foo.foobar();   // error, no instance of Foo
-f.bar();        // produces 6;
-f.foobar();     // produces 7;
+assert(f.bar() == 6);
+assert(f.foobar() == 7);
 ---------------
+)
 
 $(P
-        Static functions are never virtual.
+        Static methods are never $(DDSUBLINK spec/function, virtual-functions, virtual).
 )
 $(P
         Static data has one instance per thread, not one per object.
 )
+
+$(P A static $(DDSUBLINK spec/function, nested, nested function)
+or $(DDSUBLINK spec/struct, nested, type) cannot
+access variables in the parent scope.)
+
+$(P Inside a function, a $(DDSUBLINK spec/function, local-static-variables,
+static local variable) persists after the function returns.)
+
 $(P
         Static does not have the additional C meaning of being local
-        to a file. Use the $(D private) attribute in D to achieve that.
+        to a file. Use the $(RELATIVE_LINK2 VisibilityAttribute, `private`)
+        attribute in D to achieve that.
         For example:
 )
 
@@ -662,7 +676,7 @@ scope int* x; // scope ignored, global variable
 
 void main()
 {
-    static int* x; // scope ignored, global variable
+    static int* x;  // scope ignored, global variable
     scope float y;  // scope ignored, no indirections
     scope int[2] z; // scope ignored, static array is value type
     scope int[] w;  // scope dynamic array
@@ -673,26 +687,26 @@ void main()
 $(P
         When applied to a local variable with a type that has indirections,
         its value may not be assigned to a variable with longer lifetime:
-
+)
         $(UL
-            $(LI Variables outside the $(DDSUBLINK spec/statement, scope-statement, scope statement) that the variable is declared in)
-            $(LI Variables declared before the `scope` variable$(COMMA) since local variables are destructed in the reverse order that they are declared in.)
+            $(LI Variables outside the $(DDSUBLINK spec/statement, scope-statement, Scope Statement) that the variable is declared in)
+            $(LI Variables declared before the `scope` variable$(COMMA) since local variables are destructed in the reverse order that they are declared in)
             $(LI `__gshared` or `static` variables)
         )
 
+$(P
         Other operations implicitly assigning them to variables with longer lifetime are also disallowed:
-
+)
         $(UL
             $(LI Returning a `scope` variable from a function)
             $(LI Assigning a `scope` variable to a non-scope parameter by calling a function)
             $(LI Putting a `scope` variable in an array literal)
         )
-)
-
 $(P
         The `scope` attribute is part of the variable declaration, not of the type, and it only applies to the first level of indirection.
         For example, it is impossible to declare a variable as a dynamic array of scope pointers, because `scope` only applies to the `.ptr`
         of the array itself, not its elements. `scope` affects various types as follows:
+)
 
         $(TABLE_2COLS ,
         $(THEAD Type of local variable, What `scope` applies to)
@@ -709,9 +723,6 @@ $(P
         $(TROW $(GLINK2 enum, enum), the base type)
         )
 
-        Example:
-)
-
 ---
 struct S
 {
@@ -719,7 +730,7 @@ struct S
     string* strPtr;
 }
 
-string escape(scope S s, scope S* sPtr, string[2] sarray, scope string[] darray)
+string escape(scope S s, scope S* sPtr, scope string[2] sarray, scope string[] darray)
 {
     return s.str;        // invalid, scope applies to struct members
     return *s.strPtr;    // valid, scope struct member is dereferenced
@@ -732,28 +743,39 @@ string escape(scope S s, scope S* sPtr, string[2] sarray, scope string[] darray)
 ---
 
 $(P
-    A "`scope` value" is the value of a `scope` variable, or any generated value that is (or could be) allocated on the stack:
+    A "`scope` value" is the value of a `scope` variable, or a generated value pointing to stack allocated memory.
+    Such values are generated by $(DDSUBLINK spec/arrays, slicing, Slicing) or creating $(DDSUBLINK spec/arrays, pointers, Pointers)
+    to a variable that is (or may be) allocated on the stack:
+)
     $(UL
-        $(LI The address of a function local variable / parameter)
+        $(LI A function parameter)
+        $(LI A local variable)
         $(LI A struct member accessed through the implicit `this` parameter)
         $(LI The return value of a $(DDSUBLINK spec/function, ref-functions, Ref Function))
-        $(LI The variadic parameter from  $(DDSUBLINK spec/function, typesafe_variadic_functions, Typesafe Variadic Functions))
     )
 
+$(P
+    The variadic parameter from $(DDSUBLINK spec/function, typesafe_variadic_functions, Typesafe Variadic Functions) is also a scope value,
+    since the arguments are passed on the stack.
+)
+
+$(P
     When a local variable is assigned a `scope` value, it is inferred `scope`, even when the variable has an explicit type and does not use the `auto` keyword.
 )
 
 ---
-int* escape(ref int x, int y, scope int* z)
+@safe:
+ref int[2] identity(return ref int[2] x) {return x;}
+
+int* escape(int[2] y, scope int* z)
 {
-    scope int* w;
+    int x;
 
-    auto xPtr = &x; // inferred `scope int*`
-    int* yPtr = &y; // also inferred `scope int*`
-    int* zCopy = z; // inferred `scope int*`
-    int* wCopy = w; // inferred `scope int*`
+    auto  xPtr  = &x;            // inferred `scope int*`
+    int[] yArr  = identity(y)[]; // inferred `scope int[]`
+    int*  zCopy = z;             // inferred `scope int*`
 
-    return yPtr; // error
+    return zCopy; // error
 }
 
 void variadic(int[] a...)
@@ -775,9 +797,9 @@ struct S
 ---
 
 $(P
-    $(DDSUBLINK spec/function, scope-parameters, scope parameters) are treated the same as scope local variables,
+    $(DDSUBLINK spec/function, scope-parameters, Scope Parameters) are treated the same as scope local variables,
     except that returning them is allowed when the function has $(DDSUBLINK spec/function, function-attribute-inference, Function Attribute Inference).
-    In that case, they are inferred as $(DDSUBLINK spec/function, return-scope-parameters, return scope parameters).
+    In that case, they are inferred as $(DDSUBLINK spec/function, return-scope-parameters, Return Scope Parameters).
 )
 
 $(H3 $(LNAME2 scope-class-var, `class` 型の $(D scope) 変数))
@@ -792,11 +814,6 @@ $(P
 $(P
         When a class is constructed with `new` and assigned to a local `scope` variable,
         it may be allocated on the stack and permitted in a `@nogc` context.
-)
-$(P
-        If there is more than one `scope` class variable going out of scope
-        at the same point, then the destructors are called in the reverse
-        order that the variables were constructed.
 )
 $(P
         If there is more than one `scope` class variable going out of scope
@@ -828,32 +845,8 @@ void main() @nogc
 $(H2 $(LNAME2 abstract, $(D abstract) 属性))
 
 $(P
-        An abstract member function must be overridden by a derived class.
-        Only virtual member functions may be declared abstract; non-virtual
-        member functions and free-standing functions cannot be declared
-        abstract.
-)
-
-$(P
-        Classes become abstract if any of its virtual member functions
-        are declared abstract or if they are defined within an
-        abstract attribute.
-        Note that an abstract class may also contain non-virtual member functions.
-)
-
-$(P
-        Classes defined within an abstract attribute or with abstract member
-        functions cannot be instantiated directly.
-        They can only be instantiated as a base class of
-        another, non-abstract, class.
-)
-
-$(P
-        Member functions declared as abstract can still have function
-        bodies. This is so that even though they must be overridden,
-        they can still provide $(SINGLEQUOTE base class functionality),
-        e.g. through $(D super.foo()) in a derived class.
-        Note that the class is still abstract and cannot be instantiated directly.
+        An $(DDSUBLINK spec/class, abstract, abstract class) must be overridden by a derived class.
+        Declaring an abstract member function makes the class abstract.
 )
 
 $(H2 $(LNAME2 final, `final` 属性))

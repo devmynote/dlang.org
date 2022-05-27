@@ -1322,8 +1322,7 @@ $(H3 $(LNAME2 no-implicit-fallthrough, 暗黙のフォールスルー))
         $(P A $(GLINK ScopeStatementList) must either be empty, or be ended with
         a $(GLINK ContinueStatement), $(GLINK BreakStatement),
         $(GLINK ReturnStatement), $(GLINK GotoStatement), $(GLINK2 expression, ThrowExpression)
-        or `assert(0)` expression unless this is the last case. This is to
-        set apart with C's error-prone implicit fall-through behavior.)
+        or `assert(0)` expression unless this is the last case.)
 
 --------------
 switch (i)
@@ -2082,7 +2081,7 @@ else
 
 $(H2 $(LEGACY_LNAME2 PragmaStatement, pragma-statement, Pragma 文))
 
-$(P See $(GLINK2 pragma, PragmaStatement).)
+$(P See $(GLINK2 pragma, PragmaStatement)).
 
 $(H2 $(LEGACY_LNAME2 MixinStatement, mixin-statement, Mixin 文))
 

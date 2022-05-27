@@ -104,8 +104,8 @@ $(H3 関数の本文)
 $(GRAMMAR
 $(GNAME FunctionBody):
     $(GLINK SpecifiedFunctionBody)
-    $(GLINK MissingFunctionBody)
     $(GLINK ShortenedFunctionBody)
+    $(GLINK MissingFunctionBody)
 
 $(GNAME FunctionLiteralBody):
     $(GLINK SpecifiedFunctionBody)
@@ -115,25 +115,45 @@ $(GNAME SpecifiedFunctionBody):
     $(GLINK FunctionContracts)$(OPT) $(GLINK InOutContractExpression) $(D do)$(OPT) $(GLINK2 statement, BlockStatement)
     $(GLINK FunctionContracts)$(OPT) $(GLINK InOutStatement) $(D do) $(GLINK2 statement, BlockStatement)
 
-$(GNAME MissingFunctionBody):
-    $(D ;)
-    $(GLINK FunctionContracts)$(OPT) $(GLINK InOutContractExpression) $(D ;)
-    $(GLINK FunctionContracts)$(OPT) $(GLINK InOutStatement)
-
 $(GNAME ShortenedFunctionBody):
     $(GLINK InOutContractExpressions)$(OPT) $(D =>) $(GLINK2 expression, AssignExpression) $(D ;)
 )
 
-        $(P 例:)
+        $(P Examples:)
 
         ---
         int hasSpecifiedBody() { return 1; }
-        int hasMissingBody();
-        int hasShortenedBody() => 1;
+        int hasShortenedBody() => 1; // equivalent
         ---
 
-        $(P $(B Note:) The `ShortenedFunctionBody` form requires the `-preview=shortenedMethods`
+        $(P The *ShortenedFunctionBody* form implies a
+        $(DDSUBLINK spec/statement, ReturnStatement, return statement).
+        This syntax also applies for $(DDSUBLINK spec/expression, function_literals, function literals).)
+
+        $(P $(B Note:) The *ShortenedFunctionBody* form requires the `-preview=shortenedMethods`
         command-line switch, which is available starting in v2.096.0.)
+
+$(H3 $(LNAME2 function-declarations, Functions without Bodies))
+
+$(GRAMMAR
+$(GNAME MissingFunctionBody):
+    $(D ;)
+    $(GLINK FunctionContracts)$(OPT) $(GLINK InOutContractExpression) $(D ;)
+    $(GLINK FunctionContracts)$(OPT) $(GLINK InOutStatement)
+)
+
+    $(P Functions without bodies:)
+
+---
+int foo();
+---
+
+    $(P that are not declared as $(D abstract) are expected to have their implementations
+    elsewhere, and that implementation will be provided at the link step.
+    This enables an implementation of a function to be completely hidden from the user
+    of it, and the implementation may be in another language such as C, assembler, etc.
+    )
+
 
 $(H2 $(LNAME2 contracts, 関数の契約))
 
@@ -361,20 +381,6 @@ $(H2 $(LNAME2 function-return-values, 関数の戻り値))
         This means they cannot be passed by reference to other functions.
         )
 
-$(H2 $(LNAME2 function-declarations, 本文無し関数))
-
-    $(P Functions without bodies:)
-
----
-int foo();
----
-
-    $(P that are not declared as $(D abstract) are expected to have their implementations
-    elsewhere, and that implementation will be provided at the link step.
-    This enables an implementation of a function to be completely hidden from the user
-    of it, and the implementation may be in another language such as C, assembler, etc.
-    )
-
 $(H2 $(LNAME2 pure-functions, Pure 関数))
 
         $(P Pure functions are annotated with the `pure` attribute.
@@ -456,7 +462,7 @@ $(H3 $(LNAME2 pure-special-cases, 特殊なケース))
 
         $(UNDEFINED_BEHAVIOR occurs if these flags are not restored to their
         initial state upon function exit. It is the programmer's responsibility
-        to ensure this.)
+        to ensure this. Setting these flags is not allowed in `@safe` code.)
 
         $(P A pure function can perform impure operations in statements that are in a
         $(GLINK2 version, ConditionalStatement)
@@ -821,13 +827,14 @@ $(H2 $(LNAME2 optional-parenthesis, 括弧付けが任意の場合))
     $(P If a function call passes no explicit argument, i.e. it would syntactically use $(D ()), then these parentheses
     may be omitted, similar to a getter invocation of a
         $(RELATIVE_LINK2 property-functions, property function).
+        A $(RELATIVE_LINK2 pseudo-member, UFCS) call can also omit empty parentheses.
         )
 
         $(SPEC_RUNNABLE_EXAMPLE_COMPILE
         ---
         void foo() {}   // no arguments
-    void fun(int x = 10) { }
-        void bar(int[] arr) {}  // for UFCS
+        void fun(int x = 10) {}
+        void bar(int[] arr) {}
 
         void main()
         {
@@ -836,13 +843,13 @@ $(H2 $(LNAME2 optional-parenthesis, 括弧付けが任意の場合))
             fun;        // OK
 
             int[] arr;
-            arr.bar();  // OK
+            arr.bar();  // UFCS call
             arr.bar;    // also OK
         }
         ---
         )
 
-    $(P Optional parentheses are not applied to delegates or function pointers.)
+    $(P Due to ambiguity, parentheses are required to call a delegate or a function pointer:)
 
     ---
     void main()
@@ -857,43 +864,51 @@ $(H2 $(LNAME2 optional-parenthesis, 括弧付けが任意の場合))
     }
     ---
 
-    $(P If a function returns a delegate or function pointer, the parentheses are required if the
-    returned value is to be called.
+    $(P If a function returns a delegate or a function pointer, any parentheses
+    apply first to the function call, not the result. Two sets of parentheses are required
+    to call the result directly:
     )
 
     $(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
-    struct S {
-        int function() callfp() { return &numfp; }
-        int delegate() calldg() return { return &numdg; }
-        int numdg() { return 6; }
-    }
+    int getNum() { return 6; }
+    int function() getFunc() { return &getNum; }
 
-    int numfp() { return 6; }
+    void main()
+    {
+        int function() fp;
+
+        fp = getFunc;   // implicit call
+        assert(fp() == 6);
+
+        fp = getFunc(); // explicit call
+        assert(fp() == 6);
+
+        int x = getFunc()();
+        assert(x == 6);
+    }
+    ---
+    )
+    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
+    ---
+    struct S
+    {
+        int getNum() { return 6; }
+        int delegate() getDel() return { return &getNum; }
+    }
 
     void main()
     {
         S s;
-        int function() fp;
-
-        fp = s.callfp;
-        assert(fp() == 6);
-
-        fp = s.callfp();
-        assert(fp() == 6);
-
-        int x = s.callfp()();
-        assert(x == 6);
-
         int delegate() dg;
 
-        dg = s.calldg;
+        dg = s.getDel;   // implicit call
         assert(dg() == 6);
 
-        dg = s.calldg();
+        dg = s.getDel(); // explicit call
         assert(dg() == 6);
 
-        int y = s.calldg()();
+        int y = s.getDel()();
         assert(y == 6);
     }
     ---
@@ -1945,8 +1960,9 @@ $(H3 $(LNAME2 ref-return-scope-parameters, Ref Return Scope 引数))
         When a parameter is passed by `ref` and has both the `return` and `scope` storage classes,
         it gets $(LINK2 #return-scope-parameters, `return scope`) semantics if and only if the `return` and `scope`
         keywords appear adjacent to each other, in that order.
+        Specifying a `return ref` and `scope` parameter enables returning a reference to a scope pointer.
         In all other cases, the parameter has $(LINK2 #return-ref-parameters, `return ref`) semantics
-        and regular $(LINK2 #scope-parameters, `scope`) semantics:)
+        and regular $(LINK2 #scope-parameters, `scope`) semantics.)
 
 ---
 U xerxes(       ref return scope V v) // (1) ref and return scope
@@ -1978,28 +1994,33 @@ struct S
 
     // note: `this` is passed by `ref` in structs
 
-    int* retRefA() scope return
+    int* retRefA() scope return // return-ref, scope
     {
         globalPtr = this.ptr; // disallowed, `this` is `scope`
         return &this.val; // allowed, `return` means `return ref`
     }
 
-    ref int retRefB() scope return
+    ref int retRefB() scope return // return-ref, scope
     {
         globalPtr = this.ptr; // disallowed, `this` is `scope`
         return  this.val; // allowed, `return` means `return ref`
     }
 
-    int* retScopeA() return scope
+    int* retScopeA() return scope // ref, return-scope
     {
         return &this.val; // disallowed, escaping a reference to `this`
         return this.ptr;  // allowed, returning a `return scope` pointer
     }
 
-    ref int retScopeB() return scope
+    ref int retScopeB() return scope // ref, return-scope
     {
         return this.val;  // disallowed, escaping a reference to `this`
         return *this.ptr; // allowed, returning a `return scope` pointer
+    }
+
+    ref int* retRefScopeC() scope return // return-ref, scope
+    {
+        return this.ptr; // allowed, returning a reference to a scope pointer
     }
 }
 
@@ -2025,6 +2046,11 @@ ref int retScopeB(ref return scope S s)
 {
     return s.val;  // disallowed, escaping a reference to `s`
     return *s.ptr; // allowed, returning a `return scope` pointer
+}
+
+ref int* retRefScopeC(return ref scope int* p)
+{
+    return p; // allowed, returning a reference to a scope pointer
 }
 ---
 
@@ -2744,6 +2770,8 @@ struct Foo
         $(P Nested functions always have the D function linkage type.
         )
 
+$(H3 $(LNAME2 nested-declaration-order, Declaration Order))
+
         $(P Unlike module level declarations, declarations within function
         scope are processed in order. This means that two nested functions
         cannot mutually call each other:
@@ -2956,6 +2984,10 @@ void test()
         They can be initialized to the address of any function (including a function literal).
         Initialization with the address of a function that requires a context pointer
         is not allowed in @safe functions.
+        )
+
+        $(UNDEFINED_BEHAVIOR Calling a function pointer that was set to point to
+        a function that requires a context pointer.
         )
 
         ---
@@ -3771,10 +3803,13 @@ $(H2 $(LNAME2 function-attribute-inference, 関数属性インターフェース
 
 $(H2 $(LNAME2 pseudo-member, 統一された関数呼び出し構文 (UFCS)))
 
-        $(P A free function can be called with a syntax equivalent to that of
-        a member function of its first parameter type. The free function is
-        called a $(I UFCS function).
+        $(P A free function can be called like a member function when both:)
+        $(UL
+        $(LI The member function does not (or cannot) exist for the object expression)
+        $(LI The free function's first parameter type matches the object expression)
         )
+        $(P The object expression can be any type.
+        This is called a $(I UFCS function call).)
 
         ---
         void sun(T, int);
@@ -3782,7 +3817,7 @@ $(H2 $(LNAME2 pseudo-member, 統一された関数呼び出し構文 (UFCS)))
         void moon(T t)
         {
             t.sun(1);
-            // If `T` does not have member function `sun`,
+            // If `T` does not have a member function `sun`,
             // `t.sun(1)` is interpreted as if it were written `sun(t, 1)`
         }
         ---
@@ -3825,17 +3860,14 @@ $(H2 $(LNAME2 pseudo-member, 統一された関数呼び出し構文 (UFCS)))
         ---
 
         $(P Functions declared in a local scope are not found when searching for a matching
-        UFCS function.)
-
-        $(P Member functions are not found when searching for a matching
-        UFCS function.)
-
-        $(P Otherwise, UFCS function lookup proceeds normally.)
+        UFCS function. Neither are other local symbols, although local imports are searched:)
 
         ---
         module a;
+
         void foo(X);
         alias boo = foo;
+
         void main()
         {
             void bar(X);     // bar declared in local scope
@@ -3852,24 +3884,33 @@ $(H2 $(LNAME2 pseudo-member, 統一された関数呼び出し構文 (UFCS)))
                           // because the declared alias name 'boo' in local scope
                           // overrides module scope name
         }
+        ---
+
+        $(P Member functions are not found when searching for a matching
+        UFCS function.)
+
+        ---
         class C
         {
             void mfoo(X);           // member function
             static void sbar(X);    // static member function
             import b : ibaz = baz;  // void baz(X);
+
             void test()
             {
                 X obj;
                 //obj.mfoo();  // NG, UFCS does not see member functions
                 //obj.sbar();  // NG, UFCS does not see static member functions
-                obj.ibaz();    // OK, ibaz is an alias of baz which declared at
+                obj.ibaz();    // OK, ibaz is an alias of baz which is declared at
                                //     the top level scope of module b
             }
         }
         ---
 
+        $(P Otherwise, UFCS function lookup proceeds normally.)
+
         $(RATIONALE Local function symbols are not considered by UFCS
-        to avoid unexpected name conflicts. See below problematic examples.)
+        to avoid unexpected name conflicts. See below for problematic examples.)
 
         ---
         int front(int[] arr) { return arr[0]; }
