@@ -888,7 +888,7 @@ DIP 1021
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="checkParamArgumentEscape"></span>bool <code class="code">checkParamArgumentEscape</code>(Scope* <code class="code">sc</code>, FuncDeclaration <code class="code">fdc</code>, Parameter <code class="code">par</code>, Expression <code class="code">arg</code>, bool <code class="code">assertmsg</code>, bool <code class="code">gag</code>);
+            <span class="ddoc_anchor" id="checkParamArgumentEscape"></span>bool <code class="code">checkParamArgumentEscape</code>(Scope* <code class="code">sc</code>, FuncDeclaration <code class="code">fdc</code>, Parameter <code class="code">par</code>, STC <code class="code">parStc</code>, Expression <code class="code">arg</code>, bool <code class="code">assertmsg</code>, bool <code class="code">gag</code>);
 
           </code>
         </p>
@@ -949,6 +949,20 @@ DIP 1021
   <div class="ddoc_param_desc">
     <p class="para">
       function parameter (<code class="code">this</code> if <code class="code">null</code>)
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">STC <code class="code">parStc</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      storage classes of function parameter (may have added <code class="code">scope</code> from <code class="code">pure</code>)
     </p>
   </div>
 </td>
@@ -1703,7 +1717,7 @@ DIP 1021
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="escapeByValue"></span>void <code class="code">escapeByValue</code>(Expression <code class="code">e</code>, EscapeByResults* <code class="code">er</code>, bool <code class="code">live</code> = false);
+            <span class="ddoc_anchor" id="escapeByValue"></span>void <code class="code">escapeByValue</code>(Expression <code class="code">e</code>, EscapeByResults* <code class="code">er</code>, bool <code class="code">live</code> = false, bool <code class="code">retRefTransition</code> = false);
 
           </code>
         </p>
@@ -1781,6 +1795,20 @@ DIP 1021
   </div>
 </td>
 </tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">bool <code class="code">retRefTransition</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      if <code class="code"><code class="code">e</code></code> is returned through a <code class="code">return ref scope</code> function call
+    </p>
+  </div>
+</td>
+</tr>
 
     </tbody>
   </table>
@@ -1802,7 +1830,7 @@ DIP 1021
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="escapeByRef"></span>void <code class="code">escapeByRef</code>(Expression <code class="code">e</code>, EscapeByResults* <code class="code">er</code>, bool <code class="code">live</code> = false);
+            <span class="ddoc_anchor" id="escapeByRef"></span>void <code class="code">escapeByRef</code>(Expression <code class="code">e</code>, EscapeByResults* <code class="code">er</code>, bool <code class="code">live</code> = false, bool <code class="code">retRefTransition</code> = false);
 
           </code>
         </p>
@@ -1880,6 +1908,20 @@ DIP 1021
   </div>
 </td>
 </tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">bool <code class="code">retRefTransition</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      if <code class="code"><code class="code">e</code></code> is returned through a <code class="code">return ref scope</code> function call
+    </p>
+  </div>
+</td>
+</tr>
 
     </tbody>
   </table>
@@ -1945,6 +1987,144 @@ DIP 1021
   <p class="para">
     Reset arrays so the storage can be used again
   </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#EscapeByResults.pushRef" id="EscapeByResults.pushRef"><code class="code">pushRef</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="EscapeByResults.pushRef"></span>void <code class="code">pushRef</code>(VarDeclaration <code class="code">v</code>, bool <code class="code">retRefTransition</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Escape variable <code class="code"><code class="code">v</code></code> by reference
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">VarDeclaration <code class="code">v</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      variable to escape
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">bool <code class="code">retRefTransition</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      <code class="code"><code class="code">v</code></code> is escaped through a <code class="code">return ref scope</code> function call
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#EscapeByResults.pushExp" id="EscapeByResults.pushExp"><code class="code">pushExp</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="EscapeByResults.pushExp"></span>void <code class="code">pushExp</code>(Expression <code class="code">e</code>, bool <code class="code">retRefTransition</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Escape a reference to expression <code class="code"><code class="code">e</code></code>
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Expression <code class="code">e</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      expression to escape
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">bool <code class="code">retRefTransition</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      <code class="code"><code class="code">e</code></code> is escaped through a <code class="code">return ref scope</code> function call
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
 </div>
 
 </section>
@@ -2029,7 +2209,7 @@ DIP 1021
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#notMaybeScope" id="notMaybeScope"><code class="code">notMaybeScope</code></a>
+  <a href="#finishScopeParamInference" id="finishScopeParamInference"><code class="code">finishScopeParamInference</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -2038,7 +2218,7 @@ DIP 1021
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="notMaybeScope"></span>void <code class="code">notMaybeScope</code>(VarDeclaration <code class="code">v</code>);
+            <span class="ddoc_anchor" id="finishScopeParamInference"></span>void <code class="code">finishScopeParamInference</code>(FuncDeclaration <code class="code">funcdecl</code>, ref TypeFunction <code class="code">f</code>);
 
           </code>
         </p>
@@ -2050,14 +2230,8 @@ DIP 1021
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Turn off <code class="code">STC.maybescope</code> for variable <code class="code"><code class="code">v</code></code>.
-
-  </p>
-</div>
-<div class="ddoc_description">
-  <h4>Discussion</h4>
-  <p class="para">
-    This exists in order to find where <code class="code">STC.maybescope</code> is getting turned off.
+    After semantic analysis of the function body,
+ try to infer <code class="code">scope</code> / <code class="code">return</code> on the parameters
 
   </p>
 </div>
@@ -2068,79 +2242,28 @@ DIP 1021
       <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">VarDeclaration <code class="code">v</code></em>
+    <em class="term">FuncDeclaration <code class="code">funcdecl</code></em>
   </code>
 </td>
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      variable
+      function declaration that was analyzed
     </p>
   </div>
 </td>
 </tr>
-
-    </tbody>
-  </table>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#eliminateMaybeScopes" id="eliminateMaybeScopes"><code class="code">eliminateMaybeScopes</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="eliminateMaybeScopes"></span>void <code class="code">eliminateMaybeScopes</code>(VarDeclaration[] <code class="code">array</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Have some variables that are maybescopes that were
- assigned values from other maybescope variables.
- Now that semantic analysis of the function is
- complete, we can finalize this by turning off
- maybescope for <code class="code">array</code> elements that cannot be scope.
-
-  </p>
-</div>
-<div class="ddoc_description">
-  <h4>Discussion</h4>
-  <p class="para">
-    
-
-  </p>
-</div>
-<div class="ddoc_params">
-  <h4>Parameters</h4>
-  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
-    <tbody>
-      <tr class="ddoc_param_row">
+<tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">VarDeclaration[] <code class="code">array</code></em>
+    <em class="term">TypeFunction <code class="code">f</code></em>
   </code>
 </td>
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      <code class="code">array</code> of variables that were assigned to from maybescope variables
+      final function type. <code class="code"><code class="code">funcdecl</code>.type</code> started as the 'premature type' before attribute
+       inference, then its inferred attributes are copied over to final type <code class="code"><code class="code">f</code></code>
     </p>
   </div>
 </td>

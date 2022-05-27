@@ -1,4 +1,4 @@
-.TH DMD 1 "2022-04-30" "The D Language Foundation" "The D Language Foundation"
+.TH DMD 1 "2022-05-27" "The D Language Foundation" "The D Language Foundation"
 .SH NAME
 dmd \- Digital Mars D2.x Compiler
 .SH SYNOPSIS
@@ -156,6 +156,8 @@ Name output file to \fIfilename\fR
 Preserve source path for output files
 .IP -os=\fIos\fR
 Sets target operating system to \fIos\fR
+.IP -P=\fIpreprocessorflag\fR
+Pass \fIpreprocessorflag\fR to C preprocessor
 .IP -preview=\fIname\fR
 Enable an upcoming language change identified by \fIname\fR
 .IP -preview=[h|help|?]
@@ -165,7 +167,7 @@ Profile runtime performance of generated code
 .IP -profile=gc
 Profile runtime allocations
 .IP -release
-Compile release version
+Contracts and asserts are not emitted, and bounds checking is performed only in @safe functions
 .IP -revert=\fIname\fR
 Revert language change identified by \fIname\fR
 .IP -revert=[h|help|?]
@@ -226,8 +228,6 @@ List all non-mutable fields which occupy an object instance
 Give deprecation messages about all usages of complex or imaginary types
 .IP \fItls\fR
 List all variables going into thread local storage
-.IP \fIvmarkdown\fR
-List instances of Markdown replacements in Ddoc
 .IP \fIin\fR
 List all usages of 'in' on parameter
 .SH LINKING

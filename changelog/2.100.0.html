@@ -17,10 +17,7 @@
 <link rel="stylesheet" href="../css/print.css" media="print">
 <link rel="shortcut icon" href="../favicon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0">
-<style>    .changelog-source-edit-btn {
-        float: right;
-    }
-</style>
+
 </head>
 <body id='Change Log: 2.100.0' class='changelog'>
 <script type="text/javascript">document.body.className += ' have-javascript'</script>
@@ -100,7 +97,7 @@ Log</option>
     </p>
     </div>
     <ul><li><a id="pending" href="pending.html">Nightly</a> <span class="hide-from-nav"> (preview) - upcoming changes from <span class="d_inlinecode donthyphenate notranslate">master</span></span></li>
-<li><a id="2.100.0" href="2.100.0.html" style="display: inline-block">2.100.0</a> (preview) <span class="hide-from-nav"> - scheduled for May 07, 2022</span></li>
+<li><a id="2.100.0" href="2.100.0.html">2.100.0</a><span class="hide-from-nav"> (May 10, 2022)</span></li>
 <li><a id="2.099.1" href="2.099.1.html">2.099.1</a><span class="hide-from-nav"> (Apr 07, 2022)</span></li>
 <li><a id="2.099.0" href="2.099.0.html">2.099.0</a><span class="hide-from-nav"> (Mar 06, 2022)</span></li>
 <li><a id="2.098.1" href="2.098.1.html">2.098.1</a><span class="hide-from-nav"> (Dec 19, 2021)</span></li>
@@ -247,7 +244,7 @@ Log</option>
 <li><a id="2.000" href="2.000.html">2.000</a><span class="hide-from-nav"> (Jun 17, 2007)</span></li></ul>
 </div>
     <div class="hyphenate" id="content">        
-<div id="tools"><div >	<div class="tip smallprint">		<a href="https://github.com/devmynote/dlang.org/edit/master/changelog/2.100.0_pre.dd">ページの改善</a>
+<div id="tools"><div >	<div class="tip smallprint">		<a href="https://github.com/devmynote/dlang.org/edit/master/changelog/2.100.0.dd">ページの改善</a>
 		<div >		    いますぐフォークしてオンライン編集し、このページのプルリクエストを送信します。
 			Github へのログインが必要です。 これは小さな変更に適しています。
 			大きな変更を加えたい場合は、通常の cloneの使用をお勧めします。
@@ -267,13 +264,13 @@ Log</option>
 <div class="changelog-nav">previous version: <a href="2.099.1.html">2.099.1</a></div>
 
 
-<div class="version"><p><b><font size="4"><a href="http://downloads.dlang.org/pre-releases/2.x/2.100.0">Download D 2.100.0 Beta</a></font></b><br>
-<small>to be released May 07, 2022</small>
+<div class="version"><p><b><font size="4"><a href="http://downloads.dlang.org/releases/2.x/2.100.0">Download D 2.100.0</a></font></b><br>
+<small>released May 10, 2022</small>
 </p>
 
-<div class="changelog-header-stats">2.100.0 comes with 22 major changes and 162 fixed Bugzilla issues.
+<div class="changelog-header-stats">2.100.0 comes with 22 major changes and 179 fixed Bugzilla issues.
         A huge thanks goes to the
-        <a href="#contributors">40 contributors</a>
+        <a href="#contributors">41 contributors</a>
         who made 2.100.0 possible.</div>
 
 <div class="bugsfixed"><h4>Compiler changes</h4> <ol>
@@ -282,7 +279,6 @@ Log</option>
 <li><a href="#dep_scope_type"><span class="d_inlinecode donthyphenate notranslate">scope</span> as a type constraint on class, struct, and enum declarations is deprecated.</a></li>
 <li><a href="#deprecation_asm_stc">The deprecation period of unannotated <span class="d_inlinecode donthyphenate notranslate">asm</span> blocks has been ended.</a></li>
 <li><a href="#deprecation_delete">The deprecation period of the <span class="d_inlinecode donthyphenate notranslate">delete</span> keyword has been ended.</a></li>
-<li><a href="#dip1000_deprecation_warnings">Print warning messages unless -revert=dip1000 is used</a></li>
 <li><a href="#dtoh-improvements">Improvements for the C++ header generation</a></li>
 <li><a href="#error_scope_interface">The deprecation period for <span class="d_inlinecode donthyphenate notranslate">scope</span> as a type constraint on interface declarations has ended.</a></li>
 <li><a href="#inout-return">The <span class="d_inlinecode donthyphenate notranslate">inout</span> attribute no longer implies the <span class="d_inlinecode donthyphenate notranslate">return</span> attribute</a></li>
@@ -297,6 +293,7 @@ Log</option>
 <div class="bugsfixed"><h4>Library changes</h4> <ol>
 <li><a href="#std_functional_bind">New function <span class="d_inlinecode donthyphenate notranslate">bind</span> in <span class="d_inlinecode donthyphenate notranslate">std.functional</span></a></li>
 <li><a href="#std_typecons_nullable_range"><span class="d_inlinecode donthyphenate notranslate">Nullable</span> in <span class="d_inlinecode donthyphenate notranslate">std.typecons</span> can now act as a range</a></li>
+<li><a href="#zlib">Zlib updated to 1.2.12</a></li>
 
  </ol></div>
 
@@ -320,7 +317,7 @@ Log</option>
 
 <div class="bugsfixed"><h4>Compiler changes</h4> <ol>
 <li><a class="anchor" title="Permalink to this section" id="alias_this_assignment" href="#alias_this_assignment">End deprecation period for using <span class="d_inlinecode donthyphenate notranslate">alias this</span> for partial assignment.</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/alias_this_assignment.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Starting with this release, <span class="d_inlinecode donthyphenate notranslate">alias this</span> may not be used for the partial
 assignment of a left-hand side operand. Any such assignment will result in a
 compiler error.
@@ -353,7 +350,7 @@ used since the object will be fully initialised.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="d1_style_operators" href="#d1_style_operators">The deprecation period for D1-style operators has ended.</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/d1_style_operators.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Starting with this release, any use of the deprecated D1 overload operators
 will result in a compiler error.
 </p>
@@ -430,7 +427,7 @@ will result in a compiler error.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="dep_scope_type" href="#dep_scope_type"><span class="d_inlinecode donthyphenate notranslate">scope</span> as a type constraint on class, struct, and enum declarations is deprecated.</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/dep_scope_type.dd"><i class="fa fa-edit"></i></a></div>
+
 <p><span class="d_inlinecode donthyphenate notranslate">scope</span> as a type constraint on class declarations was meant to force users
 of a class to <span class="d_inlinecode donthyphenate notranslate">scope</span> allocate it, which resulted in the class being placed
 on the stack rather than GC-allocated. While it has been scheduled for
@@ -461,7 +458,7 @@ only the type constraint is deprecated.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="deprecation_asm_stc" href="#deprecation_asm_stc">The deprecation period of unannotated <span class="d_inlinecode donthyphenate notranslate">asm</span> blocks has been ended.</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/deprecation_asm_stc.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>See the <a href="../deprecate.html#asm">Deprecated Features</a> for more
 information.
 </p>
@@ -472,29 +469,20 @@ information.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="deprecation_delete" href="#deprecation_delete">The deprecation period of the <span class="d_inlinecode donthyphenate notranslate">delete</span> keyword has been ended.</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/deprecation_delete.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>See the <a href="../deprecate.html#delete">Deprecated Features</a> for more information.
 </p>
 
 <p>Starting with this release, using the <span class="d_inlinecode donthyphenate notranslate">delete</span> keyword will result in a compiler error.
 </p>
 
-<p>As a replacement, users are encouraged to use <a href="../phobos-prerelease/object.html#.destroy""><span class="d_inlinecode donthyphenate notranslate">destroy</span></a>
-if feasible, or <a href="../phobos-prerelease/core_memory.html#.__delete"><span class="d_inlinecode donthyphenate notranslate">core.memory.__delete</span></a> as a last resort.
-</p>
-</li>
-
-<li><a class="anchor" title="Permalink to this section" id="dip1000_deprecation_warnings" href="#dip1000_deprecation_warnings">Print warning messages unless -revert=dip1000 is used</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/dip1000_deprecation_warnings.dd"><i class="fa fa-edit"></i></a></div>
-<p>As an incentive to transition to -preview=dip1000 by default, now the
-compiler prints what would have been error messages if the flag had
-been on as deprecation messages.  This new behaviour can be disabled
-with -revert=dip1000.
+<p>As a replacement, users are encouraged to use <a href="../phobos/object.html#.destroy""><span class="d_inlinecode donthyphenate notranslate">destroy</span></a>
+if feasible, or <a href="../phobos/core_memory.html#.__delete"><span class="d_inlinecode donthyphenate notranslate">core.memory.__delete</span></a> as a last resort.
 </p>
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="dtoh-improvements" href="#dtoh-improvements">Improvements for the C++ header generation</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/dtoh-improvements.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>The following features/bugfixes/improvements were implemented for the
 experimental C++ header generator:
 </p>
@@ -519,7 +507,7 @@ experimental C++ header generator:
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="error_scope_interface" href="#error_scope_interface">The deprecation period for <span class="d_inlinecode donthyphenate notranslate">scope</span> as a type constraint on interface declarations has ended.</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/error_scope_interface.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Starting with this release, using <span class="d_inlinecode donthyphenate notranslate">scope</span> as a type constraint on <span class="d_inlinecode donthyphenate notranslate">interface</span>
 declarations will result in a compiler error.
 </p>
@@ -529,7 +517,7 @@ declarations will result in a compiler error.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="inout-return" href="#inout-return">The <span class="d_inlinecode donthyphenate notranslate">inout</span> attribute no longer implies the <span class="d_inlinecode donthyphenate notranslate">return</span> attribute</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/inout-return.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>The compiler would formerly add the <span class="d_inlinecode donthyphenate notranslate">return</span> attribute to <span class="d_inlinecode donthyphenate notranslate">inout</span> functions, under the assumption that every <span class="d_inlinecode donthyphenate notranslate">inout</span> function would return its argument.
 However, it could also return a member of the <span class="d_inlinecode donthyphenate notranslate">inout</span> argument, which would still be <span class="d_inlinecode donthyphenate notranslate">inout</span> because <span class="d_inlinecode donthyphenate notranslate">const</span> and <span class="d_inlinecode donthyphenate notranslate">immutable</span> are transitive, while <span class="d_inlinecode donthyphenate notranslate">return</span> semantics are not transitive.
 </p>
@@ -567,7 +555,7 @@ However, it could also return a member of the <span class="d_inlinecode donthyph
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="invariant_contract_version_identifier" href="#invariant_contract_version_identifier">Support contract invariant version identifier.</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/invariant_contract_version_identifier.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Sometimes it is useful to compile code only when invariants are enabled. This
 feature provides the reserved version identifier D_Invariants which evaluates to
 true or false when invariants are compiled in or not respectively.
@@ -591,7 +579,7 @@ true or false when invariants are compiled in or not respectively.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="mustUse" href="#mustUse">Implement DIP 1038: @mustuse</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/mustUse.dd"><i class="fa fa-edit"></i></a></div>
+
 <p><span class="d_inlinecode donthyphenate notranslate">@mustuse</span> is a new attribute that can be applied to a <span class="d_inlinecode donthyphenate notranslate">struct</span> or <span class="d_inlinecode donthyphenate notranslate">union</span> type
 to make ignoring an expression of that type into a compile-time error. It can
 be used to implement alternative error-handling mechanisms for code that cannot
@@ -599,12 +587,12 @@ use exceptions, including <span class="d_inlinecode donthyphenate notranslate">@
 </p>
 
 <p>For more information, see
-<a href="https://github.com/dlang/DIPs/blob/master/DIPs/accepted/DIP1038.md, DIP 1038">https://github.com/dlang/DIPs/blob/master/DIPs/accepted/DIP1038.md, DIP 1038</a>.
+<a href="https://github.com/dlang/DIPs/blob/master/DIPs/accepted/DIP1038.md">DIP 1038</a>.
 </p>
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="static_array_tupleof" href="#static_array_tupleof">Added <span class="d_inlinecode donthyphenate notranslate">.tupleof</span> property for static arrays</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/static_array_tupleof.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>The <span class="d_inlinecode donthyphenate notranslate">.tupleof</span> property may now be used with instances of static arrays, yielding an <a href="../spec/template.html#homogeneous_sequences">lvalue sequence</a> of each element in the array.
 </p>
 
@@ -624,7 +612,7 @@ foo(ia.tupleof); <span class="d_comment">// same as `foo(1, 2, 3);`
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="super_type_gone" href="#super_type_gone">Usage of <span class="d_inlinecode donthyphenate notranslate">this</span> and <span class="d_inlinecode donthyphenate notranslate">super</span> as types has been removed</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/super_type_gone.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Prior to this release, using <span class="d_inlinecode donthyphenate notranslate">this</span> or <span class="d_inlinecode donthyphenate notranslate">super</span> as a type resulted in a compiler
 error suggesting to use <span class="d_inlinecode donthyphenate notranslate">typeof(this)</span> or <span class="d_inlinecode donthyphenate notranslate">typeof(super)</span> instead. This has now
 been completely removed from the language, and the parser won't recognize this
@@ -633,7 +621,7 @@ wrong code anymore.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="switch-fallthrough" href="#switch-fallthrough">A missed case of switch case fallthrough has been deprecated</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dmd/edit/stable/changelog/switch-fallthrough.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Forgetting a <span class="d_inlinecode donthyphenate notranslate">break;</span> statement in a switch case has been turned from a deprecation
 <a href="..//changelog/2.099.0.html#switch_fallthrough_error">into an error in DMD 2.099.0</a>.
 However, the compiler would not issue an error when using multiple values in a single case statement:
@@ -664,10 +652,10 @@ Starting from DMD 2.110, it will produce an error just like other cases of switc
 
 <div class="bugsfixed"><h4>Library changes</h4> <ol>
 <li><a class="anchor" title="Permalink to this section" id="std_functional_bind" href="#std_functional_bind">New function <span class="d_inlinecode donthyphenate notranslate">bind</span> in <span class="d_inlinecode donthyphenate notranslate">std.functional</span></a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/phobos/edit/stable/changelog/std_functional_bind.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>It is used to pass the fields of a struct as arguments to a function. For
 example, it can be used in a range pipeline to give names to the elements of a
-<a href="../phobos-prerelease/std_typecons.html#.Tuple"><span class="d_inlinecode donthyphenate notranslate">std.typecons.Tuple</span></a>:
+<a href="../phobos/std_typecons.html#.Tuple"><span class="d_inlinecode donthyphenate notranslate">std.typecons.Tuple</span></a>:
 </p>
 
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio;
@@ -685,13 +673,13 @@ example, it can be used in a range pipeline to give names to the elements of a
 }
 </pre>
 
-<p>See <a href="../phobos-prerelease/std_functional.html#.bind">the standard library documentation</a>
+<p>See <a href="../phobos/std_functional.html#.bind">the standard library documentation</a>
 for more information.
 </p>
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="std_typecons_nullable_range" href="#std_typecons_nullable_range"><span class="d_inlinecode donthyphenate notranslate">Nullable</span> in <span class="d_inlinecode donthyphenate notranslate">std.typecons</span> can now act as a range</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/phobos/edit/stable/changelog/std_typecons_nullable_range.dd"><i class="fa fa-edit"></i></a></div>
+
 <p><span class="d_inlinecode donthyphenate notranslate">Nullable</span> now offers an alternative 0 or 1 element range interface.
 </p>
 
@@ -706,12 +694,18 @@ for more information.
 </pre>
 </li>
 
+<li><a class="anchor" title="Permalink to this section" id="zlib" href="#zlib">Zlib updated to 1.2.12</a>
+
+<p>The bundled zlib has been updated to version 1.2.12.
+</p>
+</li>
+
 
  </ol></div>
 
 <div class="bugsfixed"><h4>Tools changes</h4> <ol>
 <li><a class="anchor" title="Permalink to this section" id="rdmd-environment-args" href="#rdmd-environment-args">rdmd now supports specifying the D compiler using the <span class="d_inlinecode donthyphenate notranslate">RDMD_DMD</span> environment variable</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/tools/edit/stable/../tools/changelog/rdmd-environment-args.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>rdmd now uses the <span class="d_inlinecode donthyphenate notranslate">RDMD_DMD</span> environment variable, if it is present in the environment, to choose the D compiler to use. As with the <span class="d_inlinecode donthyphenate notranslate">--compiler</span> option, the variable's value must specify the name or path of a compiler with a DMD-like command line syntax, such as <span class="d_inlinecode donthyphenate notranslate">gdmd</span> or <span class="d_inlinecode donthyphenate notranslate">ldmd2</span>. The variable overrides the default (which is decided at the time <span class="d_inlinecode donthyphenate notranslate">rdmd</span> was built), but can still be overridden by the <span class="d_inlinecode donthyphenate notranslate">--compiler</span> option.
 </p>
 </li>
@@ -721,7 +715,7 @@ for more information.
 
 <div class="bugsfixed"><h4>Dub changes</h4> <ol>
 <li><a class="anchor" title="Permalink to this section" id="actual-dynamiclibrary" href="#actual-dynamiclibrary">Builds dynamicLibrary targets as dynamic libraries instead of static libraries.</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dub/edit/stable/changelog/actual-dynamiclibrary.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Dub will no longer build dynamicLibrary targetType's as staticLibrary.
 </p>
 
@@ -733,7 +727,7 @@ for more information.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="build-path-variable" href="#build-path-variable">The <span class="d_inlinecode donthyphenate notranslate">$DUB_BUILD_PATH</span> variable was added</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dub/edit/stable/changelog/build-path-variable.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>The <span class="d_inlinecode donthyphenate notranslate">$DUB_BUILD_PATH</span> variable is now defined inside the <span class="d_inlinecode donthyphenate notranslate">postBuildCommands</span>
 section. It contains the absolute path in which the package was built, and can
 be used to copy by-products of the build process to their intended locations.
@@ -751,7 +745,7 @@ be done with a <span class="d_inlinecode donthyphenate notranslate">dub.json</sp
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="command-variables" href="#command-variables">Command environment variable substitution changed</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dub/edit/stable/changelog/command-variables.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Now users can use the documented predefined variables inside custom command
 directives without the need for a wrapper shell script.
 </p>
@@ -777,7 +771,7 @@ environment variables.
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="etc-dub-settings-json" href="#etc-dub-settings-json">Posix: use /etc/dub/settings.json if DUB is installed in /usr</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dub/edit/stable/changelog/etc-dub-settings-json.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>For Linux distributions that put the dub installation in /usr, there is now a
 special case that DUB will load from /etc/dub/settings.json (absolute path) if
 the installation is inside /usr.
@@ -790,7 +784,7 @@ loaded if it exists, but if not <span class="d_inlinecode donthyphenate notransl
 </li>
 
 <li><a class="anchor" title="Permalink to this section" id="injectsourcefile" href="#injectsourcefile">Adds injection of source files from dependencies via injectSourceFiles command</a>
-<div class="changelog-source-edit-btn"><a href="https://github.com/dlang/dub/edit/stable/changelog/injectsourcefile.dd"><i class="fa fa-edit"></i></a></div>
+
 <p>Each (sub)package now supports a source file that will be included in any executable or dynamic library that depends either directly or indirectly on it.
 </p>
 
@@ -822,6 +816,11 @@ Unlike sourceLibrary the injection of source code using this feature will inject
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22999">Bugzilla 22999</a>: no switch fallthrough error with multi-valued case</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=23019">Bugzilla 23019</a>: Missing filename when -of points to an existing directory</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=23036">Bugzilla 23036</a>: Rvalue constructor with default parameter crashes compiler in the presence of a copy constructor</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23046">Bugzilla 23046</a>: [REG][CODEGEN] __simd(XMM.LODLPS) bad codegen</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23087">Bugzilla 23087</a>: getLinkage trait regression for overloads with v2.100.0-rc.1</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23089">Bugzilla 23089</a>: Linkage-related ICE regression in v2.100.0-rc.1</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23097">Bugzilla 23097</a>: [REG 2.100] ArrayIndexError@src/dmd/mtype.d(4767): index [18446744073709551615] is out of bounds for array of length 0</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23098">Bugzilla 23098</a>: array literal to scope inout parameter not allowed in safe code</li>
  </ol></div>
 <div class="bugsfixed"><h4>DMD Compiler bug fixes</h4> <ol>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=7625">Bugzilla 7625</a>: inlining only works with explicit else branch</li>
@@ -868,7 +867,6 @@ Unlike sourceLibrary the injection of source code using this feature will inject
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22848">Bugzilla 22848</a>: DWARF .debug_line section should be generated to conform with DW_AT_stmt_list bounds</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22874">Bugzilla 22874</a>: ICE: Segmentation fault building druntime on mips64el-linux</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22876">Bugzilla 22876</a>: importC: expression parsing affected by parentheses that should do nothing</li>
-<li><a href="https://issues.dlang.org/show_bug.cgi?id=22877">Bugzilla 22877</a>: importC: wrong sizeof for string literal</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22878">Bugzilla 22878</a>: importC: glibc fallback for HUGE_VAL gives 'not representable'</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22884">Bugzilla 22884</a>: ImportC: function does not decay to pointer when being cast</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22885">Bugzilla 22885</a>: ImportC: typedef declared with itself should work</li>
@@ -922,6 +920,18 @@ Unlike sourceLibrary the injection of source code using this feature will inject
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=23029">Bugzilla 23029</a>: ImportC: _Generic treats pointer to const and regular pointers as the same type</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=23031">Bugzilla 23031</a>: importC: hex character escapes should be variable length</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=23034">Bugzilla 23034</a>: importC: head-const struct confused with multiple files on command line</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23037">Bugzilla 23037</a>: importC: type with only type-qualifier doesn't work</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23038">Bugzilla 23038</a>: importC: sizeof inside struct has struct members in scope</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23039">Bugzilla 23039</a>: importC: declaration with array length has itself in scope</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23044">Bugzilla 23044</a>: importC: comma expression with function call parsed as declaration</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23045">Bugzilla 23045</a>: importC: casted function type is missing extern(C)</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23047">Bugzilla 23047</a>: [ICE][SIMD] Do not SROA vector types</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23056">Bugzilla 23056</a>: importC: dmd asserts for missing return statement in CTFE function</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23057">Bugzilla 23057</a>: importC: dmd segfault on invalid syntax</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23066">Bugzilla 23066</a>: importC: cannot initialize char array with string literal of different length</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23075">Bugzilla 23075</a>: global const string definitions should go in readonly segment</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23077">Bugzilla 23077</a>: codegen cannot generage XMM load/store for optimized operation that uses byte/short/...</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23083">Bugzilla 23083</a>: .tupleof on static array rvalue evaluates expression multiple times</li>
  </ol></div>
 <div class="bugsfixed"><h4>DMD Compiler enhancements</h4> <ol>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=3632">Bugzilla 3632</a>: modify float is float to do a bitwise compare</li>
@@ -975,6 +985,7 @@ Unlike sourceLibrary the injection of source code using this feature will inject
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22822">Bugzilla 22822</a>: core.sys.posix.sys.stat: PPC stat_t bindings corrupt</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22832">Bugzilla 22832</a>: Can't destroy class with overloaded opCast</li>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=22843">Bugzilla 22843</a>: Program hangs on full gc collect with --DRT-gcopt=fork:1 if run under valgrind/callgrind</li>
+<li><a href="https://issues.dlang.org/show_bug.cgi?id=23051">Bugzilla 23051</a>: OpenBSD: Build broken on 2.100.0-beta.1 due to the inout attribute no longer implying the return attribute</li>
  </ol></div>
 <div class="bugsfixed"><h4>Druntime enhancements</h4> <ol>
 <li><a href="https://issues.dlang.org/show_bug.cgi?id=18816">Bugzilla 18816</a>: [betterC] Standard Streams Unlinkable</li>
@@ -994,7 +1005,7 @@ Unlike sourceLibrary the injection of source code using this feature will inject
  </ol></div>
 
 </div>
-<h3><a class="anchor" title="Permalink to this section" id="contributors" href="#contributors">Contributors to this release (40)</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="contributors" href="#contributors">Contributors to this release (41)</a></h3>
 <p>A huge thanks goes to all the awesome people who made this release possible.</p>
 <ul>    <li>Adam D. Ruppe</li>
     <li>aG0aep6G</li>
@@ -1019,6 +1030,7 @@ Unlike sourceLibrary the injection of source code using this feature will inject
     <li>Johan Engelen</li>
     <li>João Lourenço</li>
     <li>Luís Ferreira</li>
+    <li>Martin Kinkelin</li>
     <li>Martin Nowak</li>
     <li>Mathias Lang</li>
     <li>Max Haughton</li>
@@ -1043,7 +1055,7 @@ Unlike sourceLibrary the injection of source code using this feature will inject
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Apr 30 08:50:49 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Fri May 27 14:32:46 2022
 </div>
     </div>
 </div>

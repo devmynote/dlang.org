@@ -2289,6 +2289,90 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#ScopeDsymbol.getImportedScopes" id="ScopeDsymbol.getImportedScopes"><code class="code">getImportedScopes</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="ScopeDsymbol.getImportedScopes"></span>final pure nothrow @nogc @safe Dsymbols* <code class="code">getImportedScopes</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    the symbols whose members have been imported, i.e. imported modules
+ and template mixins.
+
+
+  </p>
+</div>
+<div class="ddoc_see_also">
+  <h4>See Also</h4>
+  <p class="para">
+    importScope
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#ScopeDsymbol.getImportVisibilities" id="ScopeDsymbol.getImportVisibilities"><code class="code">getImportVisibilities</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="ScopeDsymbol.getImportVisibilities"></span>final pure nothrow @nogc @safe Visibility.Kind[] <code class="code">getImportVisibilities</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    the array of visibilities associated with each imported scope. The
+ length of the array matches the imported scopes array.
+
+
+  </p>
+</div>
+<div class="ddoc_see_also">
+  <h4>See Also</h4>
+  <p class="para">
+    getImportedScopes
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#ScopeDsymbol.findGetMembers" id="ScopeDsymbol.findGetMembers"><code class="code">findGetMembers</code></a>
 </div>
 </div><div class="ddoc_decl">

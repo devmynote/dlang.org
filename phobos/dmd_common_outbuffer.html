@@ -1227,10 +1227,6 @@ pure nothrow void <code class="code">writestring</code>(string <code class="code
         <p class="para">
           <code class="code">
             <span class="ddoc_anchor" id="OutBuffer.writestringln"></span>pure nothrow void <code class="code">writestringln</code>(const(char)[] <code class="code">s</code>);
-<br>
-<span class="ddoc_anchor" id="OutBuffer.writeString"></span>pure nothrow void <code class="code">writeString</code>(const(char)[] <code class="code">s</code>);
-<br>
-pure nothrow void <code class="code">writeString</code>(string <code class="code">s</code>);
 
           </code>
         </p>
@@ -1243,6 +1239,42 @@ pure nothrow void <code class="code">writeString</code>(string <code class="code
   <div class="ddoc_summary">
   <p class="para">
     NOT zero-terminated, followed by newline
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.writeStringz" id="OutBuffer.writeStringz"><code class="code">writeStringz</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.writeStringz"></span>pure nothrow @trusted void <code class="code">writeStringz</code>(const(char)* <code class="code">s</code>);
+<br>
+pure nothrow void <code class="code">writeStringz</code>(const(char)[] <code class="code">s</code>);
+<br>
+pure nothrow void <code class="code">writeStringz</code>(string <code class="code">s</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Write string to buffer, ensure it is zero terminated
   </p>
 </div>
 

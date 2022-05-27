@@ -1983,6 +1983,39 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#FuncDeclaration.safetyViolation" id="FuncDeclaration.safetyViolation"><code class="code">safetyViolation</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="FuncDeclaration.safetyViolation"></span>AttributeViolation* <code class="code">safetyViolation</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    In case of failed <code class="code">@safe</code> inference, store the error that made the function <code class="code">@system</code> for
+better diagnostics
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#FuncDeclaration.flags" id="FuncDeclaration.flags"><code class="code">flags</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -3012,7 +3045,7 @@ See the <code class="code">FUNCFLAG</code> enum
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="FuncDeclaration.setUnsafe"></span>final bool <code class="code">setUnsafe</code>();
+            <span class="ddoc_anchor" id="FuncDeclaration.setUnsafe"></span>final bool <code class="code">setUnsafe</code>(bool <code class="code">gag</code> = false, Loc <code class="code">loc</code> = Loc.init, const(char)* <code class="code">fmt</code> = null, RootObject <code class="code">arg0</code> = null, RootObject <code class="code">arg1</code> = null);
 
           </code>
         </p>
@@ -3024,9 +3057,153 @@ See the <code class="code">FUNCFLAG</code> enum
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    The function is doing something unsafe,
- so mark it as unsafe.
- If there's a safe error, return <code class="code">true</code>.
+    The function is doing something unsafe, so mark it as unsafe.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">bool <code class="code">gag</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      surpress error message (used in escape.d)
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Loc <code class="code">loc</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      location of error
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">const(char)* <code class="code">fmt</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      printf-style format string
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">RootObject <code class="code">arg0</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      (optional) argument for first %s format specifier
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">RootObject <code class="code">arg1</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      (optional) argument for second %s format specifier
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    whether there's a safe error
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#FuncDeclaration.setUnsafeCall" id="FuncDeclaration.setUnsafeCall"><code class="code">setUnsafeCall</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="FuncDeclaration.setUnsafeCall"></span>final bool <code class="code">setUnsafeCall</code>(FuncDeclaration <code class="code">f</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    The function is calling <code class="code">@system</code> function <code class="code"><code class="code">f</code></code>, so mark it as unsafe.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">FuncDeclaration <code class="code">f</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      function being called (needed for diagnostic of inferred functions)
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    whether there's a safe error
   </p>
 </div>
 
@@ -4721,6 +4898,367 @@ mismatches = <span class="psymbol">MODMatchToBuffer</span>(&amp;<span class="par
 </div>
 <div class="ddoc_decl">
   
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#setUnsafe" id="setUnsafe"><code class="code">setUnsafe</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="setUnsafe"></span>bool <code class="code">setUnsafe</code>(Scope* <code class="code">sc</code>, bool <code class="code">gag</code> = false, Loc <code class="code">loc</code> = Loc.init, const(char)* <code class="code">fmt</code> = null, RootObject <code class="code">arg0</code> = null, RootObject <code class="code">arg1</code> = null);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A statement / expression in this scope is not <code class="code">@safe</code>,
+ so mark the enclosing function as <code class="code">@system</code>
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Scope* <code class="code">sc</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      scope that the unsafe statement / expression is in
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">bool <code class="code">gag</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      surpress error message (used in escape.d)
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Loc <code class="code">loc</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      location of error
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">const(char)* <code class="code">fmt</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      printf-style format string
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">RootObject <code class="code">arg0</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      (optional) argument for first %s format specifier
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">RootObject <code class="code">arg1</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      (optional) argument for second %s format specifier
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    whether there's a safe error
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#AttributeViolation" id="AttributeViolation"><code class="code">AttributeViolation</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="AttributeViolation"></span>struct <code class="code">AttributeViolation</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Stores a reason why a function failed to infer a function attribute like <code class="code">@safe</code> or <code class="code">pure</code>
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    Has two modes:
+<ul><li>a regular safety error, stored in (fmtStr, arg0, arg1)</li>
+<li>a call to a function without the attribute, which is a special case, because in that case,</li>
+</ul>
+that function might recursively also have a <code class="code"><code class="code">AttributeViolation</code></code>. This way, in case
+of a big call stack, the error can go down all the way to the root cause.
+The <code class="code">FunctionDeclaration</code> is then stored in <code class="code">arg0</code> and <code class="code">fmtStr</code> must be <code class="code">null</code>.
+  </p>
+</div>
+
+</section>
+<ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#AttributeViolation.loc" id="AttributeViolation.loc"><code class="code">loc</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="AttributeViolation.loc"></span>Loc <code class="code">loc</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    location of error
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#AttributeViolation.fmtStr" id="AttributeViolation.fmtStr"><code class="code">fmtStr</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="AttributeViolation.fmtStr"></span>const(char)* <code class="code">fmtStr</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    printf-style format string
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#AttributeViolation.arg0" id="AttributeViolation.arg0"><code class="code">arg0</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="AttributeViolation.arg0"></span>RootObject <code class="code">arg0</code>;
+<br>
+<span class="ddoc_anchor" id="AttributeViolation.arg1"></span>RootObject <code class="code">arg1</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Arguments for up to two <code class="code">%s</code> format specifiers in format string
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li>
+</ul>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#errorSupplementalInferredSafety" id="errorSupplementalInferredSafety"><code class="code">errorSupplementalInferredSafety</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="errorSupplementalInferredSafety"></span>void <code class="code">errorSupplementalInferredSafety</code>(FuncDeclaration <code class="code">fd</code>, int <code class="code">maxDepth</code>, bool <code class="code">deprecation</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Print the reason why <code class="code"><code class="code">fd</code></code> was inferred <code class="code">@system</code> as a supplemental error
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">FuncDeclaration <code class="code">fd</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      function to check
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">int <code class="code">maxDepth</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      up to how many functions deep to report errors
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">bool <code class="code">deprecation</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      print deprecations instead of errors
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+</section>
 
 </div>
 

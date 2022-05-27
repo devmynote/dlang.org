@@ -963,12 +963,21 @@ C c;
         <li><span class="d_inlinecode donthyphenate notranslate">&gt;</span><span class="d_inlinecode donthyphenate notranslate">&gt;</span><span class="d_inlinecode donthyphenate notranslate">&gt;</span> is an unsigned right shift.</li>
     </ul>
 <div class="blankline"></div>
-    <p>It's illegal to shift by the same or more bits than the size of the
-        quantity being shifted:</p>
+    <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b>     The result of a shift by a negative value or by the same or more bits
+    than the size of the quantity being shifted is undefined.
+    When the shift amount is known at compile time, doing this results in
+    a compile error.
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">int</span> c;
-<span class="d_keyword">auto</span> x = c &lt;&lt; 33;        <span class="d_comment">// error
+
+<span class="d_keyword">int</span> s = -3;
+<span class="d_keyword">auto</span> y = c &lt;&lt; s; <span class="d_comment">// implementation defined value
+</span>
+<span class="d_keyword">auto</span> x = c &lt;&lt; 33;  <span class="d_comment">// error, max shift count allowed is 31
 </span></pre>
+    </div>
+
+
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="add_expressions" href="#add_expressions">Add 式</a></h2>
 <div class="blankline"></div>
@@ -1468,7 +1477,7 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
 <h2><a class="anchor" title="Permalink to this section" id="throw_expression" href="#throw_expression">Throw 式</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="ThrowExpression"><span class="gname">ThrowExpression</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">throw</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
+    <span class="d_inlinecode donthyphenate notranslate">throw</span> <a href="#AssignExpression"><i>AssignExpression</i></a>
 </pre>
 <div class="blankline"></div>
 <p>    <i>AssignExpression</i> is evaluated and must yield a reference to a <span class="d_inlinecode donthyphenate notranslate">Throwable</span>
@@ -2007,7 +2016,8 @@ and abort the program.
         <a href="#ParameterWithAttributes"><i>ParameterWithAttributes</i></a> or <a href="#ParameterWithMemberAttributes"><i>ParameterWithMemberAttributes</i></a>
         can be used to specify the parameters for the function. If these are
         omitted, the function defaults to the empty parameter list <span class="d_inlinecode donthyphenate notranslate">( )</span>.
-        The type of a function literal is a delegate or a pointer to function.
+        The type of a function literal is a
+        <a href="../spec/function.html#closures">delegate or a pointer to function</a>.
     </p>
 <div class="blankline"></div>
     <p>For example:</p>
@@ -2028,7 +2038,7 @@ and abort the program.
 
 <span class="d_keyword">void</span> test()
 {
-    fp = <span class="d_keyword">function</span> <span class="d_keyword">int</span>(<span class="d_keyword">char</span> c) { <span class="d_keyword">return</span> 6;} ;
+    fp = <span class="d_keyword">function</span> <span class="d_keyword">int</span>(<span class="d_keyword">char</span> c) { <span class="d_keyword">return</span> 6; };
 }
 </pre>
 <div class="blankline"></div>
@@ -2060,14 +2070,27 @@ and abort the program.
 <div class="blankline"></div>
     <p>The use of <span class="d_inlinecode donthyphenate notranslate">ref</span> declares that the return value is returned by reference:</p>
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">void</span> main()
 {
     <span class="d_keyword">int</span> x;
-    <span class="d_keyword">auto</span> dg = <span class="d_keyword">delegate</span> <span class="d_keyword">ref</span> <span class="d_keyword">int</span>() { <span class="d_keyword">return</span> x; }
+    <span class="d_keyword">auto</span> dg = <span class="d_keyword">delegate</span> <span class="d_keyword">ref</span> <span class="d_keyword">int</span>() { <span class="d_keyword">return</span> x; };
     x = 3;
-    <span class="d_keyword">assert</span>(fp() == 3);
+    <span class="d_keyword">assert</span>(dg() == 3);
 }
 </pre>
+        
+</div>
+<div class="blankline"></div>
+    <div class="spec-boxes note"><b>Note:</b> When comparing function literals with <a href="../spec/function.html#nested">nested functions</a>,
+        the <span class="d_inlinecode donthyphenate notranslate">function</span> form is analogous to static
+        or non-nested functions, and the <span class="d_inlinecode donthyphenate notranslate">delegate</span> form is
+        analogous to non-static nested functions. I.e.
+        a delegate literal can access non-static local variables in an enclosing
+        function, a function literal cannot.
+    </div>
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="lambda-type-inference" href="#lambda-type-inference">Type Inference</a></h4>
 <div class="blankline"></div>
     <p>If <span class="d_inlinecode donthyphenate notranslate">function</span> or <span class="d_inlinecode donthyphenate notranslate">delegate</span> is omitted,
         it is inferred to be <span class="d_inlinecode donthyphenate notranslate">delegate</span> if accessing
@@ -2090,7 +2113,7 @@ and abort the program.
 </pre>
 <div class="blankline"></div>
     <p>If the type of a function literal can be uniquely determined from its context,
-        the parameter type inference is possible.</p>
+        parameter type inference is possible.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">void</span> foo(<span class="d_keyword">int</span> <span class="d_keyword">function</span>(<span class="d_keyword">int</span>) fp);
 
@@ -2104,7 +2127,7 @@ and abort the program.
 </span>}
 </pre>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">auto</span> fp1 = <span class="d_keyword">function</span> (i) { <span class="d_keyword">return</span> 1; } <span class="d_comment">// error, cannot infer type of `i`
+<pre class="d_code notranslate"><span class="d_keyword">auto</span> fp1 = <span class="d_keyword">function</span> (i) { <span class="d_keyword">return</span> 1; }; <span class="d_comment">// error, cannot infer type of `i`
 </span></pre>
 <div class="blankline"></div>
     <p>If the function literal is assigned to an alias, the inference
@@ -2116,47 +2139,50 @@ and abort the program.
 </span><span class="d_keyword">double</span> d = fp3(10.3); <span class="d_comment">// `i` is inferred as `double` here
 </span></pre>
 <div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="lambda-short-syntax" href="#lambda-short-syntax">短い構文</a></h4>
+<div class="blankline"></div>
     <p>Anonymous delegates can behave like arbitrary statement literals.
         For example, here an arbitrary statement is executed by a loop:</p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">double</span> test()
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">void</span> loop(<span class="d_keyword">int</span> n, <span class="d_keyword">void</span> <span class="d_keyword">delegate</span>() statement)
 {
-    <span class="d_keyword">double</span> d = 7.6;
-    <span class="d_keyword">float</span> f = 2.3;
-
-    <span class="d_keyword">void</span> loop(<span class="d_keyword">int</span> k, <span class="d_keyword">int</span> j, <span class="d_keyword">void</span> <span class="d_keyword">delegate</span>() statement)
+    <span class="d_keyword">foreach</span> (_; 0 .. n)
     {
-        <span class="d_keyword">foreach</span> (i; k .. j)
-        {
-            statement();
-        }
+        statement();
     }
-
-    loop(5, 100, { d += 1; });
-    loop(3, 10,  { f += 3; });
-
-    <span class="d_keyword">return</span> d + f;
 }
-</pre>
-<div class="blankline"></div>
-    <p>The syntax <span class="d_inlinecode donthyphenate notranslate">=&gt; AssignExpression</span> is equivalent to <span class="d_inlinecode donthyphenate notranslate">{ return AssignExpression; }</span>.</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio;
 
 <span class="d_keyword">void</span> main()
 {
+    <span class="d_keyword">int</span> n = 0;
+
+    loop(5, { n += 1; });
+    <span class="d_keyword">assert</span>(n == 5);
+}
+</pre>
+        
+</div>
+<div class="blankline"></div>
+    <p>The syntax <span class="d_inlinecode donthyphenate notranslate">=&gt; AssignExpression</span> is equivalent to <span class="d_inlinecode donthyphenate notranslate">{ return AssignExpression; }</span>.</p>
+<div class="blankline"></div>
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">void</span> main()
+{
     <span class="d_keyword">auto</span> i = 3;
-    <span class="d_keyword">auto</span> twice  = <span class="d_keyword">function</span> (<span class="d_keyword">int</span> x) =&gt; x * 2;
-    <span class="d_keyword">auto</span> square = <span class="d_keyword">delegate</span> (<span class="d_keyword">int</span> x) =&gt; x * x;
+    <span class="d_keyword">auto</span> twice = <span class="d_keyword">function</span> (<span class="d_keyword">int</span> x) =&gt; x * 2;
+    <span class="d_keyword">assert</span>(twice(i) == 6);
+
+    <span class="d_keyword">auto</span> square = <span class="d_keyword">delegate</span> () =&gt; i * i;
+    <span class="d_keyword">assert</span>(square() == 9);
 
     <span class="d_keyword">auto</span> n = 5;
     <span class="d_keyword">auto</span> mul_n = (<span class="d_keyword">int</span> x) =&gt; x * n;
-
-    writeln(twice(i));   <span class="d_comment">// prints 6
-</span>    writeln(square(i));  <span class="d_comment">// prints 9
-</span>    writeln(mul_n(i));   <span class="d_comment">// prints 15
-</span>}
+    <span class="d_keyword">assert</span>(mul_n(i) == 15);
+}
 </pre>
+        
+</div>
 <div class="blankline"></div>
     <p>The syntax <span class="d_inlinecode donthyphenate notranslate">Identifier =&gt; AssignExpression</span> is equivalent to <span class="d_inlinecode donthyphenate notranslate">(Identifier) { return AssignExpression; }</span>.</p>
 <div class="blankline"></div>
@@ -2186,13 +2212,6 @@ and abort the program.
         if the semicolons were accidentally omitted.
         </div>
 <div class="blankline"></div>
-    <div class="spec-boxes note"><b>Note:</b> When comparing function literals with <a href="../spec/function.html#nested">nested functions</a>,
-        the <span class="d_inlinecode donthyphenate notranslate">function</span> form is analogous to static
-        or non-nested functions, and the <span class="d_inlinecode donthyphenate notranslate">delegate</span> form is
-        analogous to non-static nested functions. I.e.
-        a delegate literal can access non-static local variables in an enclosing
-        function, a function literal cannot.
-    </div>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="uniform_construction_syntax" href="#uniform_construction_syntax">スカラー型の統一された構築構文</a></h3>
 <div class="blankline"></div>
@@ -2813,7 +2832,7 @@ file full path: '/example/test.d'
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Apr 30 08:50:40 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Fri May 27 14:32:43 2022
 </div>
     </div>
 </div>

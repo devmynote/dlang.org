@@ -169,7 +169,8 @@
     <li><a href="#invariants">クラスの不変条件</a></li>
     <li><a href="#alias-this">Alias This</a></li>
     <li><a href="#auto">Scope クラス</a></li>
-    <li><a href="#final">Final クラス</a></li>
+    <li><a href="#abstract">Abstract クラス</a></li>
+    <li><a href="#final">Final Classes</a></li>
     <li><a href="#nested">クラスのネスト</a><ol>        <li><a href="#static-nested">静的クラスのネスト</a></li>
         <li><a href="#nested-context">属性のポインタ</a></li>
         <li><a href="#nested-explicit">明示的なインスタンス化</a></li>
@@ -221,28 +222,24 @@
     <a href="../spec/type.html#BasicType"><i>BasicType</i></a>
 </pre>
 <div class="blankline"></div>
-<p>Classes consist of:</p>
+<p>A class consists of:</p>
 <div class="blankline"></div>
+
 <ul>        <li>a super class</li>
-        <li>interfaces</li>
-        <li>a nested anonymous metaclass for classes declared with <span class="d_inlinecode donthyphenate notranslate">extern (Objective-C)</span></li>
+        <li><a href="../spec/interface.html">interfaces</a>
         <li>dynamic fields</li>
-        <li>static fields</li>
-        <li>types</li>
-        <li><a href="#synchronized-classes">an optional synchronized attribute</a></li>
-        <li><a href="#member-functions">member functions</a>
+        <li><a href="../spec/attribute.html#static">static</a> fields</li>
+        <li><a href="#nested">nested classes</a></li>
+        <li><a href="#member-functions">member functions</a></li>
         <ul>            <li>static member functions</li>
             <li><a href="../spec/function.html#virtual-functions">Virtual Functions</a></li>
             <li><a href="#constructors">Constructors</a></li>
             <li><a href="#destructors">Destructors</a></li>
-            <li><a href="#static-constructor">Static Constructors</a></li>
-            <li><a href="#static-destructor">Static Destructors</a></li>
-            <li><a href="#SharedStaticConstructor"><i>SharedStaticConstructor</i></a>s</li>
-            <li><a href="#SharedStaticDestructor"><i>SharedStaticDestructor</i></a>s</li>
             <li><a href="#invariants">Class Invariants</a></li>
-            <li><a href="../spec/unittest.html#unittest">Unit Tests</a></li>
-            <li><a href="#alias-this">Alias This</a></li>
+            <li><a href="../spec/operatoroverloading.html">Operator Overloading</a></li>
         </ul>
+        <li><a href="#alias-this">Alias This</a></li>
+        <li>other declarations (see <a href="../spec/module.html#DeclDef"><i>DeclDef</i></a>)</li>
         </li>
 </ul>
 <div class="blankline"></div>
@@ -438,7 +435,7 @@ Foo var;
         </p>
 <div class="blankline"></div>
         <p>Static member functions with Objective-C linkage are placed in
-        the hidden nested metaclass as non-static member functions.
+        a hidden nested metaclass as non-static member functions.
         </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
@@ -1326,7 +1323,73 @@ class are also scope.</p>
 it is automatically called. This holds true even if the scope was exited via a
 thrown exception.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="final" href="#final">Final クラス</a></h2>
+<div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="abstract" href="#abstract">Abstract クラス</a></h2>
+<div class="blankline"></div>
+<p>        An abstract member function must be overridden by a derived class.
+        Only virtual member functions may be declared abstract; non-virtual
+        member functions and free-standing functions cannot be declared
+        abstract.
+</p>
+<div class="blankline"></div>
+<p>        A class is abstract if any of its virtual member functions
+        are declared abstract or if they are defined within an
+        abstract attribute.
+        Note that an abstract class may also contain non-virtual member functions.
+        Abstract classes cannot be instantiated directly.
+        They can only be instantiated as a base class of
+        another, non-abstract, class.
+</p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">class</span> C
+{
+    <span class="d_keyword">abstract</span> <span class="d_keyword">void</span> f();
+}
+
+<span class="d_keyword">auto</span> c = <span class="d_keyword">new</span> C; <span class="d_comment">// error, C is abstract
+</span>
+<span class="d_keyword">class</span> D : C {}
+
+<span class="d_keyword">auto</span> d = <span class="d_keyword">new</span> D; <span class="d_comment">// error, D is abstract
+</span>
+<span class="d_keyword">class</span> E : C
+{
+    <span class="d_keyword">override</span> <span class="d_keyword">void</span> f() {}
+}
+
+<span class="d_keyword">auto</span> e = <span class="d_keyword">new</span> E; <span class="d_comment">// OK
+</span></pre>
+
+</div>
+<div class="blankline"></div>
+<p>        Member functions declared as abstract can still have function
+        bodies. This is so that even though they must be overridden,
+        they can still provide &lsquo;base class functionality&rsquo;,
+        e.g. through <span class="d_inlinecode donthyphenate notranslate">super.foo()</span> in a derived class.
+        Note that the class is still abstract and cannot be instantiated directly.
+</p>
+<div class="blankline"></div>
+<p>        A class can be declared abstract:
+</p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">abstract</span> <span class="d_keyword">class</span> A
+{
+    <span class="d_comment">// ...
+</span>}
+
+<span class="d_keyword">auto</span> a = <span class="d_keyword">new</span> A; <span class="d_comment">// error, A is abstract
+</span>
+<span class="d_keyword">class</span> B : A {}
+
+<span class="d_keyword">auto</span> b = <span class="d_keyword">new</span> B; <span class="d_comment">// OK
+</span></pre>
+
+</div>
+<div class="blankline"></div>
+<div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="final" href="#final">Final Classes</a></h2>
 <div class="blankline"></div>
         <p>Final classes cannot be subclassed:</p>
 <div class="blankline"></div>
@@ -1623,7 +1686,7 @@ obj.foo();
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Apr 30 08:50:42 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Fri May 27 14:32:43 2022
 </div>
     </div>
 </div>

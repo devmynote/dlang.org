@@ -1154,7 +1154,7 @@ If <code class="code">semantic()</code> has not been run, 0 is returned.
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="Type.covariant"></span>final Covariant <code class="code">covariant</code>(Type <code class="code">t</code>, StorageClass* <code class="code">pstc</code> = null);
+            <span class="ddoc_anchor" id="Type.covariant"></span>final Covariant <code class="code">covariant</code>(Type <code class="code">t</code>, StorageClass* <code class="code">pstc</code> = null, bool <code class="code">cppCovariant</code> = false);
 
           </code>
         </p>
@@ -1199,6 +1199,20 @@ If <code class="code">semantic()</code> has not been run, 0 is returned.
   <div class="ddoc_param_desc">
     <p class="para">
       if not <code class="code">null</code>, store STCxxxx which would make it <code class="code">covariant</code>
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">bool <code class="code">cppCovariant</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      <code class="code">true</code> if extern(C++) function types should follow C++ <code class="code">covariant</code> rules
     </p>
   </div>
 </td>
@@ -3626,7 +3640,7 @@ T a, b;
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#TypeTraits.sym" id="TypeTraits.sym"><code class="code">sym</code></a>
+  <a href="#TypeTraits.obj" id="TypeTraits.obj"><code class="code">obj</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -3635,7 +3649,7 @@ T a, b;
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="TypeTraits.sym"></span>Dsymbol <code class="code">sym</code>;
+            <span class="ddoc_anchor" id="TypeTraits.obj"></span>RootObject <code class="code">obj</code>;
 
           </code>
         </p>
@@ -3647,7 +3661,7 @@ T a, b;
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    After <code class="code">typeSemantic</code> the symbol when <code class="code">exp</code> doesn't represent a type.
+    Cached type/symbol after semantic analysis.
   </p>
 </div>
 

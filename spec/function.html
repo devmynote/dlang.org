@@ -146,11 +146,11 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#grammar">文法</a></li>
+    <ol>    <li><a href="#grammar">文法</a><ol>        <li><a href="#function-declarations">Functions without Bodies</a></li>
+    </ol></li>
     <li><a href="#contracts">関数の契約</a><ol>        <li><a href="#in_out_inheritance">In, Out, 継承</a></li>
     </ol></li>
     <li><a href="#function-return-values">関数の戻り値</a></li>
-    <li><a href="#function-declarations">本文無し関数</a></li>
     <li><a href="#pure-functions">Pure 関数</a><ol>        <li><a href="#pure-special-cases">特殊なケース</a></li>
         <li><a href="#pure-factory-functions">Pure ファクトリ関数</a></li>
         <li><a href="#pure-optimization">最適化</a></li>
@@ -189,7 +189,8 @@
     </ol></li>
     <li><a href="#local-variables">ローカル変数</a><ol>        <li><a href="#local-static-variables">ローカル静的変数</a></li>
     </ol></li>
-    <li><a href="#nested">関数のネスト</a></li>
+    <li><a href="#nested">関数のネスト</a><ol>        <li><a href="#nested-declaration-order">Declaration Order</a></li>
+    </ol></li>
     <li><a href="#closures">デリゲート, 関数ポインタ, クロージャ</a><ol>        <li><a href="#anonymous">無名関数、無名デリゲート</a></li>
     </ol></li>
     <li><a href="#main"><span class="d_inlinecode donthyphenate notranslate">main()</span> 関数</a><ol>        <li><a href="#betterc-main"><span class="d_inlinecode donthyphenate notranslate">extern(C) main()</span> 関数</a></li>
@@ -306,8 +307,8 @@
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="FunctionBody"><span class="gname">FunctionBody</span></a>:
     <a href="#SpecifiedFunctionBody"><i>SpecifiedFunctionBody</i></a>
-    <a href="#MissingFunctionBody"><i>MissingFunctionBody</i></a>
     <a href="#ShortenedFunctionBody"><i>ShortenedFunctionBody</i></a>
+    <a href="#MissingFunctionBody"><i>MissingFunctionBody</i></a>
 <div class="blankline"></div>
 <a id="FunctionLiteralBody"><span class="gname">FunctionLiteralBody</span></a>:
     <a href="#SpecifiedFunctionBody"><i>SpecifiedFunctionBody</i></a>
@@ -317,24 +318,42 @@
     <a href="#FunctionContracts"><i>FunctionContracts</i></a><sub>opt</sub> <a href="#InOutContractExpression"><i>InOutContractExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">do</span><sub>opt</sub> <a href="../spec/statement.html#BlockStatement"><i>BlockStatement</i></a>
     <a href="#FunctionContracts"><i>FunctionContracts</i></a><sub>opt</sub> <a href="#InOutStatement"><i>InOutStatement</i></a> <span class="d_inlinecode donthyphenate notranslate">do</span> <a href="../spec/statement.html#BlockStatement"><i>BlockStatement</i></a>
 <div class="blankline"></div>
-<a id="MissingFunctionBody"><span class="gname">MissingFunctionBody</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">;</span>
-    <a href="#FunctionContracts"><i>FunctionContracts</i></a><sub>opt</sub> <a href="#InOutContractExpression"><i>InOutContractExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
-    <a href="#FunctionContracts"><i>FunctionContracts</i></a><sub>opt</sub> <a href="#InOutStatement"><i>InOutStatement</i></a>
-<div class="blankline"></div>
 <a id="ShortenedFunctionBody"><span class="gname">ShortenedFunctionBody</span></a>:
     <a href="#InOutContractExpressions"><i>InOutContractExpressions</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">=&gt;</span> <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
 </pre>
 <div class="blankline"></div>
-        <p>例:</p>
+        <p>Examples:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">int</span> hasSpecifiedBody() { <span class="d_keyword">return</span> 1; }
-<span class="d_keyword">int</span> hasMissingBody();
-<span class="d_keyword">int</span> hasShortenedBody() =&gt; 1;
+<span class="d_keyword">int</span> hasShortenedBody() =&gt; 1; <span class="d_comment">// equivalent
+</span></pre>
+<div class="blankline"></div>
+        <p>The <em>ShortenedFunctionBody</em> form implies a
+        <a href="../spec/statement.html#ReturnStatement">return statement</a>.
+        This syntax also applies for <a href="../spec/expression.html#function_literals">function literals</a>.</p>
+<div class="blankline"></div>
+        <p><b>Note:</b> The <em>ShortenedFunctionBody</em> form requires the <span class="d_inlinecode donthyphenate notranslate">-preview=shortenedMethods</span>
+        command-line switch, which is available starting in v2.096.0.</p>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="function-declarations" href="#function-declarations">Functions without Bodies</a></h3>
+<div class="blankline"></div>
+<pre class="bnf notranslate"><a id="MissingFunctionBody"><span class="gname">MissingFunctionBody</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">;</span>
+    <a href="#FunctionContracts"><i>FunctionContracts</i></a><sub>opt</sub> <a href="#InOutContractExpression"><i>InOutContractExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
+    <a href="#FunctionContracts"><i>FunctionContracts</i></a><sub>opt</sub> <a href="#InOutStatement"><i>InOutStatement</i></a>
 </pre>
 <div class="blankline"></div>
-        <p><b>Note:</b> The <span class="d_inlinecode donthyphenate notranslate">ShortenedFunctionBody</span> form requires the <span class="d_inlinecode donthyphenate notranslate">-preview=shortenedMethods</span>
-        command-line switch, which is available starting in v2.096.0.</p>
+    <p>Functions without bodies:</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">int</span> foo();
+</pre>
+<div class="blankline"></div>
+    <p>that are not declared as <span class="d_inlinecode donthyphenate notranslate">abstract</span> are expected to have their implementations
+    elsewhere, and that implementation will be provided at the link step.
+    This enables an implementation of a function to be completely hidden from the user
+    of it, and the implementation may be in another language such as C, assembler, etc.
+    </p>
+<div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="contracts" href="#contracts">関数の契約</a></h2>
 <div class="blankline"></div>
@@ -567,19 +586,6 @@
         This means they cannot be passed by reference to other functions.
         </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="function-declarations" href="#function-declarations">本文無し関数</a></h2>
-<div class="blankline"></div>
-    <p>Functions without bodies:</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">int</span> foo();
-</pre>
-<div class="blankline"></div>
-    <p>that are not declared as <span class="d_inlinecode donthyphenate notranslate">abstract</span> are expected to have their implementations
-    elsewhere, and that implementation will be provided at the link step.
-    This enables an implementation of a function to be completely hidden from the user
-    of it, and the implementation may be in another language such as C, assembler, etc.
-    </p>
-<div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="pure-functions" href="#pure-functions">Pure 関数</a></h2>
 <div class="blankline"></div>
         <p>Pure functions are annotated with the <span class="d_inlinecode donthyphenate notranslate">pure</span> attribute.
@@ -657,7 +663,7 @@ foo(a);
 <div class="blankline"></div>
         <div class="spec-boxes undefined-behavior"><b>Undefined Behavior:</b> occurs if these flags are not restored to their
         initial state upon function exit. It is the programmer's responsibility
-        to ensure this.</div>
+        to ensure this. Setting these flags is not allowed in <span class="d_inlinecode donthyphenate notranslate">@safe</span> code.</div>
 
 
 <div class="blankline"></div>
@@ -1018,13 +1024,14 @@ foo(a);
     <p>If a function call passes no explicit argument, i.e. it would syntactically use <span class="d_inlinecode donthyphenate notranslate">()</span>, then these parentheses
     may be omitted, similar to a getter invocation of a
         <a href="#property-functions">property function</a>.
+        A <a href="#pseudo-member">UFCS</a> call can also omit empty parentheses.
         </p>
 <div class="blankline"></div>
         <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">void</span> foo() {}   <span class="d_comment">// no arguments
-</span><span class="d_keyword">void</span> fun(<span class="d_keyword">int</span> x = 10) { }
-<span class="d_keyword">void</span> bar(<span class="d_keyword">int</span>[] arr) {}  <span class="d_comment">// for UFCS
-</span>
+</span><span class="d_keyword">void</span> fun(<span class="d_keyword">int</span> x = 10) {}
+<span class="d_keyword">void</span> bar(<span class="d_keyword">int</span>[] arr) {}
+
 <span class="d_keyword">void</span> main()
 {
     foo();      <span class="d_comment">// OK
@@ -1032,14 +1039,14 @@ foo(a);
 </span>    fun;        <span class="d_comment">// OK
 </span>
     <span class="d_keyword">int</span>[] arr;
-    arr.bar();  <span class="d_comment">// OK
+    arr.bar();  <span class="d_comment">// UFCS call
 </span>    arr.bar;    <span class="d_comment">// also OK
 </span>}
 </pre>
         
 </div>
 <div class="blankline"></div>
-    <p>Optional parentheses are not applied to delegates or function pointers.</p>
+    <p>Due to ambiguity, parentheses are required to call a delegate or a function pointer:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">void</span> main()
 {
@@ -1053,42 +1060,50 @@ foo(a);
 </span>}
 </pre>
 <div class="blankline"></div>
-    <p>If a function returns a delegate or function pointer, the parentheses are required if the
-    returned value is to be called.
+    <p>If a function returns a delegate or a function pointer, any parentheses
+    apply first to the function call, not the result. Two sets of parentheses are required
+    to call the result directly:
     </p>
 <div class="blankline"></div>
     <div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">struct</span> S {
-    <span class="d_keyword">int</span> <span class="d_keyword">function</span>() callfp() { <span class="d_keyword">return</span> &amp;numfp; }
-    <span class="d_keyword">int</span> <span class="d_keyword">delegate</span>() calldg() <span class="d_keyword">return</span> { <span class="d_keyword">return</span> &amp;numdg; }
-    <span class="d_keyword">int</span> numdg() { <span class="d_keyword">return</span> 6; }
-}
+<pre class="d_code notranslate"><span class="d_keyword">int</span> getNum() { <span class="d_keyword">return</span> 6; }
+<span class="d_keyword">int</span> <span class="d_keyword">function</span>() getFunc() { <span class="d_keyword">return</span> &amp;getNum; }
 
-<span class="d_keyword">int</span> numfp() { <span class="d_keyword">return</span> 6; }
+<span class="d_keyword">void</span> main()
+{
+    <span class="d_keyword">int</span> <span class="d_keyword">function</span>() fp;
+
+    fp = getFunc;   <span class="d_comment">// implicit call
+</span>    <span class="d_keyword">assert</span>(fp() == 6);
+
+    fp = getFunc(); <span class="d_comment">// explicit call
+</span>    <span class="d_keyword">assert</span>(fp() == 6);
+
+    <span class="d_keyword">int</span> x = getFunc()();
+    <span class="d_keyword">assert</span>(x == 6);
+}
+</pre>
+    
+</div>
+    <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">struct</span> S
+{
+    <span class="d_keyword">int</span> getNum() { <span class="d_keyword">return</span> 6; }
+    <span class="d_keyword">int</span> <span class="d_keyword">delegate</span>() getDel() <span class="d_keyword">return</span> { <span class="d_keyword">return</span> &amp;getNum; }
+}
 
 <span class="d_keyword">void</span> main()
 {
     S s;
-    <span class="d_keyword">int</span> <span class="d_keyword">function</span>() fp;
-
-    fp = s.callfp;
-    <span class="d_keyword">assert</span>(fp() == 6);
-
-    fp = s.callfp();
-    <span class="d_keyword">assert</span>(fp() == 6);
-
-    <span class="d_keyword">int</span> x = s.callfp()();
-    <span class="d_keyword">assert</span>(x == 6);
-
     <span class="d_keyword">int</span> <span class="d_keyword">delegate</span>() dg;
 
-    dg = s.calldg;
-    <span class="d_keyword">assert</span>(dg() == 6);
+    dg = s.getDel;   <span class="d_comment">// implicit call
+</span>    <span class="d_keyword">assert</span>(dg() == 6);
 
-    dg = s.calldg();
-    <span class="d_keyword">assert</span>(dg() == 6);
+    dg = s.getDel(); <span class="d_comment">// explicit call
+</span>    <span class="d_keyword">assert</span>(dg() == 6);
 
-    <span class="d_keyword">int</span> y = s.calldg()();
+    <span class="d_keyword">int</span> y = s.getDel()();
     <span class="d_keyword">assert</span>(y == 6);
 }
 </pre>
@@ -2118,8 +2133,9 @@ C balin(<span class="d_keyword">return</span> <span class="d_keyword">scope</spa
         When a parameter is passed by <span class="d_inlinecode donthyphenate notranslate">ref</span> and has both the <span class="d_inlinecode donthyphenate notranslate">return</span> and <span class="d_inlinecode donthyphenate notranslate">scope</span> storage classes,
         it gets <a href="#return-scope-parameters"><span class="d_inlinecode donthyphenate notranslate">return scope</span></a> semantics if and only if the <span class="d_inlinecode donthyphenate notranslate">return</span> and <span class="d_inlinecode donthyphenate notranslate">scope</span>
         keywords appear adjacent to each other, in that order.
+        Specifying a <span class="d_inlinecode donthyphenate notranslate">return ref</span> and <span class="d_inlinecode donthyphenate notranslate">scope</span> parameter enables returning a reference to a scope pointer.
         In all other cases, the parameter has <a href="#return-ref-parameters"><span class="d_inlinecode donthyphenate notranslate">return ref</span></a> semantics
-        and regular <a href="#scope-parameters"><span class="d_inlinecode donthyphenate notranslate">scope</span></a> semantics:</p>
+        and regular <a href="#scope-parameters"><span class="d_inlinecode donthyphenate notranslate">scope</span></a> semantics.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate">U xerxes(       <span class="d_keyword">ref</span> <span class="d_keyword">return</span> <span class="d_keyword">scope</span> V v) <span class="d_comment">// (1) ref and return scope
 </span>U sargon(<span class="d_keyword">return</span> <span class="d_keyword">ref</span>        <span class="d_keyword">scope</span> V v) <span class="d_comment">// (2) return ref and scope
@@ -2149,28 +2165,33 @@ C balin(<span class="d_keyword">return</span> <span class="d_keyword">scope</spa
 
     <span class="d_comment">// note: `this` is passed by `ref` in structs
 </span>
-    <span class="d_keyword">int</span>* retRefA() <span class="d_keyword">scope</span> <span class="d_keyword">return</span>
-    {
+    <span class="d_keyword">int</span>* retRefA() <span class="d_keyword">scope</span> <span class="d_keyword">return</span> <span class="d_comment">// return-ref, scope
+</span>    {
         globalPtr = <span class="d_keyword">this</span>.ptr; <span class="d_comment">// disallowed, `this` is `scope`
 </span>        <span class="d_keyword">return</span> &amp;<span class="d_keyword">this</span>.val; <span class="d_comment">// allowed, `return` means `return ref`
 </span>    }
 
-    <span class="d_keyword">ref</span> <span class="d_keyword">int</span> retRefB() <span class="d_keyword">scope</span> <span class="d_keyword">return</span>
-    {
+    <span class="d_keyword">ref</span> <span class="d_keyword">int</span> retRefB() <span class="d_keyword">scope</span> <span class="d_keyword">return</span> <span class="d_comment">// return-ref, scope
+</span>    {
         globalPtr = <span class="d_keyword">this</span>.ptr; <span class="d_comment">// disallowed, `this` is `scope`
 </span>        <span class="d_keyword">return</span>  <span class="d_keyword">this</span>.val; <span class="d_comment">// allowed, `return` means `return ref`
 </span>    }
 
-    <span class="d_keyword">int</span>* retScopeA() <span class="d_keyword">return</span> <span class="d_keyword">scope</span>
-    {
+    <span class="d_keyword">int</span>* retScopeA() <span class="d_keyword">return</span> <span class="d_keyword">scope</span> <span class="d_comment">// ref, return-scope
+</span>    {
         <span class="d_keyword">return</span> &amp;<span class="d_keyword">this</span>.val; <span class="d_comment">// disallowed, escaping a reference to `this`
 </span>        <span class="d_keyword">return</span> <span class="d_keyword">this</span>.ptr;  <span class="d_comment">// allowed, returning a `return scope` pointer
 </span>    }
 
-    <span class="d_keyword">ref</span> <span class="d_keyword">int</span> retScopeB() <span class="d_keyword">return</span> <span class="d_keyword">scope</span>
-    {
+    <span class="d_keyword">ref</span> <span class="d_keyword">int</span> retScopeB() <span class="d_keyword">return</span> <span class="d_keyword">scope</span> <span class="d_comment">// ref, return-scope
+</span>    {
         <span class="d_keyword">return</span> <span class="d_keyword">this</span>.val;  <span class="d_comment">// disallowed, escaping a reference to `this`
 </span>        <span class="d_keyword">return</span> *<span class="d_keyword">this</span>.ptr; <span class="d_comment">// allowed, returning a `return scope` pointer
+</span>    }
+
+    <span class="d_keyword">ref</span> <span class="d_keyword">int</span>* retRefScopeC() <span class="d_keyword">scope</span> <span class="d_keyword">return</span> <span class="d_comment">// return-ref, scope
+</span>    {
+        <span class="d_keyword">return</span> <span class="d_keyword">this</span>.ptr; <span class="d_comment">// allowed, returning a reference to a scope pointer
 </span>    }
 }
 
@@ -2196,6 +2217,11 @@ C balin(<span class="d_keyword">return</span> <span class="d_keyword">scope</spa
 {
     <span class="d_keyword">return</span> s.val;  <span class="d_comment">// disallowed, escaping a reference to `s`
 </span>    <span class="d_keyword">return</span> *s.ptr; <span class="d_comment">// allowed, returning a `return scope` pointer
+</span>}
+
+<span class="d_keyword">ref</span> <span class="d_keyword">int</span>* retRefScopeC(<span class="d_keyword">return</span> <span class="d_keyword">ref</span> <span class="d_keyword">scope</span> <span class="d_keyword">int</span>* p)
+{
+    <span class="d_keyword">return</span> p; <span class="d_comment">// allowed, returning a reference to a scope pointer
 </span>}
 </pre>
 <div class="blankline"></div>
@@ -2899,6 +2925,8 @@ Bar
         <p>Nested functions always have the D function linkage type.
         </p>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="nested-declaration-order" href="#nested-declaration-order">Declaration Order</a></h3>
+<div class="blankline"></div>
         <p>Unlike module level declarations, declarations within function
         scope are processed in order. This means that two nested functions
         cannot mutually call each other:
@@ -3110,6 +3138,12 @@ Bar
         Initialization with the address of a function that requires a context pointer
         is not allowed in @safe functions.
         </p>
+<div class="blankline"></div>
+        <div class="spec-boxes undefined-behavior"><b>Undefined Behavior:</b> Calling a function pointer that was set to point to
+        a function that requires a context pointer.
+        </div>
+
+
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> S
 {
@@ -3902,17 +3936,19 @@ f1(u1.x, u1.y); <span class="d_comment">// Ok
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="pseudo-member" href="#pseudo-member">統一された関数呼び出し構文 (UFCS)</a></h2>
 <div class="blankline"></div>
-        <p>A free function can be called with a syntax equivalent to that of
-        a member function of its first parameter type. The free function is
-        called a <i>UFCS function</i>.
-        </p>
+        <p>A free function can be called like a member function when both:</p>
+        <ul>        <li>The member function does not (or cannot) exist for the object expression</li>
+        <li>The free function's first parameter type matches the object expression</li>
+        </ul>
+        <p>The object expression can be any type.
+        This is called a <i>UFCS function call</i>.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">void</span> sun(T, <span class="d_keyword">int</span>);
 
 <span class="d_keyword">void</span> moon(T t)
 {
     t.sun(1);
-    <span class="d_comment">// If `T` does not have member function `sun`,
+    <span class="d_comment">// If `T` does not have a member function `sun`,
 </span>    <span class="d_comment">// `t.sun(1)` is interpreted as if it were written `sun(t, 1)`
 </span>}
 </pre>
@@ -3953,16 +3989,13 @@ obj.prop;      <span class="d_comment">// if X does not have member prop, reinte
 </span></pre>
 <div class="blankline"></div>
         <p>Functions declared in a local scope are not found when searching for a matching
-        UFCS function.</p>
-<div class="blankline"></div>
-        <p>Member functions are not found when searching for a matching
-        UFCS function.</p>
-<div class="blankline"></div>
-        <p>Otherwise, UFCS function lookup proceeds normally.</p>
+        UFCS function. Neither are other local symbols, although local imports are searched:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">module</span> a;
+
 <span class="d_keyword">void</span> foo(X);
 <span class="d_keyword">alias</span> boo = foo;
+
 <span class="d_keyword">void</span> main()
 {
     <span class="d_keyword">void</span> bar(X);     <span class="d_comment">// bar declared in local scope
@@ -3979,24 +4012,32 @@ obj.prop;      <span class="d_comment">// if X does not have member prop, reinte
 </span>                  <span class="d_comment">// because the declared alias name 'boo' in local scope
 </span>                  <span class="d_comment">// overrides module scope name
 </span>}
-<span class="d_keyword">class</span> C
+</pre>
+<div class="blankline"></div>
+        <p>Member functions are not found when searching for a matching
+        UFCS function.</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">class</span> C
 {
     <span class="d_keyword">void</span> mfoo(X);           <span class="d_comment">// member function
 </span>    <span class="d_keyword">static</span> <span class="d_keyword">void</span> sbar(X);    <span class="d_comment">// static member function
 </span>    <span class="d_keyword">import</span> b : ibaz = baz;  <span class="d_comment">// void baz(X);
-</span>    <span class="d_keyword">void</span> test()
+</span>
+    <span class="d_keyword">void</span> test()
     {
         X obj;
         <span class="d_comment">//obj.mfoo();  // NG, UFCS does not see member functions
 </span>        <span class="d_comment">//obj.sbar();  // NG, UFCS does not see static member functions
-</span>        obj.ibaz();    <span class="d_comment">// OK, ibaz is an alias of baz which declared at
+</span>        obj.ibaz();    <span class="d_comment">// OK, ibaz is an alias of baz which is declared at
 </span>                       <span class="d_comment">//     the top level scope of module b
 </span>    }
 }
 </pre>
 <div class="blankline"></div>
+        <p>Otherwise, UFCS function lookup proceeds normally.</p>
+<div class="blankline"></div>
         <div class="spec-boxes rationale"><b>Rationale:</b> Local function symbols are not considered by UFCS
-        to avoid unexpected name conflicts. See below problematic examples.</div>
+        to avoid unexpected name conflicts. See below for problematic examples.</div>
 
 
 <div class="blankline"></div>
@@ -4030,7 +4071,7 @@ obj.prop;      <span class="d_comment">// if X does not have member prop, reinte
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Apr 30 08:50:42 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Fri May 27 14:32:43 2022
 </div>
     </div>
 </div>

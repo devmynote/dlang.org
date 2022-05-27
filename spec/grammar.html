@@ -707,7 +707,7 @@
     <span class="d_inlinecode donthyphenate notranslate">cast (</span> <a href="#TypeCtors"><i>TypeCtors</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#UnaryExpression"><i>UnaryExpression</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="ThrowExpression"><span class="gname">ThrowExpression</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">throw</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
+    <span class="d_inlinecode donthyphenate notranslate">throw</span> <a href="#AssignExpression"><i>AssignExpression</i></a>
 </pre>
 <pre class="bnf notranslate"><a id="PowExpression"><span class="gname">PowExpression</span></a>:
     <a href="#PostfixExpression"><i>PostfixExpression</i></a>
@@ -1383,8 +1383,8 @@
 </pre>
 <pre class="bnf notranslate"><a id="FunctionBody"><span class="gname">FunctionBody</span></a>:
     <a href="#SpecifiedFunctionBody"><i>SpecifiedFunctionBody</i></a>
-    <a href="#MissingFunctionBody"><i>MissingFunctionBody</i></a>
     <a href="#ShortenedFunctionBody"><i>ShortenedFunctionBody</i></a>
+    <a href="#MissingFunctionBody"><i>MissingFunctionBody</i></a>
 <div class="blankline"></div>
 <a id="FunctionLiteralBody"><span class="gname">FunctionLiteralBody</span></a>:
     <a href="#SpecifiedFunctionBody"><i>SpecifiedFunctionBody</i></a>
@@ -1394,13 +1394,13 @@
     <a href="#FunctionContracts"><i>FunctionContracts</i></a><sub>opt</sub> <a href="#InOutContractExpression"><i>InOutContractExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">do</span><sub>opt</sub> <a href="#BlockStatement"><i>BlockStatement</i></a>
     <a href="#FunctionContracts"><i>FunctionContracts</i></a><sub>opt</sub> <a href="#InOutStatement"><i>InOutStatement</i></a> <span class="d_inlinecode donthyphenate notranslate">do</span> <a href="#BlockStatement"><i>BlockStatement</i></a>
 <div class="blankline"></div>
-<a id="MissingFunctionBody"><span class="gname">MissingFunctionBody</span></a>:
+<a id="ShortenedFunctionBody"><span class="gname">ShortenedFunctionBody</span></a>:
+    <a href="#InOutContractExpressions"><i>InOutContractExpressions</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">=&gt;</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
+</pre>
+<pre class="bnf notranslate"><a id="MissingFunctionBody"><span class="gname">MissingFunctionBody</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">;</span>
     <a href="#FunctionContracts"><i>FunctionContracts</i></a><sub>opt</sub> <a href="#InOutContractExpression"><i>InOutContractExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
     <a href="#FunctionContracts"><i>FunctionContracts</i></a><sub>opt</sub> <a href="#InOutStatement"><i>InOutStatement</i></a>
-<div class="blankline"></div>
-<a id="ShortenedFunctionBody"><span class="gname">ShortenedFunctionBody</span></a>:
-    <a href="#InOutContractExpressions"><i>InOutContractExpressions</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">=&gt;</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
 </pre>
 <pre class="bnf notranslate"><a id="FunctionContracts"><span class="gname">FunctionContracts</span></a>:
     <a href="#FunctionContract"><i>FunctionContract</i></a>
@@ -1707,6 +1707,7 @@
     <a href="#parent"><span class="d_inlinecode donthyphenate notranslate">parent</span></a>
     <a href="#child"><span class="d_inlinecode donthyphenate notranslate">child</span></a>
     <a href="#classInstanceSize"><span class="d_inlinecode donthyphenate notranslate">classInstanceSize</span></a>
+    <a href="#classInstanceAlignment"><span class="d_inlinecode donthyphenate notranslate">classInstanceAlignment</span></a>
     <a href="#getVirtualIndex"><span class="d_inlinecode donthyphenate notranslate">getVirtualIndex</span></a>
     <a href="#allMembers"><span class="d_inlinecode donthyphenate notranslate">allMembers</span></a>
     <a href="#derivedMembers"><span class="d_inlinecode donthyphenate notranslate">derivedMembers</span></a>
@@ -2486,6 +2487,13 @@ on-off-switch:
 <a id="EnumBaseType"><span class="gname">EnumBaseType</span></a>:
     <a href="#Type"><i>Type</i></a>
 </pre>
+<pre class="bnf notranslate"><a id="type-specifier"><span class="gname">type-specifier</span></a>:
+    <a id="typeof-specifier"><span class="gname">typeof-specifier</span></a>
+<div class="blankline"></div>
+<a id="typeof-specifier"><span class="gname">typeof-specifier</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">typeof (</span> <a id="expression"><span class="gname">expression</span></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
+    <span class="d_inlinecode donthyphenate notranslate">typeof (</span> <a id="type-name"><span class="gname">type-name</span></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
+</pre>
 <pre class="bnf notranslate"><a id="CImportDeclaration"><span class="gname">CImportDeclaration</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">__import</span> <a href="#ImportList"><i>ImportList</i></a> <span class="d_inlinecode donthyphenate notranslate">;</span>
 </pre>
@@ -2499,7 +2507,7 @@ on-off-switch:
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Apr 30 08:50:40 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Fri May 27 14:32:42 2022
 </div>
     </div>
 </div>

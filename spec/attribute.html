@@ -738,34 +738,48 @@ runtime error.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="static" href="#static"><span class="d_inlinecode donthyphenate notranslate">static</span> 属性</a></h2>
 <div class="blankline"></div>
-        <p>The <span class="d_inlinecode donthyphenate notranslate">static</span> attribute applies to functions and data.
-        It means that the declaration does not apply to a particular
+        <p>The <span class="d_inlinecode donthyphenate notranslate">static</span> attribute applies to types, functions and data.
+        <span class="d_inlinecode donthyphenate notranslate">static</span> is ignored when applied to other declarations.</p>
+<div class="blankline"></div>
+        <p>Inside an aggregate type, a <span class="d_inlinecode donthyphenate notranslate">static</span>
+        declaration does not apply to a particular
         instance of an object, but to the type of the object. In
         other words, it means there is no <span class="d_inlinecode donthyphenate notranslate">this</span> reference.
-        <span class="d_inlinecode donthyphenate notranslate">static</span> is ignored when applied to other declarations.
         </p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">class</span> Foo
 {
-    <span class="d_keyword">static</span> <span class="d_keyword">int</span> bar() { <span class="d_keyword">return</span> 6; }
+    <span class="d_keyword">static</span> <span class="d_keyword">int</span> x;
+    <span class="d_keyword">static</span> <span class="d_keyword">int</span> bar() { <span class="d_keyword">return</span> x; }
     <span class="d_keyword">int</span> foobar() { <span class="d_keyword">return</span> 7; }
 }
 
-...
-
+Foo.x = 6; <span class="d_comment">// no instance needed
+</span><span class="d_keyword">assert</span>(Foo.bar() == 6);
+<span class="d_comment">//Foo.foobar(); // error, no instance of Foo
+</span>
 Foo f = <span class="d_keyword">new</span> Foo;
-Foo.bar();      <span class="d_comment">// produces 6
-</span>Foo.foobar();   <span class="d_comment">// error, no instance of Foo
-</span>f.bar();        <span class="d_comment">// produces 6;
-</span>f.foobar();     <span class="d_comment">// produces 7;
-</span></pre>
+<span class="d_keyword">assert</span>(f.bar() == 6);
+<span class="d_keyword">assert</span>(f.foobar() == 7);
+</pre>
+
+</div>
 <div class="blankline"></div>
-<p>        Static functions are never virtual.
+<p>        Static methods are never <a href="../spec/function.html#virtual-functions">virtual</a>.
 </p>
 <p>        Static data has one instance per thread, not one per object.
 </p>
+<div class="blankline"></div>
+<p>A static <a href="../spec/function.html#nested">nested function</a>
+or <a href="../spec/struct.html#nested">type</a> cannot
+access variables in the parent scope.</p>
+<div class="blankline"></div>
+<p>Inside a function, a <a href="../spec/function.html#local-static-variables">static local variable</a> persists after the function returns.</p>
+<div class="blankline"></div>
 <p>        Static does not have the additional C meaning of being local
-        to a file. Use the <span class="d_inlinecode donthyphenate notranslate">private</span> attribute in D to achieve that.
+        to a file. Use the <a href="#VisibilityAttribute"><span class="d_inlinecode donthyphenate notranslate">private</span></a>
+        attribute in D to achieve that.
         For example:
 </p>
 <div class="blankline"></div>
@@ -804,7 +818,7 @@ Foo.bar();      <span class="d_comment">// produces 6
 </span>
 <span class="d_keyword">void</span> main()
 {
-    <span class="d_keyword">static</span> <span class="d_keyword">int</span>* x; <span class="d_comment">// scope ignored, global variable
+    <span class="d_keyword">static</span> <span class="d_keyword">int</span>* x;  <span class="d_comment">// scope ignored, global variable
 </span>    <span class="d_keyword">scope</span> <span class="d_keyword">float</span> y;  <span class="d_comment">// scope ignored, no indirections
 </span>    <span class="d_keyword">scope</span> <span class="d_keyword">int</span>[2] z; <span class="d_comment">// scope ignored, static array is value type
 </span>    <span class="d_keyword">scope</span> <span class="d_keyword">int</span>[] w;  <span class="d_comment">// scope dynamic array
@@ -815,23 +829,22 @@ Foo.bar();      <span class="d_comment">// produces 6
 <div class="blankline"></div>
 <p>        When applied to a local variable with a type that has indirections,
         its value may not be assigned to a variable with longer lifetime:
-<div class="blankline"></div>
-        <ul>            <li>Variables outside the <a href="../spec/statement.html#scope-statement">scope statement</a> that the variable is declared in</li>
-            <li>Variables declared before the <span class="d_inlinecode donthyphenate notranslate">scope</span> variable, since local variables are destructed in the reverse order that they are declared in.</li>
+</p>
+        <ul>            <li>Variables outside the <a href="../spec/statement.html#scope-statement">Scope Statement</a> that the variable is declared in</li>
+            <li>Variables declared before the <span class="d_inlinecode donthyphenate notranslate">scope</span> variable, since local variables are destructed in the reverse order that they are declared in</li>
             <li><span class="d_inlinecode donthyphenate notranslate">__gshared</span> or <span class="d_inlinecode donthyphenate notranslate">static</span> variables</li>
         </ul>
 <div class="blankline"></div>
-        Other operations implicitly assigning them to variables with longer lifetime are also disallowed:
-<div class="blankline"></div>
+<p>        Other operations implicitly assigning them to variables with longer lifetime are also disallowed:
+</p>
         <ul>            <li>Returning a <span class="d_inlinecode donthyphenate notranslate">scope</span> variable from a function</li>
             <li>Assigning a <span class="d_inlinecode donthyphenate notranslate">scope</span> variable to a non-scope parameter by calling a function</li>
             <li>Putting a <span class="d_inlinecode donthyphenate notranslate">scope</span> variable in an array literal</li>
         </ul>
-</p>
-<div class="blankline"></div>
 <p>        The <span class="d_inlinecode donthyphenate notranslate">scope</span> attribute is part of the variable declaration, not of the type, and it only applies to the first level of indirection.
         For example, it is impossible to declare a variable as a dynamic array of scope pointers, because <span class="d_inlinecode donthyphenate notranslate">scope</span> only applies to the <span class="d_inlinecode donthyphenate notranslate">.ptr</span>
         of the array itself, not its elements. <span class="d_inlinecode donthyphenate notranslate">scope</span> affects various types as follows:
+</p>
 <div class="blankline"></div>
         <center><table><caption></caption>        <tr><th class="donthyphenate"><b>Type of local variable</b></th><th class="donthyphenate"><b>What <span class="d_inlinecode donthyphenate notranslate">scope</span> applies to</b></th></tr>
 <div class="blankline"></div>
@@ -847,16 +860,13 @@ Foo.bar();      <span class="d_comment">// produces 6
         <tr><td><a href="../spec/enum.html#enum"><i>enum</i></a></td><td>the base type</td></tr>
         </table></center>
 <div class="blankline"></div>
-        Example:
-</p>
-<div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> S
 {
     string str; <span class="d_comment">// note: string = immutable(char)[]
 </span>    string* strPtr;
 }
 
-string escape(<span class="d_keyword">scope</span> S s, <span class="d_keyword">scope</span> S* sPtr, string[2] sarray, <span class="d_keyword">scope</span> string[] darray)
+string escape(<span class="d_keyword">scope</span> S s, <span class="d_keyword">scope</span> S* sPtr, <span class="d_keyword">scope</span> string[2] sarray, <span class="d_keyword">scope</span> string[] darray)
 {
     <span class="d_keyword">return</span> s.str;        <span class="d_comment">// invalid, scope applies to struct members
 </span>    <span class="d_keyword">return</span> *s.strPtr;    <span class="d_comment">// valid, scope struct member is dereferenced
@@ -868,26 +878,35 @@ string escape(<span class="d_keyword">scope</span> S s, <span class="d_keyword">
 </span>}
 </pre>
 <div class="blankline"></div>
-<p>    A "<span class="d_inlinecode donthyphenate notranslate">scope</span> value" is the value of a <span class="d_inlinecode donthyphenate notranslate">scope</span> variable, or any generated value that is (or could be) allocated on the stack:
-    <ul>        <li>The address of a function local variable / parameter</li>
+<p>    A "<span class="d_inlinecode donthyphenate notranslate">scope</span> value" is the value of a <span class="d_inlinecode donthyphenate notranslate">scope</span> variable, or a generated value pointing to stack allocated memory.
+    Such values are generated by <a href="../spec/arrays.html#slicing">Slicing</a> or creating <a href="../spec/arrays.html#pointers">Pointers</a>
+    to a variable that is (or may be) allocated on the stack:
+</p>
+    <ul>        <li>A function parameter</li>
+        <li>A local variable</li>
         <li>A struct member accessed through the implicit <span class="d_inlinecode donthyphenate notranslate">this</span> parameter</li>
         <li>The return value of a <a href="../spec/function.html#ref-functions">Ref Function</a></li>
-        <li>The variadic parameter from  <a href="../spec/function.html#typesafe_variadic_functions">Typesafe Variadic Functions</a></li>
     </ul>
 <div class="blankline"></div>
-    When a local variable is assigned a <span class="d_inlinecode donthyphenate notranslate">scope</span> value, it is inferred <span class="d_inlinecode donthyphenate notranslate">scope</span>, even when the variable has an explicit type and does not use the <span class="d_inlinecode donthyphenate notranslate">auto</span> keyword.
+<p>    The variadic parameter from <a href="../spec/function.html#typesafe_variadic_functions">Typesafe Variadic Functions</a> is also a scope value,
+    since the arguments are passed on the stack.
 </p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">int</span>* escape(<span class="d_keyword">ref</span> <span class="d_keyword">int</span> x, <span class="d_keyword">int</span> y, <span class="d_keyword">scope</span> <span class="d_keyword">int</span>* z)
-{
-    <span class="d_keyword">scope</span> <span class="d_keyword">int</span>* w;
+<p>    When a local variable is assigned a <span class="d_inlinecode donthyphenate notranslate">scope</span> value, it is inferred <span class="d_inlinecode donthyphenate notranslate">scope</span>, even when the variable has an explicit type and does not use the <span class="d_inlinecode donthyphenate notranslate">auto</span> keyword.
+</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate">@safe:
+<span class="d_keyword">ref</span> <span class="d_keyword">int</span>[2] identity(<span class="d_keyword">return</span> <span class="d_keyword">ref</span> <span class="d_keyword">int</span>[2] x) {<span class="d_keyword">return</span> x;}
 
-    <span class="d_keyword">auto</span> xPtr = &amp;x; <span class="d_comment">// inferred `scope int*`
-</span>    <span class="d_keyword">int</span>* yPtr = &amp;y; <span class="d_comment">// also inferred `scope int*`
-</span>    <span class="d_keyword">int</span>* zCopy = z; <span class="d_comment">// inferred `scope int*`
-</span>    <span class="d_keyword">int</span>* wCopy = w; <span class="d_comment">// inferred `scope int*`
+<span class="d_keyword">int</span>* escape(<span class="d_keyword">int</span>[2] y, <span class="d_keyword">scope</span> <span class="d_keyword">int</span>* z)
+{
+    <span class="d_keyword">int</span> x;
+
+    <span class="d_keyword">auto</span>  xPtr  = &amp;x;            <span class="d_comment">// inferred `scope int*`
+</span>    <span class="d_keyword">int</span>[] yArr  = identity(y)[]; <span class="d_comment">// inferred `scope int[]`
+</span>    <span class="d_keyword">int</span>*  zCopy = z;             <span class="d_comment">// inferred `scope int*`
 </span>
-    <span class="d_keyword">return</span> yPtr; <span class="d_comment">// error
+    <span class="d_keyword">return</span> zCopy; <span class="d_comment">// error
 </span>}
 
 <span class="d_keyword">void</span> variadic(<span class="d_keyword">int</span>[] a...)
@@ -908,9 +927,9 @@ string escape(<span class="d_keyword">scope</span> S s, <span class="d_keyword">
 }
 </pre>
 <div class="blankline"></div>
-<p>    <a href="../spec/function.html#scope-parameters">scope parameters</a> are treated the same as scope local variables,
+<p>    <a href="../spec/function.html#scope-parameters">Scope Parameters</a> are treated the same as scope local variables,
     except that returning them is allowed when the function has <a href="../spec/function.html#function-attribute-inference">Function Attribute Inference</a>.
-    In that case, they are inferred as <a href="../spec/function.html#return-scope-parameters">return scope parameters</a>.
+    In that case, they are inferred as <a href="../spec/function.html#return-scope-parameters">Return Scope Parameters</a>.
 </p>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="scope-class-var" href="#scope-class-var"><span class="d_inlinecode donthyphenate notranslate">class</span> 型の <span class="d_inlinecode donthyphenate notranslate">scope</span> 変数</a></h3>
@@ -923,10 +942,6 @@ string escape(<span class="d_keyword">scope</span> S s, <span class="d_keyword">
 </p>
 <p>        When a class is constructed with <span class="d_inlinecode donthyphenate notranslate">new</span> and assigned to a local <span class="d_inlinecode donthyphenate notranslate">scope</span> variable,
         it may be allocated on the stack and permitted in a <span class="d_inlinecode donthyphenate notranslate">@nogc</span> context.
-</p>
-<p>        If there is more than one <span class="d_inlinecode donthyphenate notranslate">scope</span> class variable going out of scope
-        at the same point, then the destructors are called in the reverse
-        order that the variables were constructed.
 </p>
 <p>        If there is more than one <span class="d_inlinecode donthyphenate notranslate">scope</span> class variable going out of scope
         at the same point, then the destructors are called in the reverse
@@ -954,29 +969,8 @@ string escape(<span class="d_keyword">scope</span> S s, <span class="d_keyword">
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="abstract" href="#abstract"><span class="d_inlinecode donthyphenate notranslate">abstract</span> 属性</a></h2>
 <div class="blankline"></div>
-<p>        An abstract member function must be overridden by a derived class.
-        Only virtual member functions may be declared abstract; non-virtual
-        member functions and free-standing functions cannot be declared
-        abstract.
-</p>
-<div class="blankline"></div>
-<p>        Classes become abstract if any of its virtual member functions
-        are declared abstract or if they are defined within an
-        abstract attribute.
-        Note that an abstract class may also contain non-virtual member functions.
-</p>
-<div class="blankline"></div>
-<p>        Classes defined within an abstract attribute or with abstract member
-        functions cannot be instantiated directly.
-        They can only be instantiated as a base class of
-        another, non-abstract, class.
-</p>
-<div class="blankline"></div>
-<p>        Member functions declared as abstract can still have function
-        bodies. This is so that even though they must be overridden,
-        they can still provide &lsquo;base class functionality&rsquo;,
-        e.g. through <span class="d_inlinecode donthyphenate notranslate">super.foo()</span> in a derived class.
-        Note that the class is still abstract and cannot be instantiated directly.
+<p>        An <a href="../spec/class.html#abstract">abstract class</a> must be overridden by a derived class.
+        Declaring an abstract member function makes the class abstract.
 </p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="final" href="#final"><span class="d_inlinecode donthyphenate notranslate">final</span> 属性</a></h2>
@@ -1165,7 +1159,7 @@ A user-defined attribute looks like:
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sat Apr 30 08:50:40 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Fri May 27 14:32:43 2022
 </div>
     </div>
 </div>
