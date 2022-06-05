@@ -46,7 +46,7 @@ $(P Student applications should include a project proposal (possibly
 starting from one of the $(LINK2
 http://prowiki.org/wiki4d/wiki.cgi?GSOC_2012_Ideas, ideas page)) and a
 resum&eacute;, unless they already have a known track record in
-visible projects. Follow the $(LINK2 gsoc2012-template.html,
+visible projects. Follow the $(LINK2 gsoc/gsoc2012-template.html,
 application template) when putting together your application.)
 
 $(HTMLTAG h3, Application)

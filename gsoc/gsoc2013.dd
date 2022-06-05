@@ -46,7 +46,7 @@ the time you plan to spend on your GSoC project.)
 $(P Student applications should include a project proposal (possibly
 starting from one of the $(LINK2 https://wiki.dlang.org/GSOC_2013_Ideas, ideas page)) and a
 resum&eacute;, unless they already have a known track record in
-visible projects. Follow the $(LINK2 gsoc2013-template.html,
+visible projects. Follow the $(LINK2 gsoc/gsoc2013-template.html,
 application template) when putting together your application.)
 
 $(HTMLTAG h3, Application)
