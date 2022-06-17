@@ -3087,7 +3087,6 @@ $(H2 $(LNAME2 main, $(D main()) 関数))
             $(GLINK SpecifiedFunctionBody)
         )
 
-
         $(UL
         $(LI If `main` returns `void`, the OS will receive a zero value on success.)
         $(LI If `main` returns `void` or `noreturn`, the OS will receive a non-zero
