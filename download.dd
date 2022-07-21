@@ -64,7 +64,7 @@ $(TABLEC download-compilers,
 Macros:
         TITLE=ダウンロード
 
-    DMDV2=$(LATEST)
+    DMDV2=2.100.0
 
     BETA=$(COMMENT $0)
     _=BETA=$0
