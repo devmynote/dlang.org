@@ -68,7 +68,7 @@ $(H2 $(LNAME2 testing_membership, キーが含まれるかの確認))
         ---------
         int* p;
 
-        p = "hello" $(CODE_HIGHLIGHT in) aa;
+        p = ("hello" $(CODE_HIGHLIGHT in) aa);
         if (p !is null)
         {
             *p = 4;  // update value associated with key
@@ -198,17 +198,15 @@ $(H2 $(LNAME2 construction_assignment_entries, 連想配列エントリの設定
     operator, it is specially handled for setting an AA entry associated with
     the key.)
 
-$(SPEC_RUNNABLE_EXAMPLE_RUN
         ---------
         string[int] aa;
         string s;
-
-        //s = aa[1];        // throws RangeError in runtime
+        s = aa[1];          // throws RangeError in runtime
         aa[1] = "hello";    // handled for setting AA entry
         s = aa[1];          // succeeds to lookup
         assert(s == "hello");
         ---------
-)
+
     $(P If the assigned value type is equivalent with the AA element type:)
 
       $(OL
@@ -218,7 +216,6 @@ $(SPEC_RUNNABLE_EXAMPLE_RUN
         assignment.)
       )
 
-$(SPEC_RUNNABLE_EXAMPLE_RUN
         ---------
         struct S
         {
@@ -232,7 +229,6 @@ $(SPEC_RUNNABLE_EXAMPLE_RUN
                         // operator-overloading rewrites it to member opAssign function.
         assert(aa[1].val == 20);
         ---------
-)
 
     $(P If the assigned value type is $(B not) equivalent with the AA element
     type, the expression could invoke operator overloading with normal indexing
@@ -253,7 +249,6 @@ $(SPEC_RUNNABLE_EXAMPLE_RUN
         implicit constructor call from the assigned value, implicit construction
         is used for setting the AA entry:)
 
-$(SPEC_RUNNABLE_EXAMPLE_RUN
         ---------
         struct S
         {
@@ -262,7 +257,7 @@ $(SPEC_RUNNABLE_EXAMPLE_RUN
             void opAssign(int v) { this.val = v * 2; }
         }
         S s = 1;    // OK, rewritten to: S s = S(1);
-        s = 1;      // OK, rewritten to: s.opAssign(1);
+          s = 1;    // OK, rewritten to: s.opAssign(1);
 
         S[int] aa;
         aa[1] = 10; // first setting is rewritten to: aa[1] = S(10);
@@ -270,7 +265,7 @@ $(SPEC_RUNNABLE_EXAMPLE_RUN
         aa[1] = 10; // second setting is rewritten to: aa[1].opAssign(10);
         assert(aa[1].val == 20);
         ---------
-)
+
         This is designed for efficient memory reuse with some value-semantics
         structs, eg. $(REF BigInt, std,bigint).
 
@@ -303,7 +298,6 @@ $(H2 $(LNAME2 inserting_if_not_present, 存在しない場合は挿入))
         allows the construction via a function or delegate. This allows the use
         of any mechanism as demonstrated below.)
 
-$(SPEC_RUNNABLE_EXAMPLE_RUN
         ---------
         class C{}
         C[string] aa;
@@ -316,7 +310,6 @@ $(SPEC_RUNNABLE_EXAMPLE_RUN
         auto b = aa.require("b", { newc = new C; return newc;}());
         assert(b is newc);
         ---------
-)
 
 $(H2 $(LNAME2 advanced_updating, 高度な更新))
 
@@ -381,7 +374,6 @@ $(H2 $(LNAME2 runtime_initialization, immutableな連想配列の実行時初期
         a constructor (static constructor depending on scope),
         a buffer associative array and $(D assumeUnique):)
 
-$(SPEC_RUNNABLE_EXAMPLE_RUN
         ---------
         immutable long[string] aa;
 
@@ -391,7 +383,7 @@ $(SPEC_RUNNABLE_EXAMPLE_RUN
             import std.conv : to;
 
             long[string] temp; // mutable buffer
-            foreach (i; 0 .. 10)
+            foreach(i; 0 .. 10)
             {
                 temp[to!string(i)] = i;
             }
@@ -400,14 +392,13 @@ $(SPEC_RUNNABLE_EXAMPLE_RUN
             aa = assumeUnique(temp);
         }
 
-        void main()
+        unittest
         {
             assert(aa["1"] == 1);
             assert(aa["5"] == 5);
             assert(aa["9"] == 9);
         }
         ---------
-)
 
 $(H2 $(LNAME2 construction_and_ref_semantic, 構築および参照の扱い))
 
@@ -416,18 +407,15 @@ $(H2 $(LNAME2 construction_and_ref_semantic, 構築および参照の扱い))
         assigning one array to another does not copy the data. This is especially important when attempting
         to create multiple references to the same array.)
 
-$(SPEC_RUNNABLE_EXAMPLE_RUN
         ------
         int[int] aa;             // defaults to null
         int[int] aa2 = aa;       // copies the null reference
-
         aa[1] = 1;
         assert(aa2.length == 0); // aa2 still is null
         aa2 = aa;
         aa2[2] = 2;
         assert(aa[2] == 2);      // now both refer to the same instance
         ------
-)
 
 $(H2 $(LNAME2 properties, プロパティ))
 
@@ -480,8 +468,7 @@ $(P Properties for associative arrays are:)
         else evaluates the $(D create) delegate and adds it to the associative array))
     )
 
-$(H2 $(LNAME2 examples, 例))
-
+$(HR)
 $(H3 $(LNAME2 aa_example, 連想配列の例: 単語のカウント))
 
         $(P Let's consider the file is ASCII encoded with LF EOL.
@@ -489,9 +476,7 @@ $(H3 $(LNAME2 aa_example, 連想配列の例: 単語のカウント))
         over code points and functions from $(LINK2 $(ROOT_DIR)phobos/std_uni.html,std.uni).
         )
 
-$(SPEC_RUNNABLE_EXAMPLE_COMPILE
         ---------
-        import std.algorithm : sort;
         import std.file;         // D file I/O
         import std.stdio;
         import std.ascii;
@@ -506,7 +491,7 @@ $(SPEC_RUNNABLE_EXAMPLE_COMPILE
             {
                 ulong wordCount, lineCount, charCount;
 
-                foreach (line; File(arg).byLine())
+                foreach(line; File(arg).byLine())
                 {
                     bool inWord;
                     size_t wordStart;
@@ -564,9 +549,8 @@ $(SPEC_RUNNABLE_EXAMPLE_COMPILE
             }
         }
         ---------
-)
 
-$(H3 $(LNAME2 aa_example_iteration, 連想配列の例: Tupleのカウント))
+$(H3 $(LNAME2 aa_example_iteration, 連想配列の例: ペアを数える))
 
     $(P An Associative Array can be iterated in key/value fashion using a
         $(DDSUBLINK spec/statement, ForeachStatement, foreach statement). As
@@ -574,35 +558,34 @@ $(H3 $(LNAME2 aa_example_iteration, 連想配列の例: Tupleのカウント))
         length 2 (aka 2-mers) in a string will be counted:)
 
         ------
-        import std.range : dropOne, only, save, zip;
+        import std.range : slide;
         import std.stdio : writefln;
-        import std.typecons : Tuple;
         import std.utf : byCodeUnit; // avoids UTF-8 auto-decoding
 
-        int[Tuple!(immutable char, immutable char)] aa;
+        int[string] aa;
 
         // The string `arr` has a limited alphabet: {A, C, G, T}
         // Thus, for better performance, iteration can be done _without_ decoding
         auto arr = "AGATAGA".byCodeUnit;
 
-        // iterate over all pairs in the string and observe each pair
+        // iterate over all pairs in the string and count each pair
         // ('A', 'G'), ('G', 'A'), ('A', 'T'), ...
-        foreach (window; arr.zip(arr.save.dropOne))
-            aa[window]++;
+        foreach (window; arr.slide(2))
+            aa[window.source]++; // source unwraps the code unit range
 
         // iterate over all key/value pairs of the Associative Array
         foreach (key, value; aa)
         {
-            // the second parameter uses tuple-expansion
-            writefln("key: %s [%s], value: %d", key, key.expand.only, value);
+            writefln("key: %s, value: %d", key, value);
         }
         ------
+)
 $(CONSOLE
-% rdmd count.d
-key: Tuple!(immutable(char), immutable(char))('A', 'G') [AG], value: 2
-key: Tuple!(immutable(char), immutable(char))('G', 'A') [GA], value: 2
-key: Tuple!(immutable(char), immutable(char))('A', 'T') [AT], value: 1
-key: Tuple!(immutable(char), immutable(char))('T', 'A') [TA], value: 1
+$(GT) rdmd count.d
+key: AT, value: 1
+key: GA, value: 2
+key: TA, value: 1
+key: AG, value: 2
 )
 )
 
