@@ -2329,12 +2329,15 @@ $(GNAME TypeidExpression):
         of the dynamic type (i.e. the most derived type).
         The $(I Expression) is always executed.)
 
+        $(SPEC_RUNNABLE_EXAMPLE_COMPILE
         ---
         class A { }
         class B : A { }
 
         void main()
         {
+            import std.stdio;
+
             writeln(typeid(int));        // int
             uint i;
             writeln(typeid(i++));        // uint
@@ -2344,6 +2347,7 @@ $(GNAME TypeidExpression):
             writeln(typeid(typeof(a)));  // A
         }
         ---
+        )
 
 $(H3 $(LNAME2 is_expression, Is 式))
 
@@ -2553,6 +2557,7 @@ void foo()
         dependent on $(I Identifier), the deduced type.
         )
 
+    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     alias Bar = int;
 
@@ -2561,17 +2566,20 @@ void foo()
     else
         alias S = long;
 
-    writeln(typeid(S));  // prints "int"
+    static assert(is(S == int));
     ---
+    )
+    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     alias Abc = long*;
 
     static if (is(Abc U : U*))
     {
         U u;
-        writeln(typeid(typeof(u)));  // prints "long"
     }
+    static assert(is(U == long));
     ---
+    )
 
         $(P
         The way the type of $(I Identifier) is determined is analogous
@@ -2589,14 +2597,16 @@ void foo()
         dependent on $(I Identifier), the deduced type.
         )
 
+    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     alias Bar = short;
 
     static if (is(Bar T == int))   // not satisfied, short is not int
         alias S = T;
 
-    alias U = T;                   // error, T is not defined
+    static assert(!is(T)); // T is not defined
     ---
+    )
 
         $(P
         If $(I TypeSpecialization) is one of
@@ -2656,14 +2666,16 @@ void foo()
         $(TROW $(D package), the package)
         )
 
+    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     enum E : byte { Emember }
 
     static if (is(E V == enum))    // satisfied, E is an enum
         V v;                       // v is declared to be a byte
 
-    pragma(msg, V); // byte
+    static assert(is(V == byte));
     ---
+    )
 
 $(H4 $(LNAME2 is-parameter-list, Parameter List Forms))
 
@@ -2683,21 +2695,21 @@ $(D is $(LPAREN)) $(I Type) $(I Identifier) $(D ==) $(I TypeSpecialization) $(D 
 
 $(P $(B Example:) Matching a Template Instantiation))
 
-$(SPEC_RUNNABLE_EXAMPLE_RUN
+$(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     struct Tuple(T...)
     {
         // ...
     }
-    alias Tup = Tuple!(int, string);
+    alias Tup2 = Tuple!(int, string);
 
-    static if (is(Tup : Template!Args, alias Template, Args...))
+    static if (is(Tup2 : Template!Args, alias Template, Args...))
     {
-        writeln(__traits(isSame, Template, Tuple)); // true
-        writeln(is(Template!(int, string) == Tup));  // true, same struct
-        writeln(typeid(Args[0]));  // int
-        writeln(typeid(Args[1]));  // immutable(char)[]
+        static assert(__traits(isSame, Template, Tuple));
+        static assert(is(Template!(int, string) == Tup2)); // same struct
     }
+    static assert(is(Args[0] == int));
+    static assert(is(Args[1] == string));
     ---
 )
 
@@ -2720,13 +2732,13 @@ $(SPEC_RUNNABLE_EXAMPLE_COMPILE
 
 $(P $(B Example:) Matching a Static Array)
 
-$(SPEC_RUNNABLE_EXAMPLE_RUN
+$(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     static if (is(int[10] W : W[len], int len))
     {
-        writeln(typeid(W));  // int
-        writeln(len);        // 10
+        static assert(len == 10);
     }
+    static assert(is(W == int));
 
     // no match, len should be 10
     static assert(!is(int[10] X : X[len], int len : 5));
@@ -2766,6 +2778,7 @@ $(GNAME SpecialKeyword):
 
     $(P Example:)
 
+    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     module test;
     import std.stdio;
@@ -2786,6 +2799,7 @@ $(GNAME SpecialKeyword):
         return 0;
     }
     ---
+    )
 
     $(P Assuming the file was at /example/test.d, this will output:)
 
