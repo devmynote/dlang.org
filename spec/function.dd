@@ -1019,8 +1019,6 @@ void main()
 }
 ------
 )
-        $(P Base class methods can also be called through the
-        $(DDSUBLINK spec/expression, super, `super`) reference.)
 
         $(IMPLEMENTATION_DEFINED Normally calling a virtual function implies getting the
         address of the function at runtime by indexing into the class's `vtbl[]`.
@@ -2384,17 +2382,21 @@ $(H4 $(LNAME2 lazy_variadic_functions, Lazy な可変長引数関数))
         parameter. This will prevent a closure being generated for the delegate,
         as `scope` means the delegate will not escape the function.)
 
-$(H3 $(LNAME2 this-reference, `this` の参照))
+$(LEGACY_LNAME2 this-reference)
+$(H3 $(LNAME2 hidden-parameters, 隠しパラメータ))
 
-        $(P
+        $(UL
+        $(LI
             Non-static member functions all have a hidden parameter called the
-            `this` reference, which refers to the object for which
+            $(DDSUBLINK spec/expression, this, `this` reference), which refers to the object for which
             the function is called.
         )
-
-        $(P
+        $(LI D-style variadic functions have
+            $(RELATIVE_LINK2 d_style_variadic_functions, hidden parameters).)
+        $(LI
             Functions with `Objective-C` linkage have an additional hidden,
             unnamed, parameter which is the selector it was called with.
+        )
         )
 
 
@@ -2945,8 +2947,8 @@ $(H3 $(LNAME2 function-delegate-init, 初期化))
         ---
         )
         $(P The last assignment uses a $(GLINK2 expression, FunctionLiteral), which
-        $(DDSUBLINK spec/expression, lambda-type-inference, is inferred)
-        as a delegate.)
+        $(DDSUBLINK spec/expression, lambda-type-inference, implicitly converts)
+        to a delegate.)
 
         $(NOTE Function pointers can be passed to functions taking a delegate argument by passing
         them through the $(REF toDelegate, std,functional) template, which converts any callable
