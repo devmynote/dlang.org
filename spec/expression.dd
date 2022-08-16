@@ -1204,41 +1204,6 @@ $(H4 $(LNAME2 cast_static_array, Static Arrays))
             ---
         )
 
-$(H4 $(LNAME2 cast_integers, Integers))
-
-    $(P Casting an integer to a smaller integral will truncate the
-        value towards the least significant bits.
-        If the target type is signed and the most significant bit is set
-        after truncation, that bit will be lost from the value and
-        the sign bit will be set.)
-
-        $(SPEC_RUNNABLE_EXAMPLE_RUN
-        ---
-        uint a = 260;
-        auto b = cast(ubyte) a;
-        assert(b == 4); // truncated like 260 & 0xff
-
-        int c = 128;
-        assert(cast(byte)c == -128); // reinterpreted
-        ---
-        )
-
-    $(P Casting between signed and unsigned types will reinterpret the
-        value if the destination type cannot represent the source
-        value.)
-
-        $(SPEC_RUNNABLE_EXAMPLE_RUN
-        ---
-        short c = -1;
-        auto d = cast(ushort) c;
-        assert(d == ushort.max);
-
-        ubyte e = 255;
-        auto f = cast(byte) e;
-        assert(f == -1);
-        ---
-        )
-
 $(H4 $(LNAME2 cast_floating, Floating Point))
 
     $(P Casting a floating point literal from one type to another
@@ -1622,10 +1587,9 @@ $(H3 $(LNAME2 this, this))
 
     $(P Within a non-static member function, $(D this) resolves to
         a reference to the object for which the function was called.
-    )
-    $(P `typeof(this)` is valid anywhere inside an aggregate type
-        definition.
-        If a class member function is called with an explicit reference
+        If the object is an instance of a struct, $(D this) will
+        be a pointer to that instance.
+        If a member function is called with an explicit reference
         to $(D typeof(this)), a non-virtual call is made:)
 
         -------------
@@ -1651,14 +1615,14 @@ $(H3 $(LNAME2 this, this))
         }
         -------------
 
-    $(P Assignment to $(D this) is not allowed for classes.)
+    $(P Assignment to $(D this) is not allowed.)
 
 $(H3 $(LNAME2 super, super))
 
     $(P $(D super) is identical to $(D this), except that it is
         cast to $(D this)'s base class.
         It is an error if there is no base class.
-        It is an error to use the $(D super) reference outside a non-static class member function.
+        It is an error to use $(D super) within a struct member function.
         (Only class $(D Object) has no base class.)
         If a member function is called with an explicit reference
         to $(D super), a non-virtual call is made.
@@ -1809,7 +1773,7 @@ $(GNAME ArrayMemberInitialization):
         ---
         )
 
-$(H3 $(LNAME2 cast_array_literal, キャスト))
+$(H4 $(LNAME2 cast_array_literal, キャスト))
 
     $(P When array literals are cast to another array type, each
         element of the array is cast to the new element type.
@@ -2308,6 +2272,73 @@ $(GNAME ImportExpression):
         }
         ---
 
+$(H3 $(LNAME2 new_expressions, New 式s))
+
+$(GRAMMAR
+$(GNAME NewExpression):
+    $(D new) $(GLINK2 type, Type)
+    $(D new) $(GLINK2 type, Type) $(D [) $(GLINK AssignExpression) $(D ])
+    $(D new) $(GLINK2 type, Type) $(D $(LPAREN)) $(GLINK ArgumentList)$(OPT) $(D $(RPAREN))
+    $(GLINK2 class, NewAnonClassExpression)
+
+$(GNAME ArgumentList):
+    $(GLINK AssignExpression)
+    $(GLINK AssignExpression) $(D ,)
+    $(GLINK AssignExpression) $(D ,) $(GSELF ArgumentList)
+)
+
+    $(P $(I NewExpression)s are used to allocate memory on the
+        $(DDLINK spec/garbage, Garbage Collection, garbage
+        collected) heap.
+    )
+
+    $(P If a $(I NewExpression) is used as an initializer for
+        a function local variable with $(DDSUBLINK spec/attribute, scope, `scope`) storage class,
+        then the instance is allocated on the stack.
+    )
+
+    $(P `new` can also be used to allocate a
+        $(DDSUBLINK spec/class, nested-explicit, nested class).)
+
+$(H4 $(LNAME2 new_multidimensional, Multidimensional Arrays))
+
+    $(P To allocate multidimensional arrays, the declaration reads
+        in the same order as the prefix array declaration order.)
+
+        -------------
+        char[][] foo;   // dynamic array of strings
+        ...
+        foo = new char[][30]; // allocate array of 30 strings
+        -------------
+
+    $(P The above allocation can also be written as:)
+
+        -------------
+        foo = new char[][](30); // allocate array of 30 strings
+        -------------
+
+    $(P To allocate the nested arrays, multiple arguments can be used:)
+
+        ---------------
+        int[][][] bar;
+        ...
+        bar = new int[][][](5, 20, 30);
+        ---------------
+
+    The code above is equivalent to:
+
+        ----------
+        bar = new int[][][5];
+        foreach (ref a; bar)
+        {
+            a = new int[][20];
+            foreach (ref b; a)
+            {
+                b = new int[30];
+            }
+        }
+        -----------
+
 $(H3 $(LNAME2 typeid_expressions, Typeid 式))
 
 $(GRAMMAR
@@ -2746,7 +2777,7 @@ $(SPEC_RUNNABLE_EXAMPLE_COMPILE
 )
 
 
-$(H2 $(LNAME2 specialkeywords, 特殊なキーワード))
+$(H3 $(LNAME2 specialkeywords, 特殊なキーワード))
 
 $(GRAMMAR
 $(GNAME SpecialKeyword):
