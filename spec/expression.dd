@@ -503,7 +503,7 @@ $(GNAME CmpExpression):
     $(GLINK ShiftExpression)
 )
 
-$(H2 $(LNAME2 equality_expressions, 等式))
+$(H3 $(LNAME2 equality_expressions, 等式))
 
 $(GRAMMAR
 $(GNAME EqualExpression):
@@ -545,7 +545,7 @@ $(GNAME EqualExpression):
         x.re == y.re && x.im == y.im
         ---
 
-    $(H3 $(LNAME2 class_struct_equality, Class や Struct の等式))
+    $(H4 $(LNAME2 class_struct_equality, Class や Struct の等式))
 
     $(P For struct objects, equality means the result of the
         $(LINK2 https://dlang.org/spec/operatoroverloading.html#equals, `opEquals()` member function).
@@ -616,9 +616,27 @@ $(GNAME IdentityExpression):
         bits in the operands being identical.
     )
 
+    $(SPEC_RUNNABLE_EXAMPLE_RUN
+    ---
+    Object o;
+    assert(o is null);
+    static assert(float() is float.nan);
+    ---
+    )
+
     $(P For static and dynamic arrays, identity of two arrays is given when
     both arrays refer to the same memory location and contain the same number
     of elements.
+    )
+
+    $(SPEC_RUNNABLE_EXAMPLE_RUN
+    ---
+    auto a = [1, 2];
+    assert(a is a[0..$]);
+    assert(a !is a[0..1]);
+    auto b = [1, 2];
+    assert(a !is b);
+    ---
     )
 
     $(P For other operand types, identity is defined as being the same
@@ -628,7 +646,7 @@ $(GNAME IdentityExpression):
     $(P The identity operator $(D is) cannot be overloaded.
     )
 
-$(H2 $(LNAME2 relation_expressions, 関係式))
+$(H3 $(LNAME2 relation_expressions, 関係式))
 
 $(GRAMMAR
 $(GNAME RelExpression):
@@ -642,10 +660,10 @@ $(GNAME RelExpression):
         The result type of a relational expression is $(D bool).
     )
 
-$(H3 $(LNAME2 array_comparisons, 配列の比較))
+$(H3 $(LNAME2 array_comparisons, 配列の比較s))
 
-    $(P For static and dynamic arrays, the result of the relational
-        op is the result of the operator applied to the first non-equal
+    $(P For static and dynamic arrays, the result of a *CmpExpression*
+        is the result of the operator applied to the first non-equal
         element of the array. If two arrays compare equal, but are of
         different lengths, the shorter array compares as "less" than the
         longer array.
@@ -679,7 +697,7 @@ $(H3 $(LEGACY_LNAME2 floating_point_comparisons, floating-point-comparisons, 浮
         point comparison is performed.
     )
 
-    $(P A relational operator can have `NaN` operands.
+    $(P A *CmpExpression* can have `NaN` operands.
         If either or both operands is `NaN`, the floating point
         comparison operation returns as follows:)
 
@@ -692,12 +710,12 @@ $(H3 $(LEGACY_LNAME2 floating_point_comparisons, floating-point-comparisons, 浮
         $(TROW $(D ==),equal, `false`)
         $(TROW $(D !=),$(ARGS unordered, less, or greater), `true`)
         )
+    $(P To check for `NaN`, use $(GLINK IdentityExpression).)
 
 $(H3 $(LEGACY_LNAME2 class_comparisons, class-comparisons, クラスの比較))
 
-    $(P For class objects, the relational
-        operators compare the
-        contents of the objects. Therefore, comparing against
+    $(P For class objects, *EqualExpression* and *RelExpression* compare the
+        *contents* of the objects. Therefore, comparing against
         a $(CODE null) class reference is invalid, as $(CODE null) has no contents.)
 
         $(SPEC_RUNNABLE_EXAMPLE_COMPILE
@@ -711,12 +729,13 @@ $(H3 $(LEGACY_LNAME2 class_comparisons, class-comparisons, クラスの比較))
         )
 
     $(P For class objects, the result of `Object.opCmp()` forms the left
-        operand, and `0` forms the right operand. The result of the
-        relational expression `(o1 op o2)` is:)
+        operand, and `0` forms the right operand. The result of an
+        *EqualExpression* or *RelExpression* `(o1 op o2)` is:)
 
         ---
         (o1.opCmp(o2) op 0)
         ---
+
 
 $(H2 $(LNAME2 in_expressions, In 式))
 
@@ -987,69 +1006,6 @@ $(GNAME ComplementExpression):
     $(P $(B Note:) the usual $(INTEGER_PROMOTIONS) are not performed
         prior to the complement operation.
     )
-
-$(H3 $(LNAME2 new_expressions, New 式))
-
-$(GRAMMAR
-$(GNAME NewExpression):
-    $(D new) $(GLINK2 type, Type)
-    $(D new) $(GLINK2 type, Type) $(D [) $(GLINK AssignExpression) $(D ])
-    $(D new) $(GLINK2 type, Type) $(D $(LPAREN)) $(GLINK ArgumentList)$(OPT) $(D $(RPAREN))
-    $(GLINK2 class, NewAnonClassExpression)
-
-$(GNAME ArgumentList):
-    $(GLINK AssignExpression)
-    $(GLINK AssignExpression) $(D ,)
-    $(GLINK AssignExpression) $(D ,) $(GSELF ArgumentList)
-)
-
-    $(P $(I NewExpression)s are used to allocate memory on the garbage
-        collected heap.
-    )
-
-    $(P If a $(I NewExpression) is used as an initializer for
-        a function local variable with $(D scope) storage class,
-        then the instance is allocated on the stack.
-    )
-
-$(H3 $(LNAME2 new_multidimensional, 多次元配列))
-
-    $(P To allocate multidimensional arrays, the declaration reads
-        in the same order as the prefix array declaration order.)
-
-        -------------
-        char[][] foo;   // dynamic array of strings
-        ...
-        foo = new char[][30]; // allocate array of 30 strings
-        -------------
-
-    $(P The above allocation can also be written as:)
-
-        -------------
-        foo = new char[][](30); // allocate array of 30 strings
-        -------------
-
-    $(P To allocate the nested arrays, multiple arguments can be used:)
-
-        ---------------
-        int[][][] bar;
-        ...
-        bar = new int[][][](5, 20, 30);
-        ---------------
-
-    The code above is equivalent to:
-
-        ----------
-        bar = new int[][][5];
-        foreach (ref a; bar)
-        {
-            a = new int[][20];
-            foreach (ref b; a)
-            {
-                b = new int[30];
-            }
-        }
-        -----------
 
 $(H3 $(LNAME2 delete_expressions, Delete 式))
 
