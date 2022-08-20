@@ -530,7 +530,7 @@ $(GNAME EqualExpression):
     $(P For float, double, and real values, the $(USUAL_ARITHMETIC_CONVERSIONS) are applied
         to bring them to a common type before comparison.
         The values $(D -0) and $(D +0) are considered equal.
-        If either or both operands are NAN, then $(D ==) returns false and $(D !=) returns $(D true).
+        If either or both operands are NaN, then $(D ==) returns false and $(D !=) returns $(D true).
         Otherwise, the bit patterns of the common type are compared for equality.
     )
 
@@ -579,7 +579,7 @@ $(GNAME EqualExpression):
         operators are intended to compare the contents of the objects,
         however an appropriate $(D opEquals) override must be defined for this to work.
         The default $(D opEquals) provided by the root $(D Object) class is
-        equivalent to the $(D is) operator.
+        equivalent to the $(D is) operator (see below).
         Comparing against $(D null) is invalid, as $(D null) has no contents.
         Use the $(D is) and $(D !is) operators instead.)
 
@@ -621,6 +621,20 @@ $(GNAME IdentityExpression):
     of elements.
     )
 
+    $(SPEC_RUNNABLE_EXAMPLE_RUN
+    ---
+    Object o;
+    assert(o is null);
+
+    auto a = [1, 2];
+    assert(a is a[0..$]);
+    assert(a !is a[0..1]);
+
+    auto b = [1, 2];
+    assert(a !is b);
+    ---
+    )
+
     $(P For other operand types, identity is defined as being the same
         as equality.
     )
@@ -644,8 +658,8 @@ $(GNAME RelExpression):
 
 $(H3 $(LNAME2 array_comparisons, 配列の比較))
 
-    $(P For static and dynamic arrays, the result of the relational
-        op is the result of the operator applied to the first non-equal
+    $(P For static and dynamic arrays, the result of a *CmpExpression*
+        is the result of the operator applied to the first non-equal
         element of the array. If two arrays compare equal, but are of
         different lengths, the shorter array compares as "less" than the
         longer array.
@@ -670,7 +684,7 @@ $(H3 $(LNAME2 integer_comparisons, 整数の比較))
     $(P It is an error to have one operand be signed and the other
         unsigned for a $(D <), $(D <)$(D =), $(D >) or
         $(D >)$(D =) expression.
-        Use $(RELATIVE_LINK2 cast_integers, casts) to make both operands signed or both operands unsigned.
+        Use casts to make both operands signed or both operands unsigned.
     )
 
 $(H3 $(LEGACY_LNAME2 floating_point_comparisons, floating-point-comparisons, 浮動小数点の比較))
@@ -679,7 +693,7 @@ $(H3 $(LEGACY_LNAME2 floating_point_comparisons, floating-point-comparisons, 浮
         point comparison is performed.
     )
 
-    $(P A relational operator can have `NaN` operands.
+    $(P A *CmpExpression* can have `NaN` operands.
         If either or both operands is `NaN`, the floating point
         comparison operation returns as follows:)
 
@@ -693,11 +707,14 @@ $(H3 $(LEGACY_LNAME2 floating_point_comparisons, floating-point-comparisons, 浮
         $(TROW $(D !=),$(ARGS unordered, less, or greater), `true`)
         )
 
-$(H3 $(LEGACY_LNAME2 class_comparisons, class-comparisons, クラスの比較))
+    $(BEST_PRACTICE Although *IdentityExpression* can be used to check for `T.nan`,
+    there are other floating-point values for NaN produced at runtime.
+    Use $(REF isNaN, std,math,traits) to handle all of them.)
 
-    $(P For class objects, the relational
-        operators compare the
-        contents of the objects. Therefore, comparing against
+$(H3 $(LEGACY_LNAME2 class_comparisons, class-comparisons, Class Comparisons))
+
+    $(P For class objects, *EqualExpression* and *RelExpression* compare the
+        *contents* of the objects. Therefore, comparing against
         a $(CODE null) class reference is invalid, as $(CODE null) has no contents.)
 
         $(SPEC_RUNNABLE_EXAMPLE_COMPILE
@@ -711,8 +728,8 @@ $(H3 $(LEGACY_LNAME2 class_comparisons, class-comparisons, クラスの比較))
         )
 
     $(P For class objects, the result of `Object.opCmp()` forms the left
-        operand, and `0` forms the right operand. The result of the
-        relational expression `(o1 op o2)` is:)
+        operand, and `0` forms the right operand. The result of an
+        *EqualExpression* or *RelExpression* `(o1 op o2)` is:)
 
         ---
         (o1.opCmp(o2) op 0)
@@ -988,69 +1005,6 @@ $(GNAME ComplementExpression):
     $(P $(B Note:) the usual $(INTEGER_PROMOTIONS) are not performed
         prior to the complement operation.
     )
-
-$(H3 $(LNAME2 new_expressions, New 式))
-
-$(GRAMMAR
-$(GNAME NewExpression):
-    $(D new) $(GLINK2 type, Type)
-    $(D new) $(GLINK2 type, Type) $(D [) $(GLINK AssignExpression) $(D ])
-    $(D new) $(GLINK2 type, Type) $(D $(LPAREN)) $(GLINK ArgumentList)$(OPT) $(D $(RPAREN))
-    $(GLINK2 class, NewAnonClassExpression)
-
-$(GNAME ArgumentList):
-    $(GLINK AssignExpression)
-    $(GLINK AssignExpression) $(D ,)
-    $(GLINK AssignExpression) $(D ,) $(GSELF ArgumentList)
-)
-
-    $(P $(I NewExpression)s are used to allocate memory on the garbage
-        collected heap.
-    )
-
-    $(P If a $(I NewExpression) is used as an initializer for
-        a function local variable with $(D scope) storage class,
-        then the instance is allocated on the stack.
-    )
-
-$(H3 $(LNAME2 new_multidimensional, Multidimensional Arrays))
-
-    $(P To allocate multidimensional arrays, the declaration reads
-        in the same order as the prefix array declaration order.)
-
-        -------------
-        char[][] foo;   // dynamic array of strings
-        ...
-        foo = new char[][30]; // allocate array of 30 strings
-        -------------
-
-    $(P The above allocation can also be written as:)
-
-        -------------
-        foo = new char[][](30); // allocate array of 30 strings
-        -------------
-
-    $(P To allocate the nested arrays, multiple arguments can be used:)
-
-        ---------------
-        int[][][] bar;
-        ...
-        bar = new int[][][](5, 20, 30);
-        ---------------
-
-    The code above is equivalent to:
-
-        ----------
-        bar = new int[][][5];
-        foreach (ref a; bar)
-        {
-            a = new int[][20];
-            foreach (ref b; a)
-            {
-                b = new int[30];
-            }
-        }
-        -----------
 
 $(H3 $(LNAME2 delete_expressions, Delete 式))
 
@@ -2169,7 +2123,6 @@ $(H3 $(LNAME2 uniform_construction_syntax, スカラー型の統一された構�
         auto b = wchar();   // same as: wchar.init
         ---
 
-    $(P See also: $(DDSUBLINK spec/type, usual-arithmetic-conversions, Usual Arithmetic Conversions).)
 
 
 $(H3 $(LNAME2 assert_expressions, Assert 式))
@@ -2312,6 +2265,73 @@ $(GNAME ImportExpression):
         }
         ---
 
+$(H3 $(LNAME2 new_expressions, New 式))
+
+$(GRAMMAR
+$(GNAME NewExpression):
+    $(D new) $(GLINK2 type, Type)
+    $(D new) $(GLINK2 type, Type) $(D [) $(GLINK AssignExpression) $(D ])
+    $(D new) $(GLINK2 type, Type) $(D $(LPAREN)) $(GLINK ArgumentList)$(OPT) $(D $(RPAREN))
+    $(GLINK2 class, NewAnonClassExpression)
+
+$(GNAME ArgumentList):
+    $(GLINK AssignExpression)
+    $(GLINK AssignExpression) $(D ,)
+    $(GLINK AssignExpression) $(D ,) $(GSELF ArgumentList)
+)
+
+    $(P $(I NewExpression)s are used to allocate memory on the
+        $(DDLINK spec/garbage, Garbage Collection, garbage
+        collected) heap.
+    )
+
+    $(P If a $(I NewExpression) is used as an initializer for
+        a function local variable with $(DDSUBLINK spec/attribute, scope, `scope`) storage class,
+        then the instance is allocated on the stack.
+    )
+
+    $(P `new` can also be used to allocate a
+        $(DDSUBLINK spec/class, nested-explicit, nested class).)
+
+$(H4 $(LNAME2 new_multidimensional, Multidimensional Arrays))
+
+    $(P To allocate multidimensional arrays, the declaration reads
+        in the same order as the prefix array declaration order.)
+
+        -------------
+        char[][] foo;   // dynamic array of strings
+        ...
+        foo = new char[][30]; // allocate array of 30 strings
+        -------------
+
+    $(P The above allocation can also be written as:)
+
+        -------------
+        foo = new char[][](30); // allocate array of 30 strings
+        -------------
+
+    $(P To allocate the nested arrays, multiple arguments can be used:)
+
+        ---------------
+        int[][][] bar;
+        ...
+        bar = new int[][][](5, 20, 30);
+        ---------------
+
+    The code above is equivalent to:
+
+        ----------
+        bar = new int[][][5];
+        foreach (ref a; bar)
+        {
+            a = new int[][20];
+            foreach (ref b; a)
+            {
+                b = new int[30];
+            }
+        }
+        -----------
+
 $(H3 $(LNAME2 typeid_expressions, Typeid 式))
 
 $(GRAMMAR
@@ -2334,12 +2354,15 @@ $(GNAME TypeidExpression):
         of the dynamic type (i.e. the most derived type).
         The $(I Expression) is always executed.)
 
+        $(SPEC_RUNNABLE_EXAMPLE_COMPILE
         ---
         class A { }
         class B : A { }
 
         void main()
         {
+            import std.stdio;
+
             writeln(typeid(int));        // int
             uint i;
             writeln(typeid(i++));        // uint
@@ -2349,6 +2372,7 @@ $(GNAME TypeidExpression):
             writeln(typeid(typeof(a)));  // A
         }
         ---
+        )
 
 $(H3 $(LNAME2 is_expression, Is 式))
 
@@ -2411,9 +2435,8 @@ $(GNAME TypeSpecialization):
     )
 
     $(P $(I IsExpression)s may be used in conjunction with $(D typeof) to check
-    whether an expression is semantically correct. For example, $(D is(typeof(foo)))
-    will return $(D true) if $(D foo) is a semantically correct expression with a valid
-    type.
+    whether an expression type checks correctly. For example, $(D is(typeof(foo)))
+    will return $(D true) if $(D foo) has a valid type.
     )
 
 $(H4 $(LNAME2 basic-forms, Basic Forms))
@@ -2558,6 +2581,7 @@ void foo()
         dependent on $(I Identifier), the deduced type.
         )
 
+    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     alias Bar = int;
 
@@ -2566,17 +2590,20 @@ void foo()
     else
         alias S = long;
 
-    writeln(typeid(S));  // prints "int"
+    static assert(is(S == int));
     ---
+    )
+    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     alias Abc = long*;
 
     static if (is(Abc U : U*))
     {
         U u;
-        writeln(typeid(typeof(u)));  // prints "long"
     }
+    static assert(is(U == long));
     ---
+    )
 
         $(P
         The way the type of $(I Identifier) is determined is analogous
@@ -2594,14 +2621,16 @@ void foo()
         dependent on $(I Identifier), the deduced type.
         )
 
+    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     alias Bar = short;
 
     static if (is(Bar T == int))   // not satisfied, short is not int
         alias S = T;
 
-    alias U = T;                   // error, T is not defined
+    static assert(!is(T)); // T is not defined
     ---
+    )
 
         $(P
         If $(I TypeSpecialization) is one of
@@ -2661,14 +2690,16 @@ void foo()
         $(TROW $(D package), the package)
         )
 
+    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     enum E : byte { Emember }
 
     static if (is(E V == enum))    // satisfied, E is an enum
         V v;                       // v is declared to be a byte
 
-    pragma(msg, V); // byte
+    static assert(is(V == byte));
     ---
+    )
 
 $(H4 $(LNAME2 is-parameter-list, Parameter List Forms))
 
@@ -2688,21 +2719,21 @@ $(D is $(LPAREN)) $(I Type) $(I Identifier) $(D ==) $(I TypeSpecialization) $(D 
 
 $(P $(B Example:) Matching a Template Instantiation))
 
-$(SPEC_RUNNABLE_EXAMPLE_RUN
+$(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     struct Tuple(T...)
     {
         // ...
     }
-    alias Tup = Tuple!(int, string);
+    alias Tup2 = Tuple!(int, string);
 
-    static if (is(Tup : Template!Args, alias Template, Args...))
+    static if (is(Tup2 : Template!Args, alias Template, Args...))
     {
-        writeln(__traits(isSame, Template, Tuple)); // true
-        writeln(is(Template!(int, string) == Tup));  // true, same struct
-        writeln(typeid(Args[0]));  // int
-        writeln(typeid(Args[1]));  // immutable(char)[]
+        static assert(__traits(isSame, Template, Tuple));
+        static assert(is(Template!(int, string) == Tup2)); // same struct
     }
+    static assert(is(Args[0] == int));
+    static assert(is(Args[1] == string));
     ---
 )
 
@@ -2725,13 +2756,13 @@ $(SPEC_RUNNABLE_EXAMPLE_COMPILE
 
 $(P $(B Example:) Matching a Static Array)
 
-$(SPEC_RUNNABLE_EXAMPLE_RUN
+$(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     static if (is(int[10] W : W[len], int len))
     {
-        writeln(typeid(W));  // int
-        writeln(len);        // 10
+        static assert(len == 10);
     }
+    static assert(is(W == int));
 
     // no match, len should be 10
     static assert(!is(int[10] X : X[len], int len : 5));
@@ -2771,6 +2802,7 @@ $(GNAME SpecialKeyword):
 
     $(P Example:)
 
+    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
     ---
     module test;
     import std.stdio;
@@ -2791,6 +2823,7 @@ $(GNAME SpecialKeyword):
         return 0;
     }
     ---
+    )
 
     $(P Assuming the file was at /example/test.d, this will output:)
 
