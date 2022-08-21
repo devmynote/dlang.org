@@ -991,6 +991,9 @@ $(TABLE
     $(TROW `!`, Logical NOT)
 )
 
+    $(P The usual $(INTEGER_PROMOTIONS) are performed prior to unary
+    `-` and `+` operations.)
+
 $(H3 $(LNAME2 complement_expressions, 補数式))
 
 $(GRAMMAR
@@ -1000,13 +1003,11 @@ $(GNAME ComplementExpression):
 
     $(P $(I ComplementExpression)s work on integral types (except $(D bool)).
         All the bits in the value are complemented.
-    )
-
-    $(P $(B Note:) the usual $(INTEGER_PROMOTIONS) are not performed
+        The usual $(INTEGER_PROMOTIONS) are performed
         prior to the complement operation.
     )
 
-$(H3 $(LNAME2 delete_expressions, Delete 式))
+$(H3 $(LNAME2 delete_expressions, Delete Expressions))
 
 $(GRAMMAR
 $(GNAME DeleteExpression):
@@ -1157,43 +1158,6 @@ $(H4 $(LNAME2 cast_static_array, Static Arrays))
                3030303
              */
             ---
-        )
-
-$(H4 $(LNAME2 cast_integers, 整数))
-
-    $(P Casting an integer to a smaller integral will truncate the
-        value towards the least significant bits.
-        If the target type is signed and the most significant bit is set
-        after truncation, that bit will be lost from the value and
-        the sign bit will be set.)
-
-        $(SPEC_RUNNABLE_EXAMPLE_RUN
-        ---
-        uint a = 260;
-        auto b = cast(ubyte) a;
-        assert(b == 4); // truncated like 260 & 0xff
-
-        int c = 128;
-        assert(cast(byte)c == -128); // reinterpreted
-        ---
-        )
-
-    $(P Converting between signed and unsigned types will reinterpret the
-        value if the destination type cannot represent the source
-        value.)
-
-        $(SPEC_RUNNABLE_EXAMPLE_RUN
-        ---
-        short c = -1;
-        ushort d = c;
-        assert(d == ushort.max);
-        assert(uint(c) == uint.max);
-
-        ubyte e = 255;
-        byte f = e;
-        assert(f == -1); // reinterpreted
-        assert(short(e) == 255); // no change
-        ---
         )
 
 $(H4 $(LNAME2 cast_floating, 浮動小数点))
@@ -1579,9 +1543,10 @@ $(H3 $(LNAME2 this, this))
 
     $(P Within a non-static member function, $(D this) resolves to
         a reference to the object for which the function was called.
-        If the object is an instance of a struct, $(D this) will
-        be a pointer to that instance.
-        If a member function is called with an explicit reference
+    )
+    $(P `typeof(this)` is valid anywhere inside an aggregate type
+        definition.
+        If a class member function is called with an explicit reference
         to $(D typeof(this)), a non-virtual call is made:)
 
         -------------
@@ -1607,14 +1572,14 @@ $(H3 $(LNAME2 this, this))
         }
         -------------
 
-    $(P Assignment to $(D this) is not allowed.)
+    $(P Assignment to $(D this) is not allowed for classes.)
 
 $(H3 $(LNAME2 super, super))
 
     $(P $(D super) is identical to $(D this), except that it is
         cast to $(D this)'s base class.
         It is an error if there is no base class.
-        It is an error to use $(D super) within a struct member function.
+        It is an error to use the $(D super) reference outside a non-static class member function.
         (Only class $(D Object) has no base class.)
         If a member function is called with an explicit reference
         to $(D super), a non-virtual call is made.
@@ -2122,7 +2087,6 @@ $(H3 $(LNAME2 uniform_construction_syntax, スカラー型の統一された構�
         auto a = ushort();  // same as: ushort.init
         auto b = wchar();   // same as: wchar.init
         ---
-
 
 
 $(H3 $(LNAME2 assert_expressions, Assert 式))
