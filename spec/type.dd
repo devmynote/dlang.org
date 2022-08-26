@@ -4,8 +4,6 @@ $(SPEC_S 型,
 
 $(HEADERNAV_TOC)
 
-$(H2 $(LNAME2 grammar, Grammar))
-
     $(P D is statically typed. Every expression has a type. Types constrain the values
     an expression can hold, and determine the semantics of operations on those values.
     )
@@ -89,9 +87,11 @@ $(GNAME QualifiedIdentifier):
     $(GLINK_LEX Identifier) $(D [) $(GLINK2 expression, AssignExpression) $(D] .) $(GSELF QualifiedIdentifier)
 )
 
-    * $(RELATIVE_LINK2 basic-data-types, Basic Data Types) are leaf types.
-    * $(RELATIVE_LINK2 derived-data-types, Derived Data Types) build on leaf types.
-    * $(RELATIVE_LINK2 user-defined-types, User-Defined Types) are aggregates of basic and derived types.
+
+    $(P $(RELATIVE_LINK2 basic_data_types, Basic Data Types) are leaf types.
+    $(RELATIVE_LINK2 derived-data_types, Derived Data Types) build on leaf types.
+    $(RELATIVE_LINK2 user-defined-types, User-Defined Types) are aggregates of basic and derived types.
+    )
 
 $(H2 $(LEGACY_LNAME2 Basic Data Types, basic-data-types, 基本的なデータ型))
 
@@ -274,33 +274,6 @@ $(H3 $(LEGACY_LNAME2 Integer Promotions, integer-promotions, 整数の拡張))
     column.
     )
 
-    $(P Integer promotion applies to each operand of a binary expression:)
-
-    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
-    ---
-    byte a;
-    auto b = a + a;
-    static assert(is(typeof(b) == int));
-    // error: can't implicitly convert expression of type int to byte:
-    //byte c = a + a;
-
-    ushort d;
-    // error: can't implicitly convert expression of type int to ushort:
-    //d = d * d;
-    int e = d * d; // OK
-    static assert(is(typeof(int() * d) == int));
-
-    dchar f;
-    static assert(is(typeof(f - f) == uint));
-    ---
-    )
-
-    $(RATIONALE
-    * 32-bit integer operations are often faster than smaller integer types
-      for single variables on modern architectures.
-    * Promotion helps avoid accidental overflow which is more common with small integer types.
-    )
-
 $(H3 $(LEGACY_LNAME2 Usual Arithmetic Conversions, usual-arithmetic-conversions, 通常の算術変換))
 
     $(P The usual arithmetic conversions convert operands of binary
@@ -320,7 +293,7 @@ $(H3 $(LEGACY_LNAME2 Usual Arithmetic Conversions, usual-arithmetic-conversions,
     $(LI Else if either operand is `float`, the other operand is
     converted to `float`.)
 
-    $(LI Else the integer promotions above are done on each operand,
+    $(LI Else the integer promotions are done on each operand,
     followed by:
 
     $(OL
@@ -335,33 +308,6 @@ $(H3 $(LEGACY_LNAME2 Usual Arithmetic Conversions, usual-arithmetic-conversions,
         $(LI The signed type is converted to the unsigned type.)
     )
     )
-    )
-
-    $(RATIONALE The above rules follow C99, which makes porting code from C easier.)
-
-    $(P $(B Example:) Signed and unsigned conversions:)
-    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
-    ---
-    int i;
-    uint u;
-    static assert(is(typeof(i + u) == uint));
-    static assert(is(typeof(short() + u) == uint));
-    static assert(is(typeof(ulong() + i) == ulong));
-    static assert(is(typeof(long() - u) == long));
-    static assert(is(typeof(long() * ulong()) == ulong));
-    ---
-    )
-
-    $(P $(B Example:) Floating point:)
-    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
-    ---
-    float f;
-    static assert(is(typeof(f + ulong()) == float));
-
-    double d;
-    static assert(is(typeof(f * d) == double));
-    static assert(is(typeof(real() / d) == real));
-    ---
     )
 
     $(P If one or both of the operand types is an enum  after
@@ -397,6 +343,34 @@ ulong  u4 = long(-1); // ok, -1 can be represented in a ulong
     cannot be implicitly converted to imaginary floating
     point types.
     )
+
+$(H3 $(LNAME2 vrp, 値の範囲の伝播))
+
+    $(P Besides type-based implicit conversions, D allows certain integer
+        expressions to implicitly convert to a narrower type after
+        integer promotion. This works by analysing the minimum and
+        maximum possible range of values for each expression.
+        If that range of values matches or is a subset of a narrower type's value range, implicit
+        conversion is allowed. If one of the values is known at compile-time,
+        that can further reduce the range of values.)
+
+    $(SPEC_RUNNABLE_EXAMPLE_COMPILE
+    ---
+    extern char c;
+    short s = c + 100; // promoted to int, but narrowed to `c.min + 100` ... `c.max + 100`
+
+    extern int i;
+    ubyte j = i & 0x3F;
+    //ubyte k = i & 0x14A; // error, 0x14A > ubyte.max
+    ushort k = i & 0x14A; // OK
+
+    extern ubyte b;
+    //ubyte p = b + b; // error, ubyte.max + ubyte.max > ubyte.max
+    short p = b + b; // OK
+    ---
+    )
+    $(P For more information, see $(LINK2 https://digitalmars.com/articles/b62.html, here).)
+
 
 $(H2 $(LNAME2 bool, $(D bool)))
 
