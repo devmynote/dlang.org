@@ -15,23 +15,23 @@ jobs:
     - name: 'Download dmd'
       uses: dlang-community/setup-dlang@v1
       with:
-        compiler: dmd-latest
+        compiler: dmd-2.095.0
     - name: 'Checkout dlang.org'
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         path: dlang.org
     - name: 'Checkout dmd'
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: dlang/dmd
         path: dmd
     - name: 'Checkout phobos'
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: dlang/phobos
         path: phobos
     - name: 'Checkout druntime'
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: dlang/druntime
         path: druntime
