@@ -528,14 +528,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="https://www.digitalmars.com">Walter Bright</a>
+    <a href="http://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -723,67 +723,6 @@
 
 </li>
 </ul>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#toChars" id="toChars"><code class="code">toChars</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="toChars"></span>const(char)* <code class="code">toChars</code>(ClassKind <code class="code">c</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Give a nice string for a class kind for error messages
-
-  </p>
-</div>
-<div class="ddoc_params">
-  <h4>Parameters</h4>
-  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
-    <tbody>
-      <tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">ClassKind <code class="code">c</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      class kind
-    </p>
-  </div>
-</td>
-</tr>
-
-    </tbody>
-  </table>
-</div>
-<div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    0-terminated string for <code class="code"><code class="code">c</code></code>
-  </p>
-</div>
-
-</section>
 
 </div>
 
@@ -1398,7 +1337,7 @@ it would be stored in TypeInfo_Class.defaultConstructor
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#AggregateDeclaration.userDtors" id="AggregateDeclaration.userDtors"><code class="code">userDtors</code></a>
+  <a href="#AggregateDeclaration.dtors" id="AggregateDeclaration.dtors"><code class="code">dtors</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -1407,7 +1346,7 @@ it would be stored in TypeInfo_Class.defaultConstructor
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="AggregateDeclaration.userDtors"></span>DtorDeclarations <code class="code">userDtors</code>;
+            <span class="ddoc_anchor" id="AggregateDeclaration.dtors"></span>DtorDeclarations <code class="code">dtors</code>;
 
           </code>
         </p>
@@ -1419,39 +1358,7 @@ it would be stored in TypeInfo_Class.defaultConstructor
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    user-defined destructors (<code class="code">~this()</code>) - mixins can yield multiple ones
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#AggregateDeclaration.aggrDtor" id="AggregateDeclaration.aggrDtor"><code class="code">aggrDtor</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="AggregateDeclaration.aggrDtor"></span>DtorDeclaration <code class="code">aggrDtor</code>;
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    aggregate destructor calling userDtors and fieldDtor (and base class aggregate dtor for C++ classes)
+    Array of destructors
   </p>
 </div>
 
@@ -1483,7 +1390,39 @@ it would be stored in TypeInfo_Class.defaultConstructor
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    the aggregate destructor exposed as <code class="code">__xdtor</code> alias
+    aggregate destructor calling dtors and member constructors
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#AggregateDeclaration.primaryDtor" id="AggregateDeclaration.primaryDtor"><code class="code">primaryDtor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="AggregateDeclaration.primaryDtor"></span>DtorDeclaration <code class="code">primaryDtor</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    non-deleting C++ destructor, same as dtor for D
   </p>
 </div>
 
@@ -1515,13 +1454,6 @@ it would be stored in TypeInfo_Class.defaultConstructor
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    (same as aggrDtor, except for C++ classes with virtual dtor on Windows)
-
-  </p>
-</div>
-<div class="ddoc_description">
-  <h4>Discussion</h4>
-  <p class="para">
     aggregate destructor used in TypeInfo (must have extern(D) ABI)
   </p>
 </div>
@@ -1542,7 +1474,7 @@ it would be stored in TypeInfo_Class.defaultConstructor
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="AggregateDeclaration.fieldDtor"></span>DtorDeclaration <code class="code">fieldDtor</code>;
+            <span class="ddoc_anchor" id="AggregateDeclaration.fieldDtor"></span>FuncDeclaration <code class="code">fieldDtor</code>;
 
           </code>
         </p>
@@ -1554,7 +1486,7 @@ it would be stored in TypeInfo_Class.defaultConstructor
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    function destructing (non-inherited) fields
+    aggregate destructor for just the fields
   </p>
 </div>
 
@@ -1793,7 +1725,7 @@ it would be stored in TypeInfo_Class.defaultConstructor
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="AggregateDeclaration.determineSize"></span>final bool <code class="code">determineSize</code>(const ref Loc <code class="code">loc</code>);
+            <span class="ddoc_anchor" id="AggregateDeclaration.determineSize"></span>final bool <code class="code">determineSize</code>(Loc <code class="code">loc</code>);
 
           </code>
         </p>
@@ -1872,7 +1804,7 @@ it would be stored in TypeInfo_Class.defaultConstructor
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="AggregateDeclaration.fill"></span>final bool <code class="code">fill</code>(const ref Loc <code class="code">loc</code>, Expressions* <code class="code">elements</code>, bool <code class="code">ctorinit</code>);
+            <span class="ddoc_anchor" id="AggregateDeclaration.fill"></span>final bool <code class="code">fill</code>(Loc <code class="code">loc</code>, Expressions* <code class="code">elements</code>, bool <code class="code">ctorinit</code>);
 
           </code>
         </p>
@@ -2058,121 +1990,22 @@ it would be stored in TypeInfo_Class.defaultConstructor
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Place a field (mem) into an aggregate (agg), which can be a struct, union or class
+    Place a member (mem) into an aggregate (agg), which can be a struct, union or class
 
   </p>
-</div>
-<div class="ddoc_params">
-  <h4>Parameters</h4>
-  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
-    <tbody>
-      <tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">uint* <code class="code">nextoffset</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      location just past the end of the previous field in the aggregate.
-                    Updated to be just past the end of this field to be placed, i.e. the future <code class="code">nextoffset</code>
-    </p>
-  </div>
-</td>
-</tr>
-<tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">uint <code class="code">memsize</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      size of field
-    </p>
-  </div>
-</td>
-</tr>
-<tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">uint <code class="code">memalignsize</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      natural <code class="code">alignment</code> of field
-    </p>
-  </div>
-</td>
-</tr>
-<tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">structalign_t <code class="code">alignment</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      <code class="code">alignment</code> in effect for this field
-    </p>
-  </div>
-</td>
-</tr>
-<tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">uint* <code class="code">paggsize</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      size of aggregate (updated)
-    </p>
-  </div>
-</td>
-</tr>
-<tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">uint* <code class="code">paggalignsize</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      <code class="code">alignment</code> of aggregate (updated)
-    </p>
-  </div>
-</td>
-</tr>
-<tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">bool <code class="code">isunion</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      the aggregate is a union
-    </p>
-  </div>
-</td>
-</tr>
-
-    </tbody>
-  </table>
 </div>
 <div class="ddoc_returns">
   <h4>Return Value</h4>
   <p class="para">
-    aligned offset to place field at
+    offset to place field at
+<br><br>
+ <code class="code">nextoffset</code>:    next location in aggregate
+ <code class="code">memsize</code>:       size of member
+ <code class="code">memalignsize</code>:  natural <code class="code">alignment</code> of member
+ <code class="code">alignment</code>:     <code class="code">alignment</code> in effect for this member
+ <code class="code">paggsize</code>:      size of aggregate (updated)
+ <code class="code">paggalignsize</code>: <code class="code">alignment</code> of aggregate (updated)
+ <code class="code">isunion</code>:       the aggregate is a union
   </p>
 </div>
 

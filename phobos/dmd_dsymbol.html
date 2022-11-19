@@ -519,14 +519,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="https://www.digitalmars.com">Walter Bright</a>
+    <a href="http://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -1671,7 +1671,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="Dsymbol.size"></span>uinteger_t <code class="code">size</code>(const ref Loc <code class="code">loc</code>);
+            <span class="ddoc_anchor" id="Dsymbol.size"></span>d_uns64 <code class="code">size</code>(const ref Loc <code class="code">loc</code>);
 
           </code>
         </p>
@@ -2020,110 +2020,6 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#Dsymbol.comment" id="Dsymbol.comment"><code class="code">comment</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="Dsymbol.comment"></span>final const(char)* <code class="code">comment</code>();
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    get documentation <code class="code">comment</code> for this Dsymbol
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#Dsymbol.ddocUnittest" id="Dsymbol.ddocUnittest"><code class="code">ddocUnittest</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="Dsymbol.ddocUnittest"></span>final UnitTestDeclaration <code class="code">ddocUnittest</code>();
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Get ddoc unittest associated with this symbol.
- (only use this with ddoc)
-
-  </p>
-</div>
-<div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    ddoc unittest, <code class="code">null</code> if none
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#Dsymbol.ddocUnittest" id="Dsymbol.ddocUnittest"><code class="code">ddocUnittest</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="Dsymbol.ddocUnittest.2"></span>final void <code class="code">ddocUnittest</code>(UnitTestDeclaration <code class="code">utd</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Set ddoc unittest associated with this symbol.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
   <a href="#Dsymbol.inNonRoot" id="Dsymbol.inNonRoot"><code class="code">inNonRoot</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -2146,46 +2042,6 @@
   <div class="ddoc_summary">
   <p class="para">
     Returns <code class="code">true</code> if this symbol is defined in a non-root module without instantiation.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#Dsymbol.deinitialize" id="Dsymbol.deinitialize"><code class="code">deinitialize</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="Dsymbol.deinitialize"></span>static void <code class="code">deinitialize</code>();
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Deinitializes the global state of the compiler.
-
-  </p>
-</div>
-<div class="ddoc_description">
-  <h4>Discussion</h4>
-  <p class="para">
-    This can be used to restore the state set by <code class="code">_init</code> to its original
- state.
   </p>
 </div>
 
@@ -2289,90 +2145,6 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#ScopeDsymbol.getImportedScopes" id="ScopeDsymbol.getImportedScopes"><code class="code">getImportedScopes</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="ScopeDsymbol.getImportedScopes"></span>final pure nothrow @nogc @safe Dsymbols* <code class="code">getImportedScopes</code>();
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    the symbols whose members have been imported, i.e. imported modules
- and template mixins.
-
-
-  </p>
-</div>
-<div class="ddoc_see_also">
-  <h4>See Also</h4>
-  <p class="para">
-    importScope
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#ScopeDsymbol.getImportVisibilities" id="ScopeDsymbol.getImportVisibilities"><code class="code">getImportVisibilities</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="ScopeDsymbol.getImportVisibilities"></span>final pure nothrow @nogc @safe Visibility.Kind[] <code class="code">getImportVisibilities</code>();
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    the array of visibilities associated with each imported scope. The
- length of the array matches the imported scopes array.
-
-
-  </p>
-</div>
-<div class="ddoc_see_also">
-  <h4>See Also</h4>
-  <p class="para">
-    getImportedScopes
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
   <a href="#ScopeDsymbol.findGetMembers" id="ScopeDsymbol.findGetMembers"><code class="code">findGetMembers</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -2416,7 +2188,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="ScopeDsymbol.symtabInsert"></span>nothrow Dsymbol <code class="code">symtabInsert</code>(Dsymbol <code class="code">s</code>);
+            <span class="ddoc_anchor" id="ScopeDsymbol.symtabInsert"></span>Dsymbol <code class="code">symtabInsert</code>(Dsymbol <code class="code">s</code>);
 
           </code>
         </p>
@@ -2477,7 +2249,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="ScopeDsymbol.symtabLookup"></span>nothrow Dsymbol <code class="code">symtabLookup</code>(Dsymbol <code class="code">s</code>, Identifier <code class="code">id</code>);
+            <span class="ddoc_anchor" id="ScopeDsymbol.symtabLookup"></span>Dsymbol <code class="code">symtabLookup</code>(Dsymbol <code class="code">s</code>, Identifier <code class="code">id</code>);
 
           </code>
         </p>
@@ -2831,7 +2603,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="ForwardingScopeDsymbol.symtabLookup"></span>nothrow Dsymbol <code class="code">symtabLookup</code>(Dsymbol <code class="code">s</code>, Identifier <code class="code">id</code>);
+            <span class="ddoc_anchor" id="ForwardingScopeDsymbol.symtabLookup"></span>Dsymbol <code class="code">symtabLookup</code>(Dsymbol <code class="code">s</code>, Identifier <code class="code">id</code>);
 
           </code>
         </p>
@@ -3034,7 +2806,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="AliasAssign.this"></span>nothrow this(const ref Loc <code class="code">loc</code>, Identifier <code class="code">ident</code>, Type <code class="code">type</code>, Dsymbol <code class="code">aliassym</code>);
+            <span class="ddoc_anchor" id="AliasAssign.this"></span>this(const ref Loc <code class="code">loc</code>, Identifier <code class="code">ident</code>, Type <code class="code">type</code>, Dsymbol <code class="code">aliassym</code>);
 
           </code>
         </p>
@@ -3101,7 +2873,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="DsymbolTable.lookup"></span>nothrow Dsymbol <code class="code">lookup</code>(const Identifier <code class="code">ident</code>);
+            <span class="ddoc_anchor" id="DsymbolTable.lookup"></span>Dsymbol <code class="code">lookup</code>(const Identifier <code class="code">ident</code>);
 
           </code>
         </p>
@@ -3162,7 +2934,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="DsymbolTable.update"></span>nothrow void <code class="code">update</code>(Dsymbol <code class="code">s</code>);
+            <span class="ddoc_anchor" id="DsymbolTable.update"></span>void <code class="code">update</code>(Dsymbol <code class="code">s</code>);
 
           </code>
         </p>
@@ -3218,7 +2990,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="DsymbolTable.insert"></span>nothrow Dsymbol <code class="code">insert</code>(Dsymbol <code class="code">s</code>);
+            <span class="ddoc_anchor" id="DsymbolTable.insert"></span>Dsymbol <code class="code">insert</code>(Dsymbol <code class="code">s</code>);
 
           </code>
         </p>
@@ -3279,7 +3051,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="DsymbolTable.insert.2"></span>nothrow Dsymbol <code class="code">insert</code>(const Identifier <code class="code">ident</code>, Dsymbol <code class="code">s</code>);
+            <span class="ddoc_anchor" id="DsymbolTable.insert.2"></span>Dsymbol <code class="code">insert</code>(const Identifier <code class="code">ident</code>, Dsymbol <code class="code">s</code>);
 
           </code>
         </p>
@@ -3354,7 +3126,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="DsymbolTable.length"></span>const pure nothrow size_t <code class="code">length</code>();
+            <span class="ddoc_anchor" id="DsymbolTable.length"></span>const pure size_t <code class="code">length</code>();
 
           </code>
         </p>

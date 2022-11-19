@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>dmd.common.string</title>
+    <title>dmd.backend.outbuf</title>
     <style type="text/css" media="screen">
       html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,
       blockquote, pre, a, abbr, address, cite, code, del, dfn, em, figure,
@@ -508,201 +508,43 @@
   <body id="ddoc_main" class="ddoc dlang">
     <div class="content_wrapper">
       <article class="module">
-        <h1 class="module_name">dmd.common.string</h1>
+        <h1 class="module_name">dmd.backend.outbuf</h1>
         <section id="module_content"><section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Common <code class="code">string</code> functions including filename manipulation.
+    Compiler implementation of the
+ <a href="http://www.dlang.org">D programming language</a>.
 
   </p>
 </div>
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    Walter Bright, <a href="https://www.digitalmars.com">https://www.digitalmars.com</a>
+    <a href="http://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
 <div class="ddoc_section">
   <p class="para">
     <span class="ddoc_section_h">Source:</span>
-<a href="https://github.com/dlang/dmd/blob/master/src/dmd/common/string.d">common/string.d</a>
+<a href="https://github.com/dlang/dmd/blob/master/src/dmd/backend/outbuf.d">backend/<code class="code">outbuf</code>.d</a>
 
   </p>
 </div>
 <div class="ddoc_section">
   <p class="para">
     <span class="ddoc_section_h">Documentation:</span>
-<a href="https://dlang.org/phobos/dmd_common_string.html">https://dlang.org/phobos/dmd_common_string.html</a>
-
-  </p>
-</div>
-<div class="ddoc_section">
-  <p class="para">
-    <span class="ddoc_section_h">Coverage:</span>
-<a href="https://codecov.io/gh/dlang/dmd/src/master/src/dmd/common/string.d">https://codecov.io/gh/dlang/dmd/src/master/src/dmd/common/string.d</a>
+<a href="https://dlang.org/phobos/dmd_backend_outbuf.html">https://dlang.org/phobos/dmd_backend_outbuf.html</a>
   </p>
 </div>
 
-</section>
-<section class="section ddoc_module_members_section">
-  <div class="ddoc_module_members">
-    <ul class="ddoc_members">
-  <li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#SmallBuffer" id="SmallBuffer"><code class="code">SmallBuffer</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="SmallBuffer"></span>struct <code class="code">SmallBuffer</code>(T);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Defines a temporary array using a fixed-length buffer as back store. If the length
-of the buffer suffices, it is readily used. Otherwise, <code class="code">malloc</code> is used to
-allocate memory for the array and <code class="code">free</code> is used for deallocation in the
-destructor.
-
-  </p>
-</div>
-<div class="ddoc_description">
-  <h4>Discussion</h4>
-  <p class="para">
-    This type is meant to use exclusively as an automatic variable. It is not
-default constructible or copyable.
-  </p>
-</div>
-<div class="ddoc_examples">
-  <h4>Examples</h4>
-  <p class="para">
-    ditto
-
-<section class="code_listing">
-  <div class="code_sample">
-    <div class="dlang">
-      <ol class="code_lines">
-        <li><code class="code"><span class="keyword">char</span>[230] buf = <span class="keyword">void</span>;
-<span class="keyword">auto</span> a = <span class="psymbol">SmallBuffer</span>!<span class="keyword">char</span>(10, buf);
-<span class="keyword">assert</span>(a[] <span class="keyword">is</span> buf[0 .. 10]);
-<span class="keyword">auto</span> b = <span class="psymbol">SmallBuffer</span>!<span class="keyword">char</span>(1000, buf);
-<span class="keyword">assert</span>(b[] !<span class="keyword">is</span> buf[]);
-b.create(1000);
-<span class="keyword">assert</span>(b.length == 1000);
-<span class="keyword">assert</span>(b[] !<span class="keyword">is</span> buf[]);
-</code></li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-  </p>
-</div>
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#asDString" id="asDString"><code class="code">asDString</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="asDString"></span>pure nothrow @nogc auto <code class="code">asDString</code>(C)(C* <code class="code">stringz</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Converts a zero-terminated C string to a D slice. Takes linear time and allocates no memory.
-
-  </p>
-</div>
-<div class="ddoc_params">
-  <h4>Parameters</h4>
-  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
-    <tbody>
-      <tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">C* <code class="code">stringz</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      the C string to be converted
-    </p>
-  </div>
-</td>
-</tr>
-
-    </tbody>
-  </table>
-</div>
-<div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    a slice comprehending the string. The terminating 0 is not part of the slice.
-  </p>
-</div>
-<div class="ddoc_examples">
-  <h4>Examples</h4>
-  <p class="para">
-    
-<section class="code_listing">
-  <div class="code_sample">
-    <div class="dlang">
-      <ol class="code_lines">
-        <li><code class="code"><span class="keyword">const</span> <span class="keyword">char</span>* p = <span class="string_literal">"123"</span>.ptr;
-<span class="keyword">assert</span>(p.<span class="psymbol">asDString</span> == <span class="string_literal">"123"</span>);
-</code></li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-  </p>
-</div>
-</section>
-
-</div>
-
-</li>
-</ul>
-  </div>
 </section>
 </section>
       </article>

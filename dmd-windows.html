@@ -379,7 +379,7 @@ C:&amp;gt;unzip dmc.zip
             Generate position independent executables
         </dd><dt><a class="anchor" title="Permalink to this section" id="switch-g" href="#switch-g"><b>-g</b></a></dt><dd>
                             Add CodeView symbolic debug info. See
-                <a href="https://dlang.org/windbg.html">Debugging on Windows</a>.
+                <a href="http://dlang.org/windbg.html">Debugging on Windows</a>.
             
             
         </dd><dt><a class="anchor" title="Permalink to this section" id="switch-gdwarf" href="#switch-gdwarf"><b>-gdwarf</b></a>=<i>version </i></dt><dd>
@@ -471,11 +471,11 @@ C:&amp;gt;unzip dmc.zip
             compiler memory requirements but increasing compile times.
         </dd><dt><a class="anchor" title="Permalink to this section" id="switch-m32" href="#switch-m32"><b>-m32</b></a></dt><dd>
             
+            Compile a 32 bit executable. This is the default.
+            The generated object code is in OMF and is meant to be used with the
+            <a href="http://www.digitalmars.com/download/freecompiler.html">Digital Mars C/C++ compiler</a>.
         </dd><dt><a class="anchor" title="Permalink to this section" id="switch-m32mscoff" href="#switch-m32mscoff"><b>-m32mscoff</b></a></dt><dd>
-            Generate 32 bit code and write MS-COFF object files (deprecated use -m32)
-        </dd><dt><a class="anchor" title="Permalink to this section" id="switch-m32omf" href="#switch-m32omf"><b>-m32omf</b></a></dt><dd>
-            Compile a 32 bit executable. The generated object code is in OMF and is meant to be used with the
-               <a href="http://www.digitalmars.com/download/freecompiler.html">Digital Mars C/C++ compiler</a>.
+            Generate 32 bit code and write MS-COFF object files
         </dd><dt><a class="anchor" title="Permalink to this section" id="switch-m64" href="#switch-m64"><b>-m64</b></a></dt><dd>
             
             The generated object code is in MS-COFF and is meant to be used with the
@@ -517,7 +517,7 @@ C:&amp;gt;unzip dmc.zip
         </dd><dt><a class="anchor" title="Permalink to this section" id="switch-mixin" href="#switch-mixin"><b>-mixin</b></a>=<i>filename </i></dt><dd>
             Expand and save mixins to file specified by <i>filename </i>
         </dd><dt><a class="anchor" title="Permalink to this section" id="switch-mscrtlib" href="#switch-mscrtlib"><b>-mscrtlib</b></a>=<i>libname </i></dt><dd>
-            If building MS-COFF object files when targeting Windows, embed a reference to
+            If building MS-COFF object files with -m64 or -m32mscoff, embed a reference to
             the given C runtime library <i>libname</i> into the object file containing <span class="d_inlinecode donthyphenate notranslate">main</span>,
             <span class="d_inlinecode donthyphenate notranslate">DllMain</span> or <span class="d_inlinecode donthyphenate notranslate">WinMain</span> for automatic linking. The default is <em class="tt">libcmt</em>
             (release version with static linkage), the other usual alternatives are
@@ -558,21 +558,6 @@ C:&amp;gt;unzip dmc.zip
             Normally the path for <b>.d</b> source files is stripped
             off when generating an object, interface, or Ddoc file
             name. <a href="#switch-op"><b>-op</b></a> will leave it on.
-        </dd><dt><a class="anchor" title="Permalink to this section" id="switch-os" href="#switch-os"><b>-os</b></a>=<i>os </i></dt><dd>
-            Set the target operating system as other than the host.
-                <ul>                    <li><i>host</i>: Target the host operating system (default).</li>
-                    <li><i>dragonflybsd</i>: DragonFlyBSD</li>
-                    <li><i>freebsd</i>: FreeBSD</li>
-                    <li><i>linux</i>: Linux</li>
-                    <li><i>openbsd</i>: OpenBSD</li>
-                    <li><i>osx</i>: OSX</li>
-                    <li><i>solaris</i>: Solaris</li>
-                    <li><i>windows</i>: Windows</li>
-                </ul>
-        </dd><dt><a class="anchor" title="Permalink to this section" id="switch-P" href="#switch-P"><b>-P</b></a>=<i>preprocessorflag </i></dt><dd>
-            Pass <i>preprocessorflag</i> to
-            sppn.exe or cl.exe
-            
         </dd><dt><a class="anchor" title="Permalink to this section" id="switch-preview" href="#switch-preview"><b>-preview</b></a>=<i>name </i></dt><dd>
             Preview an upcoming language change identified by <i>id</i>
         </dd><dt><b>-preview</b>=[<i>h|help|? </i>]</dt><dd>
@@ -580,18 +565,10 @@ C:&amp;gt;unzip dmc.zip
         </dd><dt><a class="anchor" title="Permalink to this section" id="switch-profile" href="#switch-profile"><b>-profile</b></a></dt><dd>
             Profile runtime performance of generated code
         </dd><dt><b>-profile</b>=gc</dt><dd>
-            <a href="https://www.digitalmars.com/ctg/trace.html">profile</a>
+            <a href="http://www.digitalmars.com/ctg/trace.html">profile</a>
             the runtime performance of the generated code.
-            <ul>                <li><b>gc</b>: Instrument calls to GC memory allocation and
-                write a report to the file <em class="tt">profilegc.log</em> upon program
-                termination.  <b>Note:</b> Only instrumented calls will be
-                logged. These include:
-                   <ul>                       <li>Language constructs that allocate memory</li>
-                       <li>Phobos functions that allocate GC memory</li>
-                       <li>GC allocations via core.memory.GC</li>
-                   </ul>
-                   Allocations made by other means will not be logged,
-                   including direct calls to the GC's C API.</li>
+            <ul>                <li><b>gc</b>: Instrument calls to memory allocation and write a report
+                to the file <em class="tt">profilegc.log</em> upon program termination.</li>
             </ul>
         </dd><dt><a class="anchor" title="Permalink to this section" id="switch-release" href="#switch-release"><b>-release</b></a></dt><dd>
             Compile release version, which means not emitting run-time
@@ -634,8 +611,6 @@ C:&amp;gt;unzip dmc.zip
              <span class="d_inlinecode donthyphenate notranslate">unittest</span> <a href="spec/version.html#PredefinedVersions">version identifier</a>
         </dd><dt><a class="anchor" title="Permalink to this section" id="switch-v" href="#switch-v"><b>-v</b></a></dt><dd>
             Enable verbose output for each compiler pass
-        </dd><dt><a class="anchor" title="Permalink to this section" id="switch-vasm" href="#switch-vasm"><b>-vasm</b></a></dt><dd>
-            List generated assembler for each function
         </dd><dt><a class="anchor" title="Permalink to this section" id="switch-vcolumns" href="#switch-vcolumns"><b>-vcolumns</b></a></dt><dd>
             Print character (column) numbers in diagnostics
         </dd><dt><a class="anchor" title="Permalink to this section" id="switch-verror-style" href="#switch-verror-style"><b>-verror-style</b></a>=[<i>digitalmars|gnu </i>]</dt><dd>
@@ -1042,7 +1017,7 @@ make -f win32.mak
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="spec/ddoc.html">Ddoc</a> on Sun Jun  5 07:47:02 2022
+<a href="spec/ddoc.html">Ddoc</a> on Sat Nov 19 17:35:44 2022
 </div>
     </div>
 </div>

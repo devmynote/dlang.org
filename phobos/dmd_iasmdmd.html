@@ -520,14 +520,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    Mike Cote, John Micco and <a href="https://www.digitalmars.com">Walter Bright</a>
+    Mike Cote, John Micco and <a href="http://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -624,6 +624,67 @@
   <h4>Return Value</h4>
   <p class="para">
     <code class="code"><code class="code">s</code></code> on success, ErrorStatement if errors happened
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#iasm_regs" id="iasm_regs"><code class="code">iasm_regs</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="iasm_regs"></span>regm_t <code class="code">iasm_regs</code>(block* <code class="code">bp</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Called from back end.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">block* <code class="code">bp</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      asm block
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    mask of registers used by block <code class="code">bp</code>.
   </p>
 </div>
 

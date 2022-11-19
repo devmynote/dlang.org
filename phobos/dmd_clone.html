@@ -520,14 +520,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="https://www.digitalmars.com">Walter Bright</a>
+    <a href="http://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -987,9 +987,9 @@ __swap = <span class="keyword">this</span>;   <span class="comment">// bit copy
   <div class="ddoc_summary">
   <p class="para">
     Build __xopEquals for TypeInfo_Struct
-      bool __xopEquals(ref const S p) const
+      static bool __xopEquals(ref const S p, ref const S q)
       {
-          return this == p;
+          return p == q;
       }
 
   </p>
@@ -1031,9 +1031,9 @@ __swap = <span class="keyword">this</span>;   <span class="comment">// bit copy
   <div class="ddoc_summary">
   <p class="para">
     Build __xopCmp for TypeInfo_Struct
-      int __xopCmp(ref const S p) const
+      static bool __xopCmp(ref const S p, ref const S q)
       {
-          return this.opCmp(p);
+          return p.opCmp(q);
       }
 
   </p>
@@ -1086,7 +1086,7 @@ __swap = <span class="keyword">this</span>;   <span class="comment">// bit copy
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#buildDtors" id="buildDtors"><code class="code">buildDtors</code></a>
+  <a href="#buildDtor" id="buildDtor"><code class="code">buildDtor</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -1095,7 +1095,7 @@ __swap = <span class="keyword">this</span>;   <span class="comment">// bit copy
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="buildDtors"></span>void <code class="code">buildDtors</code>(AggregateDeclaration <code class="code">ad</code>, Scope* <code class="code">sc</code>);
+            <span class="ddoc_anchor" id="buildDtor"></span>DtorDeclaration <code class="code">buildDtor</code>(AggregateDeclaration <code class="code">ad</code>, Scope* <code class="code">sc</code>);
 
           </code>
         </p>
@@ -1107,10 +1107,9 @@ __swap = <span class="keyword">this</span>;   <span class="comment">// bit copy
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Create aggregate destructor for struct/class by aggregating
- all the destructors in userDtors[] with the destructors for
+    Create inclusive destructor for struct/class by aggregating
+ all the destructors in dtors[] with the destructors for
  all the members.
- Sets <code class="code">ad</code>'s fieldDtor, aggrDtor, dtor and tidtor fields.
 
   </p>
 </div>
@@ -1150,11 +1149,94 @@ __swap = <span class="keyword">this</span>;   <span class="comment">// bit copy
     </tbody>
   </table>
 </div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    generated function, <code class="code">null</code> if none needed
+
+  </p>
+</div>
 <div class="ddoc_section">
   <p class="para">
     <span class="ddoc_section_h">Note:</span>
 Close similarity with StructDeclaration::buildPostBlit(),
  and the ordering changes (runs backward instead of forwards).
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#buildExternDDtor" id="buildExternDDtor"><code class="code">buildExternDDtor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="buildExternDDtor"></span>DtorDeclaration <code class="code">buildExternDDtor</code>(AggregateDeclaration <code class="code">ad</code>, Scope* <code class="code">sc</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    build a shim function around the compound dtor that translates
+  a C++ destructor to a destructor with extern(D) calling convention
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">AggregateDeclaration <code class="code">ad</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      the aggregate that contains the destructor to wrap
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Scope* <code class="code">sc</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      the scope in which to analyze the new function
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    the shim destructor, semantically analyzed and added to the class as a member
   </p>
 </div>
 

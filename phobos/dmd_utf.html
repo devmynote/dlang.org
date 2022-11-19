@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>dmd.mustuse</title>
+    <title>dmd.utf</title>
     <style type="text/css" media="screen">
       html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,
       blockquote, pre, a, abbr, address, cite, code, del, dfn, em, figure,
@@ -508,39 +508,46 @@
   <body id="ddoc_main" class="ddoc dlang">
     <div class="content_wrapper">
       <article class="module">
-        <h1 class="module_name">dmd.mustuse</h1>
+        <h1 class="module_name">dmd.utf</h1>
         <section id="module_content"><section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Compile-time checks associated with the @<code class="code">mustuse</code> attribute.
+    Functions related to UTF encoding.
+
+  </p>
+</div>
+<div class="ddoc_authors">
+  <h4>Authors</h4>
+  <p class="para">
+    <a href="http://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
 <div class="ddoc_section">
   <p class="para">
     <span class="ddoc_section_h">Source:</span>
-<a href="https://github.com/dlang/dmd/blob/master/src/dmd/mustuse.d">mustuse.d</a>
+<a href="https://github.com/dlang/dmd/blob/master/src/dmd/utf.d">utf.d</a>
 
   </p>
 </div>
 <div class="ddoc_section">
   <p class="para">
     <span class="ddoc_section_h">Documentation:</span>
-<a href="https://dlang.org/phobos/dmd_mustuse.html">https://dlang.org/phobos/dmd_mustuse.html</a>
+<a href="https://dlang.org/phobos/dmd_utf.html">https://dlang.org/phobos/dmd_utf.html</a>
 
   </p>
 </div>
 <div class="ddoc_section">
   <p class="para">
     <span class="ddoc_section_h">Coverage:</span>
-<a href="https://codecov.io/gh/dlang/dmd/src/master/src/dmd/mustuse.d">https://codecov.io/gh/dlang/dmd/src/master/src/dmd/mustuse.d</a>
+<a href="https://codecov.io/gh/dlang/dmd/src/master/src/dmd/utf.d">https://codecov.io/gh/dlang/dmd/src/master/src/dmd/utf.d</a>
   </p>
 </div>
 
@@ -551,7 +558,7 @@
   <li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#checkMustUse" id="checkMustUse"><code class="code">checkMustUse</code></a>
+  <a href="#utf_isValidDchar" id="utf_isValidDchar"><code class="code">utf_isValidDchar</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -560,7 +567,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="checkMustUse"></span>bool <code class="code">checkMustUse</code>(Expression <code class="code">e</code>, Scope* <code class="code">sc</code>);
+            <span class="ddoc_anchor" id="utf_isValidDchar"></span>pure nothrow @nogc bool <code class="code">utf_isValidDchar</code>(dchar <code class="code">c</code>);
 
           </code>
         </p>
@@ -572,8 +579,138 @@
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Check whether discarding an expression would violate the requirements of
- @mustuse. If so, emit an error.
+    The Unicode code space is the range of code points [0x000000,0x10FFFF]
+except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#isUniAlpha" id="isUniAlpha"><code class="code">isUniAlpha</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="isUniAlpha"></span>pure nothrow @nogc bool <code class="code">isUniAlpha</code>(dchar <code class="code">c</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Return !=0 if unicode alpha.
+ Use table from C99 Appendix D.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#utf_codeLengthChar" id="utf_codeLengthChar"><code class="code">utf_codeLengthChar</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="utf_codeLengthChar"></span>pure nothrow @nogc int <code class="code">utf_codeLengthChar</code>(dchar <code class="code">c</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Returns the code length of <code class="code">c</code> in code units.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#utf_codeLength" id="utf_codeLength"><code class="code">utf_codeLength</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="utf_codeLength"></span>pure nothrow @nogc int <code class="code">utf_codeLength</code>(int <code class="code">sz</code>, dchar <code class="code">c</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Returns the code length of <code class="code">c</code> in code units for the encoding.
+ <code class="code">sz</code> is the encoding: 1 = utf8, 2 = utf16, 4 = utf32.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#utf_decodeChar" id="utf_decodeChar"><code class="code">utf_decodeChar</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="utf_decodeChar"></span>pure nothrow @nogc string <code class="code">utf_decodeChar</code>(const(char)[] <code class="code">s</code>, ref size_t <code class="code">ridx</code>, out dchar <code class="code">rresult</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Decode a UTF-8 sequence as a single UTF-32 code point.
 
   </p>
 </div>
@@ -584,13 +721,13 @@
       <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">Expression <code class="code">e</code></em>
+    <em class="term">const(char)[] <code class="code">s</code></em>
   </code>
 </td>
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      the expression to check
+      UTF-8 sequence
     </p>
   </div>
 </td>
@@ -598,13 +735,27 @@
 <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">Scope* <code class="code">sc</code></em>
+    <em class="term">size_t <code class="code">ridx</code></em>
   </code>
 </td>
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      scope in which <code class="code"><code class="code">e</code></code> was semantically analyzed
+      starting index in <code class="code">s</code>[], updated to reflect number of code units decoded
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">dchar <code class="code">rresult</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      set to character decoded
     </p>
   </div>
 </td>
@@ -616,7 +767,7 @@
 <div class="ddoc_returns">
   <h4>Return Value</h4>
   <p class="para">
-    <code class="code">true</code> on error, <code class="code">false</code> on success.
+    <code class="code">null</code> on success, otherwise error message string
   </p>
 </div>
 
@@ -627,7 +778,7 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#checkMustUseReserved" id="checkMustUseReserved"><code class="code">checkMustUseReserved</code></a>
+  <a href="#utf_decodeWchar" id="utf_decodeWchar"><code class="code">utf_decodeWchar</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -636,7 +787,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="checkMustUseReserved"></span>void <code class="code">checkMustUseReserved</code>(Dsymbol <code class="code">sym</code>);
+            <span class="ddoc_anchor" id="utf_decodeWchar"></span>pure nothrow @nogc string <code class="code">utf_decodeWchar</code>(const(wchar)[] <code class="code">s</code>, ref size_t <code class="code">ridx</code>, out dchar <code class="code">rresult</code>);
 
           </code>
         </p>
@@ -648,15 +799,7 @@
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Called from a symbol's semantic to check for reserved usage of @mustuse.
-
-  </p>
-</div>
-<div class="ddoc_description">
-  <h4>Discussion</h4>
-  <p class="para">
-    If such usage is found, emits an errror.
-
+    Decode a UTF-16 sequence as a single UTF-32 code point.
 
   </p>
 </div>
@@ -667,13 +810,41 @@
       <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">Dsymbol <code class="code">sym</code></em>
+    <em class="term">const(wchar)[] <code class="code">s</code></em>
   </code>
 </td>
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      symbol to check
+      UTF-16 sequence
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">size_t <code class="code">ridx</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      starting index in <code class="code">s</code>[], updated to reflect number of code units decoded
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">dchar <code class="code">rresult</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      set to character decoded
     </p>
   </div>
 </td>
@@ -681,6 +852,12 @@
 
     </tbody>
   </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    <code class="code">null</code> on success, otherwise error message string
+  </p>
 </div>
 
 </section>

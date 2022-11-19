@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>dmd.root.utf</title>
+    <title>dmd.root.outbuffer</title>
     <style type="text/css" media="screen">
       html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,
       blockquote, pre, a, abbr, address, cite, code, del, dfn, em, figure,
@@ -508,46 +508,46 @@
   <body id="ddoc_main" class="ddoc dlang">
     <div class="content_wrapper">
       <article class="module">
-        <h1 class="module_name">dmd.root.utf</h1>
+        <h1 class="module_name">dmd.root.outbuffer</h1>
         <section id="module_content"><section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Functions related to UTF encoding.
+    An expandable buffer in which you can write text or binary data.
 
   </p>
 </div>
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="https://www.digitalmars.com">Walter Bright</a>
+    Walter Bright, <a href="http://www.digitalmars.com">http://www.digitalmars.com</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
 <div class="ddoc_section">
   <p class="para">
     <span class="ddoc_section_h">Source:</span>
-<a href="https://github.com/dlang/dmd/blob/master/src/dmd/root/utf.d">utf.d</a>
+<a href="https://github.com/dlang/dmd/blob/master/src/dmd/root/outbuffer.d">root/outbuffer.d</a>
 
   </p>
 </div>
 <div class="ddoc_section">
   <p class="para">
     <span class="ddoc_section_h">Documentation:</span>
-<a href="https://dlang.org/phobos/dmd_root_utf.html">https://dlang.org/phobos/dmd_root_utf.html</a>
+<a href="https://dlang.org/phobos/dmd_root_outbuffer.html">https://dlang.org/phobos/dmd_root_outbuffer.html</a>
 
   </p>
 </div>
 <div class="ddoc_section">
   <p class="para">
     <span class="ddoc_section_h">Coverage:</span>
-<a href="https://codecov.io/gh/dlang/dmd/src/master/src/dmd/root/utf.d">https://codecov.io/gh/dlang/dmd/src/master/src/dmd/root/utf.d</a>
+<a href="https://codecov.io/gh/dlang/dmd/src/master/src/dmd/root/outbuffer.d">https://codecov.io/gh/dlang/dmd/src/master/src/dmd/root/outbuffer.d</a>
   </p>
 </div>
 
@@ -558,7 +558,7 @@
   <li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#utf_isValidDchar" id="utf_isValidDchar"><code class="code">utf_isValidDchar</code></a>
+  <a href="#OutBuffer" id="OutBuffer"><code class="code">OutBuffer</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -567,7 +567,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="utf_isValidDchar"></span>pure nothrow @nogc bool <code class="code">utf_isValidDchar</code>(dchar <code class="code">c</code>);
+            <span class="ddoc_anchor" id="OutBuffer"></span>struct <code class="code">OutBuffer</code>;
 
           </code>
         </p>
@@ -579,8 +579,38 @@
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    The Unicode code space is the range of code points [0x000000,0x10FFFF]
-except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
+    <code class="code"><code class="code">OutBuffer</code></code> is a write-only output stream of untyped data. It is backed up by
+a contiguous array or a memory-mapped file.
+  </p>
+</div>
+
+</section>
+<ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.doindent" id="OutBuffer.doindent"><code class="code">doindent</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.doindent"></span>bool <code class="code">doindent</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Whether to indent
   </p>
 </div>
 
@@ -591,7 +621,7 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#isUniAlpha" id="isUniAlpha"><code class="code">isUniAlpha</code></a>
+  <a href="#OutBuffer.spaces" id="OutBuffer.spaces"><code class="code">spaces</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -600,7 +630,7 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="isUniAlpha"></span>pure nothrow @nogc bool <code class="code">isUniAlpha</code>(dchar <code class="code">c</code>);
+            <span class="ddoc_anchor" id="OutBuffer.spaces"></span>bool <code class="code">spaces</code>;
 
           </code>
         </p>
@@ -612,8 +642,7 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Return !=0 if unicode alpha.
- Use table from C99 Appendix D.
+    Whether to indent by 4 <code class="code">spaces</code> or by tabs;
   </p>
 </div>
 
@@ -624,7 +653,7 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#utf_codeLengthChar" id="utf_codeLengthChar"><code class="code">utf_codeLengthChar</code></a>
+  <a href="#OutBuffer.level" id="OutBuffer.level"><code class="code">level</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -633,7 +662,7 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="utf_codeLengthChar"></span>pure nothrow @nogc int <code class="code">utf_codeLengthChar</code>(dchar <code class="code">c</code>);
+            <span class="ddoc_anchor" id="OutBuffer.level"></span>int <code class="code">level</code>;
 
           </code>
         </p>
@@ -645,7 +674,7 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Returns the code length of <code class="code">c</code> in code units.
+    Current indent <code class="code">level</code>
   </p>
 </div>
 
@@ -656,7 +685,7 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#utf_codeLength" id="utf_codeLength"><code class="code">utf_codeLength</code></a>
+  <a href="#OutBuffer.this" id="OutBuffer.this"><code class="code">this</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -665,7 +694,7 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="utf_codeLength"></span>pure nothrow @nogc int <code class="code">utf_codeLength</code>(int <code class="code">sz</code>, dchar <code class="code">c</code>);
+            <span class="ddoc_anchor" id="OutBuffer.this"></span>@trusted this(const(char)* <code class="code">filename</code>);
 
           </code>
         </p>
@@ -677,40 +706,8 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Returns the code length of <code class="code">c</code> in code units for the encoding.
- <code class="code">sz</code> is the encoding: 1 = utf8, 2 = utf16, 4 = utf32.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#utf_decodeChar" id="utf_decodeChar"><code class="code">utf_decodeChar</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="utf_decodeChar"></span>pure nothrow @nogc string <code class="code">utf_decodeChar</code>(const(char)[] <code class="code">s</code>, ref size_t <code class="code">ridx</code>, out dchar <code class="code">rresult</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Decode a UTF-8 sequence as a single UTF-32 code point.
+    Construct from <code class="code">filename</code>. Will map the file into memory (or create it anew
+    if necessary) and start writing at the beginning of it.
 
   </p>
 </div>
@@ -721,41 +718,284 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
       <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">const(char)[] <code class="code">s</code></em>
+    <em class="term">const(char)* <code class="code">filename</code></em>
   </code>
 </td>
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      UTF-8 sequence
+      zero-terminated name of file to map into memory
     </p>
   </div>
 </td>
 </tr>
-<tr class="ddoc_param_row">
+
+    </tbody>
+  </table>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.extractData" id="OutBuffer.extractData"><code class="code">extractData</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.extractData"></span>pure nothrow @nogc @trusted char* <code class="code">extractData</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Transfer ownership of the allocated data to the caller.
+
+  </p>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    pointer to the allocated data
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.destroy" id="OutBuffer.destroy"><code class="code">destroy</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.destroy"></span>pure nothrow @trusted void <code class="code">destroy</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Releases all resources associated with <code class="code">this</code> and resets it as an empty
+    memory buffer. The config variables <code class="code">notlinehead</code>, <code class="code">doindent</code> etc. are
+    not changed.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.reserve" id="OutBuffer.reserve"><code class="code">reserve</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.reserve"></span>pure nothrow void <code class="code">reserve</code>(size_t <code class="code">nbytes</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Reserves <code class="code"><code class="code">nbytes</code></code> bytes of additional memory (or file space) in advance.
+    The resulting capacity is at least the previous length plus <code class="code"><code class="code">nbytes</code></code>.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">size_t <code class="code">ridx</code></em>
+    <em class="term">size_t <code class="code">nbytes</code></em>
   </code>
 </td>
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      starting index in <code class="code">s</code>[], updated to reflect number of code units decoded
+      the number of additional bytes to <code class="code">reserve</code>
     </p>
   </div>
 </td>
 </tr>
-<tr class="ddoc_param_row">
+
+    </tbody>
+  </table>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.setsize" id="OutBuffer.setsize"><code class="code">setsize</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.setsize"></span>pure nothrow @nogc @safe void <code class="code">setsize</code>(size_t <code class="code">size</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Shrink the <code class="code">size</code> of the data to <code class="code"><code class="code">size</code></code>.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">dchar <code class="code">rresult</code></em>
+    <em class="term">size_t <code class="code">size</code></em>
   </code>
 </td>
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      set to character decoded
+      new <code class="code">size</code> of data, must be &lt;= <code class="code">.length</code>
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.writenl" id="OutBuffer.writenl"><code class="code">writenl</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.writenl"></span>pure nothrow void <code class="code">writenl</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    write newline
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.allocate" id="OutBuffer.allocate"><code class="code">allocate</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.allocate"></span>pure nothrow char[] <code class="code">allocate</code>(size_t <code class="code">nbytes</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Allocate space, but leave it uninitialized.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">size_t <code class="code">nbytes</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      amount to <code class="code">allocate</code>
     </p>
   </div>
 </td>
@@ -767,7 +1007,7 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
 <div class="ddoc_returns">
   <h4>Return Value</h4>
   <p class="para">
-    <code class="code">null</code> on success, otherwise error message string
+    slice of the allocated space to be filled in
   </p>
 </div>
 
@@ -778,7 +1018,7 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#utf_decodeWchar" id="utf_decodeWchar"><code class="code">utf_decodeWchar</code></a>
+  <a href="#OutBuffer.print" id="OutBuffer.print"><code class="code">print</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -787,7 +1027,7 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="utf_decodeWchar"></span>pure nothrow @nogc string <code class="code">utf_decodeWchar</code>(const(wchar)[] <code class="code">s</code>, ref size_t <code class="code">ridx</code>, out dchar <code class="code">rresult</code>);
+            <span class="ddoc_anchor" id="OutBuffer.print"></span>pure nothrow void <code class="code">print</code>(ulong <code class="code">u</code>);
 
           </code>
         </p>
@@ -799,7 +1039,7 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Decode a UTF-16 sequence as a single UTF-32 code point.
+    Convert <code class="code"><code class="code">u</code></code> to a string and append it to the buffer.
 
   </p>
 </div>
@@ -810,41 +1050,237 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
       <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">const(wchar)[] <code class="code">s</code></em>
+    <em class="term">ulong <code class="code">u</code></em>
   </code>
 </td>
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      UTF-16 sequence
+      integral value to append
     </p>
   </div>
 </td>
 </tr>
-<tr class="ddoc_param_row">
+
+    </tbody>
+  </table>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.bracket" id="OutBuffer.bracket"><code class="code">bracket</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.bracket"></span>pure nothrow size_t <code class="code">bracket</code>(size_t <code class="code">i</code>, const(char)* <code class="code">left</code>, size_t <code class="code">j</code>, const(char)* <code class="code">right</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Insert <code class="code">left</code> at <code class="code">i</code>, and <code class="code">right</code> at <code class="code">j</code>.
+ Return index just past <code class="code">right</code>.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.insert" id="OutBuffer.insert"><code class="code">insert</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.insert"></span>pure nothrow size_t <code class="code">insert</code>(size_t <code class="code">offset</code>, const(void)* <code class="code">p</code>, size_t <code class="code">nbytes</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    <code class="code">offset</code> + <code class="code">nbytes</code>
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.opSlice" id="OutBuffer.opSlice"><code class="code">opSlice</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.opSlice"></span>const pure nothrow @nogc @safe const(char)[] <code class="code">opSlice</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    a non-owning const slice of the buffer contents
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.extractSlice" id="OutBuffer.extractSlice"><code class="code">extractSlice</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.extractSlice"></span>pure nothrow char[] <code class="code">extractSlice</code>(bool <code class="code">nullTerminate</code> = false);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Extract the data as a slice and take ownership of it.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    When <code class="code">true</code> is passed as an argument, this function behaves
+ like <code class="code">dmd.utils.toDString(thisbuffer.extractChars())</code>.
+
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">size_t <code class="code">ridx</code></em>
+    <em class="term">bool <code class="code">nullTerminate</code></em>
   </code>
 </td>
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      starting index in <code class="code">s</code>[], updated to reflect number of code units decoded
+      When <code class="code">true</code>, the data will be <code class="code">null</code> terminated.
+                   This is useful to call C functions or store
+                   the result in <code class="code">Strings</code>. Defaults to <code class="code">false</code>.
     </p>
   </div>
 </td>
 </tr>
-<tr class="ddoc_param_row">
+
+    </tbody>
+  </table>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.moveToFile" id="OutBuffer.moveToFile"><code class="code">moveToFile</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.moveToFile"></span>bool <code class="code">moveToFile</code>(const char* <code class="code">filename</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Destructively saves the contents of <code class="code">this</code> to <code class="code"><code class="code">filename</code></code>. As an
+    optimization, if the file already has identical contents with the buffer,
+    no copying is done. This is because on SSD drives reading is often much
+    faster than writing and because there's a high likelihood an identical
+    file is written during the build process.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">dchar <code class="code">rresult</code></em>
+    <em class="term">char* <code class="code">filename</code></em>
   </code>
 </td>
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      set to character decoded
+      the name of the file to receive the contents
     </p>
   </div>
 </td>
@@ -856,11 +1292,16 @@ except the UTF-16 surrogate pairs in the range [0xD800,0xDFFF]
 <div class="ddoc_returns">
   <h4>Return Value</h4>
   <p class="para">
-    <code class="code">null</code> on success, otherwise error message string
+    <code class="code">true</code> iff the operation succeeded.
   </p>
 </div>
 
 </section>
+
+</div>
+
+</li>
+</ul>
 
 </div>
 

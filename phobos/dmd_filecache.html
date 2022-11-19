@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>dmd.file_manager</title>
+    <title>dmd.filecache</title>
     <style type="text/css" media="screen">
       html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,
       blockquote, pre, a, abbr, address, cite, code, del, dfn, em, figure,
@@ -508,42 +508,222 @@
   <body id="ddoc_main" class="ddoc dlang">
     <div class="content_wrapper">
       <article class="module">
-        <h1 class="module_name">dmd.file_manager</h1>
+        <h1 class="module_name">dmd.filecache</h1>
         <section id="module_content"><section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Read a file from disk and store it in memory.
+    Cache the contents from files read from disk into memory.
+
+  </p>
+</div>
+<div class="ddoc_authors">
+  <h4>Authors</h4>
+  <p class="para">
+    <a href="http://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
 <div class="ddoc_section">
   <p class="para">
     <span class="ddoc_section_h">Source:</span>
-<a href="https://github.com/dlang/dmd/blob/master/src/dmd/file_manager.d">file_manager.d</a>
+<a href="https://github.com/dlang/dmd/blob/master/src/dmd/filecache.d"><code class="code">filecache</code>.d</a>
 
   </p>
 </div>
 <div class="ddoc_section">
   <p class="para">
     <span class="ddoc_section_h">Documentation:</span>
-<a href="https://dlang.org/phobos/dmd_file_manager.html">https://dlang.org/phobos/dmd_file_manager.html</a>
+<a href="https://dlang.org/phobos/dmd_filecache.html">https://dlang.org/phobos/dmd_filecache.html</a>
 
   </p>
 </div>
 <div class="ddoc_section">
   <p class="para">
     <span class="ddoc_section_h">Coverage:</span>
-<a href="https://codecov.io/gh/dlang/dmd/src/master/src/dmd/file_manager.d">https://codecov.io/gh/dlang/dmd/src/master/src/dmd/file_manager.d</a>
+<a href="https://codecov.io/gh/dlang/dmd/src/master/src/dmd/filecache.d">https://codecov.io/gh/dlang/dmd/src/master/src/dmd/filecache.d</a>
   </p>
 </div>
 
+</section>
+<section class="section ddoc_module_members_section">
+  <div class="ddoc_module_members">
+    <ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#FileAndLines" id="FileAndLines"><code class="code">FileAndLines</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="FileAndLines"></span>class <code class="code">FileAndLines</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A line-by-line representation of a .
+  </p>
+</div>
+
+</section>
+<ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#FileAndLines.this" id="FileAndLines.this"><code class="code">this</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="FileAndLines.this"></span>nothrow this(const(char)[] <code class="code">filename</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    File to read and split into its lines.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li>
+</ul>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#FileCache" id="FileCache"><code class="code">FileCache</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="FileCache"></span>struct <code class="code">FileCache</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    A simple file cache that can be used to avoid reading the same file multiple times.
+It stores its cached files as 
+  </p>
+</div>
+
+</section>
+<ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#FileCache.addOrGetFile" id="FileCache.addOrGetFile"><code class="code">addOrGetFile</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="FileCache.addOrGetFile"></span>nothrow FileAndLines <code class="code">addOrGetFile</code>(const(char)[] <code class="code">file</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Add or get a <code class="code">file</code> from the <code class="code">file</code> cache.
+    If the <code class="code">file</code> isn't part of the cache, it will be read from the filesystem.
+    If the <code class="code">file</code> has been read before, the cached <code class="code">file</code> object will be returned
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">const(char)[] <code class="code">file</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      <code class="code">file</code> to load in (or get from) the cache
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    a  object containing a line-by-line representation of the requested <code class="code">file</code>
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li>
+</ul>
+
+</div>
+
+</li>
+</ul>
+  </div>
 </section>
 </section>
       </article>

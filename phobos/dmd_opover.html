@@ -527,14 +527,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="https://www.digitalmars.com">Walter Bright</a>
+    <a href="http://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -575,7 +575,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="isCommutative"></span>bool <code class="code">isCommutative</code>(EXP <code class="code">op</code>);
+            <span class="ddoc_anchor" id="isCommutative"></span>bool <code class="code">isCommutative</code>(TOK <code class="code">op</code>);
 
           </code>
         </p>
@@ -608,7 +608,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="opToArg"></span>Objects* <code class="code">opToArg</code>(Scope* <code class="code">sc</code>, EXP <code class="code">op</code>);
+            <span class="ddoc_anchor" id="opToArg"></span>Objects* <code class="code">opToArg</code>(Scope* <code class="code">sc</code>, TOK <code class="code">op</code>);
 
           </code>
         </p>
@@ -640,7 +640,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="op_overload"></span>Expression <code class="code">op_overload</code>(Expression <code class="code">e</code>, Scope* <code class="code">sc</code>, EXP* <code class="code">pop</code> = null);
+            <span class="ddoc_anchor" id="op_overload"></span>Expression <code class="code">op_overload</code>(Expression <code class="code">e</code>, Scope* <code class="code">sc</code>, TOK* <code class="code">pop</code> = null);
 
           </code>
         </p>
@@ -693,7 +693,7 @@
 <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">EXP* <code class="code">pop</code></em>
+    <em class="term">TOK* <code class="code">pop</code></em>
   </code>
 </td>
 <td>
@@ -963,8 +963,7 @@
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      <code class="code">null</code> or opApply or delegate, overload resolution has not been done.
-               Do overload resolution on <code class="code">sapply</code>.
+      <code class="code">null</code> or opApply or delegate
     </p>
   </div>
 </td>

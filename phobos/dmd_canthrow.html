@@ -527,14 +527,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="https://www.digitalmars.com">Walter Bright</a>
+    <a href="http://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -566,110 +566,6 @@
   <li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#CT" id="CT"><code class="code">CT</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="CT"></span>enum <code class="code">CT</code>: BE;
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Status indicating what kind of throwable might be caused by an expression.
-
-  </p>
-</div>
-<div class="ddoc_description">
-  <h4>Discussion</h4>
-  <p class="para">
-    This is a subset of <code class="code">BE</code> restricted to the values actually used by <code class="code">canThrow</code>.
-  </p>
-</div>
-
-</section>
-<ul class="ddoc_members">
-  <li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#CT.none" id="CT.none"><code class="code">none</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="CT.none"></span><code class="code">none</code>
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Never throws an <code class="code">Exception</code> or <code class="code">Throwable</code>
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#CT.exception" id="CT.exception"><code class="code">exception</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="CT.exception"></span><code class="code">exception</code>
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Might throw an <code class="code">Exception</code>
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li>
-</ul>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
   <a href="#canThrow" id="canThrow"><code class="code">canThrow</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -679,7 +575,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="canThrow"></span>BE <code class="code">canThrow</code>(Expression <code class="code">e</code>, FuncDeclaration <code class="code">func</code>, bool <code class="code">mustNotThrow</code>);
+            <span class="ddoc_anchor" id="canThrow"></span>bool <code class="code">canThrow</code>(Expression <code class="code">e</code>, FuncDeclaration <code class="code">func</code>, bool <code class="code">mustNotThrow</code>);
 
           </code>
         </p>
