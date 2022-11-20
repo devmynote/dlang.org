@@ -32,6 +32,12 @@ jobs:
         repository: dlang/phobos
         ref: v2.100.1
         path: phobos
+    - name: 'Checkout druntime'
+      uses: actions/checkout@v3
+      with:
+        repository: dlang/druntime
+        ref: v2.100.1
+        path: druntime
     - name: 'Make html file'
       run: |
         cd dlang.org
