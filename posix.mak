@@ -929,6 +929,7 @@ $W/$(MAN_PAGE): $(DMD_DIR)/generated/$(MAN_PAGE) | ${STABLE_DMD}
 		${MAKE} -s -C $(DMD_DIR)/compiler/docs DMD=$(abspath $(STABLE_DMD)) DIFFABLE=$(DIFFABLE) preview > $(dir $@)dmd.txt; \
 	fi
 
-man: $W/$(MAN_PAGE)
+#man: $W/$(MAN_PAGE)
+man:
 
 .DELETE_ON_ERROR: # GNU Make directive (delete output files on error)

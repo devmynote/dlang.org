@@ -24,20 +24,14 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: dlang/dmd
-        ref: v2.098.1
+        ref: v2.100.1
         path: dmd
     - name: 'Checkout phobos'
       uses: actions/checkout@v3
       with:
         repository: dlang/phobos
-        ref: v2.098.1
+        ref: v2.100.1
         path: phobos
-    - name: 'Checkout druntime'
-      uses: actions/checkout@v3
-      with:
-        repository: dlang/druntime
-        ref: v2.098.1
-        path: druntime
     - name: 'Make html file'
       run: |
         cd dlang.org
