@@ -17,7 +17,7 @@ $(DIVC intro, $(DIV, $(DIV,
         $(DIVC download,
             $(DIVC btn-group-vertical,
               <a href="download.html" class="btn">Downloads</a>
-              $(SPANC smallprint, 最新バージョン: 2.100.0
+              $(SPANC smallprint, 最新バージョンn: 2.100.0
                   &ndash; $(LINK2 changelog/2.100.0.html, Changelog))
             )
         )
