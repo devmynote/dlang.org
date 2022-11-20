@@ -616,8 +616,9 @@ $(GNAME IdentityExpression):
         bits in the operands being identical.
     )
 
-    $(P For static and dynamic arrays, identity is defined as referring
-        to the same array elements and the same number of elements.
+    $(P For static and dynamic arrays, identity of two arrays is given when
+    both arrays refer to the same memory location and contain the same number
+    of elements.
     )
 
     $(P For other operand types, identity is defined as being the same
@@ -1339,6 +1340,7 @@ $(P
     }
     ---
 
+    $(P The type of a *ThrowExpression* is $(DDSUBLINK spec/type, noreturn, `noreturn`).)
 
 $(BEST_PRACTICE Use $(DDSUBLINK spec/expression, assert_expressions, Assert Expressions)
 rather than $(LINK2 $(ROOT_DIR)library/object#.Error, Error) to report program bugs
@@ -1849,10 +1851,10 @@ $(H3 $(LNAME2 function_literals, 関数リテラル))
 
 $(GRAMMAR
 $(GNAME FunctionLiteral):
-    $(D function) $(D ref)$(OPT) $(GLINK2 type, Type)$(OPT) $(GLINK ParameterWithAttributes) $(OPT) $(GLINK FunctionLiteralBody2)
-    $(D delegate) $(D ref)$(OPT) $(GLINK2 type, Type)$(OPT) $(GLINK ParameterWithMemberAttributes) $(OPT) $(GLINK FunctionLiteralBody2)
+    $(D function) $(D ref)$(OPT) $(GLINK2 type, Type)$(OPT) $(GLINK ParameterWithAttributes)$(OPT) $(GLINK FunctionLiteralBody2)
+    $(D delegate) $(D ref)$(OPT) $(GLINK2 type, Type)$(OPT) $(GLINK ParameterWithMemberAttributes)$(OPT) $(GLINK FunctionLiteralBody2)
     $(D ref)$(OPT) $(GLINK ParameterWithMemberAttributes) $(GLINK FunctionLiteralBody2)
-    $(GLINK2 function, FunctionLiteralBody)
+    $(GLINK2 statement, BlockStatement)
     $(IDENTIFIER) $(D =>) $(GLINK AssignExpression)
 
 $(GNAME ParameterWithAttributes):
@@ -1863,15 +1865,15 @@ $(GNAME ParameterWithMemberAttributes):
 
 $(GNAME FunctionLiteralBody2):
     $(D =>) $(GLINK AssignExpression)
-    $(GLINK2 function, FunctionLiteralBody)
+    $(GLINK2 function, SpecifiedFunctionBody)
 )
 
     $(P $(I FunctionLiteral)s (also known as $(LNAME2 lambdas, $(I Lambdas))) enable embedding anonymous functions
         and anonymous delegates directly into expressions.
-        $(I Type) is the return type of the function or delegate,
-        if omitted it is inferred from any $(I ReturnStatement)s
-        in the $(I FunctionLiteralBody).
-        $(GLINK ParameterWithAttributes) or $(GLINK ParameterWithMemberAttributes)
+        $(I Type) is the return type of the function or delegate -
+        if omitted it is inferred from either the *AssignExpression*, or
+        any $(GLINK2 statement, ReturnStatement)s in the $(I BlockStatement).
+        $(I ParameterWithAttributes) or $(I ParameterWithMemberAttributes)
         can be used to specify the parameters for the function. If these are
         omitted, the function defaults to the empty parameter list $(D ( )).
         The type of a function literal is a
@@ -1954,26 +1956,48 @@ $(GNAME FunctionLiteralBody2):
 
 $(H4 $(LNAME2 lambda-type-inference, Type Inference))
 
-    $(P If $(D function) or $(D delegate) is omitted,
-        it is inferred to be `delegate` if accessing
-        variables in enclosing functions, otherwise `function` is inferred.
+    $(P If a literal omits $(D function) or $(D delegate) and there's no
+        expected type from the context, then
+        it is inferred to be a delegate if it accesses a
+        variable in an enclosing function, otherwise it is a function pointer.
         )
 
+        $(SPEC_RUNNABLE_EXAMPLE_COMPILE
         -------------
-        int abc(int delegate(int i));
-        int def(uint function(uint s));
+        void test()
+        {
+            int b = 3;
+
+            auto fp = (uint c) { return c * 2; }; // inferred as function pointer
+            auto dg = (int c) { return 6 + b; }; // inferred as delegate
+
+            static assert(!is(typeof(fp) == delegate));
+            static assert(is(typeof(dg) == delegate));
+        }
+        -------------
+        )
+    $(P If a delegate is expected, the literal will be inferred as a delegate
+        even if it accesses no variables from an enclosing function:)
+
+        $(SPEC_RUNNABLE_EXAMPLE_COMPILE
+        -------------
+        void abc(int delegate(int i)) {}
+        void def(uint function(uint s)) {}
 
         void test()
         {
             int b = 3;
 
             abc( (int c) { return 6 + b; } );  // inferred as delegate
+            abc( (int c) { return c * 2; } );  // inferred as delegate
+
             def( (uint c) { return c * 2; } ); // inferred as function
             //def( (uint c) { return c * b; } );  // error!
-            // Because the FunctionLiteralBody accesses b, the function literal type
+            // Because the FunctionLiteral accesses b, its type
             // is inferred as delegate. But def cannot accept a delegate argument.
         }
         -------------
+        )
 
     $(P If the type of a function literal can be uniquely determined from its context,
         parameter type inference is possible.)
@@ -1984,26 +2008,35 @@ $(H4 $(LNAME2 lambda-type-inference, Type Inference))
         void test()
         {
             int function(int) fp = (n) { return n * 2; };
-            // The type of parameter n is inferred to int.
+            // The type of parameter n is inferred as int.
 
             foo((n) { return n * 2; });
-            // The type of parameter n is inferred to int.
+            // The type of parameter n is inferred as int.
         }
         -------------
 
         ---
-        auto fp1 = function (i) { return 1; }; // error, cannot infer type of `i`
+        auto fp = (i) { return 1; }; // error, cannot infer type of `i`
         ---
 
-    $(P If the function literal is assigned to an alias, the inference
+    $(P If a function literal is
+        $(DDSUBLINK spec/declaration, alias, aliased), the inference
         of the parameter types is done when the types are needed, as
-        the function literal becomes a template.)
+        the function literal becomes a
+        $(DDSUBLINK spec/template, function-templates, template).)
 
+        $(SPEC_RUNNABLE_EXAMPLE_COMPILE
         ---
-        alias fp3 = function (i) { return 1; };   // ok, infer type of `i` when used
-        int j = fp3(4);       // `i` is inferred as `int` here
-        double d = fp3(10.3); // `i` is inferred as `double` here
+        alias fpt = (i) { return i; }; // ok, infer type of `i` when used
+        //auto fpt(T)(T i) { return i; } // equivalent
+
+        auto v = fpt(4);    // `i` is inferred as int
+        auto d = fpt(10.3); // `i` is inferred as double
+
+        alias fp = fpt!float;
+        auto f = fp(0); // f is a float
         ---
+        )
 
 $(H4 $(LNAME2 lambda-short-syntax, 短い構文))
 
@@ -2337,6 +2370,12 @@ $(GNAME TypeSpecialization):
         compared against.
     )
 
+    $(P $(I IsExpression)s may be used in conjunction with $(D typeof) to check
+    whether an expression is semantically correct. For example, $(D is(typeof(foo)))
+    will return $(D true) if $(D foo) is a semantically correct expression with a valid
+    type.
+    )
+
 $(H4 $(LNAME2 basic-forms, Basic Forms))
 
         $(H5 $(LNAME2 is-type, $(D is $(LPAREN)) $(I Type) $(D $(RPAREN))))
@@ -2410,6 +2449,7 @@ void foo()
                 $(D delegate)
                 $(D const)
                 $(D immutable)
+                $(D inout)
                 $(D shared)
                 $(D module)
                 $(D package)
@@ -2535,7 +2575,10 @@ void foo()
                 $(D delegate)
                 $(D const)
                 $(D immutable)
+                $(D inout)
                 $(D shared)
+                $(D module)
+                $(D package)
 
         then the condition is satisfied if $(I Type) is one of those.
         *TypeSpecialization* can also match the following keywords:
@@ -2571,15 +2614,11 @@ void foo()
         $(TROW $(CODE __parameters), $(ARGS the parameter sequence of a function, delegate, or function pointer.
          This includes the parameter types, names, and default values.))
         $(TROW $(D const), $(I Type))
-        $(TROW
-        $(D immutable),
-        $(I Type)
-        )
-        $(TROW
-        $(CODE shared),
-        $(I Type)
-        )
-
+        $(TROW $(D immutable), $(I Type))
+        $(TROW $(D inout), $(I Type))
+        $(TROW $(D shared), $(I Type))
+        $(TROW $(D module), the module)
+        $(TROW $(D package), the package)
         )
 
     ---

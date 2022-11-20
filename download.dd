@@ -64,12 +64,12 @@ $(TABLEC download-compilers,
 Macros:
         TITLE=ダウンロード
 
-    DMDV2=$(LATEST)
+    DMDV2=2.100.0
 
     BETA=$(COMMENT $0)
     _=BETA=$0
     B_DMDV2=2.100.0
-    B_SUFFIX=rc.1
+    B_SUFFIX=beta.0
 
         DEB32=$(DLSITE dmd_$(DMDV2)-0_i386.deb)
         DEB64=$(DLSITE dmd_$(DMDV2)-0_amd64.deb)
