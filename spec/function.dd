@@ -135,7 +135,7 @@ $(LEGACY_LNAME2 FunctionLiteralBody)
         $(P $(B Note:) The *ShortenedFunctionBody* form requires the `-preview=shortenedMethods`
         command-line switch, which is available starting in v2.096.0.)
 
-$(H3 $(LNAME2 function-declarations, Functions without Bodies))
+$(H3 $(LNAME2 function-declarations, 本文なし関数))
 
 $(GRAMMAR
 $(GNAME MissingFunctionBody):
@@ -2656,7 +2656,7 @@ struct Foo
         $(P Nested functions always have the D function linkage type.
         )
 
-$(H3 $(LNAME2 nested-declaration-order, Declaration Order))
+$(H3 $(LNAME2 nested-declaration-order, 宣言の順序))
 
         $(P Unlike module level declarations, declarations within function
         scope are processed in order. This means that two nested functions
@@ -2783,7 +2783,7 @@ void main() {}
 ------
 )
 
-$(H3 $(LNAME2 closures, Delegates & Closures))
+$(H3 $(LNAME2 closures, デリゲートとクロージャ))
 
         $(P A delegate can be set to a non-static nested function:)
 
