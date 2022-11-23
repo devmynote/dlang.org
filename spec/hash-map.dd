@@ -68,7 +68,7 @@ $(H2 $(LNAME2 testing_membership, キーが含まれるかの確認))
         ---------
         int* p;
 
-        p = ("hello" $(CODE_HIGHLIGHT in) aa);
+        p = "hello" $(CODE_HIGHLIGHT in) aa;
         if (p !is null)
         {
             *p = 4;  // update value associated with key

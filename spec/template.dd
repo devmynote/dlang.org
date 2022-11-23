@@ -277,7 +277,48 @@ $(GNAME TemplateParameter):
         $(I TemplateParameter) when a matching argument is not supplied.
     )
 
-$(H3 $(LNAME2 argument_deduction, 引数の推定))
+$(H3 $(LNAME2 template_type_parameters, 型引数))
+
+$(GRAMMAR
+$(GNAME TemplateTypeParameter):
+    $(GLINK_LEX Identifier)
+    $(GLINK_LEX Identifier) $(GLINK TemplateTypeParameterSpecialization)
+    $(GLINK_LEX Identifier) $(GLINK TemplateTypeParameterDefault)
+    $(GLINK_LEX Identifier) $(GLINK TemplateTypeParameterSpecialization) $(GLINK TemplateTypeParameterDefault)
+
+$(GNAME TemplateTypeParameterSpecialization):
+    $(D :) $(GLINK2 type, Type)
+
+$(GNAME TemplateTypeParameterDefault):
+    $(D =) $(GLINK2 type, Type)
+)
+
+$(H4 $(LNAME2 parameters_specialization, 特殊化とパターン マッチング))
+
+    $(P Templates may be specialized for particular types of arguments
+        by following the template parameter identifier with a : and the
+        pattern for the specialized type.
+        For example:)
+
+        ------
+        template TFoo(T)        { ... } // #1
+        template TFoo(T : T[])  { ... } // #2
+        template TFoo(T : char) { ... } // #3
+        template TFoo(T, U, V)  { ... } // #4
+
+        alias foo1 = TFoo!(int);            // instantiates #1
+        alias foo2 = TFoo!(double[]);       // instantiates #2 matching pattern T[] with T being double
+        alias foo3 = TFoo!(char);           // instantiates #3
+        alias fooe = TFoo!(char, int);      // error, number of arguments mismatch
+        alias foo4 = TFoo!(char, int, int); // instantiates #4
+        ------
+
+    $(P The template picked to instantiate is the one that is most specialized
+        that fits the types of the $(I TemplateArgumentList).
+        If the result is ambiguous, it is an error.
+    )
+
+$(H4 $(LNAME2 argument_deduction, 型引数の推定))
 
     $(P The types of template parameters are deduced for a particular
         template instantiation by comparing the template argument with
@@ -312,14 +353,14 @@ $(H3 $(LNAME2 argument_deduction, 引数の推定))
         alias foo1 = TFoo!(int);     // (1) T is deduced to be int
         alias foo2 = TFoo!(char*);   // (1) T is deduced to be char*
 
-        template TBar(T : T*) { }
+        template TBar(T : T*) { }    // match template argument against T* pattern
         alias bar = TBar!(char*);    // (2) T is deduced to be char
 
-        template TAbc(D, U : D[]) { }
+        template TAbc(D, U : D[]) { }    // D[] is pattern to be matched
         alias abc1 = TAbc!(int, int[]);  // (2) D is deduced to be int, U is int[]
         alias abc2 = TAbc!(char, int[]); // (4) error, D is both char and int
 
-        template TDef(D : E*, E) { }
+        template TDef(D : E*, E) { }   // E* is pattern to be matched
         alias def = TDef!(int*, int);  // (1) E is int
                                        // (3) D is int*
         ------
@@ -350,47 +391,6 @@ $(H3 $(LNAME2 argument_deduction, 引数の推定))
         alias bar = TBar!(B*, B);  // (2) T is B*
                                    // (3) U is B
         ------
-
-$(H3 $(LNAME2 template_type_parameters, テンプレート型引数))
-
-$(GRAMMAR
-$(GNAME TemplateTypeParameter):
-    $(GLINK_LEX Identifier)
-    $(GLINK_LEX Identifier) $(GLINK TemplateTypeParameterSpecialization)
-    $(GLINK_LEX Identifier) $(GLINK TemplateTypeParameterDefault)
-    $(GLINK_LEX Identifier) $(GLINK TemplateTypeParameterSpecialization) $(GLINK TemplateTypeParameterDefault)
-
-$(GNAME TemplateTypeParameterSpecialization):
-    $(D :) $(GLINK2 type, Type)
-
-$(GNAME TemplateTypeParameterDefault):
-    $(D =) $(GLINK2 type, Type)
-)
-
-$(H4 $(LNAME2 parameters_specialization, 特殊化))
-
-    $(P Templates may be specialized for particular types of arguments
-        by following the template parameter identifier with a : and the
-        specialized type.
-        For example:)
-
-        ------
-        template TFoo(T)        { ... } // #1
-        template TFoo(T : T[])  { ... } // #2
-        template TFoo(T : char) { ... } // #3
-        template TFoo(T, U, V)  { ... } // #4
-
-        alias foo1 = TFoo!(int);            // instantiates #1
-        alias foo2 = TFoo!(double[]);       // instantiates #2 with T being double
-        alias foo3 = TFoo!(char);           // instantiates #3
-        alias fooe = TFoo!(char, int);      // error, number of arguments mismatch
-        alias foo4 = TFoo!(char, int, int); // instantiates #4
-        ------
-
-    $(P The template picked to instantiate is the one that is most specialized
-        that fits the types of the $(I TemplateArgumentList).
-        If the result is ambiguous, it is an error.
-    )
 
 
 $(H3 $(LNAME2 template_this_parameter, this 引数))
@@ -583,16 +583,17 @@ $(GNAME TemplateAliasParameterDefault):
 
     $(P Alias parameters enable templates to be parameterized with
         symbol names or values computed at compile-time.
-        Almost any kind of D symbol can be used, including user-defined type names,
+        Almost any kind of D symbol can be used, including type names,
         global names, local names, module names, template names, and
-        template instance names.
+        template instances.
     )
 
-    $(P $(B Symbol examples:))
+$(H4 $(LNAME2 alias_symbol, Symbol Aliases))
 
     $(UL
-        $(LI User-defined type names
+        $(LI Type names
 
+        $(SPEC_RUNNABLE_EXAMPLE_RUN
         ------
         class Foo
         {
@@ -608,12 +609,15 @@ $(GNAME TemplateAliasParameterDefault):
         {
             alias bar = Bar!(Foo);
             bar.sym = 3;  // sets Foo.x to 3
+            assert(Foo.x == 3);
         }
         ------
+        )
         )
 
         $(LI Global names
 
+        $(SPEC_RUNNABLE_EXAMPLE_RUN
         ------
         shared int x;
 
@@ -626,14 +630,19 @@ $(GNAME TemplateAliasParameterDefault):
         {
             alias bar = Foo!(x);
             *bar.ptr = 3;       // set x to 3
+            assert(x == 3);
+
             static shared int y;
             alias abc = Foo!(y);
             *abc.ptr = 3;       // set y to 3
+            assert(y == 3);
         }
         ------
         )
+        )
 
         $(LI Local names
+        $(SPEC_RUNNABLE_EXAMPLE_RUN
         ---
         template Foo(alias var)
         {
@@ -648,11 +657,13 @@ $(GNAME TemplateAliasParameterDefault):
             assert(v == 5);
         }
         ---
+        )
         See also $(RELATIVE_LINK2 implicit-nesting, Implicit Template Nesting).
         )
 
         $(LI Module names
 
+        $(SPEC_RUNNABLE_EXAMPLE_RUN
         ------
         import std.conv;
 
@@ -664,13 +675,16 @@ $(GNAME TemplateAliasParameterDefault):
         void main()
         {
             alias bar = Foo!(std.conv);
-            bar.sym(3);   // calls std.conv.text(3)
+            string s = bar.sym(3);   // calls std.conv.text(3)
+            assert(s == "3");
         }
         ------
+        )
         )
 
         $(LI Template names
 
+        $(SPEC_RUNNABLE_EXAMPLE_RUN
         ------
         shared int x;
 
@@ -688,12 +702,15 @@ $(GNAME TemplateAliasParameterDefault):
         {
             alias bar = Bar!(Foo);
             *bar.instance.ptr = 3;  // sets x to 3
+            assert(x == 3);
         }
         ------
+        )
         )
 
         $(LI Template instance names
 
+        $(SPEC_RUNNABLE_EXAMPLE_RUN
         ------
         shared int x;
 
@@ -712,12 +729,14 @@ $(GNAME TemplateAliasParameterDefault):
             alias foo = Foo!(x);
             alias bar = Bar!(foo);
             *bar.p = 3;  // sets x to 3
+            assert(x == 3);
         }
         ------
         )
+        )
     )
 
-    $(P $(B Value examples:))
+$(H4 $(LNAME2 alias_value, Value Aliases))
 
     $(UL
 
@@ -1322,6 +1341,66 @@ $(H3 $(LNAME2 return-deduction, Return 型の推定))
         ---
     )
 
+$(H3 $(LNAME2 auto-ref-parameters, auto ref 引数を使った関数テンプレート))
+
+    $(P Template functions can have auto ref parameters.
+        An auto ref parameter becomes a ref parameter
+        if its corresponding argument is an lvalue, otherwise it becomes
+        a value parameter:)
+
+        $(SPEC_RUNNABLE_EXAMPLE_RUN
+        ---
+        int countRefs(Args...)(auto ref Args args)
+        {
+            int result;
+
+            foreach (i, _; args)
+            {
+                if (__traits(isRef, args[i]))
+                    result++;
+            }
+            return result;
+        }
+
+        void main()
+        {
+            int y;
+            assert(countRefs(3, 4) == 0);
+            assert(countRefs(3, y, 4) == 1);
+            assert(countRefs(y, 6, y) == 2);
+        }
+        ---
+        )
+
+    $(P Auto ref parameters can be combined with auto ref return
+        attributes:)
+
+        $(SPEC_RUNNABLE_EXAMPLE_RUN
+        ---
+        auto ref min(T, U)(auto ref T lhs, auto ref U rhs)
+        {
+            return lhs > rhs ? rhs : lhs;
+        }
+
+        void main()
+        {
+            int i;
+            i = min(4, 3);
+            assert(i == 3);
+
+            int x = 7, y = 8;
+            i = min(x, y);
+            assert(i == 7);
+            // result is an lvalue
+            min(x, y) = 10;    // sets x to 10
+            assert(x == 10 && y == 8);
+
+            static assert(!__traits(compiles, min(3, y) = 10));
+            static assert(!__traits(compiles, min(y, 3) = 10));
+        }
+        ---
+        )
+
 $(H3 $(LNAME2 function-default, デフォルト引数))
 
     $(P Template arguments not implicitly deduced can have default values:)
@@ -1409,68 +1488,13 @@ $(H2 $(LNAME2 alias-template, Alias テンプレート))
         }
         ------
 
-$(H3 $(LNAME2 auto-ref-parameters, Auto Ref 引数を用いた関数テンプレート))
-
-    $(P An auto ref function template parameter becomes a ref parameter
-        if its corresponding argument is an lvalue, otherwise it becomes
-        a value parameter:)
-
-        ---
-        int foo(Args...)(auto ref Args args)
-        {
-            int result;
-
-            foreach (i, v; args)
-            {
-                if (v == 10)
-                    assert(__traits(isRef, args[i]));
-                else
-                    assert(!__traits(isRef, args[i]));
-                result += v;
-            }
-            return result;
-        }
-
-        void main()
-        {
-            int y = 10;
-            int r;
-            r = foo(8);       // returns 8
-            r = foo(y);       // returns 10
-            r = foo(3, 4, y); // returns 17
-            r = foo(4, 5, y); // returns 19
-            r = foo(y, 6, y); // returns 26
-        }
-        ---
-
-    $(P Auto ref parameters can be combined with auto ref return
-        attributes:)
-
-        ---
-        auto ref min(T, U)(auto ref T lhs, auto ref U rhs)
-        {
-            return lhs > rhs ? rhs : lhs;
-        }
-
-        void main()
-        {
-            int x = 7, y = 8;
-            int i;
-
-            i = min(4, 3);     // returns 3
-            i = min(x, y);     // returns 7
-            min(x, y) = 10;    // sets x to 10
-            static assert(!__traits(compiles, min(3, y) = 10));
-            static assert(!__traits(compiles, min(y, 3) = 10));
-        }
-        ---
-
 $(H2 $(LNAME2 nested-templates, テンプレートのネスト))
 
     $(P If a template is declared in aggregate or function local scope, the
         instantiated functions will implicitly capture the context of the
         enclosing scope.)
 
+        $(SPEC_RUNNABLE_EXAMPLE_RUN
         ----
         class C
         {
@@ -1502,10 +1526,45 @@ $(H2 $(LNAME2 nested-templates, テンプレートのネスト))
             assert(c.num == 10);
         }
         ----
+        )
 
-    $(P Above, $(D Foo!().foo) will work just the same as a member function
+    $(P Above, $(D Foo!().foo) will work just the same as a `final` member function
         of class $(D C), and $(D Bar!().bar) will work just the same as a nested
         function within function $(D main$(LPAREN)$(RPAREN)).)
+
+$(H3 $(LNAME2 limitations, 集計型の制限))
+
+    $(P A nested template cannot add non-static fields to an aggregate type.
+        Fields declared in a nested template will be implicitly `static`.)
+    $(P A nested template cannot add virtual functions to a class or interface.
+        Methods inside a nested template will be implicitly `final`.)
+
+        $(SPEC_RUNNABLE_EXAMPLE_COMPILE
+        ------
+        class Foo
+        {
+            template TBar(T)
+            {
+                T xx;           // becomes a static field of Foo
+                void func(T) {} // implicitly final
+                //abstract void baz(); // error, final functions cannot be abstract
+
+                static T yy;                    // Ok
+                static void func(T t, int y) {} // Ok
+            }
+        }
+
+        void main()
+        {
+            alias bar = Foo.TBar!int;
+            bar.xx++;
+            //bar.func(1); // error, no this
+
+            auto o = new Foo;
+            o.TBar!int.func(1); // OK
+        }
+        ------
+        )
 
 $(H3 $(LNAME2 implicit-nesting, 暗黙のネスト))
 
@@ -1730,27 +1789,7 @@ $(GNAME Constraint):
         auto y = Bar!double;    // Error, double does not satisfy constraint
         ---
 
-$(H2 $(LNAME2 limitations, 制限事項))
-
-    $(P Templates cannot be used to add non-static fields or
-        virtual functions to classes or interfaces.
-        For example:)
-
-        ------
-        class Foo
-        {
-            template TBar(T)
-            {
-                T xx;               // becomes a static field of Foo
-                int func(T) { ... } // non-virtual
-
-                static T yy;                        // Ok
-                static int func(T t, int y) { ... } // Ok
-            }
-        }
-        ------
-
-$(SPEC_SUBNAV_PREV_NEXT operatoroverloading, 演算子オーバーロード[Operator Overloading], template-mixin, ミックスイン[Template Mixins])
+$(SPEC_SUBNAV_PREV_NEXT operatoroverloading, 演算子オーバーロード[Operator Overloading], template-mixin, template-mixin, ミックスイン[Template Mixins])
 )
 
 Macros:
