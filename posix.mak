@@ -344,7 +344,7 @@ ARTICLE_FILES=$(addprefix articles/, index builtin code_coverage const-faq \
 # and .html in the generated HTML. Save for the expansion of
 # $(SPEC_ROOT), the list is sorted alphabetically.
 PAGES_ROOT=$(SPEC_ROOT) 404 acknowledgements areas-of-d-usage $(ARTICLE_FILES) \
-	ascii-table bugstats $(CHANGELOG_FILES) calendar community comparison concepts \
+	ascii-table bugstats $(CHANGELOG_FILES) community comparison concepts \
 	deprecate dmd dmd-freebsd dmd-linux dmd-osx dmd-windows \
 	documentation download dstyle forum-template gpg_keys glossary \
 	howto-promote htod index install \
@@ -688,20 +688,20 @@ $(PHOBOS_LIB): $(DMD)
 apidocs-prerelease : $W/library-prerelease/sitemap.xml $W/library-prerelease/.htaccess
 apidocs-latest : $W/library/sitemap.xml $W/library/.htaccess
 apidocs-serve : $G/docs-prerelease.json
-	${DPL_DOCS} serve-html --std-macros=html.ddoc --std-macros=dlang.org.ddoc --std-macros=std.ddoc --std-macros=macros.ddoc --std-macros=std-ddox.ddoc \
+	${DPL_DOCS} ${DPL_DOCS_FLAGS} serve-html --std-macros=html.ddoc --std-macros=dlang.org.ddoc --std-macros=std.ddoc --std-macros=macros.ddoc --std-macros=std-ddox.ddoc \
 		--override-macros=std-ddox-override.ddoc --package-order=std \
 		--git-target=master --web-file-dir=. $<
 
 $W/library-prerelease/sitemap.xml : $G/docs-prerelease.json
 	@mkdir -p $(dir $@)
-	${DPL_DOCS} generate-html --file-name-style=lowerUnderscored --std-macros=html.ddoc --std-macros=dlang.org.ddoc --std-macros=std.ddoc --std-macros=macros.ddoc --std-macros=std-ddox.ddoc \
+	${DPL_DOCS} ${DPL_DOCS_FLAGS} generate-html --file-name-style=lowerUnderscored --std-macros=html.ddoc --std-macros=dlang.org.ddoc --std-macros=std.ddoc --std-macros=macros.ddoc --std-macros=std-ddox.ddoc \
 		--override-macros=std-ddox-override.ddoc --package-order=std \
 		--git-target=master $(DPL_DOCS_PATH_RUN_FLAGS) \
 		$< $W/library-prerelease
 
 $W/library/sitemap.xml : $G/docs-latest.json
 	@mkdir -p $(dir $@)
-	${DPL_DOCS} generate-html --file-name-style=lowerUnderscored --std-macros=html.ddoc --std-macros=dlang.org.ddoc --std-macros=std.ddoc --std-macros=macros.ddoc --std-macros=std-ddox.ddoc \
+	${DPL_DOCS} ${DPL_DOCS_FLAGS} generate-html --file-name-style=lowerUnderscored --std-macros=html.ddoc --std-macros=dlang.org.ddoc --std-macros=std.ddoc --std-macros=macros.ddoc --std-macros=std-ddox.ddoc \
 		--override-macros=std-ddox-override.ddoc --package-order=std \
 		--git-target=v${LATEST} $(DPL_DOCS_PATH_RUN_FLAGS) \
 		$< $W/library
@@ -725,7 +725,7 @@ $G/docs-latest.json : ${DMD_LATEST} ${DMD_LATEST_DIR} \
 	${DMD_LATEST} -J$(DMD_LATEST_DIR)/src/dmd/res -J$(dir $(DMD_LATEST)) -c -o- -version=CoreDdoc \
 		-version=MARS -version=CoreDdoc -version=StdDdoc -Df$G/.latest-dummy.html \
 		-Xf$@ -I${PHOBOS_LATEST_DIR} @$G/.latest-files.txt
-	${DPL_DOCS} filter $@ --min-protection=Protected \
+	${DPL_DOCS} ${DPL_DOCS_FLAGS} filter $@ --min-protection=Protected \
 		--only-documented $(MOD_EXCLUDES_LATEST)
 	rm -f $G/.latest-files.txt $G/.latest-dummy.html
 
@@ -739,7 +739,7 @@ $G/docs-prerelease.json : ${DMD} ${DMD_DIR} ${DRUNTIME_DIR} | dpl-docs
 	${DMD} -J$(DMD_DIR)/res -J$(DMD_DIR)/src/dmd/res -J$(dir $(DMD)) -c -o- -version=MARS -version=CoreDdoc \
 		-version=StdDdoc -Df$G/.prerelease-dummy.html \
 		-Xf$@ -I${PHOBOS_DIR} @$G/.prerelease-files.txt
-	${DPL_DOCS} filter $@ --min-protection=Protected \
+	${DPL_DOCS} ${DPL_DOCS_FLAGS} filter $@ --min-protection=Protected \
 		--only-documented $(MOD_EXCLUDES_PRERELEASE)
 	rm -f $G/.prerelease-files.txt $G/.prerelease-dummy.html
 
