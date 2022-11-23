@@ -40,10 +40,9 @@
 <ul class='expand-content'>    <li><a href='https://dlang.org/blog'>ブログ</a></li>
     <li><a href='../orgs-using-d.html'>利用実績</a></li>
     <li><a href='https://twitter.com/search?q=%23dlang'>Twitter</a></li>
-    <li><a href='../calendar.html'>カレンダー</a></li>
     <li class="menu-divider"><a href='https://forum.dlang.org'>フォーラム</a></li>
     <li><a href='irc://irc.libera.chat/d'>IRC</a></li>
-    <li><a href='https://discord.gg/bMZk9Q4'>Discord</a></li>
+    <li><a href='https://discord.gg/bMZk9Q4'>Community Discord</a></li>
     <li><a href='https://wiki.dlang.org'>Wiki</a></li>
     <li class="menu-divider"><a href='https://github.com/dlang'>GitHub</a></li>
     <li><a href='https://dlang.org/bugstats.html'>Issues</a></li>
@@ -75,7 +74,7 @@
     <div id="search-box">        <form method="get" action="https://google.com/search">
             <input type="hidden" id="domains" name="domains" value="dlang.org">
             <input type="hidden" id="sourceid" name="sourceid" value="google-search">
-            <span id="search-query"><input id="q" name="q" placeholder="Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
+            <span id="search-query"><input id="q" name="q" placeholder="Google Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
                     <option value="dlang.org">Entire Site</option>
                     <option selected value="dlang.org/spec">Language</option>
                     <option  value="dlang.org/phobos">Library</option>
@@ -152,8 +151,7 @@
         <li><a href="#copy_example">実例</a></li>
         <li><a href="#instantiation_scope">インスタンス化のスコープ</a></li>
     </ol></li>
-    <li><a href="#parameters">テンプレートパラメータ</a><ol>        <li><a href="#argument_deduction">引数の推定</a></li>
-        <li><a href="#template_type_parameters">テンプレート型引数</a></li>
+    <li><a href="#parameters">テンプレートパラメータ</a><ol>        <li><a href="#template_type_parameters">型引数</a></li>
         <li><a href="#template_this_parameter">this 引数</a></li>
         <li><a href="#template_value_parameter">テンプレート 値引数</a></li>
         <li><a href="#aliasparameters">Alias 引数</a></li>
@@ -164,18 +162,18 @@
     <li><a href="#aggregate_templates">集約テンプレート</a></li>
     <li><a href="#function-templates">関数テンプレート</a><ol>        <li><a href="#ifti">暗黙の関数テンプレートのインスタンス化 (IFTI)</a></li>
         <li><a href="#return-deduction">Return 型の推定</a></li>
+        <li><a href="#auto-ref-parameters">auto ref 引数を使った関数テンプレート</a></li>
         <li><a href="#function-default">デフォルト引数</a></li>
     </ol></li>
     <li><a href="#template_ctors">テンプレートコンストラクタ</a></li>
     <li><a href="#variable-template">列挙型, 変数テンプレート</a></li>
-    <li><a href="#alias-template">Alias テンプレート</a><ol>        <li><a href="#auto-ref-parameters">Auto Ref 引数を用いた関数テンプレート</a></li>
-    </ol></li>
-    <li><a href="#nested-templates">テンプレートのネスト</a><ol>        <li><a href="#implicit-nesting">暗黙のネスト</a></li>
+    <li><a href="#alias-template">Alias テンプレート</a></li>
+    <li><a href="#nested-templates">テンプレートのネスト</a><ol>        <li><a href="#limitations">集計型の制限</a></li>
+        <li><a href="#implicit-nesting">暗黙のネスト</a></li>
         <li><a href="#nested_template_limitation">文脈の制限</a></li>
     </ol></li>
     <li><a href="#recursive_templates">再帰的なテンプレート</a></li>
     <li><a href="#template_constraints">テンプレートの制約</a></li>
-    <li><a href="#limitations">制限事項</a></li>
 </ol>
 </div>
 <div class="blankline"></div>
@@ -435,7 +433,46 @@ f.bar();  <span class="d_comment">// will call a.func(double)
         <i>TemplateParameter</i> when a matching argument is not supplied.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="argument_deduction" href="#argument_deduction">引数の推定</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="template_type_parameters" href="#template_type_parameters">型引数</a></h3>
+<div class="blankline"></div>
+<pre class="bnf notranslate"><a id="TemplateTypeParameter"><span class="gname">TemplateTypeParameter</span></a>:
+    <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
+    <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateTypeParameterSpecialization"><i>TemplateTypeParameterSpecialization</i></a>
+    <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateTypeParameterDefault"><i>TemplateTypeParameterDefault</i></a>
+    <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateTypeParameterSpecialization"><i>TemplateTypeParameterSpecialization</i></a> <a href="#TemplateTypeParameterDefault"><i>TemplateTypeParameterDefault</i></a>
+<div class="blankline"></div>
+<a id="TemplateTypeParameterSpecialization"><span class="gname">TemplateTypeParameterSpecialization</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="../spec/type.html#Type"><i>Type</i></a>
+<div class="blankline"></div>
+<a id="TemplateTypeParameterDefault"><span class="gname">TemplateTypeParameterDefault</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="../spec/type.html#Type"><i>Type</i></a>
+</pre>
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="parameters_specialization" href="#parameters_specialization">特殊化とパターン マッチング</a></h4>
+<div class="blankline"></div>
+    <p>Templates may be specialized for particular types of arguments
+        by following the template parameter identifier with a : and the
+        pattern for the specialized type.
+        For example:</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">template</span> TFoo(T)        { ... } <span class="d_comment">// #1
+</span><span class="d_keyword">template</span> TFoo(T : T[])  { ... } <span class="d_comment">// #2
+</span><span class="d_keyword">template</span> TFoo(T : <span class="d_keyword">char</span>) { ... } <span class="d_comment">// #3
+</span><span class="d_keyword">template</span> TFoo(T, U, V)  { ... } <span class="d_comment">// #4
+</span>
+<span class="d_keyword">alias</span> foo1 = TFoo!(<span class="d_keyword">int</span>);            <span class="d_comment">// instantiates #1
+</span><span class="d_keyword">alias</span> foo2 = TFoo!(<span class="d_keyword">double</span>[]);       <span class="d_comment">// instantiates #2 matching pattern T[] with T being double
+</span><span class="d_keyword">alias</span> foo3 = TFoo!(<span class="d_keyword">char</span>);           <span class="d_comment">// instantiates #3
+</span><span class="d_keyword">alias</span> fooe = TFoo!(<span class="d_keyword">char</span>, <span class="d_keyword">int</span>);      <span class="d_comment">// error, number of arguments mismatch
+</span><span class="d_keyword">alias</span> foo4 = TFoo!(<span class="d_keyword">char</span>, <span class="d_keyword">int</span>, <span class="d_keyword">int</span>); <span class="d_comment">// instantiates #4
+</span></pre>
+<div class="blankline"></div>
+    <p>The template picked to instantiate is the one that is most specialized
+        that fits the types of the <i>TemplateArgumentList</i>.
+        If the result is ambiguous, it is an error.
+    </p>
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="argument_deduction" href="#argument_deduction">型引数の推定</a></h4>
 <div class="blankline"></div>
     <p>The types of template parameters are deduced for a particular
         template instantiation by comparing the template argument with
@@ -468,15 +505,15 @@ f.bar();  <span class="d_comment">// will call a.func(double)
 <span class="d_keyword">alias</span> foo1 = TFoo!(<span class="d_keyword">int</span>);     <span class="d_comment">// (1) T is deduced to be int
 </span><span class="d_keyword">alias</span> foo2 = TFoo!(<span class="d_keyword">char</span>*);   <span class="d_comment">// (1) T is deduced to be char*
 </span>
-<span class="d_keyword">template</span> TBar(T : T*) { }
-<span class="d_keyword">alias</span> bar = TBar!(<span class="d_keyword">char</span>*);    <span class="d_comment">// (2) T is deduced to be char
+<span class="d_keyword">template</span> TBar(T : T*) { }    <span class="d_comment">// match template argument against T* pattern
+</span><span class="d_keyword">alias</span> bar = TBar!(<span class="d_keyword">char</span>*);    <span class="d_comment">// (2) T is deduced to be char
 </span>
-<span class="d_keyword">template</span> TAbc(D, U : D[]) { }
-<span class="d_keyword">alias</span> abc1 = TAbc!(<span class="d_keyword">int</span>, <span class="d_keyword">int</span>[]);  <span class="d_comment">// (2) D is deduced to be int, U is int[]
+<span class="d_keyword">template</span> TAbc(D, U : D[]) { }    <span class="d_comment">// D[] is pattern to be matched
+</span><span class="d_keyword">alias</span> abc1 = TAbc!(<span class="d_keyword">int</span>, <span class="d_keyword">int</span>[]);  <span class="d_comment">// (2) D is deduced to be int, U is int[]
 </span><span class="d_keyword">alias</span> abc2 = TAbc!(<span class="d_keyword">char</span>, <span class="d_keyword">int</span>[]); <span class="d_comment">// (4) error, D is both char and int
 </span>
-<span class="d_keyword">template</span> TDef(D : E*, E) { }
-<span class="d_keyword">alias</span> def = TDef!(<span class="d_keyword">int</span>*, <span class="d_keyword">int</span>);  <span class="d_comment">// (1) E is int
+<span class="d_keyword">template</span> TDef(D : E*, E) { }   <span class="d_comment">// E* is pattern to be matched
+</span><span class="d_keyword">alias</span> def = TDef!(<span class="d_keyword">int</span>*, <span class="d_keyword">int</span>);  <span class="d_comment">// (1) E is int
 </span>                               <span class="d_comment">// (3) D is int*
 </span></pre>
 <div class="blankline"></div>
@@ -504,45 +541,6 @@ Foo!(<span class="d_keyword">int</span>[<span class="d_keyword">long</span>])  <
 <span class="d_keyword">alias</span> bar = TBar!(B*, B);  <span class="d_comment">// (2) T is B*
 </span>                           <span class="d_comment">// (3) U is B
 </span></pre>
-<div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="template_type_parameters" href="#template_type_parameters">テンプレート型引数</a></h3>
-<div class="blankline"></div>
-<pre class="bnf notranslate"><a id="TemplateTypeParameter"><span class="gname">TemplateTypeParameter</span></a>:
-    <a href="../spec/lex.html#Identifier"><i>Identifier</i></a>
-    <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateTypeParameterSpecialization"><i>TemplateTypeParameterSpecialization</i></a>
-    <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateTypeParameterDefault"><i>TemplateTypeParameterDefault</i></a>
-    <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <a href="#TemplateTypeParameterSpecialization"><i>TemplateTypeParameterSpecialization</i></a> <a href="#TemplateTypeParameterDefault"><i>TemplateTypeParameterDefault</i></a>
-<div class="blankline"></div>
-<a id="TemplateTypeParameterSpecialization"><span class="gname">TemplateTypeParameterSpecialization</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">:</span> <a href="../spec/type.html#Type"><i>Type</i></a>
-<div class="blankline"></div>
-<a id="TemplateTypeParameterDefault"><span class="gname">TemplateTypeParameterDefault</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="../spec/type.html#Type"><i>Type</i></a>
-</pre>
-<div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="parameters_specialization" href="#parameters_specialization">特殊化</a></h4>
-<div class="blankline"></div>
-    <p>Templates may be specialized for particular types of arguments
-        by following the template parameter identifier with a : and the
-        specialized type.
-        For example:</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">template</span> TFoo(T)        { ... } <span class="d_comment">// #1
-</span><span class="d_keyword">template</span> TFoo(T : T[])  { ... } <span class="d_comment">// #2
-</span><span class="d_keyword">template</span> TFoo(T : <span class="d_keyword">char</span>) { ... } <span class="d_comment">// #3
-</span><span class="d_keyword">template</span> TFoo(T, U, V)  { ... } <span class="d_comment">// #4
-</span>
-<span class="d_keyword">alias</span> foo1 = TFoo!(<span class="d_keyword">int</span>);            <span class="d_comment">// instantiates #1
-</span><span class="d_keyword">alias</span> foo2 = TFoo!(<span class="d_keyword">double</span>[]);       <span class="d_comment">// instantiates #2 with T being double
-</span><span class="d_keyword">alias</span> foo3 = TFoo!(<span class="d_keyword">char</span>);           <span class="d_comment">// instantiates #3
-</span><span class="d_keyword">alias</span> fooe = TFoo!(<span class="d_keyword">char</span>, <span class="d_keyword">int</span>);      <span class="d_comment">// error, number of arguments mismatch
-</span><span class="d_keyword">alias</span> foo4 = TFoo!(<span class="d_keyword">char</span>, <span class="d_keyword">int</span>, <span class="d_keyword">int</span>); <span class="d_comment">// instantiates #4
-</span></pre>
-<div class="blankline"></div>
-    <p>The template picked to instantiate is the one that is most specialized
-        that fits the types of the <i>TemplateArgumentList</i>.
-        If the result is ambiguous, it is an error.
-    </p>
 <div class="blankline"></div>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="template_this_parameter" href="#template_this_parameter">this 引数</a></h3>
@@ -730,15 +728,16 @@ immutable(S)
 <div class="blankline"></div>
     <p>Alias parameters enable templates to be parameterized with
         symbol names or values computed at compile-time.
-        Almost any kind of D symbol can be used, including user-defined type names,
+        Almost any kind of D symbol can be used, including type names,
         global names, local names, module names, template names, and
-        template instance names.
+        template instances.
     </p>
 <div class="blankline"></div>
-    <p><b>Symbol examples:</b></p>
+<h4><a class="anchor" title="Permalink to this section" id="alias_symbol" href="#alias_symbol">Symbol Aliases</a></h4>
 <div class="blankline"></div>
-    <ul>        <li>User-defined type names
+    <ul>        <li>Type names
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">class</span> Foo
 {
     <span class="d_keyword">static</span> <span class="d_keyword">int</span> x;
@@ -753,12 +752,16 @@ immutable(S)
 {
     <span class="d_keyword">alias</span> bar = Bar!(Foo);
     bar.sym = 3;  <span class="d_comment">// sets Foo.x to 3
-</span>}
+</span>    <span class="d_keyword">assert</span>(Foo.x == 3);
+}
 </pre>
+        
+</div>
         </li>
 <div class="blankline"></div>
         <li>Global names
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">shared</span> <span class="d_keyword">int</span> x;
 
 <span class="d_keyword">template</span> Foo(<span class="d_keyword">alias</span> var)
@@ -770,14 +773,20 @@ immutable(S)
 {
     <span class="d_keyword">alias</span> bar = Foo!(x);
     *bar.ptr = 3;       <span class="d_comment">// set x to 3
-</span>    <span class="d_keyword">static</span> <span class="d_keyword">shared</span> <span class="d_keyword">int</span> y;
+</span>    <span class="d_keyword">assert</span>(x == 3);
+
+    <span class="d_keyword">static</span> <span class="d_keyword">shared</span> <span class="d_keyword">int</span> y;
     <span class="d_keyword">alias</span> abc = Foo!(y);
     *abc.ptr = 3;       <span class="d_comment">// set y to 3
-</span>}
+</span>    <span class="d_keyword">assert</span>(y == 3);
+}
 </pre>
+        
+</div>
         </li>
 <div class="blankline"></div>
         <li>Local names
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">template</span> Foo(<span class="d_keyword">alias</span> var)
 {
     <span class="d_keyword">void</span> inc() { var++; }
@@ -791,11 +800,14 @@ immutable(S)
     <span class="d_keyword">assert</span>(v == 5);
 }
 </pre>
+        
+</div>
         See also <a href="#implicit-nesting">Implicit Template Nesting</a>.
         </li>
 <div class="blankline"></div>
         <li>Module names
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">import</span> std.conv;
 
 <span class="d_keyword">template</span> Foo(<span class="d_keyword">alias</span> a)
@@ -806,13 +818,17 @@ immutable(S)
 <span class="d_keyword">void</span> main()
 {
     <span class="d_keyword">alias</span> bar = Foo!(std.conv);
-    bar.sym(3);   <span class="d_comment">// calls std.conv.text(3)
-</span>}
+    string s = bar.sym(3);   <span class="d_comment">// calls std.conv.text(3)
+</span>    <span class="d_keyword">assert</span>(s == <span class="d_string">"3"</span>);
+}
 </pre>
+        
+</div>
         </li>
 <div class="blankline"></div>
         <li>Template names
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">shared</span> <span class="d_keyword">int</span> x;
 
 <span class="d_keyword">template</span> Foo(<span class="d_keyword">alias</span> var)
@@ -829,12 +845,16 @@ immutable(S)
 {
     <span class="d_keyword">alias</span> bar = Bar!(Foo);
     *bar.instance.ptr = 3;  <span class="d_comment">// sets x to 3
-</span>}
+</span>    <span class="d_keyword">assert</span>(x == 3);
+}
 </pre>
+        
+</div>
         </li>
 <div class="blankline"></div>
         <li>Template instance names
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">shared</span> <span class="d_keyword">int</span> x;
 
 <span class="d_keyword">template</span> Foo(<span class="d_keyword">alias</span> var)
@@ -852,12 +872,15 @@ immutable(S)
     <span class="d_keyword">alias</span> foo = Foo!(x);
     <span class="d_keyword">alias</span> bar = Bar!(foo);
     *bar.p = 3;  <span class="d_comment">// sets x to 3
-</span>}
+</span>    <span class="d_keyword">assert</span>(x == 3);
+}
 </pre>
+        
+</div>
         </li>
     </ul>
 <div class="blankline"></div>
-    <p><b>Value examples:</b></p>
+<h4><a class="anchor" title="Permalink to this section" id="alias_value" href="#alias_value">Value Aliases</a></h4>
 <div class="blankline"></div>
     <ul><div class="blankline"></div>
         <li>Literals
@@ -1439,6 +1462,66 @@ foo(mptr);  <span class="d_comment">// T == int*
     
 </div>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="auto-ref-parameters" href="#auto-ref-parameters">auto ref 引数を使った関数テンプレート</a></h3>
+<div class="blankline"></div>
+    <p>Template functions can have auto ref parameters.
+        An auto ref parameter becomes a ref parameter
+        if its corresponding argument is an lvalue, otherwise it becomes
+        a value parameter:</p>
+<div class="blankline"></div>
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span> countRefs(Args...)(<span class="d_keyword">auto</span> <span class="d_keyword">ref</span> Args args)
+{
+    <span class="d_keyword">int</span> result;
+
+    <span class="d_keyword">foreach</span> (i, _; args)
+    {
+        <span class="d_keyword">if</span> (<span class="d_keyword">__traits</span>(isRef, args[i]))
+            result++;
+    }
+    <span class="d_keyword">return</span> result;
+}
+
+<span class="d_keyword">void</span> main()
+{
+    <span class="d_keyword">int</span> y;
+    <span class="d_keyword">assert</span>(countRefs(3, 4) == 0);
+    <span class="d_keyword">assert</span>(countRefs(3, y, 4) == 1);
+    <span class="d_keyword">assert</span>(countRefs(y, 6, y) == 2);
+}
+</pre>
+        
+</div>
+<div class="blankline"></div>
+    <p>Auto ref parameters can be combined with auto ref return
+        attributes:</p>
+<div class="blankline"></div>
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">auto</span> <span class="d_keyword">ref</span> min(T, U)(<span class="d_keyword">auto</span> <span class="d_keyword">ref</span> T lhs, <span class="d_keyword">auto</span> <span class="d_keyword">ref</span> U rhs)
+{
+    <span class="d_keyword">return</span> lhs &gt; rhs ? rhs : lhs;
+}
+
+<span class="d_keyword">void</span> main()
+{
+    <span class="d_keyword">int</span> i;
+    i = min(4, 3);
+    <span class="d_keyword">assert</span>(i == 3);
+
+    <span class="d_keyword">int</span> x = 7, y = 8;
+    i = min(x, y);
+    <span class="d_keyword">assert</span>(i == 7);
+    <span class="d_comment">// result is an lvalue
+</span>    min(x, y) = 10;    <span class="d_comment">// sets x to 10
+</span>    <span class="d_keyword">assert</span>(x == 10 &amp;&amp; y == 8);
+
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, min(3, y) = 10));
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, min(y, 3) = 10));
+}
+</pre>
+        
+</div>
+<div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="function-default" href="#function-default">デフォルト引数</a></h3>
 <div class="blankline"></div>
     <p>Template arguments not implicitly deduced can have default values:</p>
@@ -1520,66 +1603,13 @@ foo(x);    <span class="d_comment">// T is int, U is int*
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="auto-ref-parameters" href="#auto-ref-parameters">Auto Ref 引数を用いた関数テンプレート</a></h3>
-<div class="blankline"></div>
-    <p>An auto ref function template parameter becomes a ref parameter
-        if its corresponding argument is an lvalue, otherwise it becomes
-        a value parameter:</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">int</span> foo(Args...)(<span class="d_keyword">auto</span> <span class="d_keyword">ref</span> Args args)
-{
-    <span class="d_keyword">int</span> result;
-
-    <span class="d_keyword">foreach</span> (i, v; args)
-    {
-        <span class="d_keyword">if</span> (v == 10)
-            <span class="d_keyword">assert</span>(<span class="d_keyword">__traits</span>(isRef, args[i]));
-        <span class="d_keyword">else</span>
-            <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(isRef, args[i]));
-        result += v;
-    }
-    <span class="d_keyword">return</span> result;
-}
-
-<span class="d_keyword">void</span> main()
-{
-    <span class="d_keyword">int</span> y = 10;
-    <span class="d_keyword">int</span> r;
-    r = foo(8);       <span class="d_comment">// returns 8
-</span>    r = foo(y);       <span class="d_comment">// returns 10
-</span>    r = foo(3, 4, y); <span class="d_comment">// returns 17
-</span>    r = foo(4, 5, y); <span class="d_comment">// returns 19
-</span>    r = foo(y, 6, y); <span class="d_comment">// returns 26
-</span>}
-</pre>
-<div class="blankline"></div>
-    <p>Auto ref parameters can be combined with auto ref return
-        attributes:</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">auto</span> <span class="d_keyword">ref</span> min(T, U)(<span class="d_keyword">auto</span> <span class="d_keyword">ref</span> T lhs, <span class="d_keyword">auto</span> <span class="d_keyword">ref</span> U rhs)
-{
-    <span class="d_keyword">return</span> lhs &gt; rhs ? rhs : lhs;
-}
-
-<span class="d_keyword">void</span> main()
-{
-    <span class="d_keyword">int</span> x = 7, y = 8;
-    <span class="d_keyword">int</span> i;
-
-    i = min(4, 3);     <span class="d_comment">// returns 3
-</span>    i = min(x, y);     <span class="d_comment">// returns 7
-</span>    min(x, y) = 10;    <span class="d_comment">// sets x to 10
-</span>    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, min(3, y) = 10));
-    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">__traits</span>(compiles, min(y, 3) = 10));
-}
-</pre>
-<div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="nested-templates" href="#nested-templates">テンプレートのネスト</a></h2>
 <div class="blankline"></div>
     <p>If a template is declared in aggregate or function local scope, the
         instantiated functions will implicitly capture the context of the
         enclosing scope.</p>
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">class</span> C
 {
     <span class="d_keyword">int</span> num;
@@ -1610,10 +1640,46 @@ foo(x);    <span class="d_comment">// T is int, U is int*
     <span class="d_keyword">assert</span>(c.num == 10);
 }
 </pre>
+        
+</div>
 <div class="blankline"></div>
-    <p>Above, <span class="d_inlinecode donthyphenate notranslate">Foo!().foo</span> will work just the same as a member function
+    <p>Above, <span class="d_inlinecode donthyphenate notranslate">Foo!().foo</span> will work just the same as a <span class="d_inlinecode donthyphenate notranslate">final</span> member function
         of class <span class="d_inlinecode donthyphenate notranslate">C</span>, and <span class="d_inlinecode donthyphenate notranslate">Bar!().bar</span> will work just the same as a nested
         function within function <span class="d_inlinecode donthyphenate notranslate">main()</span>.</p>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="limitations" href="#limitations">集計型の制限</a></h3>
+<div class="blankline"></div>
+    <p>A nested template cannot add non-static fields to an aggregate type.
+        Fields declared in a nested template will be implicitly <span class="d_inlinecode donthyphenate notranslate">static</span>.</p>
+    <p>A nested template cannot add virtual functions to a class or interface.
+        Methods inside a nested template will be implicitly <span class="d_inlinecode donthyphenate notranslate">final</span>.</p>
+<div class="blankline"></div>
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">class</span> Foo
+{
+    <span class="d_keyword">template</span> TBar(T)
+    {
+        T xx;           <span class="d_comment">// becomes a static field of Foo
+</span>        <span class="d_keyword">void</span> func(T) {} <span class="d_comment">// implicitly final
+</span>        <span class="d_comment">//abstract void baz(); // error, final functions cannot be abstract
+</span>
+        <span class="d_keyword">static</span> T yy;                    <span class="d_comment">// Ok
+</span>        <span class="d_keyword">static</span> <span class="d_keyword">void</span> func(T t, <span class="d_keyword">int</span> y) {} <span class="d_comment">// Ok
+</span>    }
+}
+
+<span class="d_keyword">void</span> main()
+{
+    <span class="d_keyword">alias</span> bar = Foo.TBar!<span class="d_keyword">int</span>;
+    bar.xx++;
+    <span class="d_comment">//bar.func(1); // error, no this
+</span>
+    <span class="d_keyword">auto</span> o = <span class="d_keyword">new</span> Foo;
+    o.TBar!<span class="d_keyword">int</span>.func(1); <span class="d_comment">// OK
+</span>}
+</pre>
+        
+</div>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="implicit-nesting" href="#implicit-nesting">暗黙のネスト</a></h3>
 <div class="blankline"></div>
@@ -1829,34 +1895,15 @@ foo!(3)();  <span class="d_comment">// OK, matches
 </span><span class="d_keyword">auto</span> y = Bar!<span class="d_keyword">double</span>;    <span class="d_comment">// Error, double does not satisfy constraint
 </span></pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="limitations" href="#limitations">制限事項</a></h2>
-<div class="blankline"></div>
-    <p>Templates cannot be used to add non-static fields or
-        virtual functions to classes or interfaces.
-        For example:</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">class</span> Foo
-{
-    <span class="d_keyword">template</span> TBar(T)
-    {
-        T xx;               <span class="d_comment">// becomes a static field of Foo
-</span>        <span class="d_keyword">int</span> func(T) { ... } <span class="d_comment">// non-virtual
-</span>
-        <span class="d_keyword">static</span> T yy;                        <span class="d_comment">// Ok
-</span>        <span class="d_keyword">static</span> <span class="d_keyword">int</span> func(T t, <span class="d_keyword">int</span> y) { ... } <span class="d_comment">// Ok
-</span>    }
-}
-</pre>
-<div class="blankline"></div>
 
 <div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/operatoroverloading.html">演算子オーバーロード[Operator Overloading]</a></div>
-<div style="float: right"><a href="../spec/template-mixin.html">ミックスイン[Template Mixins]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<div style="float: right"><a href="../spec/template-mixin.html">template-mixin</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
 
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 03:03:57 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 08:30:56 2022
 </div>
     </div>
 </div>

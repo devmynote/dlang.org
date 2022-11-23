@@ -40,10 +40,9 @@
 <ul class='expand-content'>    <li><a href='https://dlang.org/blog'>ブログ</a></li>
     <li><a href='../orgs-using-d.html'>利用実績</a></li>
     <li><a href='https://twitter.com/search?q=%23dlang'>Twitter</a></li>
-    <li><a href='../calendar.html'>カレンダー</a></li>
     <li class="menu-divider"><a href='https://forum.dlang.org'>フォーラム</a></li>
     <li><a href='irc://irc.libera.chat/d'>IRC</a></li>
-    <li><a href='https://discord.gg/bMZk9Q4'>Discord</a></li>
+    <li><a href='https://discord.gg/bMZk9Q4'>Community Discord</a></li>
     <li><a href='https://wiki.dlang.org'>Wiki</a></li>
     <li class="menu-divider"><a href='https://github.com/dlang'>GitHub</a></li>
     <li><a href='https://dlang.org/bugstats.html'>Issues</a></li>
@@ -75,7 +74,7 @@
     <div id="search-box">        <form method="get" action="https://google.com/search">
             <input type="hidden" id="domains" name="domains" value="dlang.org">
             <input type="hidden" id="sourceid" name="sourceid" value="google-search">
-            <span id="search-query"><input id="q" name="q" placeholder="Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
+            <span id="search-query"><input id="q" name="q" placeholder="Google Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
                     <option value="dlang.org">Entire Site</option>
                     <option selected value="dlang.org/spec">Language</option>
                     <option  value="dlang.org/phobos">Library</option>
@@ -393,7 +392,7 @@ Foo var;
 <h2><a class="anchor" title="Permalink to this section" id="member-functions" href="#member-functions">メンバ関数 (a.k.a. Methods)</a></h2>
 <div class="blankline"></div>
         <p>Non-static member functions have an extra hidden parameter
-        called <i>this</i> through which the class object's other members
+        called <a href="../spec/expression.html#this"><span class="d_inlinecode donthyphenate notranslate">this</span></a> through which the class object's other members
         can be accessed.
         </p>
 <div class="blankline"></div>
@@ -1166,6 +1165,7 @@ on thread termination.</p>
         member.
         </p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> S
 {
     <span class="d_keyword">int</span> x;
@@ -1174,22 +1174,30 @@ on thread termination.</p>
 
 <span class="d_keyword">int</span> foo(<span class="d_keyword">int</span> i) { <span class="d_keyword">return</span> i * 2; }
 
-<span class="d_keyword">void</span> test()
+<span class="d_keyword">void</span> main()
 {
     S s;
     s.x = 7;
-    <span class="d_keyword">int</span> i = -s;  <span class="d_comment">// i == -7
-</span>    i = s + 8;   <span class="d_comment">// i == 15
-</span>    i = s + s;   <span class="d_comment">// i == 14
-</span>    i = 9 + s;   <span class="d_comment">// i == 16
-</span>    i = foo(s);  <span class="d_comment">// implicit conversion to int
-</span>}
+    <span class="d_keyword">int</span> i = -s;
+    <span class="d_keyword">assert</span>(i == -7);
+    i = s + 8;
+    <span class="d_keyword">assert</span>(i == 15);
+    i = s + s;
+    <span class="d_keyword">assert</span>(i == 14);
+    i = 9 + s;
+    <span class="d_keyword">assert</span>(i == 16);
+    i = foo(s);  <span class="d_comment">// implicit conversion to int
+</span>    <span class="d_keyword">assert</span>(i == 14);
+}
 </pre>
+
+</div>
 <div class="blankline"></div>
         <p>If the member is a class or struct, undefined lookups will
         be forwarded to the <i>AliasThis</i> member.
         </p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> Foo
 {
     <span class="d_keyword">int</span> baz = 4;
@@ -1202,19 +1210,24 @@ on thread termination.</p>
     <span class="d_keyword">alias</span> foo <span class="d_keyword">this</span>;
 }
 
-<span class="d_keyword">void</span> test()
+<span class="d_keyword">void</span> main()
 {
     <span class="d_keyword">auto</span> bar = <span class="d_keyword">new</span> Bar;
-    <span class="d_keyword">int</span> i = bar.baz; <span class="d_comment">// i == 4
-</span>    i = bar.get(); <span class="d_comment">// i == 7
-</span>}
+    <span class="d_keyword">int</span> i = bar.baz;
+    <span class="d_keyword">assert</span>(i == 4);
+    i = bar.get();
+    <span class="d_keyword">assert</span>(i == 7);
+}
 </pre>
+
+</div>
 <div class="blankline"></div>
         <p>If the <i>Identifier</i> refers to a property member
         function with no parameters, conversions and undefined
         lookups are forwarded to the return value of the function.
         </p>
 <div class="blankline"></div>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> S
 {
     <span class="d_keyword">int</span> x;
@@ -1225,13 +1238,17 @@ on thread termination.</p>
     <span class="d_keyword">alias</span> get <span class="d_keyword">this</span>;
 }
 
-<span class="d_keyword">void</span> test()
+<span class="d_keyword">void</span> main()
 {
     S s;
     s.x = 2;
-    <span class="d_keyword">int</span> i = s; <span class="d_comment">// i == 4
-</span>}
+    <span class="d_keyword">int</span> i = s;
+    <span class="d_keyword">assert</span>(i == 4);
+}
 </pre>
+
+</div>
+<div class="blankline"></div>
         <p>If an aggregate declaration defines an <span class="d_inlinecode donthyphenate notranslate">opCmp</span> or <span class="d_inlinecode donthyphenate notranslate">opEquals</span>
         method, it will take precedence to that of the aliased this member. Note
         that, unlike an <span class="d_inlinecode donthyphenate notranslate">opCmp</span> method, an <span class="d_inlinecode donthyphenate notranslate">opEquals</span> method is implicitly
@@ -1239,6 +1256,7 @@ on thread termination.</p>
         this means that if the aliased this member <span class="d_inlinecode donthyphenate notranslate">opEquals</span> is preferred it
         should be explicitly defined:
         </p>
+<div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> S
 {
     <span class="d_keyword">int</span> a;
@@ -1255,7 +1273,22 @@ on thread termination.</p>
     <span class="d_keyword">alias</span> s <span class="d_keyword">this</span>;
 }
 
-<span class="d_keyword">struct</span> U
+<span class="d_keyword">void</span> main()
+{
+    S s1, s2;
+    T t1, t2;
+
+    <span class="d_keyword">assert</span>(s1 == s2);      <span class="d_comment">// calls S.opEquals
+</span>    <span class="d_keyword">assert</span>(t1 == t2);      <span class="d_comment">// calls compiler generated T.opEquals that implements member-wise equality
+</span>
+    <span class="d_keyword">assert</span>(s1 == t1);      <span class="d_comment">// calls s1.opEquals(t1.s);
+</span>    <span class="d_keyword">assert</span>(t1 == s1);      <span class="d_comment">// calls t1.s.opEquals(s1);
+</span>}
+</pre>
+
+</div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">struct</span> U
 {
     <span class="d_keyword">int</span> a;
     <span class="d_keyword">bool</span> opCmp(U rhs) <span class="d_keyword">const</span>
@@ -1273,31 +1306,27 @@ on thread termination.</p>
 
 <span class="d_keyword">void</span> main()
 {
-    S s1, s2;
-    T t1, t2;
     U u1, u2;
     V v1, v2;
 
-    <span class="d_keyword">assert</span>(s1 == s2);      <span class="d_comment">// calls S.opEquals
-</span>    <span class="d_keyword">assert</span>(t1 == t2);      <span class="d_comment">// calls compiler generated T.opEquals that implements member-wise equality
-</span>    <span class="d_keyword">assert</span>(!(u1 &lt; u2));    <span class="d_comment">// calls U.opCmp
+    <span class="d_keyword">assert</span>(!(u1 &lt; u2));    <span class="d_comment">// calls U.opCmp
 </span>    <span class="d_keyword">assert</span>(!(v1 &lt; v2));    <span class="d_comment">// calls U.opCmp because V does not define an opCmp method
 </span>                           <span class="d_comment">// so the alias this of v1 is employed; U.opCmp expects a
 </span>                           <span class="d_comment">// paramter of type U, so alias this of v2 is used
 </span>
-    <span class="d_keyword">assert</span>(s1 == t1);      <span class="d_comment">// calls s1.opEquals(t1.s);
-</span>    <span class="d_keyword">assert</span>(t1 == s1);      <span class="d_comment">// calls t1.s.opEquals(s1);
-</span>    <span class="d_keyword">assert</span>(!(u1 &lt; v1));    <span class="d_comment">// calls u1.opCmp(v1.u);
+    <span class="d_keyword">assert</span>(!(u1 &lt; v1));    <span class="d_comment">// calls u1.opCmp(v1.u);
 </span>    <span class="d_keyword">assert</span>(!(v1 &lt; u1));    <span class="d_comment">// calls v1.u.opCmp(v1);
 </span>}
 </pre>
+
+</div>
         <p><a href="../spec/attribute.html#Attribute"><i>Attribute</i></a>s are ignored for <span class="d_inlinecode donthyphenate notranslate">AliasThis</span>.
         </p>
 <div class="blankline"></div>
         <p>Multiple <i>AliasThis</i> are currently not allowed.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="auto" href="#auto">Scope クラス</a></h2>
-<b>Note</b>: Scope classes have been <a href="../deprecate.html#scope for allocating classes on the stack">recommended for deprecation</a>.
+<b>Note</b>: Scope classes have been <a href="../deprecate.html#scope as a type constraint">recommended for deprecation</a>.
 <div class="blankline"></div>
         <p>A scope class is a class with the <span class="d_inlinecode donthyphenate notranslate">scope</span> attribute, as in:</p>
 <div class="blankline"></div>
@@ -1686,7 +1715,7 @@ obj.foo();
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 03:03:57 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 08:30:54 2022
 </div>
     </div>
 </div>

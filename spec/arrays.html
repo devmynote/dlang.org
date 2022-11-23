@@ -40,10 +40,9 @@
 <ul class='expand-content'>    <li><a href='https://dlang.org/blog'>ブログ</a></li>
     <li><a href='../orgs-using-d.html'>利用実績</a></li>
     <li><a href='https://twitter.com/search?q=%23dlang'>Twitter</a></li>
-    <li><a href='../calendar.html'>カレンダー</a></li>
     <li class="menu-divider"><a href='https://forum.dlang.org'>フォーラム</a></li>
     <li><a href='irc://irc.libera.chat/d'>IRC</a></li>
-    <li><a href='https://discord.gg/bMZk9Q4'>Discord</a></li>
+    <li><a href='https://discord.gg/bMZk9Q4'>Community Discord</a></li>
     <li><a href='https://wiki.dlang.org'>Wiki</a></li>
     <li class="menu-divider"><a href='https://github.com/dlang'>GitHub</a></li>
     <li><a href='https://dlang.org/bugstats.html'>Issues</a></li>
@@ -75,7 +74,7 @@
     <div id="search-box">        <form method="get" action="https://google.com/search">
             <input type="hidden" id="domains" name="domains" value="dlang.org">
             <input type="hidden" id="sourceid" name="sourceid" value="google-search">
-            <span id="search-query"><input id="q" name="q" placeholder="Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
+            <span id="search-query"><input id="q" name="q" placeholder="Google Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
                     <option value="dlang.org">Entire Site</option>
                     <option selected value="dlang.org/spec">Language</option>
                     <option  value="dlang.org/phobos">Library</option>
@@ -146,9 +145,9 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#array-kinds">種類</a><ol>        <li><a href="#pointers">ポインタ</a></li>
-        <li><a href="#static-arrays">静的配列</a></li>
+    <ol>    <li><a href="#array-kinds">種類</a><ol>        <li><a href="#static-arrays">静的配列</a></li>
         <li><a href="#dynamic-arrays">動的配列</a></li>
+        <li><a href="#pointers">Pointer Arrays</a></li>
     </ol></li>
     <li><a href="#declarations">配列の宣言</a></li>
     <li><a href="#literals">配列リテラル</a></li>
@@ -165,6 +164,7 @@
     <li><a href="#array-operations">配列の操作</a></li>
     <li><a href="#rectangular-arrays">長方形配列</a></li>
     <li><a href="#array-properties">配列のプロパティ</a><ol>        <li><a href="#resize">動的配列に長さを設定する</a></li>
+        <li><a href="#capacity-reserve"><span class="d_inlinecode donthyphenate notranslate">capacity</span> and <span class="d_inlinecode donthyphenate notranslate">reserve</span></a></li>
         <li><a href="#func-as-property">配列プロパティとして関数</a></li>
     </ol></li>
     <li><a href="#bounds">配列の境界チェック</a><ol>        <li><a href="#disable-bounds-check">配列の境界チェックを無効にする</a></li>
@@ -186,81 +186,11 @@
     <p>配列には、4種類あります:</p>
 <div class="blankline"></div>
     <center><table><caption>Kinds of Arrays</caption>        <tr><th class="donthyphenate"><b>Syntax</b></th><th class="donthyphenate"><b>Description</b></th></tr>
-        <tr><td><i>type</i>*</td><td><a href="#pointers">Pointers to data</a></td></tr>
         <tr><td><i>type</i>[<i>integer</i>]</td><td><a href="#static-arrays">Static arrays</a></td></tr>
         <tr><td><i>type</i>[]</td><td> <a href="#dynamic-arrays">Dynamic arrays</a></td></tr>
+        <tr><td><i>type</i>*</td><td><a href="#pointers">Pointer arrays</a></td></tr>
         <tr><td><i>type</i>[<i>type</i>]</td><td><a href="../spec/hash-map.html">Associative arrays</a></td></tr>
     </table></center>
-<div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="pointers" href="#pointers">ポインタ</a></h3>
-<div class="blankline"></div>
-        <p>A pointer to type <span class="d_inlinecode donthyphenate notranslate">T</span> has a value which is a reference (address) to another
-        object of type <span class="d_inlinecode donthyphenate notranslate">T</span>. It is commonly called a <i>pointer to T</i> and its type is
-        <span class="d_inlinecode donthyphenate notranslate">T*</span>. To access the object value, use the <span class="d_inlinecode donthyphenate notranslate">*</span> dereference operator:
-        </p>
-<div class="blankline"></div>
-<div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">int</span>* p;
-
-<span class="d_keyword">assert</span>(p == <span class="d_keyword">null</span>);
-p = <span class="d_keyword">new</span> <span class="d_keyword">int</span>(5);
-<span class="d_keyword">assert</span>(p != <span class="d_keyword">null</span>);
-
-<span class="d_keyword">assert</span>(*p == 5);
-(*p)++;
-<span class="d_keyword">assert</span>(*p == 6);
-</pre>
-
-</div>
-<div class="blankline"></div>
-        <p>If a pointer contains a <i>null</i> value, it is not pointing to a valid object.</p>
-<div class="blankline"></div>
-        <p>When a pointer to <i>T</i> is dereferenced, it must either contain a <i>null</i> value,
-        or point to a valid object of type <i>T</i>.</p>
-<div class="blankline"></div>
-        <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b>         <ol>        <li>The behavior when a <i>null</i> pointer is dereferenced. Typically the program
-        will be aborted.</li>
-        </ol></div>
-
-
-<div class="blankline"></div>
-        <div class="spec-boxes undefined-behavior"><b>Undefined Behavior:</b> dereferencing a pointer that is not <i>null</i> and does not point
-        to a valid object of type <i>T</i>.</div>
-
-
-<div class="blankline"></div>
-        <p>To set a pointer to point at an existing object, use the
-        <span class="d_inlinecode donthyphenate notranslate">&amp;</span> <em>address of</em> operator:</p>
-<div class="blankline"></div>
-<div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">int</span> i = 2;
-<span class="d_keyword">int</span>* p = &amp;i;
-
-<span class="d_keyword">assert</span>(p == &amp;i);
-<span class="d_keyword">assert</span>(*p == 2);
-*p = 4;
-<span class="d_keyword">assert</span>(i == 4);
-</pre>
-
-</div>
-<div class="blankline"></div>
-        <p>These are simple pointers to data.
-        A pointer can manipulate a block of multiple values. Accessing more
-        than one value cannot be
-        <a href="../spec/memory-safe-d.html"><span class="d_inlinecode donthyphenate notranslate">@safe</span></a> as it
-        requires <a href="#pointer-arithmetic">pointer arithmetic</a>.
-        This is supported for interfacing with C and for
-        specialized systems work.
-        A pointer has no length associated with it, so there is no way for the
-        compiler or runtime to do bounds checking, etc., on it.
-        </p>
-<div class="blankline"></div>
-        <div class="spec-boxes best-practice"><b>Best Practices:</b> Most conventional uses for pointers can be replaced with
-        dynamic arrays, <span class="d_inlinecode donthyphenate notranslate">ref</span> and <span class="d_inlinecode donthyphenate notranslate">out</span> <a href="../spec/function.html#parameters">parameters</a>,
-        and reference types.
-        </div>
-
-
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="static-arrays" href="#static-arrays">静的配列</a></h3>
 <div class="blankline"></div>
@@ -307,12 +237,36 @@ p = <span class="d_keyword">new</span> <span class="d_keyword">int</span>(5);
         Multiple dynamic arrays can share all or parts of the array data.
         </p>
 <div class="blankline"></div>
-        <div class="spec-boxes best-practice"><b>Best Practices:</b>         <ol>        <li>Use dynamic arrays instead of pointers to arrays as much as practical.
+        <div class="spec-boxes best-practice"><b>Best Practices:</b>         <ol>        <li>Use dynamic arrays instead of pointer arrays as much as practical.
         Indexing of dynamic arrays are bounds checked, avoiding buffer underflow and
         overflow problems.</li>
         </ol></div>
 
 
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="pointers" href="#pointers">Pointer Arrays</a></h3>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">int</span>* p;
+</pre>
+<div class="blankline"></div>
+        <p>A <a href="../spec/type.html#pointers">pointer</a>
+        can manipulate a block of multiple contiguous values in memory.
+        Accessing more than one value cannot be
+        <a href="../spec/memory-safe-d.html"><span class="d_inlinecode donthyphenate notranslate">@safe</span></a> as it
+        requires <a href="#pointer-arithmetic">pointer arithmetic</a>.
+        This is supported for interfacing with C and for
+        specialized systems work.
+        A pointer has no length associated with it, so there is no way for the
+        compiler or runtime to do bounds checking, etc., on it.
+        </p>
+<div class="blankline"></div>
+        <div class="spec-boxes best-practice"><b>Best Practices:</b> Most conventional uses for pointers can be replaced with
+        dynamic arrays, <span class="d_inlinecode donthyphenate notranslate">ref</span> and <span class="d_inlinecode donthyphenate notranslate">out</span> <a href="../spec/function.html#parameters">parameters</a>,
+        and reference types.
+        </div>
+
+
+<div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="declarations" href="#declarations">配列の宣言</a></h2>
 <div class="blankline"></div>
@@ -332,10 +286,10 @@ p = <span class="d_keyword">new</span> <span class="d_keyword">int</span>(5);
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="literals" href="#literals">配列リテラル</a></h2>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">auto</span> a1 = [1,2,3];  <span class="d_comment">// type is int[], with elements 1, 2 and 3
+<pre class="d_code notranslate"><span class="d_keyword">auto</span> a1 = [1,2,3];  <span class="d_comment">// type is int[], with elements 1, 2, and 3
 </span><span class="d_keyword">auto</span> a2 = [1u,2,3]; <span class="d_comment">// type is uint[], with elements 1u, 2u, and 3u
-</span><span class="d_keyword">int</span>[2] = [1, 2];
-</pre>
+</span><span class="d_keyword">int</span>[2] a3 = [1,2];  <span class="d_comment">// type is int[2], with elements 1, and 2
+</span></pre>
     <p><span class="d_inlinecode donthyphenate notranslate">[]</span> is an empty array literal.</p>
 <div class="blankline"></div>
     <p>See <a href="../spec/expression.html#array_literals">Array Literals</a>.</p>
@@ -349,6 +303,9 @@ p = <span class="d_keyword">new</span> <span class="d_keyword">int</span>(5);
         the handle for these types.
         </p>
 <div class="blankline"></div>
+        <p>The <span class="d_inlinecode donthyphenate notranslate">.ptr</span> property for static and dynamic arrays will give the address
+        of the first element in the array:</p>
+<div class="blankline"></div>
 <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">int</span>* p;
 <span class="d_keyword">int</span>[3] s;
@@ -359,13 +316,10 @@ p = s.ptr; <span class="d_comment">// p points to the first element of the array
 </span>
 <span class="d_comment">// error, since the length of the array pointed to by p is unknown
 </span><span class="d_comment">//s = p;
-</span><span class="d_comment">//s = a; // error, as a's length is not known at compile-time
-</span>s = [1,2,3];
-
+</span>
 <span class="d_comment">//a = p;   // error, length unknown
 </span>a = s;     <span class="d_comment">// a points to the elements of s
 </span><span class="d_keyword">assert</span>(a.ptr == s.ptr);
-<span class="d_keyword">assert</span>(a == [1,2,3]);
 
 <span class="d_keyword">int</span>[] b;
 a = b;     <span class="d_comment">// a points to the same array as b does
@@ -374,9 +328,37 @@ a = b;     <span class="d_comment">// a points to the same array as b does
 </pre>
 
 </div>
-    <p>Each of the three error lines above can be made to copy elements
-    using <a href="#slicing">slicing</a>, so that the number of elements
-    to copy is then known.</p>
+    <div class="spec-boxes note"><b>Note:</b> The two error lines above can be made to copy elements
+    using pointer <a href="#slicing">slicing</a>, so that the number of elements
+    to copy is then known.</div>
+<div class="blankline"></div>
+    <p>A static array can be assigned from a dynamic array - the data is copied.
+    The lengths must match:</p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[3] s;
+<span class="d_keyword">int</span>[] a;
+
+<span class="d_comment">//s = [1, 2]; // error
+</span>s = [1, 2, 3]; <span class="d_comment">// OK
+</span><span class="d_comment">//s = [1, 2, 3, 4]; // error
+</span>
+a = [4, 5, 6];
+s = a; <span class="d_comment">// OK
+</span><span class="d_keyword">assert</span>(s.ptr != a.ptr);
+a = [1, 2];
+<span class="d_comment">//s = a; // RangeError, length mismatch
+</span>
+a = s;
+<span class="d_keyword">assert</span>(a.ptr == s.ptr);
+<span class="d_comment">//s = a; // RangeError, overlap
+</span></pre>
+
+</div>
+    <p>The dynamic array data must not <a href="#overlapping-copying">overlap</a>
+    with the static array memory.
+    See also <a href="#array-copying">Copying</a>.</p>
+<div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="indexing" href="#indexing">インデックス</a></h2>
 <div class="blankline"></div>
@@ -427,7 +409,7 @@ p++; <span class="d_comment">// point to a[1]
 <div class="blankline"></div>
         <p><i>Slicing</i> an array means to specify a subarray of it.
         An array slice does not copy the data, it is only another
-        reference to it.
+        reference to it. Slicing produces a dynamic array.
         For example:
         </p>
 <div class="blankline"></div>
@@ -514,17 +496,25 @@ bar = foo[0 .. foo.length];
         </p>
 <div class="blankline"></div>
 <div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">int</span>[3] s;
-<span class="d_keyword">int</span>[3] t;
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[3] s, t;
+<span class="d_keyword">int</span>[] a;
 
 s = t;             <span class="d_comment">// the 3 elements of t are copied into s
 </span>s[] = t;           <span class="d_comment">// the 3 elements of t are copied into s
 </span>s[] = t[];         <span class="d_comment">// the 3 elements of t are copied into s
 </span>s[1..2] = t[0..1]; <span class="d_comment">// same as s[1] = t[0]
 </span>s[0..2] = t[1..3]; <span class="d_comment">// same as s[0] = t[1], s[1] = t[2]
-</span>s[0..4] = t[0..4]; <span class="d_comment">// error, only 3 elements in s
-</span>s[0..2] = t;       <span class="d_comment">// error, operands have different lengths
-</span></pre>
+</span><span class="d_comment">//s[0..4] = t[0..4]; // error, only 3 elements in s and t
+</span><span class="d_comment">//s[0..2] = t;       // error, operands have different lengths
+</span>
+a = [1, 2];
+s[0..2] = a;
+<span class="d_keyword">assert</span>(s == [1, 2, 0]);
+
+<span class="d_comment">//a[] = s; // RangeError, lengths don't match
+</span>a[0..2] = s[1..3];
+<span class="d_keyword">assert</span>(a == [2, 0]);
+</pre>
 
 </div>
 <div class="blankline"></div>
@@ -571,17 +561,26 @@ copy(s[1..3], s[0..2]);
 <div class="blankline"></div>
 <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">int</span>[3] s;
+<span class="d_keyword">int</span>[] a;
 <span class="d_keyword">int</span>* p;
 
-s[] = 3;     <span class="d_comment">// same as s[0] = 3, s[1] = 3, s[2] = 3
-</span>p[0..2] = 3; <span class="d_comment">// same as p[0] = 3, p[1] = 3
-</span></pre>
+s[] = 3;
+<span class="d_keyword">assert</span>(s == [3, 3, 3]);
+
+a = s;
+a[] = 1;
+<span class="d_keyword">assert</span>(s == [1, 1, 1]);
+
+p = s.ptr;
+p[0..2] = 2;
+<span class="d_keyword">assert</span>(s == [2, 2, 1]);
+</pre>
 
 </div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="array-concatenation" href="#array-concatenation">配列の連結</a></h2>
 <div class="blankline"></div>
-        <p>The binary operator ~ is the <i>cat</i> operator. It is used
+        <p>The binary operator <span class="d_inlinecode donthyphenate notranslate">~</span> is the <i>cat</i> operator. It is used
         to concatenate arrays:
         </p>
 <div class="blankline"></div>
@@ -595,18 +594,18 @@ s[] = 3;     <span class="d_comment">// same as s[0] = 3, s[1] = 3, s[2] = 3
 
 </div>
 <div class="blankline"></div>
-        <p>Many languages overload the + operator for concatenation.
+        <p>Many languages overload the <span class="d_inlinecode donthyphenate notranslate">+</span> operator for concatenation.
         This confusingly leads to a dilemma - does:
         </p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_string">"10"</span> + 3 + 4
 </pre>
 <div class="blankline"></div>
-        <p>produce the number 17, the string "1034" or the string "107" as the
+        <p>produce the number <span class="d_inlinecode donthyphenate notranslate">17</span>, the string <span class="d_inlinecode donthyphenate notranslate">"1034"</span> or the string <span class="d_inlinecode donthyphenate notranslate">"107"</span> as the
         result? It isn't obvious, and the language designers wind up carefully
         writing rules to disambiguate it - rules that get incorrectly
         implemented, overlooked, forgotten, and ignored. It's much better to
-        have + mean addition, and a separate operator to be array
+        have <span class="d_inlinecode donthyphenate notranslate">+</span> mean addition, and a separate operator to be array
         concatenation.
         </p>
 <div class="blankline"></div>
@@ -630,7 +629,7 @@ a = b ~ []; <span class="d_comment">// a refers to a copy of b
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="array-appending" href="#array-appending">配列の追加</a></h2>
 <div class="blankline"></div>
-        <p>Similarly, the ~= operator means append, as in:
+        <p>Similarly, the <span class="d_inlinecode donthyphenate notranslate">~=</span> operator means append, as in:
         </p>
 <div class="blankline"></div>
 <pre class="d_code notranslate">a ~= b; <span class="d_comment">// a becomes the concatenation of a and b
@@ -773,6 +772,8 @@ foo(ia.tupleof); <span class="d_comment">// same as `foo(1, 2, 3);`
         which is 8 in 32-bit builds and 16 on 64-bit builds.</td></tr>
         <tr><td><span class="d_inlinecode donthyphenate notranslate">.length</span></td><td>Get/set number of elements in the
         array. It is of type <span class="d_inlinecode donthyphenate notranslate">size_t</span>.</td></tr>
+        <tr><td><span class="d_inlinecode donthyphenate notranslate">.capacity</span></td><td>Returns the number of elements that can be appended to the array without reallocating.
+            See <a href="#capacity-reserve">here</a> for details.</td></tr>
         <tr><td><span class="d_inlinecode donthyphenate notranslate">.ptr</span></td><td>Returns a pointer to the first element of the array.</td></tr>
         <tr><td><span class="d_inlinecode donthyphenate notranslate">.dup</span></td><td>Create a dynamic array of the same size and copy the contents of the array into it. The copy will have any immutability or const stripped. If this conversion is invalid the call will not compile.</td></tr>
         <tr><td><span class="d_inlinecode donthyphenate notranslate">.idup</span></td><td>Create a dynamic array of the same size and copy the contents of the array into it. The copy is typed as being immutable. If this conversion is invalid the call will not compile.</td></tr>
@@ -791,7 +792,7 @@ p.length; <span class="d_comment">// error, length not known for pointer
 </span>
 p.dup;    <span class="d_comment">// error, length not known
 </span>s.dup;    <span class="d_comment">// creates an array of 3 elements, copies
-</span>          <span class="d_comment">// elements s into it
+</span>          <span class="d_comment">// elements of s into it
 </span>a.dup;    <span class="d_comment">// creates an array of a.length elements, copies
 </span>          <span class="d_comment">// elements of a into it
 </span></pre>
@@ -801,7 +802,7 @@ p.dup;    <span class="d_comment">// error, length not known
 <h3><a class="anchor" title="Permalink to this section" id="resize" href="#resize">動的配列に長さを設定する</a></h3>
 <div class="blankline"></div>
         <p>The <span class="d_inlinecode donthyphenate notranslate">.length</span> property of a dynamic array can be set
-        as the left-hand side of an = operator:
+        as the left-hand side of an <span class="d_inlinecode donthyphenate notranslate">=</span> operator:
         </p>
 <div class="blankline"></div>
 <pre class="d_code notranslate">array.length = 7;
@@ -815,15 +816,22 @@ p.dup;    <span class="d_comment">// error, length not known
 <pre class="d_code notranslate">array = array[0..7];
 </pre>
 <div class="blankline"></div>
-        <p>If the new array length is longer, the remainder is filled out with the
+        <p>If the new array length is longer, the array is reallocated if necessary,
+        preserving the existing elements. The new elements are filled out with the
         default initializer.
         </p>
 <div class="blankline"></div>
-        <p>To maximize efficiency, the runtime always tries to resize the array
-        in place to avoid extra copying. It will always do a copy if the new
-        size is larger and the array was not allocated via the new operator or
-        resizing in place would overwrite valid data in the array. For example:</p>
+<h4><a class="anchor" title="Permalink to this section" id="growing" href="#growing">Growing an Array</a></h4>
 <div class="blankline"></div>
+        <p>To maximize efficiency, the runtime always tries to resize the array
+        in place to avoid extra copying. It will do a copy if the new size
+        is larger and either:</p>
+
+<ul><li>The array was not <a href="../spec/garbage.html#op_involving_gc">allocated by the GC</a>.</li>
+<li>There is no spare <a href="#capacity-reserve">capacity</a> for the array.</li>
+<li>Resizing in place would overwrite valid data still accessible in another slice.
+</li>
+</ul>
 <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">char</span>[] a = <span class="d_keyword">new</span> <span class="d_keyword">char</span>[20];
 <span class="d_keyword">char</span>[] b = a[0..10];
@@ -833,11 +841,14 @@ p.dup;    <span class="d_comment">// error, length not known
 b.length = 15; <span class="d_comment">// always reallocates because extending in place would
 </span>               <span class="d_comment">// overwrite other data in a.
 </span>b[11] = 'x';   <span class="d_comment">// a[11] and c[1] are not affected
-</span>
+</span><span class="d_keyword">assert</span>(a[11] == <span class="d_keyword">char</span>.init);
+
 d.length = 1;
-d.length = 20; <span class="d_comment">// also reallocates, because doing this will overwrite a and
-</span>               <span class="d_comment">// c
+<span class="d_keyword">assert</span>(d.ptr == a.ptr); <span class="d_comment">// unchanged
 </span>
+d.length = 20; <span class="d_comment">// also reallocates, because doing this will overwrite a and c
+</span><span class="d_keyword">assert</span>(d.ptr != a.ptr);
+
 c.length = 12; <span class="d_comment">// may reallocate in place if space allows, because nothing
 </span>               <span class="d_comment">// was allocated after c.
 </span>c[5] = 'y';    <span class="d_comment">// may affect contents of a, but not b or d because those
@@ -853,16 +864,15 @@ a.length = 25; <span class="d_comment">// This always reallocates because if c e
 </div>
 <div class="blankline"></div>
 <div class="blankline"></div>
-        <p>To guarantee copying behavior, use the .dup property to ensure
-        a unique array that can be resized. Also, one may use the
-        <span class="d_inlinecode donthyphenate notranslate">.capacity</span> property to determine how many elements can be appended
-        to the array without reallocating.
+        <p>To guarantee copying behavior, use the <span class="d_inlinecode donthyphenate notranslate">.dup</span> property to ensure
+        a unique array that can be resized.
         </p>
 <div class="blankline"></div>
-        <p>These issues also apply to appending arrays with the ~= operator.
-        Concatenation using the ~ operator is not affected since it always
+        <div class="spec-boxes note"><b>Note:</b> These issues also apply to
+        <a href="#array-appending">appending arrays</a> with the <span class="d_inlinecode donthyphenate notranslate">~=</span> operator.
+        Concatenation using the <span class="d_inlinecode donthyphenate notranslate">~</span> operator is not affected since it always
         reallocates.
-        </p>
+        </div>
 <div class="blankline"></div>
         <p>Resizing a dynamic array is a relatively expensive operation.
         So, while the following method of filling an array:
@@ -912,18 +922,90 @@ array.length = i;
         input from the console - it's unlikely to be longer than 80.
         </p>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="capacity-reserve" href="#capacity-reserve"><span class="d_inlinecode donthyphenate notranslate">capacity</span> and <span class="d_inlinecode donthyphenate notranslate">reserve</span></a></h3>
+<div class="blankline"></div>
+        <p>The <span class="d_inlinecode donthyphenate notranslate">capacity</span> property gives the maximum length a dynamic array
+        can grow to without reallocating. If the array does not point to
+        GC-allocated memory, the capacity will be zero.
+        The spare capacity for an array <em>a</em> is <span class="d_inlinecode donthyphenate notranslate">a.capacity - a.length</span>.</p>
+<div class="blankline"></div>
+        <p>By default, <span class="d_inlinecode donthyphenate notranslate">capacity</span> will be zero if an element has been stored after the slice.</p>
+<div class="blankline"></div>
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[] a;
+<span class="d_keyword">assert</span>(a.capacity == 0);
+a.length = 3; <span class="d_comment">// may allocate spare capacity too
+</span><span class="d_keyword">assert</span>(a.capacity &gt;= 3);
+<span class="d_keyword">auto</span> b = a[1..3];
+<span class="d_keyword">assert</span>(b.capacity &gt;= 2); <span class="d_comment">// either a or b can append into any spare capacity
+</span>b = a[0..2];
+<span class="d_keyword">assert</span>(b.capacity == 0);
+</pre>
+        
+</div>
+<div class="blankline"></div>
+        <div class="spec-boxes rationale"><b>Rationale:</b> This behaviour helps prevent accidental overwriting of
+        elements in another slice. It is also necessary to protect immutable
+        elements from being overwritten.</div>
+
+
+<div class="blankline"></div>
         <p>The <span class="d_inlinecode donthyphenate notranslate">reserve</span>
-        function expands an array's capacity for use by the append operator.</p>
+        function expands an array's capacity for use by the
+        <a href="#array-appending">append operator</a> or <span class="d_inlinecode donthyphenate notranslate">.length</span> assignment.</p>
 <div class="blankline"></div>
 <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">int</span>[] array;
-size_t cap = array.reserve(10); <span class="d_comment">// request
-</span>array ~= [1, 2, 3, 4, 5];
-<span class="d_keyword">assert</span>(cap &gt;= 10); <span class="d_comment">// allocated may be more than request
-</span><span class="d_keyword">assert</span>(cap == array.capacity);
+<span class="d_keyword">const</span> size_t cap = array.reserve(10); <span class="d_comment">// request
+</span><span class="d_keyword">assert</span>(cap &gt;= 10); <span class="d_comment">// allocated may be more than request
+</span><span class="d_keyword">assert</span>(array.ptr != <span class="d_keyword">null</span>);
+
+<span class="d_keyword">int</span>[] copy = array;
+<span class="d_keyword">assert</span>(copy.capacity == cap); <span class="d_comment">// array and copy have same capacity
+</span>array ~= [1, 2, 3, 4, 5]; <span class="d_comment">// grow in place
+</span><span class="d_keyword">assert</span>(cap == array.capacity); <span class="d_comment">// array memory was not reallocated
+</span><span class="d_keyword">assert</span>(copy.ptr == array.ptr);
+<span class="d_keyword">assert</span>(copy.capacity == 0);
+copy ~= 0; <span class="d_comment">// new allocation
+</span><span class="d_keyword">assert</span>(copy.ptr != array.ptr);
 </pre>
 
 </div>
+        <p>Above, <span class="d_inlinecode donthyphenate notranslate">copy</span>'s length remains zero but it points to the same
+        memory allocated by the <span class="d_inlinecode donthyphenate notranslate">reserve</span> call. Because <span class="d_inlinecode donthyphenate notranslate">array</span> is then appended
+        to, <span class="d_inlinecode donthyphenate notranslate">copy.ptr + 0</span> no longer points to unused memory - instead that
+        is the address of <span class="d_inlinecode donthyphenate notranslate">array[0]</span>. So <span class="d_inlinecode donthyphenate notranslate">copy.capacity</span> will be zero to
+        prevent any appending to <span class="d_inlinecode donthyphenate notranslate">copy</span> from overwriting elements in <span class="d_inlinecode donthyphenate notranslate">array</span>.</p>
+<div class="blankline"></div>
+        <div class="spec-boxes note"><b>Note:</b> The runtime uses the number of appended elements to track the
+        start of the spare capacity for the memory allocation.</div>
+<div class="blankline"></div>
+        <p>When an array with spare capacity has its length reduced, or is
+        assigned a slice of itself that ends before the previous last element,
+        the capacity will be zero.</p>
+<div class="blankline"></div>
+        <p>The <span class="d_inlinecode donthyphenate notranslate">@system</span> function <a href="../phobos/object.html#.assumeSafeAppend""><span class="d_inlinecode donthyphenate notranslate">assumeSafeAppend</span></a> allows the
+        capacity to be regained, but care must be taken not to overwrite
+        immutable elements that may exist in a longer slice.</p>
+<div class="blankline"></div>
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[] a = [1, 2, 3];
+a.length--;
+<span class="d_keyword">assert</span>(a.capacity == 0);
+a.assumeSafeAppend();
+<span class="d_keyword">assert</span>(a.capacity &gt;= 3);
+</pre>
+        
+</div>
+<div class="blankline"></div>
+        <div class="spec-boxes note"><b>Note:</b> Accessing <span class="d_inlinecode donthyphenate notranslate">.capacity</span> may require the runtime to
+        acquire a global lock and perform a cache lookup.</div>
+<div class="blankline"></div>
+        <div class="spec-boxes best-practice"><b>Best Practices:</b> Avoid intensive use of <span class="d_inlinecode donthyphenate notranslate">.capacity</span> in performance-sensitive code.
+        Instead, track the capacity locally when building an array via a unique reference.</div>
+
+
+<div class="blankline"></div>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="func-as-property" href="#func-as-property">配列プロパティとして関数</a></h3>
 <div class="blankline"></div>
@@ -1023,7 +1105,7 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
 <h3><a class="anchor" title="Permalink to this section" id="length-initialization" href="#length-initialization">長さの初期化</a></h3>
         <p>The <span class="d_inlinecode donthyphenate notranslate">new</span> expression can be used to start a dynamic array
         with a specified length by specifying its type and then using the
-        () syntax:
+        <span class="d_inlinecode donthyphenate notranslate">(size)</span> syntax:
         </p>
 <div class="blankline"></div>
 <div class="runnable-examples">
@@ -1042,7 +1124,7 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
         Void initializations are an advanced technique and should only be used
         when profiling indicates that it matters.
         </p>
-        <p>to void initialise the elements of dynamic array use
+        <p>To void initialise the <em>elements</em> of a dynamic array use
         <a href="../phobos/std_array.html#.uninitializedArray"><span class="d_inlinecode donthyphenate notranslate">std.array.uninitializedArray</span></a>.
         </p>
 <div class="blankline"></div>
@@ -1050,19 +1132,21 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
 <h3><a class="anchor" title="Permalink to this section" id="static-init-static" href="#static-init-static">静的に割り当てられた配列の静的初期化</a></h3>
 <div class="blankline"></div>
         <p>Static initalizations are supplied by a list of array
-        element values enclosed in [ ]. The values can be optionally
-        preceded by an index and a :.
+        element values enclosed in <span class="d_inlinecode donthyphenate notranslate">[ ]</span>. The values can be optionally
+        preceded by an index and a <span class="d_inlinecode donthyphenate notranslate">:</span>.
         If an index is not supplied, it is set to the previous index
         plus 1, or 0 if it is the first value.
         </p>
 <div class="blankline"></div>
 <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">int</span>[3] a = [ 1:2, 3 ]; <span class="d_comment">// a[0] = 0, a[1] = 2, a[2] = 3
-</span></pre>
+</span>
+<span class="d_keyword">assert</span>(a == [0, 2, 3]);
+</pre>
 
 </div>
 <div class="blankline"></div>
-        <p>This is most handy when the array indices are given by enums:</p>
+        <p>This is most handy when the array indices are given by <a href="../spec/enum.html">enums</a>:</p>
 <div class="blankline"></div>
 <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">enum</span> Color { red, blue, green }
@@ -1071,6 +1155,8 @@ size_t cap = array.reserve(10); <span class="d_comment">// request
   [ Color.blue :6,
     Color.green:2,
     Color.red  :5 ];
+
+<span class="d_keyword">assert</span>(value == [5, 6, 2]);
 </pre>
 
 </div>
@@ -1358,7 +1444,7 @@ writefln(<span class="d_string">"the string is '%s'"</span>, str);
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 03:03:56 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 08:30:54 2022
 </div>
     </div>
 </div>

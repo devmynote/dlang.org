@@ -40,10 +40,9 @@
 <ul class='expand-content'>    <li><a href='https://dlang.org/blog'>ブログ</a></li>
     <li><a href='../orgs-using-d.html'>利用実績</a></li>
     <li><a href='https://twitter.com/search?q=%23dlang'>Twitter</a></li>
-    <li><a href='../calendar.html'>カレンダー</a></li>
     <li class="menu-divider"><a href='https://forum.dlang.org'>フォーラム</a></li>
     <li><a href='irc://irc.libera.chat/d'>IRC</a></li>
-    <li><a href='https://discord.gg/bMZk9Q4'>Discord</a></li>
+    <li><a href='https://discord.gg/bMZk9Q4'>Community Discord</a></li>
     <li><a href='https://wiki.dlang.org'>Wiki</a></li>
     <li class="menu-divider"><a href='https://github.com/dlang'>GitHub</a></li>
     <li><a href='https://dlang.org/bugstats.html'>Issues</a></li>
@@ -75,7 +74,7 @@
     <div id="search-box">        <form method="get" action="https://google.com/search">
             <input type="hidden" id="domains" name="domains" value="dlang.org">
             <input type="hidden" id="sourceid" name="sourceid" value="google-search">
-            <span id="search-query"><input id="q" name="q" placeholder="Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
+            <span id="search-query"><input id="q" name="q" placeholder="Google Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
                     <option value="dlang.org">Entire Site</option>
                     <option selected value="dlang.org/spec">Language</option>
                     <option  value="dlang.org/phobos">Library</option>
@@ -166,14 +165,13 @@
         <li><a href="#xor_expressions">Xor 式</a></li>
         <li><a href="#and_expressions">And 式</a></li>
     </ol></li>
-    <li><a href="#compare_expressions">比較式</a></li>
-    <li><a href="#equality_expressions">等式</a><ol>        <li><a href="#class_struct_equality">Class や Struct の等式</a></li>
+    <li><a href="#compare_expressions">比較式</a><ol>        <li><a href="#equality_expressions">等式</a></li>
         <li><a href="#identity_expressions">同一式</a></li>
-    </ol></li>
-    <li><a href="#relation_expressions">関係式</a><ol>        <li><a href="#array_comparisons">配列の比較</a></li>
+        <li><a href="#relation_expressions">関係式</a></li>
+        <li><a href="#array_comparisons">配列の比較</a></li>
         <li><a href="#integer_comparisons">整数の比較</a></li>
         <li><a href="#floating-point-comparisons">浮動小数点の比較</a></li>
-        <li><a href="#class-comparisons">クラスの比較</a></li>
+        <li><a href="#class-comparisons">Class Comparisons</a></li>
     </ol></li>
     <li><a href="#in_expressions">In 式</a></li>
     <li><a href="#shift_expressions">Shift 式</a></li>
@@ -184,9 +182,7 @@
         <li><a href="#mul_floating">浮動小数点</a></li>
     </ol></li>
     <li><a href="#unary-expression">単項式</a><ol>        <li><a href="#complement_expressions">補数式</a></li>
-        <li><a href="#new_expressions">New 式</a></li>
-        <li><a href="#new_multidimensional">多次元配列</a></li>
-        <li><a href="#delete_expressions">Delete 式</a></li>
+        <li><a href="#delete_expressions">Delete Expressions</a></li>
         <li><a href="#cast_expressions">キャスト式</a></li>
     </ol></li>
     <li><a href="#throw_expression">Throw 式</a></li>
@@ -201,17 +197,17 @@
         <li><a href="#null">null</a></li>
         <li><a href="#string_literals">文字列リテラル</a></li>
         <li><a href="#array_literals">配列リテラル</a></li>
-        <li><a href="#cast_array_literal">キャスト</a></li>
         <li><a href="#associative_array_literals">連想配列リテラル</a></li>
         <li><a href="#function_literals">関数リテラル</a></li>
         <li><a href="#uniform_construction_syntax">スカラー型の統一された構築構文</a></li>
         <li><a href="#assert_expressions">Assert 式</a></li>
         <li><a href="#mixin_expressions">Mixin 式</a></li>
         <li><a href="#import_expressions">Import 式</a></li>
+        <li><a href="#new_expressions">New 式s</a></li>
         <li><a href="#typeid_expressions">Typeid 式</a></li>
         <li><a href="#is_expression">Is 式</a></li>
+        <li><a href="#specialkeywords">特殊なキーワード</a></li>
     </ol></li>
-    <li><a href="#specialkeywords">特殊なキーワード</a></li>
     <li><a href="#associativity">結合性と可換性</a></li>
 </ol>
 </div>
@@ -258,9 +254,11 @@ to <span class="d_inlinecode donthyphenate notranslate">return</span>. This is b
 <h3><a class="anchor" title="Permalink to this section" id=".define-lvalue" href="#.define-lvalue">左辺値</a></h3>
 <div class="blankline"></div>
 <p>The following expressions, and no others, are called <em>lvalue expressions</em> or <em>lvalues</em>:</p>
-<ol><li><span class="d_inlinecode donthyphenate notranslate">this</span> inside <span class="d_inlinecode donthyphenate notranslate">struct</span> and <span class="d_inlinecode donthyphenate notranslate">union</span> member functions;</li>
-<li>a variable or the result of the <i>DotIdentifier</i> grammatical construct <span class="d_inlinecode donthyphenate notranslate">.</span> (left side may be
-missing) when the rightmost side of the dot is a variable,
+<ol><li><a href="#this"><span class="d_inlinecode donthyphenate notranslate">this</span></a> inside <span class="d_inlinecode donthyphenate notranslate">struct</span> and <span class="d_inlinecode donthyphenate notranslate">union</span> member functions;</li>
+<li>a variable, function name, or invocation of a function that returns by reference;</li>
+<li>the result of the <span class="d_inlinecode donthyphenate notranslate">.</span> <a href="#PostfixExpression"><i>PostfixExpression</i></a> or
+<a href="../spec/module.html#module_scope_operators">Module Scope Operator</a>
+when the rightmost side of the dot is a variable,
 field (direct or <span class="d_inlinecode donthyphenate notranslate">static</span>), function name, or invocation of a function that returns by reference;</li>
 <li>the result of the following expressions:
 <ul><li>built-in unary operators <span class="d_inlinecode donthyphenate notranslate">+</span> (when applied to an lvalue), <span class="d_inlinecode donthyphenate notranslate">*</span>, <span class="d_inlinecode donthyphenate notranslate">++</span> (prefix only), <span class="d_inlinecode donthyphenate notranslate">--</span> (prefix only);</li>
@@ -272,9 +270,11 @@ circumstances:</li>
 <ol>    <li><i>e<sub>1</sub></i> and <i>e<sub>2</sub></i> are lvalues of the same type; OR</li>
     <li>One of <i>e<sub>1</sub></i> and <i>e<sub>2</sub></i> is an lvalue of type <span class="d_inlinecode donthyphenate notranslate">T</span> and the other has
     and <span class="d_inlinecode donthyphenate notranslate">alias this</span> converting it to <span class="d_inlinecode donthyphenate notranslate">ref T</span>;</li></ol>
-<li>user-defined operators if and only if the function called as a result of lowering returns
+<li><a href="../spec/operatoroverloading.html">user-defined operators</a>
+if and only if the function called as a result of lowering returns
 by reference;</li>
-<li><span class="d_inlinecode donthyphenate notranslate">mixin</span> expressions if and only if the compilation of the expression resulting from compiling
+<li><a href="#mixin_expressions"><span class="d_inlinecode donthyphenate notranslate">mixin</span> expressions</a> if and only if the
+compilation of the expression resulting from compiling
 the argument(s) to <span class="d_inlinecode donthyphenate notranslate">mixin</span> is an lvalue;</li>
 <li><span class="d_inlinecode donthyphenate notranslate">cast(U)</span> expressions applied to lvalues of type <span class="d_inlinecode donthyphenate notranslate">T</span> when <span class="d_inlinecode donthyphenate notranslate">T*</span> is implicitly convertible to <span class="d_inlinecode donthyphenate notranslate">U*</span>;</li>
 <li><span class="d_inlinecode donthyphenate notranslate">cast()</span> and <span class="d_inlinecode donthyphenate notranslate">cast(</span><i>qualifier list</i><span class="d_inlinecode donthyphenate notranslate">)</span> when applied to an lvalue.</li>
@@ -304,14 +304,24 @@ The subexpression <span class="d_inlinecode donthyphenate notranslate">h()</span
 <h2><a class="anchor" title="Permalink to this section" id="order-of-evaluation" href="#order-of-evaluation">評価の順序</a></h2>
 <div class="blankline"></div>
 <p>Built-in prefix unary expressions <span class="d_inlinecode donthyphenate notranslate">++</span> and <span class="d_inlinecode donthyphenate notranslate">--</span> are evaluated as if lowered (rewritten) to
-assignments as follows: <span class="d_inlinecode donthyphenate notranslate">++expr</span> becomes <span class="d_inlinecode donthyphenate notranslate">((expr) += 1)</span>, and <span class="d_inlinecode donthyphenate notranslate">--expr</span> becomes <span class="d_inlinecode donthyphenate notranslate">((expr) -= 1)</span>.
-Therefore, the result of prefix <span class="d_inlinecode donthyphenate notranslate">++</span> and <span class="d_inlinecode donthyphenate notranslate">--</span> is the lvalue after the side effect has been
+<a href="#assignment_operator_expressions">assignments</a> as follows:</p>
+<div class="blankline"></div>
+<table>    <tr><th class="donthyphenate"><b>Expression</b></th><th class="donthyphenate"><b>Equivalent</b></th></tr>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">++expr</span></td><td><span class="d_inlinecode donthyphenate notranslate">((expr) += 1)</span></td></tr>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">--expr</span></td><td><span class="d_inlinecode donthyphenate notranslate">((expr) -= 1)</span></td></tr>
+</table>
+<p>Therefore, the result of prefix <span class="d_inlinecode donthyphenate notranslate">++</span> and <span class="d_inlinecode donthyphenate notranslate">--</span> is the lvalue after the side effect has been
 effected.</p>
 <div class="blankline"></div>
 <p>Built-in postfix unary expressions <span class="d_inlinecode donthyphenate notranslate">++</span> and <span class="d_inlinecode donthyphenate notranslate">--</span> are evaluated as if lowered (rewritten) to
 <a href="../spec/expression.html#function_literals">lambda</a>
-invocations as follows: <span class="d_inlinecode donthyphenate notranslate">expr++</span> becomes <span class="d_inlinecode donthyphenate notranslate">(ref T x){auto t = x; ++x; return t;}(expr)</span>, and
-<span class="d_inlinecode donthyphenate notranslate">expr--</span> becomes <span class="d_inlinecode donthyphenate notranslate">(ref T x){auto t = x; --x; return t;}(expr)</span>. Therefore, the result of postfix
+invocations as follows:</p>
+<div class="blankline"></div>
+<table>    <tr><th class="donthyphenate"><b>Expression</b></th><th class="donthyphenate"><b>Equivalent</b></th></tr>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">expr++</span></td><td><span class="d_inlinecode donthyphenate notranslate">(ref x){auto t = x; ++x; return t;}(expr)</span></td></tr>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">expr--</span></td><td><span class="d_inlinecode donthyphenate notranslate">(ref x){auto t = x; --x; return t;}(expr)</span></td></tr>
+</table>
+<p>Therefore, the result of postfix
 <span class="d_inlinecode donthyphenate notranslate">++</span> and <span class="d_inlinecode donthyphenate notranslate">--</span> is an rvalue just before the side effect has been effected.</p>
 <div class="blankline"></div>
 <p>Binary expressions except for <a href="#AssignExpression"><i>AssignExpression</i></a>, <a href="#OrOrExpression"><i>OrOrExpression</i></a>, and
@@ -481,7 +491,7 @@ Consequently, the destruction of <span class="d_inlinecode donthyphenate notrans
 <div class="blankline"></div>
     <p>For all assign expressions, the left operand must be a modifiable
     lvalue. The type of the assign expression is the type of the left
-    operand, and the value is the value of the left operand after assignment
+    operand, and the result is the value of the left operand after assignment
     occurs. The resulting expression is a modifiable lvalue.
     </p>
 <div class="blankline"></div>
@@ -502,26 +512,34 @@ Consequently, the destruction of <span class="d_inlinecode donthyphenate notrans
 <h3><a class="anchor" title="Permalink to this section" id="simple_assignment_expressions" href="#simple_assignment_expressions">単純な代入式</a></h3>
 <div class="blankline"></div>
     <p>If the operator is <span class="d_inlinecode donthyphenate notranslate">=</span> then it is simple assignment.
-    The right operand is implicitly converted to the type of the
-    left operand, and assigned to it.</p>
+    </p>
 <div class="blankline"></div>
-    <p>If the left and right operands are of the same struct type, and the struct
+    <ul>    <li>If the left operand is a struct that
+    <a href="../spec/operatoroverloading.html#assignment">defines <span class="d_inlinecode donthyphenate notranslate">opAssign</span></a>,
+    the behaviour is defined by the overloaded function.
+    </li>
+<div class="blankline"></div>
+    <li>If the left and right operands are of the same struct type, and the struct
     type has a <a href="../spec/struct.html#Postblit"><i>Postblit</i></a>, then the copy operation is
     as described in <a href="../spec/struct.html#struct-postblit">Struct Postblit</a>.
-    </p>
+    </li>
 <div class="blankline"></div>
-    <p>If the lvalue is the <span class="d_inlinecode donthyphenate notranslate">.length</span> property of a dynamic array, the behavior is
+    <li>If the lvalue is the <span class="d_inlinecode donthyphenate notranslate">.length</span> property of a dynamic array, the behavior is
     as described in <a href="../spec/arrays.html#resize">Setting Dynamic Array Length</a>.
-    </p>
+    </li>
 <div class="blankline"></div>
-    <p>If the lvalue is a static array or a slice, the behavior is as
+    <li>If the lvalue is a static array or a slice, the behavior is as
     described in <a href="../spec/arrays.html#array-copying">Array Copying</a> and
     <a href="../spec/arrays.html#array-setting">Array Setting</a>.
-    </p>
+    </li>
 <div class="blankline"></div>
-    <p>If the lvalue is a user-defined property, the behavior is as
+    <li>If the lvalue is a user-defined property, the behavior is as
     described in <a href="../spec/function.html#property-functions">Property Functions</a>.
-    </p>
+    </li>
+    </ul>
+<div class="blankline"></div>
+    <p>Otherwise, the right operand is implicitly converted to the type of the
+    left operand, and assigned to it.</p>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="assignment_operator_expressions" href="#assignment_operator_expressions">代入演算子の式</a></h3>
 <div class="blankline"></div>
@@ -535,15 +553,16 @@ Consequently, the destruction of <span class="d_inlinecode donthyphenate notrans
 <pre class="d_code notranslate">a = <span class="d_keyword">cast</span>(<span class="d_keyword">typeof</span>(a))(a op b)
 </pre>
 <div class="blankline"></div>
-    except that
+    except that:
 <div class="blankline"></div>
     <ul>        <li>operand <span class="d_inlinecode donthyphenate notranslate">a</span> is only evaluated once,</li>
-        <li>overloading <i>op</i> uses a different function than overloading <i>op</i>= does, and</li>
+        <li>overloading <i>op</i> uses a different function than overloading <i>op</i><span class="d_inlinecode donthyphenate notranslate">=</span> does, and</li>
         <li>the left operand of <span class="d_inlinecode donthyphenate notranslate">&gt;&gt;&gt;=</span> does not undergo <a href="../spec/type.html#integer-promotions">Integer Promotions</a> before shifting.</li>
     </ul>
 <div class="blankline"></div>
-    <p>For user-defined types, assignment operator expressions are overloaded separately from
-        the binary operator. Still the left operand must be an lvalue.
+    <p>For user-defined types, assignment operator expressions are
+        <a href="../spec/operatoroverloading.html#op-assign">overloaded separately</a> from
+        the binary operators. Still the left operand must be an lvalue.
     </p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="conditional_expressions" href="#conditional_expressions">条件式</a></h2>
@@ -695,7 +714,7 @@ test ? a = b : c = 2;   <span class="d_comment">// Deprecated
     <a href="#ShiftExpression"><i>ShiftExpression</i></a>
 </pre>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="equality_expressions" href="#equality_expressions">等式</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="equality_expressions" href="#equality_expressions">等式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="EqualExpression"><span class="gname">EqualExpression</span></a>:
     <a href="#ShiftExpression"><i>ShiftExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">==</span> <a href="#ShiftExpression"><i>ShiftExpression</i></a>
@@ -721,7 +740,7 @@ test ? a = b : c = 2;   <span class="d_comment">// Deprecated
     <p>For float, double, and real values, the <a href="../spec/type.html#usual-arithmetic-conversions">Usual Arithmetic Conversions</a> are applied
         to bring them to a common type before comparison.
         The values <span class="d_inlinecode donthyphenate notranslate">-0</span> and <span class="d_inlinecode donthyphenate notranslate">+0</span> are considered equal.
-        If either or both operands are NAN, then <span class="d_inlinecode donthyphenate notranslate">==</span> returns false and <span class="d_inlinecode donthyphenate notranslate">!=</span> returns <span class="d_inlinecode donthyphenate notranslate">true</span>.
+        If either or both operands are NaN, then <span class="d_inlinecode donthyphenate notranslate">==</span> returns false and <span class="d_inlinecode donthyphenate notranslate">!=</span> returns <span class="d_inlinecode donthyphenate notranslate">true</span>.
         Otherwise, the bit patterns of the common type are compared for equality.
     </p>
 <div class="blankline"></div>
@@ -736,14 +755,14 @@ test ? a = b : c = 2;   <span class="d_comment">// Deprecated
 <pre class="d_code notranslate">x.re == y.re &amp;&amp; x.im == y.im
 </pre>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="class_struct_equality" href="#class_struct_equality">Class や Struct の等式</a></h3>
+    <h4><a class="anchor" title="Permalink to this section" id="class_struct_equality" href="#class_struct_equality">Class や Struct の等式</a></h4>
 <div class="blankline"></div>
     <p>For struct objects, equality means the result of the
         <a href="https://dlang.org/spec/operatoroverloading.html#equals"><span class="d_inlinecode donthyphenate notranslate">opEquals()</span> member function</a>.
         If an <span class="d_inlinecode donthyphenate notranslate">opEquals()</span> is not provided, equality is defined as
         the logical product of all equality
-        results of the corresponding object fields.</p>
-    
+        results of the corresponding object fields.
+    </p>
 <div class="blankline"></div>
         <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b> The contents of any alignment gaps in the struct object.</div>
 
@@ -773,7 +792,7 @@ test ? a = b : c = 2;   <span class="d_comment">// Deprecated
         operators are intended to compare the contents of the objects,
         however an appropriate <span class="d_inlinecode donthyphenate notranslate">opEquals</span> override must be defined for this to work.
         The default <span class="d_inlinecode donthyphenate notranslate">opEquals</span> provided by the root <span class="d_inlinecode donthyphenate notranslate">Object</span> class is
-        equivalent to the <span class="d_inlinecode donthyphenate notranslate">is</span> operator.
+        equivalent to the <span class="d_inlinecode donthyphenate notranslate">is</span> operator (see below).
         Comparing against <span class="d_inlinecode donthyphenate notranslate">null</span> is invalid, as <span class="d_inlinecode donthyphenate notranslate">null</span> has no contents.
         Use the <span class="d_inlinecode donthyphenate notranslate">is</span> and <span class="d_inlinecode donthyphenate notranslate">!is</span> operators instead.</p>
 <div class="blankline"></div>
@@ -813,6 +832,20 @@ C c;
     of elements.
     </p>
 <div class="blankline"></div>
+    <div class="runnable-examples">
+<pre class="d_code notranslate">Object o;
+<span class="d_keyword">assert</span>(o <span class="d_keyword">is</span> <span class="d_keyword">null</span>);
+
+<span class="d_keyword">auto</span> a = [1, 2];
+<span class="d_keyword">assert</span>(a <span class="d_keyword">is</span> a[0..$]);
+<span class="d_keyword">assert</span>(a !<span class="d_keyword">is</span> a[0..1]);
+
+<span class="d_keyword">auto</span> b = [1, 2];
+<span class="d_keyword">assert</span>(a !<span class="d_keyword">is</span> b);
+</pre>
+    
+</div>
+<div class="blankline"></div>
     <p>For other operand types, identity is defined as being the same
         as equality.
     </p>
@@ -820,7 +853,7 @@ C c;
     <p>The identity operator <span class="d_inlinecode donthyphenate notranslate">is</span> cannot be overloaded.
     </p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="relation_expressions" href="#relation_expressions">関係式</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="relation_expressions" href="#relation_expressions">関係式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="RelExpression"><span class="gname">RelExpression</span></a>:
     <a href="#ShiftExpression"><i>ShiftExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">&lt;</span> <a href="#ShiftExpression"><i>ShiftExpression</i></a>
@@ -835,8 +868,8 @@ C c;
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="array_comparisons" href="#array_comparisons">配列の比較</a></h3>
 <div class="blankline"></div>
-    <p>For static and dynamic arrays, the result of the relational
-        op is the result of the operator applied to the first non-equal
+    <p>For static and dynamic arrays, the result of a <em>CmpExpression</em>
+        is the result of the operator applied to the first non-equal
         element of the array. If two arrays compare equal, but are of
         different lengths, the shorter array compares as "less" than the
         longer array.
@@ -860,7 +893,7 @@ C c;
     <p>It is an error to have one operand be signed and the other
         unsigned for a <span class="d_inlinecode donthyphenate notranslate">&lt;</span>, <span class="d_inlinecode donthyphenate notranslate">&lt;</span><span class="d_inlinecode donthyphenate notranslate">=</span>, <span class="d_inlinecode donthyphenate notranslate">&gt;</span> or
         <span class="d_inlinecode donthyphenate notranslate">&gt;</span><span class="d_inlinecode donthyphenate notranslate">=</span> expression.
-        Use casts to make both operands signed or both operands unsigned.
+        Use <a href="#cast_integers">casts</a> to make both operands signed or both operands unsigned.
     </p>
 <div class="blankline"></div>
 <h3><span id="floating_point_comparisons"><a class="anchor" title="Permalink to this section" id="floating-point-comparisons" href="#floating-point-comparisons">浮動小数点の比較</a></span></h3>
@@ -869,7 +902,7 @@ C c;
         point comparison is performed.
     </p>
 <div class="blankline"></div>
-    <p>A relational operator can have <span class="d_inlinecode donthyphenate notranslate">NaN</span> operands.
+    <p>A <em>CmpExpression</em> can have <span class="d_inlinecode donthyphenate notranslate">NaN</span> operands.
         If either or both operands is <span class="d_inlinecode donthyphenate notranslate">NaN</span>, the floating point
         comparison operation returns as follows:</p>
 <div class="blankline"></div>
@@ -882,11 +915,16 @@ C c;
         <tr><td><span class="d_inlinecode donthyphenate notranslate">!=</span></td><td>unordered, less, or greater</td><td><span class="d_inlinecode donthyphenate notranslate">true</span></td></tr>
         </table></center>
 <div class="blankline"></div>
-<h3><span id="class_comparisons"><a class="anchor" title="Permalink to this section" id="class-comparisons" href="#class-comparisons">クラスの比較</a></span></h3>
+    <div class="spec-boxes best-practice"><b>Best Practices:</b> Although <em>IdentityExpression</em> can be used to check for <span class="d_inlinecode donthyphenate notranslate">T.nan</span>,
+    there are other floating-point values for NaN produced at runtime.
+    Use <a href="../phobos/std_math_traits.html#.isNaN"><span class="d_inlinecode donthyphenate notranslate">std.math.traits.isNaN</span></a> to handle all of them.</div>
+
+
 <div class="blankline"></div>
-    <p>For class objects, the relational
-        operators compare the
-        contents of the objects. Therefore, comparing against
+<h3><span id="class_comparisons"><a class="anchor" title="Permalink to this section" id="class-comparisons" href="#class-comparisons">Class Comparisons</a></span></h3>
+<div class="blankline"></div>
+    <p>For class objects, <em>EqualExpression</em> and <em>RelExpression</em> compare the
+        <em>contents</em> of the objects. Therefore, comparing against
         a <span class="d_inlinecode donthyphenate notranslate">null</span> class reference is invalid, as <span class="d_inlinecode donthyphenate notranslate">null</span> has no contents.</p>
 <div class="blankline"></div>
         <div class="runnable-examples">
@@ -900,11 +938,12 @@ C c;
 </div>
 <div class="blankline"></div>
     <p>For class objects, the result of <span class="d_inlinecode donthyphenate notranslate">Object.opCmp()</span> forms the left
-        operand, and <span class="d_inlinecode donthyphenate notranslate">0</span> forms the right operand. The result of the
-        relational expression <span class="d_inlinecode donthyphenate notranslate">(o1 op o2)</span> is:</p>
+        operand, and <span class="d_inlinecode donthyphenate notranslate">0</span> forms the right operand. The result of an
+        <em>EqualExpression</em> or <em>RelExpression</em> <span class="d_inlinecode donthyphenate notranslate">(o1 op o2)</span> is:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate">(o1.opCmp(o2) op 0)
 </pre>
+<div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="in_expressions" href="#in_expressions">In 式</a></h2>
 <div class="blankline"></div>
@@ -1031,13 +1070,16 @@ C c;
 </div>
 <div class="blankline"></div>
     <p><a href="#IndexExpression"><i>IndexExpression</i></a> can also be used with a pointer and has
-    the same behaviour as adding an integer.</p>
+    the same behaviour as adding an integer, then dereferencing the result.</p>
 <div class="blankline"></div>
     <p>If the second operand is a pointer, and the first is an integral type,
         and the operator is <span class="d_inlinecode donthyphenate notranslate">+</span>,
         the operands are reversed and the pointer arithmetic just described
         is applied.
     </p>
+<div class="blankline"></div>
+    <p>Producing a pointer through pointer arithmetic is not allowed in
+        <a href="../spec/memory-safe-d.html"><span class="d_inlinecode donthyphenate notranslate">@safe</span></a> code.</p>
 <div class="blankline"></div>
     <p>If both operands are pointers, and the operator is <span class="d_inlinecode donthyphenate notranslate">+</span>,
         then it is illegal.
@@ -1058,6 +1100,7 @@ ptrdiff_t d = &amp;a[2] - a.ptr;
 </pre>
 
 </div>
+<div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="cat_expressions" href="#cat_expressions">Cat 式</a></h2>
 <div class="blankline"></div>
@@ -1143,7 +1186,7 @@ ptrdiff_t d = &amp;a[2] - a.ptr;
 </pre>
 <div class="blankline"></div>
 <table>    <tr><th class="donthyphenate"><b>Operator</b></th><th class="donthyphenate"><b>Description</b></th></tr>
-    <tr><td><span class="d_inlinecode donthyphenate notranslate">&amp;</span></td><td>Take memory address of an <a href="#.define-lvalue">lvalue</a> - see <a href="../spec/arrays.html#pointers">pointers</a></td></tr>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">&amp;</span></td><td>Take memory address of an <a href="#.define-lvalue">lvalue</a> - see <a href="../spec/type.html#pointers">pointers</a></td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">++</span></td><td>Increment before use - see <a href="#order-of-evaluation">order of evaluation</a></td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">--</span></td><td>Decrement before use</td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">*</span></td><td>Dereference/indirection - typically for pointers</td></tr>
@@ -1151,6 +1194,9 @@ ptrdiff_t d = &amp;a[2] - a.ptr;
     <tr><td><span class="d_inlinecode donthyphenate notranslate">+</span></td><td>Positive</td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">!</span></td><td>Logical NOT</td></tr>
 </table>
+<div class="blankline"></div>
+    <p>The usual <a href="../spec/type.html#integer-promotions">Integer Promotions</a> are performed prior to unary
+    <span class="d_inlinecode donthyphenate notranslate">-</span> and <span class="d_inlinecode donthyphenate notranslate">+</span> operations.</p>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="complement_expressions" href="#complement_expressions">補数式</a></h3>
 <div class="blankline"></div>
@@ -1160,71 +1206,11 @@ ptrdiff_t d = &amp;a[2] - a.ptr;
 <div class="blankline"></div>
     <p><i>ComplementExpression</i>s work on integral types (except <span class="d_inlinecode donthyphenate notranslate">bool</span>).
         All the bits in the value are complemented.
-    </p>
-<div class="blankline"></div>
-    <p><b>Note:</b> the usual <a href="../spec/type.html#integer-promotions">Integer Promotions</a> are not performed
+        The usual <a href="../spec/type.html#integer-promotions">Integer Promotions</a> are performed
         prior to the complement operation.
     </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="new_expressions" href="#new_expressions">New 式</a></h3>
-<div class="blankline"></div>
-<pre class="bnf notranslate"><a id="NewExpression"><span class="gname">NewExpression</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="../spec/type.html#Type"><i>Type</i></a>
-    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
-    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span>
-    <a href="../spec/class.html#NewAnonClassExpression"><i>NewAnonClassExpression</i></a>
-<div class="blankline"></div>
-<a id="ArgumentList"><span class="gname">ArgumentList</span></a>:
-    <a href="#AssignExpression"><i>AssignExpression</i></a>
-    <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span>
-    <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span> <i>ArgumentList</i>
-</pre>
-<div class="blankline"></div>
-    <p><i>NewExpression</i>s are used to allocate memory on the garbage
-        collected heap.
-    </p>
-<div class="blankline"></div>
-    <p>If a <i>NewExpression</i> is used as an initializer for
-        a function local variable with <span class="d_inlinecode donthyphenate notranslate">scope</span> storage class,
-        then the instance is allocated on the stack.
-    </p>
-<div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="new_multidimensional" href="#new_multidimensional">多次元配列</a></h3>
-<div class="blankline"></div>
-    <p>To allocate multidimensional arrays, the declaration reads
-        in the same order as the prefix array declaration order.</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">char</span>[][] foo;   <span class="d_comment">// dynamic array of strings
-</span>...
-foo = <span class="d_keyword">new</span> <span class="d_keyword">char</span>[][30]; <span class="d_comment">// allocate array of 30 strings
-</span></pre>
-<div class="blankline"></div>
-    <p>The above allocation can also be written as:</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate">foo = <span class="d_keyword">new</span> <span class="d_keyword">char</span>[][](30); <span class="d_comment">// allocate array of 30 strings
-</span></pre>
-<div class="blankline"></div>
-    <p>To allocate the nested arrays, multiple arguments can be used:</p>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">int</span>[][][] bar;
-...
-bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][](5, 20, 30);
-</pre>
-<div class="blankline"></div>
-    The code above is equivalent to:
-<div class="blankline"></div>
-<pre class="d_code notranslate">bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][5];
-<span class="d_keyword">foreach</span> (<span class="d_keyword">ref</span> a; bar)
-{
-    a = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][20];
-    <span class="d_keyword">foreach</span> (<span class="d_keyword">ref</span> b; a)
-    {
-        b = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[30];
-    }
-}
-</pre>
-<div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="delete_expressions" href="#delete_expressions">Delete 式</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="delete_expressions" href="#delete_expressions">Delete Expressions</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="DeleteExpression"><span class="gname">DeleteExpression</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">delete</span> <a href="#UnaryExpression"><i>UnaryExpression</i></a>
@@ -1375,7 +1361,44 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
         
 </div>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="cast_floating" href="#cast_floating">Floating Point</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="cast_integers" href="#cast_integers">整数</a></h4>
+<div class="blankline"></div>
+    <p>Casting an integer to a smaller integral will truncate the
+        value towards the least significant bits.
+        If the target type is signed and the most significant bit is set
+        after truncation, that bit will be lost from the value and
+        the sign bit will be set.</p>
+<div class="blankline"></div>
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">uint</span> a = 260;
+<span class="d_keyword">auto</span> b = <span class="d_keyword">cast</span>(<span class="d_keyword">ubyte</span>) a;
+<span class="d_keyword">assert</span>(b == 4); <span class="d_comment">// truncated like 260 &amp; 0xff
+</span>
+<span class="d_keyword">int</span> c = 128;
+<span class="d_keyword">assert</span>(<span class="d_keyword">cast</span>(<span class="d_keyword">byte</span>)c == -128); <span class="d_comment">// reinterpreted
+</span></pre>
+        
+</div>
+<div class="blankline"></div>
+    <p>Converting between signed and unsigned types will reinterpret the
+        value if the destination type cannot represent the source
+        value.</p>
+<div class="blankline"></div>
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">short</span> c = -1;
+<span class="d_keyword">ushort</span> d = c;
+<span class="d_keyword">assert</span>(d == <span class="d_keyword">ushort</span>.max);
+<span class="d_keyword">assert</span>(<span class="d_keyword">uint</span>(c) == <span class="d_keyword">uint</span>.max);
+
+<span class="d_keyword">ubyte</span> e = 255;
+<span class="d_keyword">byte</span> f = e;
+<span class="d_keyword">assert</span>(f == -1); <span class="d_comment">// reinterpreted
+</span><span class="d_keyword">assert</span>(<span class="d_keyword">short</span>(e) == 255); <span class="d_comment">// no change
+</span></pre>
+        
+</div>
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="cast_floating" href="#cast_floating">浮動小数点</a></h4>
 <div class="blankline"></div>
     <p>Casting a floating point literal from one type to another
         changes its type, but internally it is retained at full
@@ -1425,7 +1448,7 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
 }
 </pre>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="cast_struct" href="#cast_struct">Structs</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="cast_struct" href="#cast_struct">構造体</a></h4>
 <div class="blankline"></div>
     <p>Casting a value <i>v</i> to a struct <i>S</i>, when value is not a struct
         of the same type, is equivalent to:</p>
@@ -1433,7 +1456,7 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
 <pre class="d_code notranslate">S(v)
 </pre>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="cast_qualifier" href="#cast_qualifier">Qualifier Cast</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="cast_qualifier" href="#cast_qualifier">修飾子のキャスト</a></h4>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="CastQual"><span class="gname">CastQual</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">cast (</span> <a href="../spec/type.html#TypeCtors"><i>TypeCtors</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span> <a href="#UnaryExpression"><i>UnaryExpression</i></a>
@@ -1461,7 +1484,7 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
         
 </div>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="cast_void" href="#cast_void">Casting to <span class="d_inlinecode donthyphenate notranslate">void</span></a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="cast_void" href="#cast_void">Casting <span class="d_inlinecode donthyphenate notranslate">void</span> へのキャスト</a></h4>
 <div class="blankline"></div>
     <p>Casting an expression to <span class="d_inlinecode donthyphenate notranslate">void</span> type is allowed to mark that
         the result is unused. On <a href="../spec/statement.html#ExpressionStatement"><i>ExpressionStatement</i></a>,
@@ -1537,8 +1560,17 @@ and abort the program.
 </pre>
 <div class="blankline"></div>
 <table>    <tr><th class="donthyphenate"><b>Operator</b></th><th class="donthyphenate"><b>Description</b></th></tr>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">.</span></td><td>        Either:
+<ul><li>Access a <a href="../spec/property.html">property</a> of a type or expression.</li>
+<li>Access a member of a module, package, aggregate type or instance, enum
+          or template instance.</li>
+<li>Call a free function using <a href="../spec/function.html#pseudo-member">UFCS</a>.</li>
+</ul>
+    </td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">++</span></td><td>Increment after use - see <a href="#order-of-evaluation">order of evaluation</a></td></tr>
     <tr><td><span class="d_inlinecode donthyphenate notranslate">--</span></td><td>Decrement after use</td></tr>
+    <tr><td><em>IndexExpression</em></td><td>Select a single element</td></tr>
+    <tr><td><em>SliceExpression</em></td><td>Select a series of elements</td></tr>
 </table>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="index_expressions" href="#index_expressions">Index 式</a></h2>
@@ -1570,6 +1602,10 @@ and abort the program.
         A new declaration scope is created for the evaluation of the
         <i>ArgumentList</i> and <span class="d_inlinecode donthyphenate notranslate">$</span> appears in that scope only.
     </p>
+<div class="blankline"></div>
+    <p>The index operator can be <a href="../spec/operatoroverloading.html#array">overloaded</a>.
+        Using multiple indices in <em>ArgumentList</em> is only supported for operator
+        overloading.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="slice_expressions" href="#slice_expressions">Slice 式</a></h2>
 <div class="blankline"></div>
@@ -1619,29 +1655,39 @@ and abort the program.
     </p>
 <div class="blankline"></div>
     <p>If the <span class="d_inlinecode donthyphenate notranslate">[ ]</span> form is used, the slice is of all the elements in <i>PostfixExpression</i>.
+        The expression cannot be a pointer.
     </p>
+<div class="blankline"></div>
+    <p>The slice operator can be <a href="../spec/operatoroverloading.html#slice">overloaded</a>.
+        Using more than one <em>Slice</em> is only supported for operator
+        overloading.</p>
 <div class="blankline"></div>
     <p>A <i>SliceExpression</i> is not a modifiable lvalue.</p>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="slice_to_static_array" href="#slice_to_static_array">静的配列へのスライス変換</a></h3>
 <div class="blankline"></div>
     <p>If the slice bounds can be known at compile time, the slice expression
-    may be implicitly convertible to an lvalue of static array. For example:</p>
+    may be implicitly convertible to a static array lvalue. For example:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate">arr[a .. b]     <span class="d_comment">// typed T[]
 </span></pre>
 <div class="blankline"></div>
-        If both <span class="d_inlinecode donthyphenate notranslate">a</span> and <span class="d_inlinecode donthyphenate notranslate">b</span> are integers (which may be constant-folded),
+        <p>        If both <span class="d_inlinecode donthyphenate notranslate">a</span> and <span class="d_inlinecode donthyphenate notranslate">b</span> are integers (which may be constant-folded),
         the slice expression can be converted to a static array of type
         <span class="d_inlinecode donthyphenate notranslate">T[b - a]</span>.
+        </p>
+        <div class="spec-boxes note"><b>Note:</b> a static array can also be <a href="../spec/arrays.html#assignment">        assigned from a slice</a>, performing a runtime check that the lengths match.</div>
 <div class="blankline"></div>
         <div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">int</span>[] arr = [1, 2, 3];
-<span class="d_keyword">int</span>[2] sa = arr[1 .. 3];
+<pre class="d_code notranslate"><span class="d_keyword">void</span> f(<span class="d_keyword">int</span>[2] sa);
 
-<span class="d_keyword">assert</span>(sa == [2, 3]);
-<span class="d_comment">//sa = arr[0 .. 3]; // error, cannot match length
-</span></pre>
+<span class="d_keyword">int</span>[] arr = [1, 2, 3];
+<span class="d_comment">//f(arr); // error, can't convert
+</span>f(arr[1 .. 3]); <span class="d_comment">// OK
+</span><span class="d_comment">//f(arr[0 .. 3]); // error
+</span>
+<span class="d_keyword">int</span>[2] g() { <span class="d_keyword">return</span> arr[0 .. 2]; }
+</pre>
         
 </div>
 <div class="blankline"></div>
@@ -1664,34 +1710,7 @@ and abort the program.
         
 </div>
 <div class="blankline"></div>
-    <p>Certain other forms of slice expression can be implicitly converted to a static array
-        when the slice length can be known at compile-time.
-<div class="blankline"></div>
-        <div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">int</span>[] da = [1, 2, 3];
-<span class="d_keyword">int</span> i = da[0]; <span class="d_comment">// runtime variable
-</span>
-<span class="d_keyword">int</span>[2] sa = da[i .. i + 2];
-<span class="d_keyword">assert</span>(sa == [2, 3]);
-</pre>
-        
-</div>
-<div class="blankline"></div>
-    <p>The table below shows all the forms recognized:</p>
-<div class="blankline"></div>
-        <dl>        <dt><span class="d_inlinecode donthyphenate notranslate">e</span></dt> <dd>An expression that contains no side effects.</dd>
-        <dt><span class="d_inlinecode donthyphenate notranslate">a</span>, <span class="d_inlinecode donthyphenate notranslate">b</span></dt> <dd>Integers (that may be constant-folded).</dd>
-        </dl>
-<div class="blankline"></div>
-        <center><table><caption></caption>        <tr><th class="donthyphenate"><b>Form</b></th><th class="donthyphenate"><b>The length calculated at compile time</b></th></tr>
-        <tr><td><span class="d_inlinecode donthyphenate notranslate">arr[]</span></td><td>The compile time length of <span class="d_inlinecode donthyphenate notranslate">arr</span> if it's known.</td></tr>
-        <tr><td><span class="d_inlinecode donthyphenate notranslate">arr[a .. b]</span></td><td>              <span class="d_inlinecode donthyphenate notranslate">b - a</span></td></tr>
-        <tr><td><span class="d_inlinecode donthyphenate notranslate">arr[e-a .. e]</span></td><td>  <span class="d_inlinecode donthyphenate notranslate">a</span></td></tr>
-        <tr><td><span class="d_inlinecode donthyphenate notranslate">arr[e .. e+b]</span></td><td>  <span class="d_inlinecode donthyphenate notranslate">b</span></td></tr>
-        <tr><td><span class="d_inlinecode donthyphenate notranslate">arr[e-a .. e+b]</span></td><td><span class="d_inlinecode donthyphenate notranslate">a + b</span></td></tr>
-        <tr><td><span class="d_inlinecode donthyphenate notranslate">arr[e+a .. e+b]</span></td><td><span class="d_inlinecode donthyphenate notranslate">b - a</span> <i>if</i> <span class="d_inlinecode donthyphenate notranslate">a &lt;= b</span></td></tr>
-        <tr><td><span class="d_inlinecode donthyphenate notranslate">arr[e-a .. e-b]</span></td><td><span class="d_inlinecode donthyphenate notranslate">a - b</span> <i>if</i> <span class="d_inlinecode donthyphenate notranslate">a &gt;= b</span></td></tr>
-        </table></center>
+    
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="primary_expressions" href="#primary_expressions">一次式</a></h2>
 <div class="blankline"></div>
@@ -1709,7 +1728,7 @@ and abort the program.
     <a href="../spec/lex.html#IntegerLiteral"><i>IntegerLiteral</i></a>
     <a href="../spec/lex.html#FloatLiteral"><i>FloatLiteral</i></a>
     <span id="CharacterLiteral"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span><span id="character-literal"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span><a href="../spec/lex.html#CharacterLiteral"><i>CharacterLiteral</i></a>
-    <a href="#StringLiterals"><i>StringLiterals</i></a>
+    <a href="../spec/lex.html#StringLiteral"><i>StringLiteral</i></a>
     <a href="#ArrayLiteral"><i>ArrayLiteral</i></a>
     <a href="#AssocArrayLiteral"><i>AssocArrayLiteral</i></a>
     <a href="#FunctionLiteral"><i>FunctionLiteral</i></a>
@@ -1740,9 +1759,10 @@ and abort the program.
 <div class="blankline"></div>
     <p>Within a non-static member function, <span class="d_inlinecode donthyphenate notranslate">this</span> resolves to
         a reference to the object for which the function was called.
-        If the object is an instance of a struct, <span class="d_inlinecode donthyphenate notranslate">this</span> will
-        be a pointer to that instance.
-        If a member function is called with an explicit reference
+    </p>
+    <p><span class="d_inlinecode donthyphenate notranslate">typeof(this)</span> is valid anywhere inside an aggregate type
+        definition.
+        If a class member function is called with an explicit reference
         to <span class="d_inlinecode donthyphenate notranslate">typeof(this)</span>, a non-virtual call is made:</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">class</span> A
@@ -1767,14 +1787,14 @@ and abort the program.
 }
 </pre>
 <div class="blankline"></div>
-    <p>Assignment to <span class="d_inlinecode donthyphenate notranslate">this</span> is not allowed.</p>
+    <p>Assignment to <span class="d_inlinecode donthyphenate notranslate">this</span> is not allowed for classes.</p>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="super" href="#super">super</a></h3>
 <div class="blankline"></div>
     <p><span class="d_inlinecode donthyphenate notranslate">super</span> is identical to <span class="d_inlinecode donthyphenate notranslate">this</span>, except that it is
         cast to <span class="d_inlinecode donthyphenate notranslate">this</span>'s base class.
         It is an error if there is no base class.
-        It is an error to use <span class="d_inlinecode donthyphenate notranslate">super</span> within a struct member function.
+        It is an error to use the <span class="d_inlinecode donthyphenate notranslate">super</span> reference outside a non-static class member function.
         (Only class <span class="d_inlinecode donthyphenate notranslate">Object</span> has no base class.)
         If a member function is called with an explicit reference
         to <span class="d_inlinecode donthyphenate notranslate">super</span>, a non-virtual call is made.
@@ -1798,9 +1818,12 @@ and abort the program.
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="string_literals" href="#string_literals">文字列リテラル</a></h3>
 <div class="blankline"></div>
-<pre class="bnf notranslate"><a id="StringLiterals"><span class="gname">StringLiterals</span></a>:
-    <a href="../spec/lex.html#StringLiteral"><i>StringLiteral</i></a>
-    <i>StringLiterals</i> <a href="../spec/lex.html#StringLiteral"><i>StringLiteral</i></a>
+<pre class="bnf notranslate"><a id="StringLiteral"><span class="gname">StringLiteral</span></a>:
+    <a href="../spec/lex.html#WysiwygString"><i>WysiwygString</i></a>
+    <a href="../spec/lex.html#AlternateWysiwygString"><i>AlternateWysiwygString</i></a>
+    <a href="../spec/lex.html#DoubleQuotedString"><i>DoubleQuotedString</i></a>
+    <a href="../spec/lex.html#DelimitedString"><i>DelimitedString</i></a>
+    <a href="../spec/lex.html#TokenString"><i>TokenString</i></a>
 </pre>
 <div class="blankline"></div>
     <p>String literals can implicitly convert to any
@@ -1844,6 +1867,11 @@ and abort the program.
         The 0 is not included in the <span class="d_inlinecode donthyphenate notranslate">.length</span> property of the
         string literal.
     </p>
+<div class="blankline"></div>
+    <p>Concatenation of string literals requires the use of the
+        <span class="d_inlinecode donthyphenate notranslate">~</span> operator, and is resolved at compile time.
+        C style implicit concatenation without an intervening operator is
+        error prone and not supported in D.</p>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="array_literals" href="#array_literals">配列リテラル</a></h3>
 <div class="blankline"></div>
@@ -1918,7 +1946,7 @@ and abort the program.
         
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="cast_array_literal" href="#cast_array_literal">キャスト</a></h3>
+<h4><a class="anchor" title="Permalink to this section" id="cast_array_literal" href="#cast_array_literal">キャスト</a></h4>
 <div class="blankline"></div>
     <p>When array literals are cast to another array type, each
         element of the array is cast to the new element type.
@@ -1993,9 +2021,9 @@ and abort the program.
 <h3><a class="anchor" title="Permalink to this section" id="function_literals" href="#function_literals">関数リテラル</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="FunctionLiteral"><span class="gname">FunctionLiteral</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">function</span> <span class="d_inlinecode donthyphenate notranslate">ref</span><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a><sub>opt</sub> <a href="#ParameterWithAttributes"><i>ParameterWithAttributes</i></a><sub>opt</sub> <a href="#FunctionLiteralBody2"><i>FunctionLiteralBody2</i></a>
-    <span class="d_inlinecode donthyphenate notranslate">delegate</span> <span class="d_inlinecode donthyphenate notranslate">ref</span><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a><sub>opt</sub> <a href="#ParameterWithMemberAttributes"><i>ParameterWithMemberAttributes</i></a><sub>opt</sub> <a href="#FunctionLiteralBody2"><i>FunctionLiteralBody2</i></a>
-    <span class="d_inlinecode donthyphenate notranslate">ref</span><sub>opt</sub> <a href="#ParameterWithMemberAttributes"><i>ParameterWithMemberAttributes</i></a> <a href="#FunctionLiteralBody2"><i>FunctionLiteralBody2</i></a>
+    <span class="d_inlinecode donthyphenate notranslate">function</span> <a href="#RefOrAutoRef"><i>RefOrAutoRef</i></a><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a><sub>opt</sub> <a href="#ParameterWithAttributes"><i>ParameterWithAttributes</i></a><sub>opt</sub> <a href="#FunctionLiteralBody2"><i>FunctionLiteralBody2</i></a>
+    <span class="d_inlinecode donthyphenate notranslate">delegate</span> <a href="#RefOrAutoRef"><i>RefOrAutoRef</i></a><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a><sub>opt</sub> <a href="#ParameterWithMemberAttributes"><i>ParameterWithMemberAttributes</i></a><sub>opt</sub> <a href="#FunctionLiteralBody2"><i>FunctionLiteralBody2</i></a>
+    <a href="#RefOrAutoRef"><i>RefOrAutoRef</i></a><sub>opt</sub> <a href="#ParameterWithMemberAttributes"><i>ParameterWithMemberAttributes</i></a> <a href="#FunctionLiteralBody2"><i>FunctionLiteralBody2</i></a>
     <a href="../spec/statement.html#BlockStatement"><i>BlockStatement</i></a>
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">=&gt;</span> <a href="#AssignExpression"><i>AssignExpression</i></a>
 <div class="blankline"></div>
@@ -2008,13 +2036,16 @@ and abort the program.
 <a id="FunctionLiteralBody2"><span class="gname">FunctionLiteralBody2</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">=&gt;</span> <a href="#AssignExpression"><i>AssignExpression</i></a>
     <a href="../spec/function.html#SpecifiedFunctionBody"><i>SpecifiedFunctionBody</i></a>
+<div class="blankline"></div>
+<a id="RefOrAutoRef"><span class="gname">RefOrAutoRef</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">ref</span>
+    <span class="d_inlinecode donthyphenate notranslate">auto ref</span>
 </pre>
 <div class="blankline"></div>
     <p><i>FunctionLiteral</i>s (also known as <a class="anchor" title="Permalink to this section" id="lambdas" href="#lambdas"><i>Lambdas</i></a>) enable embedding anonymous functions
         and anonymous delegates directly into expressions.
         <i>Type</i> is the return type of the function or delegate -
-        if omitted it is inferred from either the <em>AssignExpression</em>, or
-        any <a href="../spec/statement.html#ReturnStatement"><i>ReturnStatement</i></a>s in the <i>BlockStatement</i>.
+        if omitted it is <a href="#lambda-return-type">inferred</a>.
         <i>ParameterWithAttributes</i> or <i>ParameterWithMemberAttributes</i>
         can be used to specify the parameters for the function. If these are
         omitted, the function defaults to the empty parameter list <span class="d_inlinecode donthyphenate notranslate">( )</span>.
@@ -2092,7 +2123,7 @@ and abort the program.
         function, a function literal cannot.
     </div>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="lambda-type-inference" href="#lambda-type-inference">Type Inference</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="lambda-type-inference" href="#lambda-type-inference">Delegate Inference</a></h4>
 <div class="blankline"></div>
     <p>If a literal omits <span class="d_inlinecode donthyphenate notranslate">function</span> or <span class="d_inlinecode donthyphenate notranslate">delegate</span> and there's no
         expected type from the context, then
@@ -2137,9 +2168,12 @@ and abort the program.
         
 </div>
 <div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="lambda-parameter-inference" href="#lambda-parameter-inference">Parameter Type Inference</a></h4>
+<div class="blankline"></div>
     <p>If the type of a function literal can be uniquely determined from its context,
         parameter type inference is possible.</p>
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">void</span> foo(<span class="d_keyword">int</span> <span class="d_keyword">function</span>(<span class="d_keyword">int</span>) fp);
 
 <span class="d_keyword">void</span> test()
@@ -2151,7 +2185,8 @@ and abort the program.
     <span class="d_comment">// The type of parameter n is inferred as int.
 </span>}
 </pre>
-<div class="blankline"></div>
+        
+</div>
 <pre class="d_code notranslate"><span class="d_keyword">auto</span> fp = (i) { <span class="d_keyword">return</span> 1; }; <span class="d_comment">// error, cannot infer type of `i`
 </span></pre>
 <div class="blankline"></div>
@@ -2174,7 +2209,26 @@ and abort the program.
         
 </div>
 <div class="blankline"></div>
-<h4><a class="anchor" title="Permalink to this section" id="lambda-short-syntax" href="#lambda-short-syntax">短い構文</a></h4>
+<h4><a class="anchor" title="Permalink to this section" id="lambda-return-type" href="#lambda-return-type">リターンの型推論</a></h4>
+<div class="blankline"></div>
+    <p>The return type of the <a href="#FunctionLiteral"><i>FunctionLiteral</i></a> can be
+        inferred from either the <em>AssignExpression</em>, or
+        any <a href="../spec/statement.html#ReturnStatement"><i>ReturnStatement</i></a>s in the <i>BlockStatement</i>.
+        If there is a different expected type from the context, and the
+        initial inferred return type implicitly converts to the expected type,
+        then the return type is inferred as the expected type.</p>
+<div class="blankline"></div>
+    <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">auto</span> fi = (<span class="d_keyword">int</span> i) { <span class="d_keyword">return</span> i; };
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(fi(5)) == <span class="d_keyword">int</span>));
+
+<span class="d_keyword">long</span> <span class="d_keyword">function</span>(<span class="d_keyword">int</span>) fl = (<span class="d_keyword">int</span> i) { <span class="d_keyword">return</span> i; };
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(fl(5)) == <span class="d_keyword">long</span>));
+</pre>
+    
+</div>
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="lambda-short-syntax" href="#lambda-short-syntax">短い構文x</a></h4>
 <div class="blankline"></div>
     <p>Anonymous delegates can behave like arbitrary statement literals.
         For example, here an arbitrary statement is executed by a loop:</p>
@@ -2264,6 +2318,8 @@ and abort the program.
 <pre class="d_code notranslate"><span class="d_keyword">auto</span> a = <span class="d_keyword">ushort</span>();  <span class="d_comment">// same as: ushort.init
 </span><span class="d_keyword">auto</span> b = <span class="d_keyword">wchar</span>();   <span class="d_comment">// same as: wchar.init
 </span></pre>
+<div class="blankline"></div>
+    <p>See also: <a href="../spec/type.html#usual-arithmetic-conversions">Usual Arithmetic Conversions</a>.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="assert_expressions" href="#assert_expressions">Assert 式</a></h3>
@@ -2403,6 +2459,103 @@ and abort the program.
 }
 </pre>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="new_expressions" href="#new_expressions">New 式s</a></h3>
+<div class="blankline"></div>
+<pre class="bnf notranslate"><a id="NewExpression"><span class="gname">NewExpression</span></a>:
+    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="../spec/type.html#Type"><i>Type</i></a>
+    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
+    <span class="d_inlinecode donthyphenate notranslate">new</span> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">(</span> <a href="#ArgumentList"><i>ArgumentList</i></a><sub>opt</sub> <span class="d_inlinecode donthyphenate notranslate">)</span>
+    <a href="../spec/class.html#NewAnonClassExpression"><i>NewAnonClassExpression</i></a>
+<div class="blankline"></div>
+<a id="ArgumentList"><span class="gname">ArgumentList</span></a>:
+    <a href="#AssignExpression"><i>AssignExpression</i></a>
+    <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span>
+    <a href="#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">,</span> <i>ArgumentList</i>
+</pre>
+<div class="blankline"></div>
+    <p><i>NewExpression</i>s are used to allocate memory on the
+        <a href="../spec/garbage.html">garbage
+        collected</a> heap.
+    </p>
+<div class="blankline"></div>
+    <p>The <em>Type</em> form constructs an instance of a type and default-initializes it.</p>
+    <p>The <em>Type(ArgumentList)</em> form allows passing either a single initializer
+        of the same type, or multiple arguments for more complex types.
+        For class types, <em>ArgumentList</em> is passed to the class constructor.
+        For a dynamic array, the argument sets the initial array length.
+        For multidimensional dynamic arrays, each argument corresponds to
+        an initial length.</p>
+<div class="blankline"></div>
+    <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span>* i = <span class="d_keyword">new</span> <span class="d_keyword">int</span>;
+<span class="d_keyword">assert</span>(*i == 0);
+i = <span class="d_keyword">new</span> <span class="d_keyword">int</span>(5);
+<span class="d_keyword">assert</span>(*i == 5);
+
+Object o = <span class="d_keyword">new</span> Object;
+Exception e = <span class="d_keyword">new</span> Exception(<span class="d_string">"info"</span>);
+
+<span class="d_keyword">auto</span> a = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[](2);
+<span class="d_keyword">assert</span>(a.length == 2);
+
+<span class="d_keyword">int</span>[][] m = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][](10, 5);
+<span class="d_keyword">assert</span>(m.length == 10);
+<span class="d_keyword">assert</span>(m[0].length == 5);
+</pre>
+    
+</div>
+<div class="blankline"></div>
+    <p>The <em>Type[AssignExpression]</em> form allocates a dynamic array with
+        length equal to <em>AssignExpression</em>.
+        It is preferred to use the <em>Type(ArgumentList)</em> form when allocating
+        dynamic arrays instead, as it is more general.</p>
+<div class="blankline"></div>
+    <div class="spec-boxes note"><b>Note:</b> It is not possible to allocate a static array directly with
+        <span class="d_inlinecode donthyphenate notranslate">new</span> (only by using a type alias).</div>
+<div class="blankline"></div>
+    <p>If a <i>NewExpression</i> is used with a class type as an initializer for
+        a function local variable with <a href="../spec/attribute.html#scope"><span class="d_inlinecode donthyphenate notranslate">scope</span></a> storage class,
+        then the instance is <a href="../spec/attribute.html#scope-class-var">allocated on the stack</a>.
+    </p>
+<div class="blankline"></div>
+    <p><span class="d_inlinecode donthyphenate notranslate">new</span> can also be used to allocate a
+        <a href="../spec/class.html#nested-explicit">nested class</a>.</p>
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="new_multidimensional" href="#new_multidimensional">多次元配列</a></h4>
+<div class="blankline"></div>
+    <p>To allocate multidimensional arrays, the declaration reads
+        in the same order as the prefix array declaration order.</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">char</span>[][] foo;   <span class="d_comment">// dynamic array of strings
+</span>...
+foo = <span class="d_keyword">new</span> <span class="d_keyword">char</span>[][30]; <span class="d_comment">// allocate array of 30 strings
+</span></pre>
+<div class="blankline"></div>
+    <p>The above allocation can also be written as:</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate">foo = <span class="d_keyword">new</span> <span class="d_keyword">char</span>[][](30); <span class="d_comment">// allocate array of 30 strings
+</span></pre>
+<div class="blankline"></div>
+    <p>To allocate the nested arrays, multiple arguments can be used:</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[][][] bar;
+...
+bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][](5, 20, 30);
+</pre>
+<div class="blankline"></div>
+    The code above is equivalent to:
+<div class="blankline"></div>
+<pre class="d_code notranslate">bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][5];
+<span class="d_keyword">foreach</span> (<span class="d_keyword">ref</span> a; bar)
+{
+    a = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][20];
+    <span class="d_keyword">foreach</span> (<span class="d_keyword">ref</span> b; a)
+    {
+        b = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[30];
+    }
+}
+</pre>
+<div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="typeid_expressions" href="#typeid_expressions">Typeid 式</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="TypeidExpression"><span class="gname">TypeidExpression</span></a>:
@@ -2424,11 +2577,14 @@ and abort the program.
         of the dynamic type (i.e. the most derived type).
         The <i>Expression</i> is always executed.</p>
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">class</span> A { }
 <span class="d_keyword">class</span> B : A { }
 
 <span class="d_keyword">void</span> main()
 {
+    <span class="d_keyword">import</span> std.stdio;
+
     writeln(<span class="d_keyword">typeid</span>(<span class="d_keyword">int</span>));        <span class="d_comment">// int
 </span>    <span class="d_keyword">uint</span> i;
     writeln(<span class="d_keyword">typeid</span>(i++));        <span class="d_comment">// uint
@@ -2438,6 +2594,8 @@ and abort the program.
 </span>    writeln(<span class="d_keyword">typeid</span>(<span class="d_keyword">typeof</span>(a)));  <span class="d_comment">// A
 </span>}
 </pre>
+        
+</div>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="is_expression" href="#is_expression">Is 式</a></h3>
 <div class="blankline"></div>
@@ -2480,7 +2638,7 @@ and abort the program.
     <ul>    <li>checking for valid types</li>
     <li>comparing types for equivalence</li>
     <li>determining if one type can be implicitly converted to another</li>
-    <li>deducing the subtypes of a type</li>
+    <li>deducing the subtypes of a type using pattern matching</li>
     </ul>
     <p>        The result of an <i>IsExpression</i> is a boolean of value <span class="d_inlinecode donthyphenate notranslate">true</span>
         if the condition is satisfied. If the condition is not satisfied,
@@ -2493,13 +2651,12 @@ and abort the program.
     </p>
 <div class="blankline"></div>
     <p><i>TypeSpecialization</i> is the type that <i>Type</i> is being
-        compared against.
+        pattern matched against.
     </p>
 <div class="blankline"></div>
     <p><i>IsExpression</i>s may be used in conjunction with <span class="d_inlinecode donthyphenate notranslate">typeof</span> to check
-    whether an expression is semantically correct. For example, <span class="d_inlinecode donthyphenate notranslate">is(typeof(foo))</span>
-    will return <span class="d_inlinecode donthyphenate notranslate">true</span> if <span class="d_inlinecode donthyphenate notranslate">foo</span> is a semantically correct expression with a valid
-    type.
+    whether an expression type checks correctly. For example, <span class="d_inlinecode donthyphenate notranslate">is(typeof(foo))</span>
+    will return <span class="d_inlinecode donthyphenate notranslate">true</span> if <span class="d_inlinecode donthyphenate notranslate">foo</span> has a valid type.
     </p>
 <div class="blankline"></div>
 <h4><a class="anchor" title="Permalink to this section" id="basic-forms" href="#basic-forms">Basic Forms</a></h4>
@@ -2630,9 +2787,11 @@ and abort the program.
         <i>TypeSpecialization</i> is only allowed to be a <i>Type</i>.
         The <i>Identifier</i> is declared to be either an alias of the
         <i>TypeSpecialization</i> or, if <i>TypeSpecialization</i> is
-        dependent on <i>Identifier</i>, the deduced type.
+        dependent on <i>Identifier</i>, the <i>TypeSpecialization</i> forms
+        a pattern from which the type of <i>Identifier</i> is deduced.
         </p>
 <div class="blankline"></div>
+    <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">alias</span> Bar = <span class="d_keyword">int</span>;
 
 <span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Bar T : <span class="d_keyword">int</span>))
@@ -2640,16 +2799,21 @@ and abort the program.
 <span class="d_keyword">else</span>
     <span class="d_keyword">alias</span> S = <span class="d_keyword">long</span>;
 
-writeln(<span class="d_keyword">typeid</span>(S));  <span class="d_comment">// prints "int"
-</span></pre>
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(S == <span class="d_keyword">int</span>));
+</pre>
+    
+</div>
+    <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">alias</span> Abc = <span class="d_keyword">long</span>*;
 
-<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Abc U : U*))
-{
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Abc U : U*)) <span class="d_comment">// Abc is matched against the pattern U*
+</span>{
     U u;
-    writeln(<span class="d_keyword">typeid</span>(<span class="d_keyword">typeof</span>(u)));  <span class="d_comment">// prints "long"
-</span>}
+}
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(U == <span class="d_keyword">long</span>));
 </pre>
+    
+</div>
 <div class="blankline"></div>
         <p>        The way the type of <i>Identifier</i> is determined is analogous
         to the way template parameter types are determined by
@@ -2662,16 +2826,20 @@ writeln(<span class="d_keyword">typeid</span>(S));  <span class="d_comment">// p
         correct and is the same as <i>TypeSpecialization</i>.
         The <i>Identifier</i> is declared to be either an alias of the
         <i>TypeSpecialization</i> or, if <i>TypeSpecialization</i> is
-        dependent on <i>Identifier</i>, the deduced type.
+        dependent on <i>Identifier</i>, the <i>TypeSpecialization</i> forms
+        a pattern from which the type of <i>Identifier</i> is deduced.
         </p>
 <div class="blankline"></div>
+    <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">alias</span> Bar = <span class="d_keyword">short</span>;
 
 <span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Bar T == <span class="d_keyword">int</span>))   <span class="d_comment">// not satisfied, short is not int
 </span>    <span class="d_keyword">alias</span> S = T;
 
-<span class="d_keyword">alias</span> U = T;                   <span class="d_comment">// error, T is not defined
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(T)); <span class="d_comment">// T is not defined
 </span></pre>
+    
+</div>
 <div class="blankline"></div>
         <p>        If <i>TypeSpecialization</i> is one of
                 <span class="d_inlinecode donthyphenate notranslate">struct</span>
@@ -2725,13 +2893,16 @@ writeln(<span class="d_keyword">typeid</span>(S));  <span class="d_comment">// p
         <tr><td><span class="d_inlinecode donthyphenate notranslate">package</span></td><td>the package</td></tr>
         </table></center>
 <div class="blankline"></div>
+    <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">enum</span> E : <span class="d_keyword">byte</span> { Emember }
 
 <span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(E V == <span class="d_keyword">enum</span>))    <span class="d_comment">// satisfied, E is an enum
 </span>    V v;                       <span class="d_comment">// v is declared to be a byte
 </span>
-<span class="d_keyword">pragma</span>(msg, V); <span class="d_comment">// byte
-</span></pre>
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(V == <span class="d_keyword">byte</span>));
+</pre>
+    
+</div>
 <div class="blankline"></div>
 <h4><a class="anchor" title="Permalink to this section" id="is-parameter-list" href="#is-parameter-list">Parameter List Forms</a></h4>
 <div class="blankline"></div>
@@ -2754,15 +2925,15 @@ writeln(<span class="d_keyword">typeid</span>(S));  <span class="d_comment">// p
 {
     <span class="d_comment">// ...
 </span>}
-<span class="d_keyword">alias</span> Tup = Tuple!(<span class="d_keyword">int</span>, string);
+<span class="d_keyword">alias</span> Tup2 = Tuple!(<span class="d_keyword">int</span>, string);
 
-<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Tup : Template!Args, <span class="d_keyword">alias</span> Template, Args...))
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(Tup2 : Template!Args, <span class="d_keyword">alias</span> Template, Args...))
 {
-    writeln(<span class="d_keyword">__traits</span>(isSame, Template, Tuple)); <span class="d_comment">// true
-</span>    writeln(<span class="d_keyword">is</span>(Template!(<span class="d_keyword">int</span>, string) == Tup));  <span class="d_comment">// true, same struct
-</span>    writeln(<span class="d_keyword">typeid</span>(Args[0]));  <span class="d_comment">// int
-</span>    writeln(<span class="d_keyword">typeid</span>(Args[1]));  <span class="d_comment">// immutable(char)[]
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">__traits</span>(isSame, Template, Tuple));
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Template!(<span class="d_keyword">int</span>, string) == Tup2)); <span class="d_comment">// same struct
 </span>}
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Args[0] == <span class="d_keyword">int</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(Args[1] == string));
 </pre>
 
 </div>
@@ -2772,8 +2943,8 @@ writeln(<span class="d_keyword">typeid</span>(S));  <span class="d_comment">// p
 <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">alias</span> AA = <span class="d_keyword">long</span>[string];
 
-<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(AA T : T[U], U : string))
-{
+<span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(AA T : T[U], U : string)) <span class="d_comment">// T[U] is the pattern
+</span>{
     <span class="d_keyword">pragma</span>(msg, T);  <span class="d_comment">// long
 </span>    <span class="d_keyword">pragma</span>(msg, U);  <span class="d_comment">// string
 </span>}
@@ -2787,11 +2958,11 @@ writeln(<span class="d_keyword">typeid</span>(S));  <span class="d_comment">// p
 <p><b>Example:</b> Matching a Static Array</p>
 <div class="blankline"></div>
 <div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(<span class="d_keyword">int</span>[10] W : W[len], <span class="d_keyword">int</span> len))
-{
-    writeln(<span class="d_keyword">typeid</span>(W));  <span class="d_comment">// int
-</span>    writeln(len);        <span class="d_comment">// 10
-</span>}
+<pre class="d_code notranslate"><span class="d_keyword">static</span> <span class="d_keyword">if</span> (<span class="d_keyword">is</span>(<span class="d_keyword">int</span>[10] W : W[len], <span class="d_keyword">int</span> len)) <span class="d_comment">// W[len] is the pattern
+</span>{
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(len == 10);
+}
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(W == <span class="d_keyword">int</span>));
 
 <span class="d_comment">// no match, len should be 10
 </span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(<span class="d_keyword">int</span>[10] X : X[len], <span class="d_keyword">int</span> len : 5));
@@ -2800,7 +2971,7 @@ writeln(<span class="d_keyword">typeid</span>(S));  <span class="d_comment">// p
 </div>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="specialkeywords" href="#specialkeywords">特殊なキーワード</a></h2>
+<h3><a class="anchor" title="Permalink to this section" id="specialkeywords" href="#specialkeywords">特殊なキーワード</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="SpecialKeyword"><span class="gname">SpecialKeyword</span></a>:
     <a href="#specialkeywords"><span class="d_inlinecode donthyphenate notranslate">__FILE__</span></a>
@@ -2831,6 +3002,7 @@ writeln(<span class="d_keyword">typeid</span>(S));  <span class="d_comment">// p
 <div class="blankline"></div>
     <p>Example:</p>
 <div class="blankline"></div>
+    <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">module</span> test;
 <span class="d_keyword">import</span> std.stdio;
 
@@ -2850,6 +3022,8 @@ writeln(<span class="d_keyword">typeid</span>(S));  <span class="d_comment">// p
     <span class="d_keyword">return</span> 0;
 }
 </pre>
+    
+</div>
 <div class="blankline"></div>
     <p>Assuming the file was at /example/test.d, this will output:</p>
 <div class="blankline"></div>
@@ -2873,11 +3047,11 @@ file full path: '/example/test.d'
 <div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/pragma.html">プラグマ[Pragmas]</a></div>
 <div style="float: right"><a href="../spec/statement.html">文[Statements]</a> <i class="fa fa-angle-right" aria-hidden="true"></i></div>
 <div style="clear:both"></div>
-</p>
+
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 03:03:56 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 08:30:53 2022
 </div>
     </div>
 </div>

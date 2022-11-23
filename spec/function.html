@@ -40,10 +40,9 @@
 <ul class='expand-content'>    <li><a href='https://dlang.org/blog'>ブログ</a></li>
     <li><a href='../orgs-using-d.html'>利用実績</a></li>
     <li><a href='https://twitter.com/search?q=%23dlang'>Twitter</a></li>
-    <li><a href='../calendar.html'>カレンダー</a></li>
     <li class="menu-divider"><a href='https://forum.dlang.org'>フォーラム</a></li>
     <li><a href='irc://irc.libera.chat/d'>IRC</a></li>
-    <li><a href='https://discord.gg/bMZk9Q4'>Discord</a></li>
+    <li><a href='https://discord.gg/bMZk9Q4'>Community Discord</a></li>
     <li><a href='https://wiki.dlang.org'>Wiki</a></li>
     <li class="menu-divider"><a href='https://github.com/dlang'>GitHub</a></li>
     <li><a href='https://dlang.org/bugstats.html'>Issues</a></li>
@@ -75,7 +74,7 @@
     <div id="search-box">        <form method="get" action="https://google.com/search">
             <input type="hidden" id="domains" name="domains" value="dlang.org">
             <input type="hidden" id="sourceid" name="sourceid" value="google-search">
-            <span id="search-query"><input id="q" name="q" placeholder="Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
+            <span id="search-query"><input id="q" name="q" placeholder="Google Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
                     <option value="dlang.org">Entire Site</option>
                     <option selected value="dlang.org/spec">Language</option>
                     <option  value="dlang.org/phobos">Library</option>
@@ -146,7 +145,7 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#grammar">文法</a><ol>        <li><a href="#function-declarations">Functions without Bodies</a></li>
+    <ol>    <li><a href="#grammar">文法</a><ol>        <li><a href="#function-declarations">本文なし関数</a></li>
     </ol></li>
     <li><a href="#contracts">関数の契約</a><ol>        <li><a href="#preconditions">前提条件</a></li>
         <li><a href="#postconditions">事後条件</a></li>
@@ -186,14 +185,21 @@
         <li><a href="#pure-scope-inference"><span class="d_inlinecode donthyphenate notranslate">pure</span>関数で推測される<span class="d_inlinecode donthyphenate notranslate">scope</span>パラメータ</a></li>
         <li><a href="#udas-parameters">引数のユーザー定義属性</a></li>
         <li><a href="#variadic">可変長引数関数</a></li>
-        <li><a href="#this-reference"><span class="d_inlinecode donthyphenate notranslate">this</span> の参照</a></li>
+        <li><a href="#hidden-parameters">隠しパラメータ</a></li>
+    </ol></li>
+    <li><a href="#refscopereturn">Ref Scope Return のケース</a><ol>        <li><a href="#rsr_definitions">定義</a></li>
+        <li><a href="#rsr_classification">分類</a></li>
+        <li><a href="#rsr_mapping">構文と分類の対応付け</a></li>
+        <li><a href="#rsr_memberfunctions">Member 関数</a></li>
+        <li><a href="#rsr_PandRef">P と ref</a></li>
+        <li><a href="#rsr_covariance">共分散</a></li>
     </ol></li>
     <li><a href="#local-variables">ローカル変数</a><ol>        <li><a href="#local-static-variables">ローカル静的変数</a></li>
     </ol></li>
-    <li><a href="#nested">関数のネスト</a><ol>        <li><a href="#nested-declaration-order">Declaration Order</a></li>
+    <li><a href="#nested">関数のネスト</a><ol>        <li><a href="#nested-declaration-order">宣言の順序</a></li>
     </ol></li>
     <li><a href="#function-pointers-delegates">関数ポインタ, デリゲート and クロージャ</a><ol>        <li><a href="#function-pointers">関数ポインタ</a></li>
-        <li><a href="#closures">Delegates &amp; Closures</a></li>
+        <li><a href="#closures">デリゲートとクロージャ</a></li>
         <li><a href="#function-delegate-init">初期化</a></li>
         <li><a href="#anonymous">無名関数、無名デリゲート</a></li>
     </ol></li>
@@ -254,12 +260,12 @@
     <a href="#ParameterAttributes"><i>ParameterAttributes</i></a><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a> <span class="d_inlinecode donthyphenate notranslate">=</span> <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a>
 <div class="blankline"></div>
 <a id="ParameterAttributes"><span class="gname">ParameterAttributes</span></a>:
-    <a href="#InOut"><i>InOut</i></a>
+    <a href="#ParameterStorageClass"><i>ParameterStorageClass</i></a>
     <a href="../spec/attribute.html#UserDefinedAttribute"><i>UserDefinedAttribute</i></a>
-    <i>ParameterAttributes</i> <a href="#InOut"><i>InOut</i></a>
+    <i>ParameterAttributes</i> <a href="#ParameterStorageClass"><i>ParameterStorageClass</i></a>
     <i>ParameterAttributes</i> <a href="../spec/attribute.html#UserDefinedAttribute"><i>UserDefinedAttribute</i></a>
 <div class="blankline"></div>
-<a id="InOut"><span class="gname">InOut</span></a>:
+<a id="ParameterStorageClass"><span class="gname">ParameterStorageClass</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">auto</span>
     <a href="../spec/type.html#TypeCtor"><i>TypeCtor</i></a>
     <span class="d_inlinecode donthyphenate notranslate">final</span>
@@ -341,7 +347,7 @@
         <p><b>Note:</b> The <em>ShortenedFunctionBody</em> form requires the <span class="d_inlinecode donthyphenate notranslate">-preview=shortenedMethods</span>
         command-line switch, which is available starting in v2.096.0.</p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="function-declarations" href="#function-declarations">Functions without Bodies</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="function-declarations" href="#function-declarations">本文なし関数</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="MissingFunctionBody"><span class="gname">MissingFunctionBody</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">;</span>
@@ -1217,6 +1223,8 @@ foo(a);
 </pre>
 
 </div>
+        <p>Base class methods can also be called through the
+        <a href="../spec/expression.html#super"><span class="d_inlinecode donthyphenate notranslate">super</span></a> reference.</p>
 <div class="blankline"></div>
         <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b> Normally calling a virtual function implies getting the
         address of the function at runtime by indexing into the class's <span class="d_inlinecode donthyphenate notranslate">vtbl[]</span>.
@@ -2546,16 +2554,226 @@ Bar
 
 
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="this-reference" href="#this-reference"><span class="d_inlinecode donthyphenate notranslate">this</span> の参照</a></h3>
+<span id="this-reference"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span>
+<h3><a class="anchor" title="Permalink to this section" id="hidden-parameters" href="#hidden-parameters">隠しパラメータ</a></h3>
 <div class="blankline"></div>
-        <p>            Non-static member functions all have a hidden parameter called the
-            <span class="d_inlinecode donthyphenate notranslate">this</span> reference, which refers to the object for which
+        <ul>        <li>            Non-static member functions all have a hidden parameter called the
+            <a href="../spec/expression.html#this"><span class="d_inlinecode donthyphenate notranslate">this</span> reference</a>, which refers to the object for which
             the function is called.
-        </p>
-<div class="blankline"></div>
-        <p>            Functions with <span class="d_inlinecode donthyphenate notranslate">Objective-C</span> linkage have an additional hidden,
+        </li>
+        <li>D-style variadic functions have
+            <a href="#d_style_variadic_functions">hidden parameters</a>.</li>
+        <li>            Functions with <span class="d_inlinecode donthyphenate notranslate">Objective-C</span> linkage have an additional hidden,
             unnamed, parameter which is the selector it was called with.
-        </p>
+        </li>
+        </ul>
+<div class="blankline"></div>
+<div class="blankline"></div>
+<div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="refscopereturn" href="#refscopereturn">Ref Scope Return のケース</a></h2>
+<div class="blankline"></div>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="rsr_definitions" href="#rsr_definitions">定義</a></h3>
+<div class="blankline"></div>
+    <center><table><caption>Definitions</caption>    <tr><th class="donthyphenate"><b>Term</b></th><th class="donthyphenate"><b>Description</b></th></tr>
+    <tr><td>I</td><td>type that contains no indirections</td></tr>
+    <tr><td>P</td><td>type that contains indirections</td></tr>
+    <tr><td>X</td><td>type that may or may not contain indirections</td></tr>
+    <tr><td>p</td><td>parameter of type P</td></tr>
+    <tr><td>i</td><td>parameter of type I</td></tr>
+    <tr><td>ref</td><td><span class="d_inlinecode donthyphenate notranslate">ref</span> or <span class="d_inlinecode donthyphenate notranslate">out</span> parameter</td></tr>
+<div class="blankline"></div>
+    <tr><td>returned</td><td>returned via the <span class="d_inlinecode donthyphenate notranslate">return</span> statement</td></tr>
+    <tr><td>escaped</td><td>stored in a global or other memory not in the function&rsquo;s stack frame</td></tr>
+    </table></center>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="rsr_classification" href="#rsr_classification">分類</a></h3>
+<div class="blankline"></div>
+<p>A parameter must be in one of the following states:</p>
+<div class="blankline"></div>
+    <center><table><caption>Classification</caption>    <tr><th class="donthyphenate"><b>Term</b></th><th class="donthyphenate"><b>Description</b></th></tr>
+    <tr><td>None</td><td>        <span class="d_inlinecode donthyphenate notranslate">p</span> may be returned or escaped</td></tr>
+<div class="blankline"></div>
+    <tr><td>ReturnScope</td><td>        <span class="d_inlinecode donthyphenate notranslate">p</span> may be returned but not escaped</td></tr>
+<div class="blankline"></div>
+    <tr><td>Scope</td><td>        <span class="d_inlinecode donthyphenate notranslate">p</span> may be neither returned nor escaped</td></tr>
+<div class="blankline"></div>
+    <tr><td>Ref</td><td>        <span class="d_inlinecode donthyphenate notranslate">p</span> may be returned or escaped,
+        <span class="d_inlinecode donthyphenate notranslate">ref</span> may not be returned nor escaped</td></tr>
+<div class="blankline"></div>
+    <tr><td>ReturnRef</td><td>        <span class="d_inlinecode donthyphenate notranslate">p</span> may be returned or escaped,
+        <span class="d_inlinecode donthyphenate notranslate">ref</span> may be returned but not escaped</td></tr>
+<div class="blankline"></div>
+    <tr><td>RefScope</td><td>        <span class="d_inlinecode donthyphenate notranslate">p</span> may be neither returned nor escaped,
+        <span class="d_inlinecode donthyphenate notranslate">ref</span> may not be returned nor escaped</td></tr>
+<div class="blankline"></div>
+    <tr><td>ReturnRef-Scope</td><td>        <span class="d_inlinecode donthyphenate notranslate">p</span> may be neither returned nor escaped,
+        <span class="d_inlinecode donthyphenate notranslate">ref</span> may be returned but not escaped</td></tr>
+<div class="blankline"></div>
+    <tr><td>Ref-ReturnScope</td><td>        <span class="d_inlinecode donthyphenate notranslate">p</span> may be returned but not escaped,
+        <span class="d_inlinecode donthyphenate notranslate">ref</span> may not be returned nor escaped</td></tr>
+<div class="blankline"></div>
+    <tr><td>ReturnRef-ReturnScope</td><td>        <span class="d_inlinecode donthyphenate notranslate">p</span> may be returned but not escaped,
+        <span class="d_inlinecode donthyphenate notranslate">ref</span> may be returned but not escaped.
+        This isn't expressible with the current syntax
+        and so is not allowed.</td></tr>
+    </table></center>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="rsr_mapping" href="#rsr_mapping">構文と分類の対応付け</a></h3>
+<div class="blankline"></div>
+    <p>The juxtaposition of <span class="d_inlinecode donthyphenate notranslate">return</span> immediately preceding <span class="d_inlinecode donthyphenate notranslate">scope</span> means ReturnScope.
+    Otherwise, <span class="d_inlinecode donthyphenate notranslate">return</span> and <span class="d_inlinecode donthyphenate notranslate">ref</span> in any position means ReturnRef.</p>
+<div class="blankline"></div>
+    <center><table><caption>Mapping</caption>    <tr><th class="donthyphenate"><b>Example</b></th><th class="donthyphenate"><b>Classification</b></th><th class="donthyphenate"><b>Comments</b></th></tr>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">X foo(P p)</span></td><td>            None</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">X foo(scope P p)</span></td><td>        Scope</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">P foo(return scope P p)</span></td><td>        ReturnScope</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">I foo(return scope P p)</span></td><td>        Scope</td><td>        The <span class="d_inlinecode donthyphenate notranslate">return</span> is dropped because the return type <span class="d_inlinecode donthyphenate notranslate">I</span> contains no pointers.</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">P foo(return P p)</span></td><td>        ReturnScope</td><td>        Makes no sense to have <span class="d_inlinecode donthyphenate notranslate">return</span> without <span class="d_inlinecode donthyphenate notranslate">scope</span>.</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">I foo(return P p)</span></td><td>        Scope</td><td>        The <span class="d_inlinecode donthyphenate notranslate">return</span> is dropped because the return type <span class="d_inlinecode donthyphenate notranslate">I</span> contains no pointers.</td></tr>
+<div class="blankline"></div>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">X foo(ref P p)</span></td><td>        Ref</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">X foo(ref scope P p)</span></td><td>        RefScope</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">P foo(ref return scope P p)</span></td><td>        Ref-ReturnScope</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">P foo(return ref scope P p)</span></td><td>        ReturnRef-Scope</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">I foo(ref return scope P p)</span></td><td>        RefScope</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">P foo(ref return P p)</span></td><td>        ReturnRef</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">I foo(ref return P p)</span></td><td>        Ref</td></tr>
+<div class="blankline"></div>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(P p)</span></td><td>        None</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(scope P p)</span></td><td>        Scope</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(return scope P p)</span></td><td>        ReturnScope</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(return P p)</span></td><td>        ReturnScope</td><td>        Makes no sense to have <span class="d_inlinecode donthyphenate notranslate">return</span> without <span class="d_inlinecode donthyphenate notranslate">scope</span>.</td></tr>
+<div class="blankline"></div>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(ref P p)</span></td><td>        Ref</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(ref scope P p)</span></td><td>        RefScope</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(ref return scope P p)</span></td><td>        Ref-ReturnScope</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(return ref scope P p)</span></td><td>        ReturnRef-Scope</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(ref return P p)</span></td><td>        ReturnRef</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">X foo(I i)</span></td><td>        None</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">X foo(scope I i)</span></td><td>        None</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">X foo(return scope I i)</span></td><td>        None</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">X foo(return I i)</span></td><td>        None</td></tr>
+<div class="blankline"></div>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">X foo(ref I i)</span></td><td>        Ref</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">X foo(ref scope I i)</span></td><td>        Ref</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">X foo(ref return scope I i)</span></td><td>        Ref</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">P foo(ref return I i)</span></td><td>        ReturnRef</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">I foo(ref return I i)</span></td><td>        Ref</td></tr>
+<div class="blankline"></div>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(I i)</span></td><td>        None</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(scope I i)</span></td><td>        None</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(return scope I i)</span></td><td>        None</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(return I i)</span></td><td>        None</td></tr>
+<div class="blankline"></div>
+<div class="blankline"></div>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(ref I i)</span></td><td>        Ref</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(ref scope I i)</span></td><td>        Ref</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(ref return scope I i)</span></td><td>        ReturnRef</td></tr>
+<div class="blankline"></div>
+    <tr><td><span class="d_inlinecode donthyphenate notranslate">ref X foo(ref return I i)</span></td><td>        ReturnRef</td></tr>
+</table></center>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="rsr_memberfunctions" href="#rsr_memberfunctions">Member 関数</a></h3>
+<div class="blankline"></div>
+    <p>Member functions are rewritten as if the <span class="d_inlinecode donthyphenate notranslate">this</span> parameter is the first
+    parameter of a non-member function,
+    </p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">struct</span> S {
+    X foo();
+}
+</pre>
+<div class="blankline"></div>
+    <p>is treated as:</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate">X foo(<span class="d_keyword">ref</span> S);
+</pre>
+<div class="blankline"></div>
+    <p>and:</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">class</span> C {
+    X foo()
+}
+</pre>
+<div class="blankline"></div>
+    <p>is treated as:</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate">X foo(P)
+</pre>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="rsr_PandRef" href="#rsr_PandRef">P と ref</a></h3>
+<div class="blankline"></div>
+    <p>The rules account for switching between <span class="d_inlinecode donthyphenate notranslate">ref</span> and P, such as:</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">int</span>* foo(<span class="d_keyword">return</span> <span class="d_keyword">ref</span> <span class="d_keyword">int</span> i) { <span class="d_keyword">return</span> &amp;i; }
+<span class="d_keyword">ref</span> <span class="d_keyword">int</span> foo(<span class="d_keyword">int</span>* p) { <span class="d_keyword">return</span> *p; }
+</pre>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="rsr_covariance" href="#rsr_covariance">共分散</a></h3>
+<div class="blankline"></div>
+    <p>Covariance means a parameter with restrictions can be converted to a parameter with
+    fewer restrictions. This is deducible from the description of each state.
+    </p>
+<div class="blankline"></div>
+    <div class="spec-boxes note"><b>Note:</b> <span class="d_inlinecode donthyphenate notranslate">ref</span> is not covariant with non-<span class="d_inlinecode donthyphenate notranslate">ref</span>, so those entries are omitted from the
+    table for simplicity.
+    </div>
+<div class="blankline"></div>
+    <center><table><caption>Covariance</caption>    <tr><th class="donthyphenate"><b>From\To</b></th><th class="donthyphenate"><b>         None</b></th><th class="donthyphenate"><b>    ReturnScope</b></th><th class="donthyphenate"><b>Scope</b></th></tr>
+    <tr><td>None</td><td>             &#10004;</td><td>           </td><td>        </td></tr>
+    <tr><td>ReturnScope</td><td>      &#10004;</td><td>&#10004;   </td><td>        </td></tr>
+    <tr><td>Scope</td><td>            &#10004;</td><td>&#10004;   </td><td>&#10004;</td></tr>
+    </table></center>
+<div class="blankline"></div>
+    <center><table><caption>Ref Covariance</caption>    <tr><th class="donthyphenate"><b>From\To</b></th><th class="donthyphenate"><b>         Ref     </b></th><th class="donthyphenate"><b>ReturnRef</b></th><th class="donthyphenate"><b>RefScope</b></th><th class="donthyphenate"><b>ReturnRef-Scope</b></th><th class="donthyphenate"><b>Ref-ReturnScope</b></th></tr>
+    <tr><td>Ref</td><td>              &#10004;</td><td>&#10004; </td><td>        </td><td>               </td><td>         </td></tr>
+    <tr><td>ReturnRef</td><td>                </td><td>&#10004; </td><td>        </td><td>               </td><td>         </td></tr>
+    <tr><td>RefScope</td><td>         &#10004;</td><td>&#10004; </td><td>&#10004;</td><td>&#10004;       </td><td> &#10004;</td></tr>
+    <tr><td>ReturnRef-Scope</td><td>          </td><td>&#10004; </td><td>        </td><td>&#10004;       </td><td>         </td></tr>
+    <tr><td>Ref-ReturnScope</td><td>  &#10004;</td><td>&#10004; </td><td>        </td><td>               </td><td> &#10004;</td></tr>
+    </table></center>
+<div class="blankline"></div>
+    <p>For example, <span class="d_inlinecode donthyphenate notranslate">scope</span> matches all non-ref parameters, and <span class="d_inlinecode donthyphenate notranslate">ref scope</span> matches all
+    ref parameters.</p>
+<div class="blankline"></div>
 <div class="blankline"></div>
 <div class="blankline"></div>
 <h2><span id="Local Variables"><a class="anchor" title="Permalink to this section" id="local-variables" href="#local-variables">ローカル変数</a></span></h2>
@@ -2813,7 +3031,7 @@ Bar
         <p>Nested functions always have the D function linkage type.
         </p>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="nested-declaration-order" href="#nested-declaration-order">Declaration Order</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="nested-declaration-order" href="#nested-declaration-order">宣言の順序</a></h3>
 <div class="blankline"></div>
         <p>Unlike module level declarations, declarations within function
         scope are processed in order. This means that two nested functions
@@ -2939,7 +3157,7 @@ Bar
 
 </div>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="closures" href="#closures">Delegates &amp; Closures</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="closures" href="#closures">デリゲートとクロージャ</a></h3>
 <div class="blankline"></div>
         <p>A delegate can be set to a non-static nested function:</p>
 <div class="blankline"></div>
@@ -2971,8 +3189,39 @@ Bar
         </p>
 <div class="blankline"></div>
         <p>Those referenced stack variables that make up the closure
-        are allocated on the GC heap. Closures are not allowed for
-        <span class="d_inlinecode donthyphenate notranslate">@nogc</span> functions.</p>
+        are allocated on the GC heap, unless:</p>
+
+<ul><li>The closure is passed to a <span class="d_inlinecode donthyphenate notranslate">scope</span> parameter.</li>
+<li>The closure is an initializer for a <span class="d_inlinecode donthyphenate notranslate">scope</span> variable.</li>
+<li>The closure is assigned to a <span class="d_inlinecode donthyphenate notranslate">scope</span> variable.
+</li>
+</ul>
+<div class="runnable-examples">
+<pre class="d_code notranslate">@nogc:
+<span class="d_keyword">void</span> f(<span class="d_keyword">scope</span> <span class="d_keyword">int</span> <span class="d_keyword">delegate</span>());
+<span class="d_keyword">void</span> g(<span class="d_keyword">int</span> <span class="d_keyword">delegate</span>());
+
+<span class="d_keyword">void</span> main()
+{
+    <span class="d_keyword">int</span> i;
+    <span class="d_keyword">int</span> h() { <span class="d_keyword">return</span> i; }
+    h(); <span class="d_comment">// OK
+</span>    <span class="d_keyword">scope</span> x = &amp;h; <span class="d_comment">// OK
+</span>    x(); <span class="d_comment">// OK
+</span>    <span class="d_comment">//auto y = &amp;h; // error, can't allocate closure in @nogc function
+</span>    f(&amp;h); <span class="d_comment">// OK
+</span>    <span class="d_comment">//g(&amp;h); // error
+</span>
+    <span class="d_comment">// delegate literals
+</span>    f(() =&gt; i); <span class="d_comment">// OK
+</span>    <span class="d_keyword">scope</span> d = () =&gt; i; <span class="d_comment">// OK
+</span>    d = () =&gt; i + 1; <span class="d_comment">// OK
+</span>    f(d);
+    <span class="d_comment">//g(() =&gt; i); // error, can't allocate closure in @nogc function
+</span>}
+</pre>
+
+</div>
 <div class="blankline"></div>
         <div class="spec-boxes note"><b>Note:</b> Returning addresses of stack variables, however, is not
         a closure and is an error.
@@ -3104,8 +3353,8 @@ Bar
         
 </div>
         <p>The last assignment uses a <a href="../spec/expression.html#FunctionLiteral"><i>FunctionLiteral</i></a>, which
-        <a href="../spec/expression.html#lambda-type-inference">implicitly converts</a>
-        to a delegate.</p>
+        <a href="../spec/expression.html#lambda-type-inference">is inferred</a>
+        as a delegate.</p>
 <div class="blankline"></div>
         <div class="spec-boxes note"><b>Note:</b> Function pointers can be passed to functions taking a delegate argument by passing
         them through the <a href="../phobos/std_functional.html#.toDelegate"><span class="d_inlinecode donthyphenate notranslate">std.functional.toDelegate</span></a> template, which converts any callable
@@ -3424,7 +3673,8 @@ Bar
 <span class="d_keyword">void</span> bar() { }
 </pre>
 <div class="blankline"></div>
-        <p>No-GC functions cannot be closures.
+        <p>No-GC functions can only use a closure if it is <span class="d_inlinecode donthyphenate notranslate">scope</span> -
+            see <a href="#closures">Delegates &amp; Closures</a>.
         </p>
 <div class="blankline"></div>
 <pre class="d_code notranslate">@nogc <span class="d_keyword">int</span> <span class="d_keyword">delegate</span>() foo()
@@ -3809,17 +4059,18 @@ f1(u1.x, u1.y); <span class="d_comment">// Ok
         <a href="#nested">nested functions</a> and
         <a href="../spec/template.html#function-templates">function templates</a>,
         since their function bodies are always present, infer the
-        <a href="#pure-functions"><span class="d_inlinecode donthyphenate notranslate">pure</span></a>,
-        <a href="#nothrow-functions"><span class="d_inlinecode donthyphenate notranslate">nothrow</span></a>,
-        <a href="#safe-functions"><span class="d_inlinecode donthyphenate notranslate">@safe</span></a>,
-        <a href="#nogc-functions"><span class="d_inlinecode donthyphenate notranslate">@nogc</span></a>,
-        <a href="#return-ref-parameters">return ref parameters</a>,
-        <a href="#scope-parameters">scope parameters</a>,
-        <a href="#return-scope-parameters">return scope parameters</a> and
-        <a href="#ref-return-scope-parameters">ref return scope parameters</a>
-        attributes unless specifically overridden.
+        following attributes unless specifically overridden:
         </p>
-<div class="blankline"></div>
+<ul><li><a href="#pure-functions"><span class="d_inlinecode donthyphenate notranslate">pure</span></a></li>
+<li><a href="#nothrow-functions"><span class="d_inlinecode donthyphenate notranslate">nothrow</span></a></li>
+<li><a href="#safe-functions"><span class="d_inlinecode donthyphenate notranslate">@safe</span></a></li>
+<li><a href="#nogc-functions"><span class="d_inlinecode donthyphenate notranslate">@nogc</span></a></li>
+<li><a href="#return-ref-parameters">return ref parameters</a></li>
+<li><a href="#scope-parameters">scope parameters</a></li>
+<li><a href="#return-scope-parameters">return scope parameters</a></li>
+<li><a href="#ref-return-scope-parameters">ref return scope parameters</a>
+</li>
+</ul>
         <p>Attribute inference is not done for other functions, even if the function
         body is present.
         </p>
@@ -3829,7 +4080,7 @@ f1(u1.x, u1.y); <span class="d_comment">// Ok
         </p>
 <div class="blankline"></div>
         <p>Cyclic functions (i.e. functions that wind up directly or indirectly
-        calling themselves) are inferred as being impure, throwing, and @system.
+        calling themselves) are inferred as being impure, throwing, and <span class="d_inlinecode donthyphenate notranslate">@system</span>.
         </p>
 <div class="blankline"></div>
         <p>If a function attempts to test itself for those attributes, then
@@ -3978,7 +4229,7 @@ obj.prop;      <span class="d_comment">// if X does not have member prop, reinte
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 03:03:57 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 08:30:55 2022
 </div>
     </div>
 </div>

@@ -40,10 +40,9 @@
 <ul class='expand-content'>    <li><a href='https://dlang.org/blog'>ブログ</a></li>
     <li><a href='../orgs-using-d.html'>利用実績</a></li>
     <li><a href='https://twitter.com/search?q=%23dlang'>Twitter</a></li>
-    <li><a href='../calendar.html'>カレンダー</a></li>
     <li class="menu-divider"><a href='https://forum.dlang.org'>フォーラム</a></li>
     <li><a href='irc://irc.libera.chat/d'>IRC</a></li>
-    <li><a href='https://discord.gg/bMZk9Q4'>Discord</a></li>
+    <li><a href='https://discord.gg/bMZk9Q4'>Community Discord</a></li>
     <li><a href='https://wiki.dlang.org'>Wiki</a></li>
     <li class="menu-divider"><a href='https://github.com/dlang'>GitHub</a></li>
     <li><a href='https://dlang.org/bugstats.html'>Issues</a></li>
@@ -75,7 +74,7 @@
     <div id="search-box">        <form method="get" action="https://google.com/search">
             <input type="hidden" id="domains" name="domains" value="dlang.org">
             <input type="hidden" id="sourceid" name="sourceid" value="google-search">
-            <span id="search-query"><input id="q" name="q" placeholder="Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
+            <span id="search-query"><input id="q" name="q" placeholder="Google Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
                     <option value="dlang.org">Entire Site</option>
                     <option selected value="dlang.org/spec">Language</option>
                     <option  value="dlang.org/phobos">Library</option>
@@ -146,14 +145,16 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#dialect">ImportC で使える文法</a></li>
-    <li><a href="#command-line">ImportCを呼び出す</a><ol>        <li><a href="#command-line">コマンドライン上の ImportCファイル</a></li>
+    <ol>    <li><a href="#examples">簡単な例</a></li>
+    <li><a href="#dialect">ImportC で使える文法</a></li>
+    <li><a href="#command-line">Invoking を呼び出す</a><ol>        <li><a href="#command-line">コマンドライン上の ImportCファイル</a></li>
         <li><a href="#importing">Cファイルのインポート</a></li>
     </ol></li>
-    <li><a href="#preprocessor">プリプロセッサ</a><ol>        <li><a href="#spp">Digital Mars C プリプロセッサ sppn.exe</a></li>
+    <li><a href="#preprocessor">プリプロセッサ</a><ol>        <li><a href="#auto-cpp">プリプロセッサの自動実行</a></li>
+        <li><a href="#manual-cpp">プリプロセッサの手動実行</a></li>
         <li><a href="#gcc-preprocessor">Gnu C プリプロセッサ</a></li>
         <li><a href="#clang-preprocessor">Clang C プリプロセッサ</a></li>
-        <li><a href="#dmpp">dmpp C プリプロセッサ</a></li>
+        <li><a href="#defines">Preprocessor Macros</a></li>
     </ol></li>
     <li><a href="#predefined-macros">定義済みマクロ</a></li>
     <li><a href="#preprocessor-directives">プリプロセッサ指令</a><ol>        <li><a href="#line-control">行コントロール</a></li>
@@ -191,7 +192,7 @@
         <li><a href="#enums">列挙型</a></li>
         <li><a href="#tag-symbols">タグシンボル</a></li>
     </ol></li>
-    <li><a href="#wrapping">Cのコードのラッピング</a></li>
+    <li><a href="#wrapping">C のコードのラッピング</a></li>
     <li><a href="#warnings">警告</a></li>
     <li><a href="#importcpp">C++ のインポート</a></li>
     <li><a href="#other-solutions">その他の解決策</a><ol>        <li><a href="#dpp">Atila Neves による dpp</a></li>
@@ -202,51 +203,91 @@
 </ol>
 </div>
 <div class="blankline"></div>
-    <div class="spec-boxes note"><b>Note:</b> This document is under construction. Please excuse the dust and noise.</div>
-<div class="blankline"></div>
     <p>ImportC is a C compiler embedded into the D implementation.
-    Its purpose is to enable direct importation of C files, without
+    It enables direct importation of C files, without
     needing to manually prepare a D file corresponding to the declarations
-    in the C file. It enables directly compiling C files into modules, and
-    linking them in with D code to form an executable. It can be used
+    in the C file. It directly compiles C files into modules that can be
+    linked in with D code to form an executable. It can be used
     as a C compiler to compile and link 100% C programs.
     </p>
 <div class="blankline"></div>
-    <p>This is not a C reference manual nor programming tutorial.
-    It describes the specifics of the dialect of C that
-    ImportC is, and how to use it effectively.</p>
-<div class="blankline"></div>
-    <p>ImportC and <a href="https://dlang.org/spec/betterc.html">BetterC</a> are very different.
+    <div class="spec-boxes note"><b>Note:</b> ImportC and <a href="https://dlang.org/spec/betterc.html">BetterC</a> are very different.
     ImportC is an actual C compiler. BetterC is a subset of D that relies only on the
-    existence of the C Standard library.</p>
+    existence of the C Standard library. BetterC code can be linked with ImportC code, too.</div>
+<div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="examples" href="#examples">簡単な例</a></h2>
+<div class="blankline"></div>
+    <p>C code in file <em class="tt">hello.c</em>:</p>
+<div class="blankline"></div>
+    <pre class="ccode notranslate">    #include &lt;stdio.h&gt;
+    int main()
+    {
+        printf("hello world\n");
+        return 0;
+    }
+    </pre>
+<div class="blankline"></div>
+    <p>Compile and run:</p>
+<div class="blankline"></div>
+    <pre class="console notranslate">    dmd hello.c
+    ./hello
+    hello world
+    </pre>
+<div class="blankline"></div>
+    <p>C function in file <em class="tt">square.c</em>:</p>
+<div class="blankline"></div>
+    <pre class="ccode notranslate">    int square(int i)
+    {
+        return i * i;
+    }
+    </pre>
+<div class="blankline"></div>
+    <p>D program in file <em class="tt">demo.d</em>:</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.stdio;
+<span class="d_keyword">import</span> square;
+<span class="d_keyword">void</span> main()
+{
+    <span class="d_keyword">int</span> i = 7;
+    writefln(<span class="d_string">"The square of %s is %s"</span>, i, square(i));
+}
+</pre>
+<div class="blankline"></div>
+    <p>Compile and run:</p>
+<div class="blankline"></div>
+    <pre class="console notranslate">    dmd demo.d square.c
+    ./demo
+    The square of 7 is 49
+    </pre>
+<div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="dialect" href="#dialect">ImportC で使える文法</a></h2>
 <div class="blankline"></div>
-    <p>There are many versions of C. ImportC is designed to be an
+    <p>There are many versions of C. ImportC is an
     implementation of <a href="https://en.wikipedia.org/wiki/C11_(C_standard_revision)">ISO/IEC 9899:2011</a>,
-    which will hereafter be referred to as <b>C11</b>.
+    which will be referred to as <b>C11</b>.
     References to the C11 Standard will be C11 followed by the paragraph number.
     Prior versions, such as C99, C89, and K+R C, are not supported.
     </p>
 <div class="blankline"></div>
-    <p>Adjustment to the ImportC dialect is made to match the
-    behavior of the C compiler that the D compiler is matched to
-    i.e. the <i>associated C compiler</i>.
-    For example, on Win32 D is matched to the Digital Mars C compiler,
-    and can be matched to the Visual C compiler using the <em class="tt">-m32mscoff</em>
-    switch. Win64 D is matched to the Visual C compiler.
-    On Posix targets, the matching C compiler is Gnu C or Clang C.
-    </p>
+    <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b> Adjustment to the ImportC dialect is made to match the
+    behavior of the C compiler that the D compiler is matched to,
+    i.e. the <a href="../glossary.html#acc">Associated C Compiler</a>.
+    </div>
+
+
 <div class="blankline"></div>
     <p>Further adjustment is made to take advantage of some of the D
     implementation's capabilities.</p>
 <div class="blankline"></div>
-    <p>This is all covered in the rest of this document.</p>
+    <div class="spec-boxes note"><b>Note:</b> This is not a C reference manual nor programming tutorial.
+    It describes the specifics of the dialect of C that
+    ImportC is, and how to use it effectively.</div>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="command-line" href="#command-line">ImportCを呼び出す</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="command-line" href="#command-line">Invoking を呼び出す</a></h2>
 <div class="blankline"></div>
-    <p>The ImportC compiler can be invoked in two ways:</p>
+    <p>The ImportC compiler can be invoked:</p>
 <div class="blankline"></div>
     <ul>    <li>directly via the command line</li>
     <li>indirectly via importing a C file</li>
@@ -254,15 +295,74 @@
 <div class="blankline"></div>
     <h3><a class="anchor" title="Permalink to this section" id="command-line" href="#command-line">コマンドライン上の ImportCファイル</a></h3>
 <div class="blankline"></div>
+    <p>ImportC files have one of the extensions <span class="d_inlinecode donthyphenate notranslate">.i</span>, or <span class="d_inlinecode donthyphenate notranslate">.c</span>. If no
+    extension is given, <span class="d_inlinecode donthyphenate notranslate">.i</span> is tried first, then <span class="d_inlinecode donthyphenate notranslate">.c</span>.
+    </p>
+<div class="blankline"></div>
+    <pre class="console notranslate">    dmd hello.c
+    </pre>
+<div class="blankline"></div>
+    <p>will compile <span class="d_inlinecode donthyphenate notranslate">hello.c</span> with ImportC and link it to create the executable
+    file <span class="d_inlinecode donthyphenate notranslate">hello</span> (<span class="d_inlinecode donthyphenate notranslate">hello.exe</span> on Windows) which can be run
+    </p>
+<div class="blankline"></div>
+    <div class="spec-boxes best-practice"><b>Best Practices:</b> explicitly use a <span class="d_inlinecode donthyphenate notranslate">.i</span> or <span class="d_inlinecode donthyphenate notranslate">.c</span> extension when
+    specifying C files on the command line.</div>
+
+
+<div class="blankline"></div>
     <h3><a class="anchor" title="Permalink to this section" id="importing" href="#importing">Cファイルのインポート</a></h3>
 <div class="blankline"></div>
+    <p>Use the D <a href="../spec/module.html#Import インポート"><i>Import インポート</i></a>:</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">import</span> hello;
+</pre>
+<div class="blankline"></div>
+    <p>which will, if <span class="d_inlinecode donthyphenate notranslate">hello</span> is not a D file, and has an extension <span class="d_inlinecode donthyphenate notranslate">.i</span> or <span class="d_inlinecode donthyphenate notranslate">.c</span>,
+    compile <span class="d_inlinecode donthyphenate notranslate">hello</span> with ImportC.
+    </p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="preprocessor" href="#preprocessor">プリプロセッサ</a></h2>
 <div class="blankline"></div>
     <p>ImportC does not have a preprocessor. It is designed to compile C
-    files after they have been first run through the C preprocessor.</p>
+    files after they have been first run through the C preprocessor.
+    ImportC can automatically run the C preprocessor associated with the
+    Associated C Compiler, or a preprocessor can be run manually.
+    </p>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="spp" href="#spp">Digital Mars C プリプロセッサ sppn.exe</a></h3>
+    <h3><a class="anchor" title="Permalink to this section" id="auto-cpp" href="#auto-cpp">プリプロセッサの自動実行</a></h3>
+<div class="blankline"></div>
+    <p>If the C file has a <em class="tt">.c</em> extension, ImportC will run the preprocessor
+    for it automatically.</p>
+<div class="blankline"></div>
+    <ol>    <li>When compiling for Windows with the <a href="../dmd.html#switch-m32omf"><em class="tt">-m32omf</em></a> switch,
+    <em class="tt">sppn.exe</em> will be used as the preprocessor.</li>
+    <li>When compiling for Windows with the <a href="../dmd.html#switch-m32mscoff"><em class="tt">-m32mscoff</em></a>
+    or the <a href="../dmd.html#switch-m64"><em class="tt">-m64</em></a> switch, <em class="tt">cl.exe /P /Zc:preprocessor</em> will be used
+    as the preprocessor.</li>
+    <li>When compiling for OSX, the <em class="tt">clang -E</em> preprocessor will be used.</li>
+    <li>Otherwise the <em class="tt">cpp</em> preprocessor will be used.</li>
+    </ol>
+<div class="blankline"></div>
+    <p>The druntime file <em class="tt">src/importc.h</em> will automatically be <em class="tt">#include</em>d.</p>
+<div class="blankline"></div>
+    <p>The <a href="../dmd.html#switch-v"><em class="tt">-v</em></a> switch can be used to observe the command
+    that invokes the preprocessor.
+    </p>
+<div class="blankline"></div>
+    <p>The <a href="../dmd.html#switch-P"><em class="tt">-P<i>preprocessorflag</i></em></a> switch passes <em class="tt"><i>preprocessorflag</i></em>
+    to the preprocessor.
+    </p>
+<div class="blankline"></div>
+<div class="blankline"></div>
+    <h3><a class="anchor" title="Permalink to this section" id="manual-cpp" href="#manual-cpp">プリプロセッサの手動実行</a></h3>
+<div class="blankline"></div>
+    <p>If the C file has a <em class="tt">.i</em> extension, the file
+    is presumed to be already preprocessed.
+    Preprocessing can be run manually:
+    </p>
+<div class="blankline"></div>
+    <h4><a class="anchor" title="Permalink to this section" id="spp" href="#spp">Digital Mars C Preprocessor sppn.exe</a></h4>
 <div class="blankline"></div>
     <p><a href="https://www.digitalmars.com/ctg/sc.html"><em class="tt">sppn.exe</em></a> runs on Win32 and is invoked as:</p>
 <div class="blankline"></div>
@@ -282,10 +382,19 @@
 <div class="blankline"></div>
     <p>The <a href="https://freecompilercamp.org/clang-basics/">Clang Preprocessor</a> can be invoked as:</p>
 <div class="blankline"></div>
-    <pre class="console notranslate">    clang -E file.c &gt; file.i
+    <pre class="console notranslate">    clang -E file.c -o file.i
     </pre>
 <div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="dmpp" href="#dmpp">dmpp C プリプロセッサ</a></h3>
+    <h4><a class="anchor" title="Permalink to this section" id="vc-preprocessor" href="#vc-preprocessor">Microsoft VC Preprocessor</a></h4>
+<div class="blankline"></div>
+    <p>The <a href="https://docs.microsoft.com/en-us/cpp/preprocessor/c-cpp-preprocessor-reference?view=msvc-170">    VC Preprocessor</a> can be invoked as:</p>
+<div class="blankline"></div>
+    <pre class="console notranslate">    cl /P /Zc:preprocessor file.c -Fifile.i
+    </pre>
+<div class="blankline"></div>
+    <p>and the preprocessed output is written to <em class="tt">file.i</em>.</p>
+<div class="blankline"></div>
+    <h4><a class="anchor" title="Permalink to this section" id="dmpp" href="#dmpp">dmpp C プリプロセッサ</a></h4>
 <div class="blankline"></div>
     <p>The <a href="https://www.DigitalMars/dmpp">dmpp C Preprocessor</a> can be invoked as:</p>
 <div class="blankline"></div>
@@ -294,19 +403,39 @@
 <div class="blankline"></div>
     <p>and the preprocessed output is written to <em class="tt">file.i</em>.</p>
 <div class="blankline"></div>
+    <h3><a class="anchor" title="Permalink to this section" id="defines" href="#defines">Preprocessor Macros</a></h3>
+<div class="blankline"></div>
+    <p>ImportC collects all the <em class="tt">#define</em> macros from the preprocessor run when it is run automatically.
+    The macros that look like manifest constants, such as:</p>
+<div class="blankline"></div>
+    <pre class="ccode notranslate">    #define COLOR 0x123456
+    </pre>
+<div class="blankline"></div>
+    <p>are interpreted as D manifest constant declarations of the form:</p>
+<div class="blankline"></div>
+<pre class="d_code notranslate"><span class="d_keyword">enum</span> COLOR = 0x123456;
+</pre>
+<div class="blankline"></div>
+    <p>The variety of macros that can be interpreted as D declarations may be expanded,
+    but will never encompass all the metaprogramming uses of C macros.
+    </p>
+<div class="blankline"></div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="predefined-macros" href="#predefined-macros">定義済みマクロ</a></h2>
 <div class="blankline"></div>
     <p>ImportC does not predefine any macros.</p>
 <div class="blankline"></div>
-    <div class="spec-boxes best-practice"><b>Best Practices:</b> To distinguish an ImportC compile vs some other C compiler, define
-    <span class="d_inlinecode donthyphenate notranslate">__IMPORTC__</span> to be <span class="d_inlinecode donthyphenate notranslate">1</span> when the preprocessor is run.</div>
-
-
+    <p>To distinguish an ImportC compile vs some other C compiler, use:</p>
+<div class="blankline"></div>
+<pre class="ccode notranslate">#if __IMPORTC__
+</pre>
+<div class="blankline"></div>
+    <p><em class="tt">__IMPORTC__</em> is defined in <em class="tt">src/importc.h</em> which is automatically
+    included when the preprocessor is run.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="preprocessor-directives" href="#preprocessor-directives">プリプロセッサ指令</a></h2>
 <div class="blankline"></div>
-    <p>Nevertheless, ImportC supports these preprocessor directives:</p>
+    <p>ImportC supports these preprocessor directives:</p>
 <div class="blankline"></div>
     <h3><a class="anchor" title="Permalink to this section" id="line-control" href="#line-control">行コントロール</a></h3>
 <div class="blankline"></div>
@@ -320,6 +449,16 @@
     <h3><a class="anchor" title="Permalink to this section" id="pragma" href="#pragma">プラグマ</a></h3>
 <div class="blankline"></div>
     <p>Pragma directives are ignored.</p>
+<div class="blankline"></div>
+    <ul>    <li><em class="tt">#pragma pack ( )</em></li>
+    <li><em class="tt">#pragma pack ( show )</em></li>
+    <li><em class="tt">#pragma pack ( push )</em></li>
+    <li><em class="tt">#pragma pack ( push , identifier )</em></li>
+    <li><em class="tt">#pragma pack ( push , integer )</em></li>
+    <li><em class="tt">#pragma pack ( push , identifier , integer )</em></li>
+    <li><em class="tt">#pragma pack ( pop )</em></li>
+    <li><em class="tt">#pragma pack ( pop PopList )</em></li>
+    </ul>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="implementation" href="#implementation">実装</a></h2>
 <div class="blankline"></div>
@@ -667,7 +806,7 @@ int foo()
     <p>Then the D compiler can access the struct tag symbol via <span class="d_inlinecode donthyphenate notranslate">S_t</span>.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="wrapping" href="#wrapping">Cのコードのラッピング</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="wrapping" href="#wrapping">C のコードのラッピング</a></h2>
 <div class="blankline"></div>
     <p>Many difficulties with adapting C code to ImportC can be done without
     editing the C code itself. Wrap the C code in another C file and then
@@ -774,7 +913,7 @@ int foo()
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 03:03:58 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 08:30:57 2022
 </div>
     </div>
 </div>

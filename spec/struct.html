@@ -40,10 +40,9 @@
 <ul class='expand-content'>    <li><a href='https://dlang.org/blog'>ブログ</a></li>
     <li><a href='../orgs-using-d.html'>利用実績</a></li>
     <li><a href='https://twitter.com/search?q=%23dlang'>Twitter</a></li>
-    <li><a href='../calendar.html'>カレンダー</a></li>
     <li class="menu-divider"><a href='https://forum.dlang.org'>フォーラム</a></li>
     <li><a href='irc://irc.libera.chat/d'>IRC</a></li>
-    <li><a href='https://discord.gg/bMZk9Q4'>Discord</a></li>
+    <li><a href='https://discord.gg/bMZk9Q4'>Community Discord</a></li>
     <li><a href='https://wiki.dlang.org'>Wiki</a></li>
     <li class="menu-divider"><a href='https://github.com/dlang'>GitHub</a></li>
     <li><a href='https://dlang.org/bugstats.html'>Issues</a></li>
@@ -75,7 +74,7 @@
     <div id="search-box">        <form method="get" action="https://google.com/search">
             <input type="hidden" id="domains" name="domains" value="dlang.org">
             <input type="hidden" id="sourceid" name="sourceid" value="google-search">
-            <span id="search-query"><input id="q" name="q" placeholder="Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
+            <span id="search-query"><input id="q" name="q" placeholder="Google Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
                     <option value="dlang.org">Entire Site</option>
                     <option selected value="dlang.org/spec">Language</option>
                     <option  value="dlang.org/phobos">Library</option>
@@ -146,7 +145,7 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#intro">はじめに</a></li>
+    <ol>    <li><a href="#intro">Introduction</a></li>
     <li><a href="#struct_layout">構造体のレイアウト</a></li>
     <li><a href="#POD">C言語との互換[Plain Old Data]</a></li>
     <li><a href="#opaque_struct_unions">あいまいな定義</a></li>
@@ -155,6 +154,7 @@
         <li><a href="#default_union_init">共用体初期化のデフォルト</a></li>
         <li><a href="#static_union_init">共用体の静的初期化</a></li>
         <li><a href="#dynamic_struct_init">構造体の動的初期化</a></li>
+        <li><a href="#dynamic_union_init">共用体の動的初期化</a></li>
     </ol></li>
     <li><a href="#struct-literal">構造体リテラル</a></li>
     <li><a href="#union-literal">Union Literals</a></li>
@@ -180,7 +180,7 @@
 </ol>
 </div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="intro" href="#intro">はじめに</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="intro" href="#intro">Introduction</a></h2>
 <div class="blankline"></div>
     <p>Whereas <a href="../spec/class.html">classes</a> are reference types,
     structs are value types.
@@ -373,8 +373,6 @@ S x; <span class="d_comment">// x.a is set to 4, x.b to 0
 <div class="blankline"></div>
         <p>The default initializers are evaluated at compile time.</p>
 <div class="blankline"></div>
-        <p>The default initializers may not contain references to mutable data.</p>
-<div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="static_struct_init" href="#static_struct_init">構造体の静的初期化</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="StructInitializer"><span class="gname">StructInitializer</span></a>:
@@ -556,6 +554,24 @@ S s = 3; <span class="d_comment">// sets s.a to 3 using S.opCall(int)
 
 </div>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="dynamic_union_init" href="#dynamic_union_init">共用体の動的初期化</a></h3>
+<div class="blankline"></div>
+        <p>The <a href="#static_union_init">static initializer syntax</a>
+        can also be used to initialize non-static variables.
+        The initializer need not be evaluable at compile time.</p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">union</span> U { <span class="d_keyword">int</span> a; <span class="d_keyword">double</span> b; }
+
+<span class="d_keyword">void</span> test(<span class="d_keyword">int</span> i)
+{
+    U u = { a : i };   <span class="d_comment">// u.a = i
+</span>    U v = { b : 5.0 }; <span class="d_comment">// v.b = 5.0
+</span>}
+</pre>
+
+</div>
+<div class="blankline"></div>
 <h2><span id="StructLiteral"><a class="anchor" title="Permalink to this section" id="struct-literal" href="#struct-literal">構造体リテラル</a></span></h2>
 <div class="blankline"></div>
         <p>A struct literal consists of the name of the struct followed
@@ -608,6 +624,12 @@ U u = U(2);
 </div>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="anonymous" href="#anonymous">Anonymous Structs and Unions</a></h2>
+<div class="blankline"></div>
+    <p>An anonymous struct or union can be declared as a member of a
+    parent class, struct or union by omitting the identifier after <span class="d_inlinecode donthyphenate notranslate">struct</span> or <span class="d_inlinecode donthyphenate notranslate">union</span>.
+    An anonymous struct declares sequentially stored fields in the
+    parent type. An anonymous union declares overlapping fields in
+    the parent type.</p>
 <div class="blankline"></div>
     <p>An anonymous union is useful inside a class or struct to share
     memory for fields, without having to name a parent field with a
@@ -1144,9 +1166,23 @@ S m = S(1);
     <p>Copy constructors are used to initialize a <span class="d_inlinecode donthyphenate notranslate">struct</span> instance from
     another <span class="d_inlinecode donthyphenate notranslate">struct</span> of the same type.</p>
 <div class="blankline"></div>
-    <p>A constructor declaration is a copy constructor declaration if and only if it is a constructor
-    declaration that takes only one non-default parameter by reference that is
-    of the same type as <span class="d_inlinecode donthyphenate notranslate">typeof(this)</span>, followed by any number of default parameters:</p>
+    <p>A constructor declaration is a copy constructor declaration if it meets
+    the following requirements:</p>
+<div class="blankline"></div>
+    <ul>    <li>It takes exactly one parameter without a
+    <a href="../spec/function.html#function-default-args">default argument</a>,
+    followed by any number of parameters with default arguments.</li>
+<div class="blankline"></div>
+    <li>Its first parameter is a
+    <a href="../spec/function.html#ref-params"><span class="d_inlinecode donthyphenate notranslate">ref</span> parameter</a>.</li>
+<div class="blankline"></div>
+    <li>The type of its first parameter is the same type as
+    <a href="../spec/type.html#typeof"><span class="d_inlinecode donthyphenate notranslate">typeof(this)</span></a>, optionally with one or more
+    <a href="../spec/const3.html">type qualifiers</a> applied to it.</li>
+<div class="blankline"></div>
+    <li>It is not a
+    <a href="../spec/template.html#template_ctors">template constructor declaration</a>.</li>
+    </ul>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> A
 {
@@ -1774,7 +1810,7 @@ A gun()
         </p>
 <div class="blankline"></div>
         <p>Unions may have fields that have destructors. However, a union itself never has
-        a destructor. When a union goes out of scope, destructors for it's fields are not called.
+        a destructor. When a union goes out of scope, destructors for its fields are not called.
         If those calls are desired, they must be inserted explicitly by the programmer:</p>
 <div class="blankline"></div>
 <div class="runnable-examples">
@@ -1854,8 +1890,6 @@ A gun()
 </pre>
     
 </div>
-<div class="blankline"></div>
-    <p>Any invariants for fields are applied before the struct invariant.</p>
 <div class="blankline"></div>
     <p>There may be multiple invariants in a struct. They are applied in lexical order.</p>
 <div class="blankline"></div>
@@ -2064,7 +2098,7 @@ A gun()
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 03:03:57 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 08:30:54 2022
 </div>
     </div>
 </div>

@@ -40,10 +40,9 @@
 <ul class='expand-content'>    <li><a href='https://dlang.org/blog'>ブログ</a></li>
     <li><a href='../orgs-using-d.html'>利用実績</a></li>
     <li><a href='https://twitter.com/search?q=%23dlang'>Twitter</a></li>
-    <li><a href='../calendar.html'>カレンダー</a></li>
     <li class="menu-divider"><a href='https://forum.dlang.org'>フォーラム</a></li>
     <li><a href='irc://irc.libera.chat/d'>IRC</a></li>
-    <li><a href='https://discord.gg/bMZk9Q4'>Discord</a></li>
+    <li><a href='https://discord.gg/bMZk9Q4'>Community Discord</a></li>
     <li><a href='https://wiki.dlang.org'>Wiki</a></li>
     <li class="menu-divider"><a href='https://github.com/dlang'>GitHub</a></li>
     <li><a href='https://dlang.org/bugstats.html'>Issues</a></li>
@@ -75,7 +74,7 @@
     <div id="search-box">        <form method="get" action="https://google.com/search">
             <input type="hidden" id="domains" name="domains" value="dlang.org">
             <input type="hidden" id="sourceid" name="sourceid" value="google-search">
-            <span id="search-query"><input id="q" name="q" placeholder="Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
+            <span id="search-query"><input id="q" name="q" placeholder="Google Search"></span><span id="search-dropdown"><span class="helper">                <select id="sitesearch" name="sitesearch" size="1">
                     <option value="dlang.org">Entire Site</option>
                     <option selected value="dlang.org/spec">Language</option>
                     <option  value="dlang.org/phobos">Library</option>
@@ -146,25 +145,30 @@
 <div class="blankline"></div>
 <div class="page-contents quickindex">    <div class="page-contents-header">        <b>Contents</b>
     </div>
-    <ol>    <li><a href="#basic-data-types">基本的なデータ型</a></li>
-    <li><a href="#derived-data-types">派生データ型</a></li>
+    <ol>    <li><a href="#grammar">文法</a></li>
+    <li><a href="#basic-data-types">基本的なデータ型</a></li>
+    <li><a href="#derived-data-types">派生データ型</a><ol>        <li><a href="#pointers">Pointers</a></li>
+    </ol></li>
     <li><a href="#user-defined-types">ユーザー定義型</a></li>
-    <li><a href="#type-conversions">型変換</a><ol>        <li><a href="#pointer-conversions">ポインタへの変換</a></li>
-        <li><a href="#implicit-conversions">暗黙の変換</a></li>
+    <li><a href="#type-conversions">型変換</a><ol>        <li><a href="#pointer-conversions">Pointer Conversions</a></li>
+        <li><a href="#implicit-conversions">Implicit Conversions</a></li>
         <li><a href="#integer-promotions">整数の拡張</a></li>
         <li><a href="#usual-arithmetic-conversions">通常の算術変換</a></li>
+        <li><a href="#vrp">値の範囲の伝播</a></li>
     </ol></li>
     <li><a href="#bool"><span class="d_inlinecode donthyphenate notranslate">bool</span></a></li>
     <li><a href="#delegates">デリゲート</a></li>
     <li><a href="#typeof"><span class="d_inlinecode donthyphenate notranslate">typeof</span></a></li>
-    <li><a href="#mixin_types">Mixin型</a></li>
-    <li><a href="#aliased-types">Aliase型</a><ol>        <li><a href="#size_t"><span class="d_inlinecode donthyphenate notranslate">size_t</span></a></li>
+    <li><a href="#mixin_types">Mixin 型</a></li>
+    <li><a href="#aliased-types">Aliase 型</a><ol>        <li><a href="#size_t"><span class="d_inlinecode donthyphenate notranslate">size_t</span></a></li>
         <li><a href="#ptrdiff_t"><span class="d_inlinecode donthyphenate notranslate">ptrdiff_t</span></a></li>
         <li><a href="#string"><span class="d_inlinecode donthyphenate notranslate">string</span></a></li>
         <li><a href="#noreturn"><span class="d_inlinecode donthyphenate notranslate">noreturn</span></a></li>
     </ol></li>
 </ol>
 </div>
+<div class="blankline"></div>
+<h2><a class="anchor" title="Permalink to this section" id="grammar" href="#grammar">文法</a></h2>
 <div class="blankline"></div>
     <p>D is statically typed. Every expression has a type. Types constrain the values
     an expression can hold, and determine the semantics of operations on those values.
@@ -246,13 +250,12 @@
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">]</span>
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">[</span> <a href="../spec/expression.html#AssignExpression"><i>AssignExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">] .</span> <i>QualifiedIdentifier</i>
 </pre>
-<div class="blankline"></div>
-<div class="blankline"></div>
-    <p><a href="#basic_data_types">Basic Data Types</a> are leaf types.
-    <a href="#derived-data_types">Derived Data Types</a> build on leaf types.
-    <a href="#user-defined-types">User-Defined Types</a> are aggregates of basic and derived types.
-    </p>
-<div class="blankline"></div>
+
+<ul><li><a href="#basic-data-types">Basic Data Types</a> are leaf types.</li>
+<li><a href="#derived-data-types">Derived Data Types</a> build on leaf types.</li>
+<li><a href="#user-defined-types">User-Defined Types</a> are aggregates of basic and derived types.
+</li>
+</ul>
 <h2><span id="Basic Data Types"><a class="anchor" title="Permalink to this section" id="basic-data-types" href="#basic-data-types">基本的なデータ型</a></span></h2>
 <div class="blankline"></div>
     <center><table><caption>Basic Data Types</caption>    <tr><th class="donthyphenate"><b>Keyword</b></th><th class="donthyphenate"><b>Default Initializer (<span class="d_inlinecode donthyphenate notranslate">.init</span>)</b></th><th class="donthyphenate"><b>Description</b></th></tr>
@@ -282,6 +285,8 @@
     <tr><td><span class="d_inlinecode donthyphenate notranslate">dchar</span></td><td><span class="d_inlinecode donthyphenate notranslate">'\U0000FFFF'</span></td><td>unsigned 32 bit (UTF-32 code unit)</td></tr>
     </table></center>
 <div class="blankline"></div>
+    <p>Endianness of basic types is part of the <a href="../spec/abi.html#endianness">ABI</a></p>
+<div class="blankline"></div>
     <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b> The real floating point type has at least the range and precision
     of the <span class="d_inlinecode donthyphenate notranslate">double</span> type. On x86 CPUs it is often implemented as the 80 bit Extended Real
     type supported by the x86 FPU.
@@ -294,13 +299,66 @@
 <div class="blankline"></div>
 <h2><span id="Derived Data Types"><a class="anchor" title="Permalink to this section" id="derived-data-types" href="#derived-data-types">派生データ型</a></span></h2>
 <div class="blankline"></div>
-    <ul>    <li><a href="../spec/arrays.html#pointers">Pointer</a></li>
-    <li><a href="../spec/arrays.html#static-arrays">Static Array</a></li>
-    <li><a href="../spec/arrays.html#dynamic-arrays">Dynamic Array</a></li>
-    <li><a href="../spec/hash-map.html">Associative Array</a></li>
+    <ul>    <li>Pointers</li>
+    <li><a href="../spec/arrays.html#static-arrays">Static Arrays</a></li>
+    <li><a href="../spec/arrays.html#dynamic-arrays">Dynamic Arrays</a></li>
+    <li><a href="../spec/hash-map.html">Associative Arrays</a></li>
     <li><a href="../spec/function.html">Functions</a></li>
     <li><a href="#delegates">Delegates</a></li>
     </ul>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="pointers" href="#pointers">Pointers</a></h3>
+<div class="blankline"></div>
+        <p>A pointer to type <span class="d_inlinecode donthyphenate notranslate">T</span> has a value which is a reference (address) to another
+        object of type <span class="d_inlinecode donthyphenate notranslate">T</span>. It is commonly called a <i>pointer to T</i> and its type is
+        <span class="d_inlinecode donthyphenate notranslate">T*</span>. To access the object value, use the <span class="d_inlinecode donthyphenate notranslate">*</span> dereference operator:
+        </p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span>* p;
+
+<span class="d_keyword">assert</span>(p == <span class="d_keyword">null</span>);
+p = <span class="d_keyword">new</span> <span class="d_keyword">int</span>(5);
+<span class="d_keyword">assert</span>(p != <span class="d_keyword">null</span>);
+
+<span class="d_keyword">assert</span>(*p == 5);
+(*p)++;
+<span class="d_keyword">assert</span>(*p == 6);
+</pre>
+
+</div>
+<div class="blankline"></div>
+        <p>If a pointer contains a <i>null</i> value, it is not pointing to a valid object.</p>
+<div class="blankline"></div>
+        <p>When a pointer to <i>T</i> is dereferenced, it must either contain a <i>null</i> value,
+        or point to a valid object of type <i>T</i>.</p>
+<div class="blankline"></div>
+        <div class="spec-boxes implementation-defined"><b>Implementation Defined:</b>         <ol>        <li>The behavior when a <i>null</i> pointer is dereferenced. Typically the program
+        will be aborted.</li>
+        </ol></div>
+
+
+<div class="blankline"></div>
+        <div class="spec-boxes undefined-behavior"><b>Undefined Behavior:</b> dereferencing a pointer that is not <i>null</i> and does not point
+        to a valid object of type <i>T</i>.</div>
+
+
+<div class="blankline"></div>
+        <p>To set a pointer to point at an existing object, use the
+        <span class="d_inlinecode donthyphenate notranslate">&amp;</span> <em>address of</em> operator:</p>
+<div class="blankline"></div>
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span> i = 2;
+<span class="d_keyword">int</span>* p = &amp;i;
+
+<span class="d_keyword">assert</span>(p == &amp;i);
+<span class="d_keyword">assert</span>(*p == 2);
+*p = 4;
+<span class="d_keyword">assert</span>(i == 4);
+</pre>
+
+</div>
+        <p>See also <a href="../spec/expression.html#pointer_arithmetic">Pointer Arithmetic</a>.</p>
 <div class="blankline"></div>
 <div class="blankline"></div>
 <h2><span id="User Defined Types"><a class="anchor" title="Permalink to this section" id="user-defined-types" href="#user-defined-types">ユーザー定義型</a></span></h2>
@@ -315,20 +373,23 @@
 <div class="blankline"></div>
     See also: <a href="../spec/expression.html#CastExpression"><i>CastExpression</i></a>.
 <div class="blankline"></div>
-<h3><span id="Pointer Conversions"><a class="anchor" title="Permalink to this section" id="pointer-conversions" href="#pointer-conversions">ポインタへの変換</a></span></h3>
+<h3><span id="Pointer Conversions"><a class="anchor" title="Permalink to this section" id="pointer-conversions" href="#pointer-conversions">Pointer Conversions</a></span></h3>
 <div class="blankline"></div>
-    <p>Casting pointers to non-pointers and vice versa is allowed.</p>
+    <p><a href="#pointers">Pointers</a> implicitly convert to <span class="d_inlinecode donthyphenate notranslate">void*</span>.</p>
 <div class="blankline"></div>
-    <div class="spec-boxes best-practice"><b>Best Practices:</b> do not do this for any pointers that point to data
+    <p>Casting between pointers and non-pointers is allowed. Some pointer casts
+    are disallowed in <a href="../spec/memory-safe-d.html"><span class="d_inlinecode donthyphenate notranslate">@safe</span> code</a>.</p>
+<div class="blankline"></div>
+    <div class="spec-boxes best-practice"><b>Best Practices:</b> do not cast any pointer to a non-pointer type that points to data
     allocated by the garbage collector.
     </div>
 
 
 <div class="blankline"></div>
-<h3><span id="Implicit Conversions"><a class="anchor" title="Permalink to this section" id="implicit-conversions" href="#implicit-conversions">暗黙の変換</a></span></h3>
+<h3><span id="Implicit Conversions"><a class="anchor" title="Permalink to this section" id="implicit-conversions" href="#implicit-conversions">Implicit Conversions</a></span></h3>
 <div class="blankline"></div>
     <p>Implicit conversions are used to automatically convert
-    types as required.
+    types as required. The rules for integers are detailed in the next sections.
     </p>
 <div class="blankline"></div>
     <p>An enum can be implicitly converted to its base
@@ -348,6 +409,14 @@ i = f;           <span class="d_comment">// OK
 </span></pre>
 
 </div>
+<div class="blankline"></div>
+    <ul>    <li>All types implicitly convert to <a href="#noreturn"><span class="d_inlinecode donthyphenate notranslate">noreturn</span></a>.</li>
+    <li>Static and dynamic arrays implicitly convert to <a href="../spec/arrays.html#void_arrays"><span class="d_inlinecode donthyphenate notranslate">void[]</span></a>.</li>
+    <li><a href="../spec/function.html#function-pointers-delegates">Function pointers and delegates</a>
+        can convert to covariant types.</li>
+    </ul>
+<div class="blankline"></div>
+<h4><a class="anchor" title="Permalink to this section" id="class-conversions" href="#class-conversions">Class Conversions</a></h4>
 <div class="blankline"></div>
     <p>A derived class can be implicitly converted to its base class, but going
     the other way requires an explicit cast. For example:</p>
@@ -418,6 +487,35 @@ Base[3] ma = (Derived[3]).init; <span class="d_comment">// mutable elements
     column.
     </p>
 <div class="blankline"></div>
+    <p>Integer promotion applies to each operand of a binary expression:</p>
+<div class="blankline"></div>
+    <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">byte</span> a;
+<span class="d_keyword">auto</span> b = a + a;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(b) == <span class="d_keyword">int</span>));
+<span class="d_comment">// error: can't implicitly convert expression of type int to byte:
+</span><span class="d_comment">//byte c = a + a;
+</span>
+<span class="d_keyword">ushort</span> d;
+<span class="d_comment">// error: can't implicitly convert expression of type int to ushort:
+</span><span class="d_comment">//d = d * d;
+</span><span class="d_keyword">int</span> e = d * d; <span class="d_comment">// OK
+</span><span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(<span class="d_keyword">int</span>() * d) == <span class="d_keyword">int</span>));
+
+<span class="d_keyword">dchar</span> f;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(f - f) == <span class="d_keyword">uint</span>));
+</pre>
+    
+</div>
+<div class="blankline"></div>
+    <div class="spec-boxes rationale"><b>Rationale:</b> <ul><li>32-bit integer operations are often faster than smaller integer types
+      for single variables on modern architectures.</li>
+<li>Promotion helps avoid accidental overflow which is more common with small integer types.</li>
+</ul>
+    </div>
+
+
+<div class="blankline"></div>
 <h3><span id="Usual Arithmetic Conversions"><a class="anchor" title="Permalink to this section" id="usual-arithmetic-conversions" href="#usual-arithmetic-conversions">通常の算術変換</a></span></h3>
 <div class="blankline"></div>
     <p>The usual arithmetic conversions convert operands of binary
@@ -436,7 +534,7 @@ Base[3] ma = (Derived[3]).init; <span class="d_comment">// mutable elements
     <li>Else if either operand is <span class="d_inlinecode donthyphenate notranslate">float</span>, the other operand is
     converted to <span class="d_inlinecode donthyphenate notranslate">float</span>.</li>
 <div class="blankline"></div>
-    <li>Else the integer promotions are done on each operand,
+    <li>Else the integer promotions above are done on each operand,
     followed by:
 <div class="blankline"></div>
     <ol>        <li>If both are the same type, no more conversions are done.</li>
@@ -451,6 +549,35 @@ Base[3] ma = (Derived[3]).init; <span class="d_comment">// mutable elements
     </ol>
     </li>
     </ol>
+<div class="blankline"></div>
+    <div class="spec-boxes rationale"><b>Rationale:</b> The above rules follow C99, which makes porting code from C easier.</div>
+
+
+<div class="blankline"></div>
+    <p><b>Example:</b> Signed and unsigned conversions:</p>
+    <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span> i;
+<span class="d_keyword">uint</span> u;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(i + u) == <span class="d_keyword">uint</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(<span class="d_keyword">short</span>() + u) == <span class="d_keyword">uint</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(<span class="d_keyword">ulong</span>() + i) == <span class="d_keyword">ulong</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(<span class="d_keyword">long</span>() - u) == <span class="d_keyword">long</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(<span class="d_keyword">long</span>() * <span class="d_keyword">ulong</span>()) == <span class="d_keyword">ulong</span>));
+</pre>
+    
+</div>
+<div class="blankline"></div>
+    <p><b>Example:</b> Floating point:</p>
+    <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">float</span> f;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(f + <span class="d_keyword">ulong</span>()) == <span class="d_keyword">float</span>));
+
+<span class="d_keyword">double</span> d;
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(f * d) == <span class="d_keyword">double</span>));
+<span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(<span class="d_keyword">real</span>() / d) == <span class="d_keyword">real</span>));
+</pre>
+    
+</div>
 <div class="blankline"></div>
     <p>If one or both of the operand types is an enum  after
     undergoing the above conversions, the result type is:</p>
@@ -485,6 +612,56 @@ Base[3] ma = (Derived[3]).init; <span class="d_comment">// mutable elements
     point types.
     </p>
 <div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="vrp" href="#vrp">値の範囲の伝播</a></h3>
+<div class="blankline"></div>
+    <p>Besides type-based implicit conversions, D allows certain integer
+        expressions to implicitly convert to a narrower type after
+        integer promotion. This works by analysing the minimum and
+        maximum possible range of values for each expression.
+        If that range of values matches or is a subset of a narrower
+        target type's value range, implicit
+        conversion is allowed. If a subexpression is known at compile-time,
+        that can further narrow the range of values.</p>
+<div class="blankline"></div>
+    <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">extern</span> <span class="d_keyword">char</span> c;
+<span class="d_comment">// min is c.min + 100 &gt; short.min
+</span><span class="d_comment">// max is c.max + 100 &lt; short.max
+</span><span class="d_keyword">short</span> s = c + 100; <span class="d_comment">// OK
+</span>
+<span class="d_keyword">extern</span> <span class="d_keyword">int</span> i;
+<span class="d_keyword">ubyte</span> j = i &amp; 0x3F; <span class="d_comment">// OK, 0 ... 0x3F
+</span><span class="d_comment">//ubyte k = i &amp; 0x14A; // error, 0x14A &gt; ubyte.max
+</span><span class="d_keyword">ushort</span> k = i &amp; 0x14A; <span class="d_comment">// OK
+</span>
+<span class="d_keyword">extern</span> <span class="d_keyword">ubyte</span> b;
+k = i &amp; b; <span class="d_comment">// OK, 0 ... b.max
+</span><span class="d_comment">//b = b + b; // error, b.max + b.max &gt; b.max
+</span>s = b + b; <span class="d_comment">// OK, 0 ... b.max + b.max
+</span></pre>
+    
+</div>
+    <p>Note the implementation does not track the range of possible values for
+    mutable variables:</p>
+<div class="blankline"></div>
+    <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">extern</span> <span class="d_keyword">int</span> i;
+<span class="d_keyword">ushort</span> s = i &amp; 0xff; <span class="d_comment">// OK
+</span><span class="d_comment">// s is now assumed to be s.min ... s.max, not 0 ... 0xff
+</span><span class="d_comment">//ubyte b = s; // error
+</span><span class="d_keyword">ubyte</span> b = s &amp; 0xff; <span class="d_comment">// OK
+</span>
+<span class="d_keyword">const</span> <span class="d_keyword">int</span> c = i &amp; 0xff;
+<span class="d_comment">// c's range is fixed and known
+</span>b = c; <span class="d_comment">// OK
+</span></pre>
+    
+</div>
+<ul><li>For more information, see <a href="https://digitalmars.com/articles/b62.html">the dmc article</a>.</li>
+<li>See also: <a href="https://en.wikipedia.org/wiki/Value_range_analysis">https://en.wikipedia.org/wiki/Value_range_analysis</a>.
+<div class="blankline"></div>
+</li>
+</ul>
 <h2><a class="anchor" title="Permalink to this section" id="bool" href="#bool"><span class="d_inlinecode donthyphenate notranslate">bool</span></a></h2>
 <div class="blankline"></div>
 <p>The bool type is a byte-size type that can only hold the value <span class="d_inlinecode donthyphenate notranslate">true</span> or
@@ -661,7 +838,7 @@ dg = &amp;o.member; <span class="d_comment">// dg is a delegate to object o and
 
 
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="mixin_types" href="#mixin_types">Mixin型</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="mixin_types" href="#mixin_types">Mixin 型</a></h2>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="MixinType"><span class="gname">MixinType</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">mixin (</span> <a href="../spec/expression.html#ArgumentList"><i>ArgumentList</i></a> <span class="d_inlinecode donthyphenate notranslate">)</span>
@@ -682,7 +859,7 @@ dg = &amp;o.member; <span class="d_comment">// dg is a delegate to object o and
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="aliased-types" href="#aliased-types">Aliase型</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="aliased-types" href="#aliased-types">Aliase 型</a></h2>
 <div class="blankline"></div>
 <h3><a class="anchor" title="Permalink to this section" id="size_t" href="#size_t"><span class="d_inlinecode donthyphenate notranslate">size_t</span></a></h3>
 <div class="blankline"></div>
@@ -737,7 +914,7 @@ dg = &amp;o.member; <span class="d_comment">// dg is a delegate to object o and
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 03:03:56 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 08:30:53 2022
 </div>
     </div>
 </div>
