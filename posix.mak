@@ -148,7 +148,7 @@ endif
 # DLang directories
 DMD_DIR=../dmd
 PHOBOS_DIR=../phobos
-DRUNTIME_DIR=../dmd/druntime
+DRUNTIME_DIR=../druntime
 TOOLS_DIR=../tools
 INSTALLER_DIR=../installer
 DUB_DIR=../dub
