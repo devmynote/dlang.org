@@ -527,14 +527,14 @@ C11
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="http://www.digitalmars.com">Walter Bright</a>
+    <a href="https://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -611,6 +611,70 @@ C11
   <div class="ddoc_summary">
   <p class="para">
     add declaration of _func__ to function symbol table
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#CParser.importBuiltins" id="CParser.importBuiltins"><code class="code">importBuiltins</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="CParser.importBuiltins"></span>bool <code class="code">importBuiltins</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    seen use of C compiler builtins, so import _builtins;
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#CParser.typedefTab" id="CParser.typedefTab"><code class="code">typedefTab</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="CParser.typedefTab"></span>Array!(void*) <code class="code">typedefTab</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Array of AST.Type[Identifier], typedef's indexed by Identifier
   </p>
 </div>
 
@@ -847,6 +911,7 @@ C11
     string-literal
     ( expression )
     generic-selection
+    _builtin_va_arg(assign_expression, type)
   </p>
 </div>
 
@@ -1167,6 +1232,7 @@ C11
     restrict
     volatile
     Atomic
+    _stdcall
   </p>
 </div>
 
@@ -1330,7 +1396,7 @@ C11
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="CParser.cparseStructDeclaration"></span>void <code class="code">cparseStructDeclaration</code>();
+            <span class="ddoc_anchor" id="CParser.cparseStructDeclaration"></span>void <code class="code">cparseStructDeclaration</code>(AST.Dsymbols* <code class="code">members</code>);
 
           </code>
         </p>
@@ -1360,7 +1426,30 @@ C11
  struct-declarator:
     declarator
     declarator (opt) : constant-expression
+
   </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">AST.Dsymbols* <code class="code">members</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      where to put the fields (<code class="code">members</code>)
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
 </div>
 
 </section>
@@ -2091,6 +2180,332 @@ C11
   <p class="para">
     After encountering an error, scan forward until a right brace or ; is found
  or the end of the file.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#CParser.isFunctionTypedef" id="CParser.isFunctionTypedef"><code class="code">isFunctionTypedef</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="CParser.isFunctionTypedef"></span>bool <code class="code">isFunctionTypedef</code>(AST.Type <code class="code">t</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    typedefTab symbol table
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    Determines if type <code class="code">t</code> is a function type.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">AST.Type <code class="code">t</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      type to test
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    <code class="code">true</code> if it represents a function
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#CParser.isTypedef" id="CParser.isTypedef"><code class="code">isTypedef</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="CParser.isTypedef"></span>bool <code class="code">isTypedef</code>(Identifier <code class="code">id</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Determine if <code class="code"><code class="code">id</code></code> is a symbol for a Typedef.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Identifier <code class="code">id</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      possible typedef
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    <code class="code">true</code> if <code class="code">id</code> is a Type
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#CParser.insertIdToTypedefTab" id="CParser.insertIdToTypedefTab"><code class="code">insertIdToTypedefTab</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="CParser.insertIdToTypedefTab"></span>void <code class="code">insertIdToTypedefTab</code>(Identifier <code class="code">id</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Add <code class="code"><code class="code">id</code></code> to typedefTab[], but only if it will mask an existing typedef.
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Identifier <code class="code">id</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      identifier for non-typedef symbol
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#CParser.insertTypedefToTypedefTab" id="CParser.insertTypedefToTypedefTab"><code class="code">insertTypedefToTypedefTab</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="CParser.insertTypedefToTypedefTab"></span>void <code class="code">insertTypedefToTypedefTab</code>(Identifier <code class="code">id</code>, AST.Type <code class="code">t</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Add <code class="code"><code class="code">id</code></code> to typedefTab[]
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Identifier <code class="code">id</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      identifier for typedef symbol
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">AST.Type <code class="code">t</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      type of the typedef symbol
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#CParser.lookupTypedef" id="CParser.lookupTypedef"><code class="code">lookupTypedef</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="CParser.lookupTypedef"></span>AST.Type* <code class="code">lookupTypedef</code>(Identifier <code class="code">id</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Lookup <code class="code">id</code> in typedefTab[].
+
+  </p>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    if not found, then <code class="code">null</code>.
+  if found, then Type*. Deferencing it will yield <code class="code">null</code> if it is not
+  a typedef, and a type if it is a typedef.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#CParser.parseSpecialTokenSequence" id="CParser.parseSpecialTokenSequence"><code class="code">parseSpecialTokenSequence</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="CParser.parseSpecialTokenSequence"></span>bool <code class="code">parseSpecialTokenSequence</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Directive Parser
   </p>
 </div>
 

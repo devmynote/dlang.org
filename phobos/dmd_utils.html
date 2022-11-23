@@ -519,14 +519,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="http://www.digitalmars.com">Walter Bright</a>
+    <a href="https://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -567,7 +567,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="toWinPath"></span>const(char)* <code class="code">toWinPath</code>(const(char)* <code class="code">src</code>);
+            <span class="ddoc_anchor" id="toWinPath"></span>nothrow const(char)* <code class="code">toWinPath</code>(const(char)* <code class="code">src</code>);
 
           </code>
         </p>
@@ -628,9 +628,9 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="readFile"></span>FileBuffer <code class="code">readFile</code>(Loc <code class="code">loc</code>, const(char)* <code class="code">filename</code>);
+            <span class="ddoc_anchor" id="readFile"></span>nothrow Buffer <code class="code">readFile</code>(Loc <code class="code">loc</code>, const(char)* <code class="code">filename</code>);
 <br>
-FileBuffer <code class="code">readFile</code>(Loc <code class="code">loc</code>, const(char)[] <code class="code">filename</code>);
+nothrow Buffer <code class="code">readFile</code>(Loc <code class="code">loc</code>, const(char)[] <code class="code">filename</code>);
 
           </code>
         </p>
@@ -699,7 +699,7 @@ FileBuffer <code class="code">readFile</code>(Loc <code class="code">loc</code>,
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="writeFile"></span>void <code class="code">writeFile</code>(Loc <code class="code">loc</code>, const(char)[] <code class="code">filename</code>, const void[] <code class="code">data</code>);
+            <span class="ddoc_anchor" id="writeFile"></span>nothrow void <code class="code">writeFile</code>(Loc <code class="code">loc</code>, const(char)[] <code class="code">filename</code>, const void[] <code class="code">data</code>);
 
           </code>
         </p>
@@ -782,7 +782,7 @@ FileBuffer <code class="code">readFile</code>(Loc <code class="code">loc</code>,
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="ensurePathToNameExists"></span>void <code class="code">ensurePathToNameExists</code>(Loc <code class="code">loc</code>, const(char)[] <code class="code">name</code>);
+            <span class="ddoc_anchor" id="ensurePathToNameExists"></span>nothrow void <code class="code">ensurePathToNameExists</code>(Loc <code class="code">loc</code>, const(char)[] <code class="code">name</code>);
 
           </code>
         </p>
@@ -852,7 +852,7 @@ FileBuffer <code class="code">readFile</code>(Loc <code class="code">loc</code>,
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="escapePath"></span>void <code class="code">escapePath</code>(OutBuffer* <code class="code">buf</code>, const(char)* <code class="code">fname</code>);
+            <span class="ddoc_anchor" id="escapePath"></span>nothrow void <code class="code">escapePath</code>(OutBuffer* <code class="code">buf</code>, const(char)* <code class="code">fname</code>);
 
           </code>
         </p>
@@ -921,7 +921,7 @@ FileBuffer <code class="code">readFile</code>(Loc <code class="code">loc</code>,
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="writeEscapedMakePath"></span>void <code class="code">writeEscapedMakePath</code>(ref OutBuffer <code class="code">buf</code>, const(char)* <code class="code">fname</code>);
+            <span class="ddoc_anchor" id="writeEscapedMakePath"></span>nothrow void <code class="code">writeEscapedMakePath</code>(ref OutBuffer <code class="code">buf</code>, const(char)* <code class="code">fname</code>);
 
           </code>
         </p>

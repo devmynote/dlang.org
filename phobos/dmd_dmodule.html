@@ -527,14 +527,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="http://www.digitalmars.com">Walter Bright</a>
+    <a href="https://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -575,7 +575,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="removeHdrFilesAndFail"></span>void <code class="code">removeHdrFilesAndFail</code>(ref Param <code class="code">params</code>, ref Modules <code class="code">modules</code>);
+            <span class="ddoc_anchor" id="removeHdrFilesAndFail"></span>nothrow void <code class="code">removeHdrFilesAndFail</code>(ref Param <code class="code">params</code>, ref Modules <code class="code">modules</code>);
 
           </code>
         </p>
@@ -841,6 +841,38 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#Module.src" id="Module.src"><code class="code">src</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Module.src"></span>const(ubyte)[] <code class="code">src</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Raw content of the file
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#Module.tagSymTab" id="Module.tagSymTab"><code class="code">tagSymTab</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -1018,89 +1050,6 @@ tag symbols that conflict with other symbols used as the index
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#Module.loadSourceBuffer" id="Module.loadSourceBuffer"><code class="code">loadSourceBuffer</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="Module.loadSourceBuffer"></span>bool <code class="code">loadSourceBuffer</code>(const ref Loc <code class="code">loc</code>, ref File.ReadResult <code class="code">readResult</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Loads the source buffer from the given read result into <code class="code">this.srcBuffer</code>.
-
-  </p>
-</div>
-<div class="ddoc_description">
-  <h4>Discussion</h4>
-  <p class="para">
-    Will take ownership of the buffer located inside <code class="code"><code class="code">readResult</code></code>.
-
-
-  </p>
-</div>
-<div class="ddoc_params">
-  <h4>Parameters</h4>
-  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
-    <tbody>
-      <tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">Loc <code class="code">loc</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      the location
-    </p>
-  </div>
-</td>
-</tr>
-<tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">File.ReadResult <code class="code">readResult</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      the result of reading a file containing the source code
-    </p>
-  </div>
-</td>
-</tr>
-
-    </tbody>
-  </table>
-</div>
-<div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    <code class="code">true</code> if successful
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
   <a href="#Module.read" id="Module.read"><code class="code">read</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -1161,13 +1110,6 @@ tag symbols that conflict with other symbols used as the index
   <h4>Return Value</h4>
   <p class="para">
     <code class="code">true</code> if successful
-
-  </p>
-</div>
-<div class="ddoc_see_also">
-  <h4>See Also</h4>
-  <p class="para">
-    loadSourceBuffer
   </p>
 </div>
 
@@ -1388,7 +1330,7 @@ tag symbols that conflict with other symbols used as the index
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="Module.imports"></span>int <code class="code">imports</code>(Module <code class="code">m</code>);
+            <span class="ddoc_anchor" id="Module.imports"></span>nothrow int <code class="code">imports</code>(Module <code class="code">m</code>);
 
           </code>
         </p>
@@ -1454,7 +1396,7 @@ tag symbols that conflict with other symbols used as the index
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="Module.fullyQualifiedName"></span>void <code class="code">fullyQualifiedName</code>(ref OutBuffer <code class="code">buf</code>);
+            <span class="ddoc_anchor" id="Module.fullyQualifiedName"></span>nothrow void <code class="code">fullyQualifiedName</code>(ref OutBuffer <code class="code">buf</code>);
 
           </code>
         </p>
@@ -1509,7 +1451,7 @@ tag symbols that conflict with other symbols used as the index
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="Module.escapetable"></span>Escape* <code class="code">escapetable</code>();
+            <span class="ddoc_anchor" id="Module.escapetable"></span>nothrow Escape* <code class="code">escapetable</code>();
 
           </code>
         </p>

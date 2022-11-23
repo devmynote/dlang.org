@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>dmd.root.outbuffer</title>
+    <title>dmd.common.outbuffer</title>
     <style type="text/css" media="screen">
       html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,
       blockquote, pre, a, abbr, address, cite, code, del, dfn, em, figure,
@@ -508,7 +508,7 @@
   <body id="ddoc_main" class="ddoc dlang">
     <div class="content_wrapper">
       <article class="module">
-        <h1 class="module_name">dmd.root.outbuffer</h1>
+        <h1 class="module_name">dmd.common.outbuffer</h1>
         <section id="module_content"><section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
@@ -519,14 +519,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    Walter Bright, <a href="http://www.digitalmars.com">http://www.digitalmars.com</a>
+    Walter Bright, <a href="https://www.digitalmars.com">https://www.digitalmars.com</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -694,7 +694,39 @@ a contiguous array or a memory-mapped file.
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="OutBuffer.this"></span>@trusted this(const(char)* <code class="code">filename</code>);
+            <span class="ddoc_anchor" id="OutBuffer.this"></span>nothrow this(size_t <code class="code">initialSize</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Construct given size.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.this" id="OutBuffer.this"><code class="code">this</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.this.2"></span>nothrow @trusted this(const(char)* <code class="code">filename</code>);
 
           </code>
         </p>
@@ -732,6 +764,102 @@ a contiguous array or a memory-mapped file.
 
     </tbody>
   </table>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.dtor" id="OutBuffer.dtor"><code class="code">dtor</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.dtor"></span>pure nothrow @trusted void <code class="code">dtor</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Frees resources associated.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.buf" id="OutBuffer.buf"><code class="code">buf</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.buf"></span>nothrow ubyte* <code class="code">buf</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    For porting with ease from dmd.backend.outbuf.Outbuffer
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.bufptr" id="OutBuffer.bufptr"><code class="code">bufptr</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.bufptr"></span>nothrow ubyte** <code class="code">bufptr</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    For porting with ease from dmd.backend.outbuf.Outbuffer
+  </p>
 </div>
 
 </section>
@@ -925,6 +1053,206 @@ a contiguous array or a memory-mapped file.
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.write16n" id="OutBuffer.write16n"><code class="code">write16n</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.write16n"></span>nothrow @trusted void <code class="code">write16n</code>(int <code class="code">v</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Writes a 16 bit value, no reserve check.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.write16" id="OutBuffer.write16"><code class="code">write16</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.write16"></span>nothrow void <code class="code">write16</code>(int <code class="code">v</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Writes a 16 bit value.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.write32" id="OutBuffer.write32"><code class="code">write32</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.write32"></span>nothrow @trusted void <code class="code">write32</code>(int <code class="code">v</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Writes a 32 bit int.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.write64" id="OutBuffer.write64"><code class="code">write64</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.write64"></span>nothrow @trusted void <code class="code">write64</code>(long <code class="code">v</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Writes a 64 bit int.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.writestring" id="OutBuffer.writestring"><code class="code">writestring</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.writestring"></span>pure nothrow void <code class="code">writestring</code>(const(char)* <code class="code">s</code>);
+<br>
+pure nothrow void <code class="code">writestring</code>(const(char)[] <code class="code">s</code>);
+<br>
+pure nothrow void <code class="code">writestring</code>(string <code class="code">s</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    NOT zero-terminated
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.writestringln" id="OutBuffer.writestringln"><code class="code">writestringln</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.writestringln"></span>pure nothrow void <code class="code">writestringln</code>(const(char)[] <code class="code">s</code>);
+<br>
+<span class="ddoc_anchor" id="OutBuffer.writeString"></span>pure nothrow void <code class="code">writeString</code>(const(char)[] <code class="code">s</code>);
+<br>
+pure nothrow void <code class="code">writeString</code>(string <code class="code">s</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    NOT zero-terminated, followed by newline
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#OutBuffer.writenl" id="OutBuffer.writenl"><code class="code">writenl</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -947,6 +1275,38 @@ a contiguous array or a memory-mapped file.
   <div class="ddoc_summary">
   <p class="para">
     write newline
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#OutBuffer.writeByten" id="OutBuffer.writeByten"><code class="code">writeByten</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="OutBuffer.writeByten"></span>nothrow @trusted void <code class="code">writeByten</code>(int <code class="code">b</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Writes an 8 bit byte, no reserve check.
   </p>
 </div>
 
@@ -1247,7 +1607,7 @@ a contiguous array or a memory-mapped file.
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="OutBuffer.moveToFile"></span>bool <code class="code">moveToFile</code>(const char* <code class="code">filename</code>);
+            <span class="ddoc_anchor" id="OutBuffer.moveToFile"></span>nothrow bool <code class="code">moveToFile</code>(const char* <code class="code">filename</code>);
 
           </code>
         </p>

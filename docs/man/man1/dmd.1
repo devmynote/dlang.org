@@ -1,4 +1,4 @@
-.TH DMD 1 "2022-11-20" "The D Language Foundation" "The D Language Foundation"
+.TH DMD 1 "2022-11-23" "The D Language Foundation" "The D Language Foundation"
 .SH NAME
 dmd \- Digital Mars D2.x Compiler
 .SH SYNOPSIS
@@ -127,7 +127,7 @@ Generate 32 bit code
 .IP -m64
 Generate 64 bit code
 .IP -main
-Add default main() (e.g. for unittesting)
+Add default main() if not present already (e.g. for unittesting)
 .IP -makedeps[=\fIfilename\fR]
 Print dependencies in Makefile compatible format to \fIfilename\fR or stdout.
 .IP -man
@@ -154,6 +154,8 @@ Write object & library files to \fIdirectory\fR
 Name output file to \fIfilename\fR
 .IP -op
 Preserve source path for output files
+.IP -os=\fIos\fR
+Sets target operating system to \fIos\fR
 .IP -preview=\fIname\fR
 Enable an upcoming language change identified by \fIname\fR
 .IP -preview=[h|help|?]
@@ -182,6 +184,8 @@ List all language changes
 Compile in unit tests
 .IP -v
 Verbose
+.IP -vasm
+List generated assembler for each function
 .IP -vcolumns
 Print character (column) numbers in diagnostics
 .IP -verror-style=[digitalmars|gnu]
@@ -218,10 +222,14 @@ Pass \fIdriverflag\fR to linker driver (cc)
 Language changes listed by \fB-transition=id\fR:
 .IP \fIfield\fR
 List all non-mutable fields which occupy an object instance
+.IP \fIcomplex\fR
+Give deprecation messages about all usages of complex or imaginary types
 .IP \fItls\fR
 List all variables going into thread local storage
 .IP \fIvmarkdown\fR
 List instances of Markdown replacements in Ddoc
+.IP \fIin\fR
+List all usages of 'in' on parameter
 .SH LINKING
 Linking is done directly by the
 .B dmd
@@ -235,12 +243,11 @@ The actual linking is done by running \fBgcc\fR.
 This ensures compatibility with modules compiled with
 \fBgcc\fR.
 .SH FILES
+.TP
 .I /etc/dmd.conf
-dmd will look for the initialization file
-.I dmd.conf
-in the directory \fI/etc\fR.
-If found, environment variable settings in the file will
-override any existing settings.
+System wide \fBdmd\fR config file. See
+.BR dmd.conf(5)
+for details.
 .SH ENVIRONMENT
 The D compiler dmd uses the following environment
 variables:

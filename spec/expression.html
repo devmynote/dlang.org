@@ -808,8 +808,9 @@ C c;
         bits in the operands being identical.
     </p>
 <div class="blankline"></div>
-    <p>For static and dynamic arrays, identity is defined as referring
-        to the same array elements and the same number of elements.
+    <p>For static and dynamic arrays, identity of two arrays is given when
+    both arrays refer to the same memory location and contain the same number
+    of elements.
     </p>
 <div class="blankline"></div>
     <p>For other operand types, identity is defined as being the same
@@ -1500,6 +1501,7 @@ bar = <span class="d_keyword">new</span> <span class="d_keyword">int</span>[][][
 }
 </pre>
 <div class="blankline"></div>
+    <p>The type of a <em>ThrowExpression</em> is <a href="../spec/type.html#noreturn"><span class="d_inlinecode donthyphenate notranslate">noreturn</span></a>.</p>
 <div class="blankline"></div>
 <div class="spec-boxes best-practice"><b>Best Practices:</b> Use <a href="../spec/expression.html#assert_expressions">Assert Expressions</a>
 rather than <a href="../library/object#.Error">Error</a> to report program bugs
@@ -1991,10 +1993,10 @@ and abort the program.
 <h3><a class="anchor" title="Permalink to this section" id="function_literals" href="#function_literals">関数リテラル</a></h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="FunctionLiteral"><span class="gname">FunctionLiteral</span></a>:
-    <span class="d_inlinecode donthyphenate notranslate">function</span> <span class="d_inlinecode donthyphenate notranslate">ref</span><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a><sub>opt</sub> <a href="#ParameterWithAttributes"><i>ParameterWithAttributes</i></a> <sub>opt</sub> <a href="#FunctionLiteralBody2"><i>FunctionLiteralBody2</i></a>
-    <span class="d_inlinecode donthyphenate notranslate">delegate</span> <span class="d_inlinecode donthyphenate notranslate">ref</span><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a><sub>opt</sub> <a href="#ParameterWithMemberAttributes"><i>ParameterWithMemberAttributes</i></a> <sub>opt</sub> <a href="#FunctionLiteralBody2"><i>FunctionLiteralBody2</i></a>
+    <span class="d_inlinecode donthyphenate notranslate">function</span> <span class="d_inlinecode donthyphenate notranslate">ref</span><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a><sub>opt</sub> <a href="#ParameterWithAttributes"><i>ParameterWithAttributes</i></a><sub>opt</sub> <a href="#FunctionLiteralBody2"><i>FunctionLiteralBody2</i></a>
+    <span class="d_inlinecode donthyphenate notranslate">delegate</span> <span class="d_inlinecode donthyphenate notranslate">ref</span><sub>opt</sub> <a href="../spec/type.html#Type"><i>Type</i></a><sub>opt</sub> <a href="#ParameterWithMemberAttributes"><i>ParameterWithMemberAttributes</i></a><sub>opt</sub> <a href="#FunctionLiteralBody2"><i>FunctionLiteralBody2</i></a>
     <span class="d_inlinecode donthyphenate notranslate">ref</span><sub>opt</sub> <a href="#ParameterWithMemberAttributes"><i>ParameterWithMemberAttributes</i></a> <a href="#FunctionLiteralBody2"><i>FunctionLiteralBody2</i></a>
-    <a href="../spec/function.html#FunctionLiteralBody"><i>FunctionLiteralBody</i></a>
+    <a href="../spec/statement.html#BlockStatement"><i>BlockStatement</i></a>
     <a href="../spec/lex.html#Identifier"><i>Identifier</i></a> <span class="d_inlinecode donthyphenate notranslate">=&gt;</span> <a href="#AssignExpression"><i>AssignExpression</i></a>
 <div class="blankline"></div>
 <a id="ParameterWithAttributes"><span class="gname">ParameterWithAttributes</span></a>:
@@ -2005,15 +2007,15 @@ and abort the program.
 <div class="blankline"></div>
 <a id="FunctionLiteralBody2"><span class="gname">FunctionLiteralBody2</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">=&gt;</span> <a href="#AssignExpression"><i>AssignExpression</i></a>
-    <a href="../spec/function.html#FunctionLiteralBody"><i>FunctionLiteralBody</i></a>
+    <a href="../spec/function.html#SpecifiedFunctionBody"><i>SpecifiedFunctionBody</i></a>
 </pre>
 <div class="blankline"></div>
     <p><i>FunctionLiteral</i>s (also known as <a class="anchor" title="Permalink to this section" id="lambdas" href="#lambdas"><i>Lambdas</i></a>) enable embedding anonymous functions
         and anonymous delegates directly into expressions.
-        <i>Type</i> is the return type of the function or delegate,
-        if omitted it is inferred from any <i>ReturnStatement</i>s
-        in the <i>FunctionLiteralBody</i>.
-        <a href="#ParameterWithAttributes"><i>ParameterWithAttributes</i></a> or <a href="#ParameterWithMemberAttributes"><i>ParameterWithMemberAttributes</i></a>
+        <i>Type</i> is the return type of the function or delegate -
+        if omitted it is inferred from either the <em>AssignExpression</em>, or
+        any <a href="../spec/statement.html#ReturnStatement"><i>ReturnStatement</i></a>s in the <i>BlockStatement</i>.
+        <i>ParameterWithAttributes</i> or <i>ParameterWithMemberAttributes</i>
         can be used to specify the parameters for the function. If these are
         omitted, the function defaults to the empty parameter list <span class="d_inlinecode donthyphenate notranslate">( )</span>.
         The type of a function literal is a
@@ -2092,25 +2094,48 @@ and abort the program.
 <div class="blankline"></div>
 <h4><a class="anchor" title="Permalink to this section" id="lambda-type-inference" href="#lambda-type-inference">Type Inference</a></h4>
 <div class="blankline"></div>
-    <p>If <span class="d_inlinecode donthyphenate notranslate">function</span> or <span class="d_inlinecode donthyphenate notranslate">delegate</span> is omitted,
-        it is inferred to be <span class="d_inlinecode donthyphenate notranslate">delegate</span> if accessing
-        variables in enclosing functions, otherwise <span class="d_inlinecode donthyphenate notranslate">function</span> is inferred.
+    <p>If a literal omits <span class="d_inlinecode donthyphenate notranslate">function</span> or <span class="d_inlinecode donthyphenate notranslate">delegate</span> and there's no
+        expected type from the context, then
+        it is inferred to be a delegate if it accesses a
+        variable in an enclosing function, otherwise it is a function pointer.
         </p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">int</span> abc(<span class="d_keyword">int</span> <span class="d_keyword">delegate</span>(<span class="d_keyword">int</span> i));
-<span class="d_keyword">int</span> def(<span class="d_keyword">uint</span> <span class="d_keyword">function</span>(<span class="d_keyword">uint</span> s));
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">void</span> test()
+{
+    <span class="d_keyword">int</span> b = 3;
+
+    <span class="d_keyword">auto</span> fp = (<span class="d_keyword">uint</span> c) { <span class="d_keyword">return</span> c * 2; }; <span class="d_comment">// inferred as function pointer
+</span>    <span class="d_keyword">auto</span> dg = (<span class="d_keyword">int</span> c) { <span class="d_keyword">return</span> 6 + b; }; <span class="d_comment">// inferred as delegate
+</span>
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(!<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(fp) == <span class="d_keyword">delegate</span>));
+    <span class="d_keyword">static</span> <span class="d_keyword">assert</span>(<span class="d_keyword">is</span>(<span class="d_keyword">typeof</span>(dg) == <span class="d_keyword">delegate</span>));
+}
+</pre>
+        
+</div>
+    <p>If a delegate is expected, the literal will be inferred as a delegate
+        even if it accesses no variables from an enclosing function:</p>
+<div class="blankline"></div>
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">void</span> abc(<span class="d_keyword">int</span> <span class="d_keyword">delegate</span>(<span class="d_keyword">int</span> i)) {}
+<span class="d_keyword">void</span> def(<span class="d_keyword">uint</span> <span class="d_keyword">function</span>(<span class="d_keyword">uint</span> s)) {}
 
 <span class="d_keyword">void</span> test()
 {
     <span class="d_keyword">int</span> b = 3;
 
     abc( (<span class="d_keyword">int</span> c) { <span class="d_keyword">return</span> 6 + b; } );  <span class="d_comment">// inferred as delegate
-</span>    def( (<span class="d_keyword">uint</span> c) { <span class="d_keyword">return</span> c * 2; } ); <span class="d_comment">// inferred as function
+</span>    abc( (<span class="d_keyword">int</span> c) { <span class="d_keyword">return</span> c * 2; } );  <span class="d_comment">// inferred as delegate
+</span>
+    def( (<span class="d_keyword">uint</span> c) { <span class="d_keyword">return</span> c * 2; } ); <span class="d_comment">// inferred as function
 </span>    <span class="d_comment">//def( (uint c) { return c * b; } );  // error!
-</span>    <span class="d_comment">// Because the FunctionLiteralBody accesses b, the function literal type
+</span>    <span class="d_comment">// Because the FunctionLiteral accesses b, its type
 </span>    <span class="d_comment">// is inferred as delegate. But def cannot accept a delegate argument.
 </span>}
 </pre>
+        
+</div>
 <div class="blankline"></div>
     <p>If the type of a function literal can be uniquely determined from its context,
         parameter type inference is possible.</p>
@@ -2120,24 +2145,34 @@ and abort the program.
 <span class="d_keyword">void</span> test()
 {
     <span class="d_keyword">int</span> <span class="d_keyword">function</span>(<span class="d_keyword">int</span>) fp = (n) { <span class="d_keyword">return</span> n * 2; };
-    <span class="d_comment">// The type of parameter n is inferred to int.
+    <span class="d_comment">// The type of parameter n is inferred as int.
 </span>
     foo((n) { <span class="d_keyword">return</span> n * 2; });
-    <span class="d_comment">// The type of parameter n is inferred to int.
+    <span class="d_comment">// The type of parameter n is inferred as int.
 </span>}
 </pre>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">auto</span> fp1 = <span class="d_keyword">function</span> (i) { <span class="d_keyword">return</span> 1; }; <span class="d_comment">// error, cannot infer type of `i`
+<pre class="d_code notranslate"><span class="d_keyword">auto</span> fp = (i) { <span class="d_keyword">return</span> 1; }; <span class="d_comment">// error, cannot infer type of `i`
 </span></pre>
 <div class="blankline"></div>
-    <p>If the function literal is assigned to an alias, the inference
+    <p>If a function literal is
+        <a href="../spec/declaration.html#alias">aliased</a>, the inference
         of the parameter types is done when the types are needed, as
-        the function literal becomes a template.</p>
+        the function literal becomes a
+        <a href="../spec/template.html#function-templates">template</a>.</p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">alias</span> fp3 = <span class="d_keyword">function</span> (i) { <span class="d_keyword">return</span> 1; };   <span class="d_comment">// ok, infer type of `i` when used
-</span><span class="d_keyword">int</span> j = fp3(4);       <span class="d_comment">// `i` is inferred as `int` here
-</span><span class="d_keyword">double</span> d = fp3(10.3); <span class="d_comment">// `i` is inferred as `double` here
+        <div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">alias</span> fpt = (i) { <span class="d_keyword">return</span> i; }; <span class="d_comment">// ok, infer type of `i` when used
+</span><span class="d_comment">//auto fpt(T)(T i) { return i; } // equivalent
+</span>
+<span class="d_keyword">auto</span> v = fpt(4);    <span class="d_comment">// `i` is inferred as int
+</span><span class="d_keyword">auto</span> d = fpt(10.3); <span class="d_comment">// `i` is inferred as double
+</span>
+<span class="d_keyword">alias</span> fp = fpt!<span class="d_keyword">float</span>;
+<span class="d_keyword">auto</span> f = fp(0); <span class="d_comment">// f is a float
 </span></pre>
+        
+</div>
 <div class="blankline"></div>
 <h4><a class="anchor" title="Permalink to this section" id="lambda-short-syntax" href="#lambda-short-syntax">短い構文</a></h4>
 <div class="blankline"></div>
@@ -2461,6 +2496,12 @@ and abort the program.
         compared against.
     </p>
 <div class="blankline"></div>
+    <p><i>IsExpression</i>s may be used in conjunction with <span class="d_inlinecode donthyphenate notranslate">typeof</span> to check
+    whether an expression is semantically correct. For example, <span class="d_inlinecode donthyphenate notranslate">is(typeof(foo))</span>
+    will return <span class="d_inlinecode donthyphenate notranslate">true</span> if <span class="d_inlinecode donthyphenate notranslate">foo</span> is a semantically correct expression with a valid
+    type.
+    </p>
+<div class="blankline"></div>
 <h4><a class="anchor" title="Permalink to this section" id="basic-forms" href="#basic-forms">Basic Forms</a></h4>
 <div class="blankline"></div>
         <h5><a class="anchor" title="Permalink to this section" id="is-type" href="#is-type"><span class="d_inlinecode donthyphenate notranslate">is (</span> <i>Type</i> <span class="d_inlinecode donthyphenate notranslate">)</span></a></h5>
@@ -2527,6 +2568,7 @@ and abort the program.
                 <span class="d_inlinecode donthyphenate notranslate">delegate</span>
                 <span class="d_inlinecode donthyphenate notranslate">const</span>
                 <span class="d_inlinecode donthyphenate notranslate">immutable</span>
+                <span class="d_inlinecode donthyphenate notranslate">inout</span>
                 <span class="d_inlinecode donthyphenate notranslate">shared</span>
                 <span class="d_inlinecode donthyphenate notranslate">module</span>
                 <span class="d_inlinecode donthyphenate notranslate">package</span>
@@ -2642,7 +2684,10 @@ writeln(<span class="d_keyword">typeid</span>(S));  <span class="d_comment">// p
                 <span class="d_inlinecode donthyphenate notranslate">delegate</span>
                 <span class="d_inlinecode donthyphenate notranslate">const</span>
                 <span class="d_inlinecode donthyphenate notranslate">immutable</span>
+                <span class="d_inlinecode donthyphenate notranslate">inout</span>
                 <span class="d_inlinecode donthyphenate notranslate">shared</span>
+                <span class="d_inlinecode donthyphenate notranslate">module</span>
+                <span class="d_inlinecode donthyphenate notranslate">package</span>
 <div class="blankline"></div>
         then the condition is satisfied if <i>Type</i> is one of those.
         <em>TypeSpecialization</em> can also match the following keywords:
@@ -2673,11 +2718,11 @@ writeln(<span class="d_keyword">typeid</span>(S));  <span class="d_comment">// p
         <tr><td><span class="d_inlinecode donthyphenate notranslate">__parameters</span></td><td>the parameter sequence of a function, delegate, or function pointer.
          This includes the parameter types, names, and default values.</td></tr>
         <tr><td><span class="d_inlinecode donthyphenate notranslate">const</span></td><td><i>Type</i></td></tr>
-        <tr><td>        <span class="d_inlinecode donthyphenate notranslate">immutable</span></td><td>        <i>Type</i>
-        </td></tr>
-        <tr><td>        <span class="d_inlinecode donthyphenate notranslate">shared</span></td><td>        <i>Type</i>
-        </td></tr>
-<div class="blankline"></div>
+        <tr><td><span class="d_inlinecode donthyphenate notranslate">immutable</span></td><td><i>Type</i></td></tr>
+        <tr><td><span class="d_inlinecode donthyphenate notranslate">inout</span></td><td><i>Type</i></td></tr>
+        <tr><td><span class="d_inlinecode donthyphenate notranslate">shared</span></td><td><i>Type</i></td></tr>
+        <tr><td><span class="d_inlinecode donthyphenate notranslate">module</span></td><td>the module</td></tr>
+        <tr><td><span class="d_inlinecode donthyphenate notranslate">package</span></td><td>the package</td></tr>
         </table></center>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">enum</span> E : <span class="d_keyword">byte</span> { Emember }
@@ -2832,7 +2877,7 @@ file full path: '/example/test.d'
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sun Nov 20 02:56:48 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 03:03:56 2022
 </div>
     </div>
 </div>

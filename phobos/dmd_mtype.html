@@ -519,14 +519,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="http://www.digitalmars.com">Walter Bright</a>
+    <a href="https://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -722,6 +722,39 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#trustToString" id="trustToString"><code class="code">trustToString</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="trustToString"></span>pure nothrow @nogc @safe string <code class="code">trustToString</code>(TRUST <code class="code">trust</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Pick off one of the <code class="code">trust</code> flags from <code class="code">trust</code>,
+ and return a string representation of it.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#ModToStc" id="ModToStc"><code class="code">ModToStc</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -786,6 +819,85 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#mutabilityOfType" id="mutabilityOfType"><code class="code">mutabilityOfType</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="mutabilityOfType"></span>int <code class="code">mutabilityOfType</code>(bool <code class="code">isref</code>, Type <code class="code">t</code>);
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Determine mutability of indirections in (ref) <code class="code">t</code>.
+
+  </p>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    When the type has any mutable indirections, returns 0.
+ When all indirections are immutable, returns 2.
+ Otherwise, when the type has const/inout indirections, returns 1.
+
+
+  </p>
+</div>
+<div class="ddoc_params">
+  <h4>Parameters</h4>
+  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
+    <tbody>
+      <tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">bool <code class="code">isref</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      if <code class="code">true</code>, check <code class="code">ref <code class="code">t</code></code>; otherwise, check just <code class="code"><code class="code">t</code></code>
+    </p>
+  </div>
+</td>
+</tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Type <code class="code">t</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      the type that is being checked
+    </p>
+  </div>
+</td>
+</tr>
+
+    </tbody>
+  </table>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#DotExpFlag" id="DotExpFlag"><code class="code">DotExpFlag</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -818,6 +930,165 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#Covariant" id="Covariant"><code class="code">Covariant</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Covariant"></span>enum <code class="code">Covariant</code>: int;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Result of a check whether two types are covariant
+  </p>
+</div>
+
+</section>
+<ul class="ddoc_members">
+  <li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Covariant.distinct" id="Covariant.distinct"><code class="code">distinct</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Covariant.distinct"></span><code class="code">distinct</code>
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    types are <code class="code">distinct</code>
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Covariant.yes" id="Covariant.yes"><code class="code">yes</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Covariant.yes"></span><code class="code">yes</code>
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    types are covariant
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Covariant.no" id="Covariant.no"><code class="code">no</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Covariant.no"></span><code class="code">no</code>
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    arguments match as far as overloading goes, but types are not covariant
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#Covariant.fwdref" id="Covariant.fwdref"><code class="code">fwdref</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Covariant.fwdref"></span><code class="code">fwdref</code>
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    cannot determine covariance because of forward references
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li>
+</ul>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#Type" id="Type"><code class="code">Type</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -841,6 +1112,39 @@
   <li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#Type.getUniqueID" id="Type.getUniqueID"><code class="code">getUniqueID</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Type.getUniqueID"></span>final const size_t <code class="code">getUniqueID</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Returns a non-zero unique ID for this Type, or returns 0 if the Type does not (yet) have a unique ID.
+If <code class="code">semantic()</code> has not been run, 0 is returned.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#Type.covariant" id="Type.covariant"><code class="code">covariant</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -850,7 +1154,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="Type.covariant"></span>final int <code class="code">covariant</code>(Type <code class="code">t</code>, StorageClass* <code class="code">pstc</code> = null);
+            <span class="ddoc_anchor" id="Type.covariant"></span>final Covariant <code class="code">covariant</code>(Type <code class="code">t</code>, StorageClass* <code class="code">pstc</code> = null);
 
           </code>
         </p>
@@ -906,12 +1210,7 @@
 <div class="ddoc_returns">
   <h4>Return Value</h4>
   <p class="para">
-    0       types are distinct
-      1       this is <code class="code">covariant</code> with <code class="code">t</code>
-      2       arguments match as far as overloading goes,
-              but types are not <code class="code">covariant</code>
-      3       cannot determine covariance because of forward references
-      *<code class="code">pstc</code>   STCxxxx which would make it <code class="code">covariant</code>
+    An enum value of either <code class="code">Covariant.yes</code> or a reason it's not <code class="code">covariant</code>.
   </p>
 </div>
 
@@ -2933,83 +3232,6 @@ T a, b;
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.parameterEscapes" id="TypeFunction.parameterEscapes"><code class="code">parameterEscapes</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.parameterEscapes"></span>bool <code class="code">parameterEscapes</code>(Type <code class="code">tthis</code>, Parameter <code class="code">p</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Examine function signature for parameter <code class="code">p</code> and see if
- the value of <code class="code">p</code> can 'escape' the scope of the function.
- This is useful to minimize the needed annotations for the parameters.
-
-  </p>
-</div>
-<div class="ddoc_params">
-  <h4>Parameters</h4>
-  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
-    <tbody>
-      <tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">Type <code class="code">tthis</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      type of <code class="code">this</code> parameter, <code class="code">null</code> if none
-    </p>
-  </div>
-</td>
-</tr>
-<tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">Parameter <code class="code">p</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      parameter to this function
-    </p>
-  </div>
-</td>
-</tr>
-
-    </tbody>
-  </table>
-</div>
-<div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    <code class="code">true</code> if escapes via assignment to global or through a parameter
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
   <a href="#TypeFunction.parameterStorageClass" id="TypeFunction.parameterStorageClass"><code class="code">parameterStorageClass</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -3238,444 +3460,6 @@ T a, b;
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.isnothrow" id="TypeFunction.isnothrow"><code class="code">isnothrow</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.isnothrow"></span>const pure nothrow @nogc @safe bool <code class="code">isnothrow</code>();
-<br>
-pure nothrow @nogc @safe void <code class="code">isnothrow</code>(bool <code class="code">v</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    set or get if the function has the <code class="code">nothrow</code> attribute
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.isnogc" id="TypeFunction.isnogc"><code class="code">isnogc</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.isnogc"></span>const pure nothrow @nogc @safe bool <code class="code">isnogc</code>();
-<br>
-pure nothrow @nogc @safe void <code class="code">isnogc</code>(bool <code class="code">v</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    set or get if the function has the <code class="code">@nogc</code> attribute
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.isproperty" id="TypeFunction.isproperty"><code class="code">isproperty</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.isproperty"></span>const pure nothrow @nogc @safe bool <code class="code">isproperty</code>();
-<br>
-pure nothrow @nogc @safe void <code class="code">isproperty</code>(bool <code class="code">v</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    set or get if the function has the <code class="code">@property</code> attribute
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.isref" id="TypeFunction.isref"><code class="code">isref</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.isref"></span>const pure nothrow @nogc @safe bool <code class="code">isref</code>();
-<br>
-pure nothrow @nogc @safe void <code class="code">isref</code>(bool <code class="code">v</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    set or get if the function has the <code class="code">ref</code> attribute
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.isreturn" id="TypeFunction.isreturn"><code class="code">isreturn</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.isreturn"></span>const pure nothrow @nogc @safe bool <code class="code">isreturn</code>();
-<br>
-pure nothrow @nogc @safe void <code class="code">isreturn</code>(bool <code class="code">v</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    set or get if the function has the <code class="code">return</code> attribute
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.isScopeQual" id="TypeFunction.isScopeQual"><code class="code">isScopeQual</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.isScopeQual"></span>const pure nothrow @nogc @safe bool <code class="code">isScopeQual</code>();
-<br>
-pure nothrow @nogc @safe void <code class="code">isScopeQual</code>(bool <code class="code">v</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    set or get if the function has the <code class="code">scope</code> attribute
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.isreturninferred" id="TypeFunction.isreturninferred"><code class="code">isreturninferred</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.isreturninferred"></span>const pure nothrow @nogc @safe bool <code class="code">isreturninferred</code>();
-<br>
-pure nothrow @nogc @safe void <code class="code">isreturninferred</code>(bool <code class="code">v</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    set or get if the function has the <code class="code">return</code> attribute inferred
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.isscopeinferred" id="TypeFunction.isscopeinferred"><code class="code">isscopeinferred</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.isscopeinferred"></span>const pure nothrow @nogc @safe bool <code class="code">isscopeinferred</code>();
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    set or get if the function has the <code class="code">scope</code> attribute inferred
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.isscopeinferred" id="TypeFunction.isscopeinferred"><code class="code">isscopeinferred</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.isscopeinferred.2"></span>pure nothrow @nogc @safe void <code class="code">isscopeinferred</code>(bool <code class="code">v</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    ditoo
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.islive" id="TypeFunction.islive"><code class="code">islive</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.islive"></span>const pure nothrow @nogc @safe bool <code class="code">islive</code>();
-<br>
-pure nothrow @nogc @safe void <code class="code">islive</code>(bool <code class="code">v</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    set or get if the function has the <code class="code">@live</code> attribute
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.incomplete" id="TypeFunction.incomplete"><code class="code">incomplete</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.incomplete"></span>const pure nothrow @nogc @safe bool <code class="code">incomplete</code>();
-<br>
-pure nothrow @nogc @safe void <code class="code">incomplete</code>(bool <code class="code">v</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    set or get if the return type or the default arguments are removed
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.isInOutParam" id="TypeFunction.isInOutParam"><code class="code">isInOutParam</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.isInOutParam"></span>const pure nothrow @nogc @safe bool <code class="code">isInOutParam</code>();
-<br>
-pure nothrow @nogc @safe void <code class="code">isInOutParam</code>(bool <code class="code">v</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    set or get if the function has the <code class="code">inout</code> on the parameters
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.isInOutQual" id="TypeFunction.isInOutQual"><code class="code">isInOutQual</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.isInOutQual"></span>const pure nothrow @nogc @safe bool <code class="code">isInOutQual</code>();
-<br>
-pure nothrow @nogc @safe void <code class="code">isInOutQual</code>(bool <code class="code">v</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    set or get if the function has the <code class="code">inout</code> on the parameters
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
   <a href="#TypeFunction.iswild" id="TypeFunction.iswild"><code class="code">iswild</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -3699,40 +3483,6 @@ pure nothrow @nogc @safe void <code class="code">isInOutQual</code>(bool <code c
   <h4>Return Value</h4>
   <p class="para">
     <code class="code">true</code> the function is <code class="code">isInOutQual</code> or <code class="code">isInOutParam</code> ,<code class="code">false</code> otherwise.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TypeFunction.isctor" id="TypeFunction.isctor"><code class="code">isctor</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TypeFunction.isctor"></span>const pure nothrow @nogc @safe bool <code class="code">isctor</code>();
-<br>
-pure nothrow @nogc @safe void <code class="code">isctor</code>(bool <code class="code">v</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    set or get if the function is a constructor
   </p>
 </div>
 
@@ -4537,6 +4287,38 @@ pure nothrow @nogc @safe void <code class="code">isctor</code>(bool <code class=
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#TypeTag.base" id="TypeTag.base"><code class="code">base</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="TypeTag.base"></span>Type <code class="code">base</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    <code class="code">base</code> type for enums otherwise <code class="code">null</code>
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#TypeTag.members" id="TypeTag.members"><code class="code">members</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -4610,7 +4392,7 @@ pure nothrow @nogc @safe void <code class="code">isctor</code>(bool <code class=
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="TypeTag.this"></span>this(const ref Loc <code class="code">loc</code>, TOK <code class="code">tok</code>, Identifier <code class="code">id</code>, Dsymbols* <code class="code">members</code>);
+            <span class="ddoc_anchor" id="TypeTag.this"></span>this(const ref Loc <code class="code">loc</code>, TOK <code class="code">tok</code>, Identifier <code class="code">id</code>, Type <code class="code">base</code>, Dsymbols* <code class="code">members</code>);
 
           </code>
         </p>

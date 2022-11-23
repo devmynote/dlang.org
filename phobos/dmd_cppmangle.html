@@ -528,14 +528,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    Walter Bright, <a href="http://www.digitalmars.com">http://www.digitalmars.com</a>
+    Walter Bright, <a href="https://www.digitalmars.com">https://www.digitalmars.com</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -661,7 +661,7 @@ Follows Itanium C++ ABI 1.86 section 5.1
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#isPrimaryDtor" id="isPrimaryDtor"><code class="code">isPrimaryDtor</code></a>
+  <a href="#isAggregateDtor" id="isAggregateDtor"><code class="code">isAggregateDtor</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -670,7 +670,7 @@ Follows Itanium C++ ABI 1.86 section 5.1
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="isPrimaryDtor"></span>bool <code class="code">isPrimaryDtor</code>(const Dsymbol <code class="code">sym</code>);
+            <span class="ddoc_anchor" id="isAggregateDtor"></span>bool <code class="code">isAggregateDtor</code>(const Dsymbol <code class="code">sym</code>);
 
           </code>
         </p>
@@ -682,8 +682,7 @@ Follows Itanium C++ ABI 1.86 section 5.1
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Determine if <code class="code">sym</code> is the 'primary' destructor, that is,
- the most-aggregate destructor (the one that is defined as _xdtor)
+    Determine if <code class="code">sym</code> is a full aggregate destructor.
 
   </p>
 </div>
@@ -712,7 +711,7 @@ Follows Itanium C++ ABI 1.86 section 5.1
 <div class="ddoc_returns">
   <h4>Return Value</h4>
   <p class="para">
-    <code class="code">true</code> if <code class="code">sym</code> is the primary destructor for an aggregate
+    <code class="code">true</code> if <code class="code">sym</code> is an aggregate destructor
   </p>
 </div>
 

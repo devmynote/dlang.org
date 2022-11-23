@@ -527,14 +527,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="http://www.digitalmars.com">Walter Bright</a>
+    <a href="https://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -685,68 +685,6 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#TupleForeachArgs" id="TupleForeachArgs"><code class="code">TupleForeachArgs</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TupleForeachArgs"></span>template <code class="code">TupleForeachArgs</code>(bool isStatic, bool isDecl)
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Determines additional argument types for makeTupleForeach.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#TupleForeachRet" id="TupleForeachRet"><code class="code">TupleForeachRet</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="TupleForeachRet"></span>template <code class="code">TupleForeachRet</code>(bool isStatic, bool isDecl)
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Determines the return type of makeTupleForeach.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
   <a href="#makeTupleForeach" id="makeTupleForeach"><code class="code">makeTupleForeach</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -756,7 +694,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="makeTupleForeach"></span>TupleForeachRet!(isStatic, isDecl) <code class="code">makeTupleForeach</code>(bool isStatic, bool isDecl)(Scope* <code class="code">sc</code>, ForeachStatement <code class="code">fs</code>, TupleForeachArgs!(isStatic, isDecl) <code class="code">args</code>);
+            <span class="ddoc_anchor" id="makeTupleForeach"></span>auto <code class="code">makeTupleForeach</code>(Scope* <code class="code">sc</code>, bool <code class="code">isStatic</code>, bool <code class="code">isDecl</code>, ForeachStatement <code class="code">fs</code>, Dsymbols* <code class="code">dbody</code>, bool <code class="code">needExpansion</code>);
 
           </code>
         </p>
@@ -768,8 +706,32 @@
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    See StatementSemanticVisitor.<code class="code">makeTupleForeach</code>.  This is a simple
- wrapper that returns the generated statements/declarations.
+    Type check and unroll <code class="code">foreach</code> over an expression tuple as well
+ as <code class="code">static foreach</code> statements and <code class="code">static foreach</code>
+ declarations. For <code class="code">static foreach</code> statements and `static
+ foreach` declarations, the visitor interface is used (and the
+ result is written into the <code class="code">result</code> field.) For `static
+ foreach` declarations, the resulting Dsymbols* are returned
+ directly.
+
+  </p>
+</div>
+<div class="ddoc_description">
+  <h4>Discussion</h4>
+  <p class="para">
+    The unrolled body is wrapped into a
+<ul><li>UnrolledLoopStatement, for <code class="code">foreach</code> over an expression tuple.</li>
+<li>ForwardingStatement, for <code class="code">static foreach</code> statements.</li>
+<li>ForwardingAttribDeclaration, for <code class="code">static foreach</code> declarations.
+</li>
+</ul>
+ <code class="code">static foreach</code> variables are declared as <code class="code">STC.local</code>, such
+ that they are inserted into the local symbol tables of the
+ forwarding constructs instead of forwarded. For `static
+ foreach` with multiple foreach loop variables whose aggregate
+ has been lowered into a sequence of tuples, this function
+ expands the tuples into multiple <code class="code">STC.local</code> <code class="code">static foreach</code>
+ variables.
   </p>
 </div>
 

@@ -529,14 +529,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="http://www.digitalmars.com">Walter Bright</a>
+    <a href="https://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -566,38 +566,6 @@
   <div class="ddoc_module_members">
     <ul class="ddoc_members">
   <li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#DMDparams" id="DMDparams"><code class="code">DMDparams</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="DMDparams"></span>struct <code class="code">DMDparams</code>;
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    DMD-specific parameters.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
   <a href="#parseCommandlineAndConfig" id="parseCommandlineAndConfig"><code class="code">parseCommandlineAndConfig</code></a>
@@ -923,7 +891,7 @@
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Parse command line arguments for the last instance of -m32, -m64 or -m32mscoff
+    Parse command line arguments for the last instance of -m32, -m64, -m32mscoff or -m32omfobj
  to detect the desired architecture.
 
   </p>
@@ -968,7 +936,7 @@
 <div class="ddoc_returns">
   <h4>Return Value</h4>
   <p class="para">
-    "32", "64" or "32mscoff" if the "-m32", "-m64", "-m32mscoff" flags were passed,
+    "32", "64" or "32omf" if the "-m32", "-m64", "-m32omf" flags were passed,
    respectively. If they weren't, return <code class="code"><code class="code">arch</code></code>.
   </p>
 </div>
@@ -1166,7 +1134,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="parseCommandLine"></span>bool <code class="code">parseCommandLine</code>(const ref Strings <code class="code">arguments</code>, const size_t <code class="code">argc</code>, ref Param <code class="code">params</code>, ref Strings <code class="code">files</code>);
+            <span class="ddoc_anchor" id="parseCommandLine"></span>bool <code class="code">parseCommandLine</code>(const ref Strings <code class="code">arguments</code>, const size_t <code class="code">argc</code>, ref Param <code class="code">params</code>, ref Strings <code class="code">files</code>, ref Target <code class="code">target</code>);
 
           </code>
         </p>
@@ -1250,6 +1218,20 @@
   </div>
 </td>
 </tr>
+<tr class="ddoc_param_row">
+  <td scope="ddoc_param_id">
+  <code class="code">
+    <em class="term">Target <code class="code">target</code></em>
+  </code>
+</td>
+<td>
+  <div class="ddoc_param_desc">
+    <p class="para">
+      more things set to result of parsing <code class="code"><code class="code">arguments</code></code>
+    </p>
+  </div>
+</td>
+</tr>
 
     </tbody>
   </table>
@@ -1268,7 +1250,7 @@
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#createModule" id="createModule"><code class="code">createModule</code></a>
+  <a href="#moduleWithEmptyMain" id="moduleWithEmptyMain"><code class="code">moduleWithEmptyMain</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -1277,7 +1259,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="createModule"></span>Module <code class="code">createModule</code>(const(char)* <code class="code">file</code>, ref Strings <code class="code">libmodules</code>);
+            <span class="ddoc_anchor" id="moduleWithEmptyMain"></span>Module <code class="code">moduleWithEmptyMain</code>();
 
           </code>
         </p>
@@ -1287,151 +1269,10 @@
 </div>
 <div class="ddoc_decl">
   <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Creates the module based on the <code class="code">file</code> provided
-
-  </p>
-</div>
-<div class="ddoc_description">
-  <h4>Discussion</h4>
-  <p class="para">
-    The <code class="code">file</code> is dispatched in one of the various arrays
-(global.params.{ddocfiles,dllfiles,jsonfiles,etc...})
-according to its extension.
-If it is a binary <code class="code">file</code>, it is added to <code class="code">libmodules</code>.
-
-
-  </p>
-</div>
-<div class="ddoc_params">
-  <h4>Parameters</h4>
-  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
-    <tbody>
-      <tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">const(char)* <code class="code">file</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      File name to dispatch
-    </p>
-  </div>
-</td>
-</tr>
-<tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">Strings <code class="code">libmodules</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      Array to which binaries (shared/static libs and object files)
-               will be appended
-    </p>
-  </div>
-</td>
-</tr>
-
-    </tbody>
-  </table>
-</div>
-<div class="ddoc_returns">
+  <div class="ddoc_returns">
   <h4>Return Value</h4>
   <p class="para">
-    A D module
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#createModules" id="createModules"><code class="code">createModules</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="createModules"></span>Modules <code class="code">createModules</code>(ref Strings <code class="code">files</code>, ref Strings <code class="code">libmodules</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Creates the list of modules based on the <code class="code">files</code> provided
-
-  </p>
-</div>
-<div class="ddoc_description">
-  <h4>Discussion</h4>
-  <p class="para">
-    Files are dispatched in the various arrays
-(global.params.{ddocfiles,dllfiles,jsonfiles,etc...})
-according to their extension.
-Binary <code class="code">files</code> are added to <code class="code">libmodules</code>.
-
-
-  </p>
-</div>
-<div class="ddoc_params">
-  <h4>Parameters</h4>
-  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
-    <tbody>
-      <tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">Strings <code class="code">files</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      File names to dispatch
-    </p>
-  </div>
-</td>
-</tr>
-<tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">Strings <code class="code">libmodules</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      Array to which binaries (shared/static libs and object <code class="code">files</code>)
-               will be appended
-    </p>
-  </div>
-</td>
-</tr>
-
-    </tbody>
-  </table>
-</div>
-<div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    An array of path to D modules
+    a compiled module (semantic3) containing an empty main() function, for the -main flag
   </p>
 </div>
 

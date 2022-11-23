@@ -551,14 +551,14 @@ While DMD itself does not support cross-compilation, GDC and LDC do.
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="http://www.digitalmars.com">Walter Bright</a>
+    <a href="https://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -1310,7 +1310,7 @@ While DMD itself does not support cross-compilation, GDC and LDC do.
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="Target.FPTypeProperties.dig"></span>d_int64 <code class="code">dig</code>;
+            <span class="ddoc_anchor" id="Target.FPTypeProperties.dig"></span>long <code class="code">dig</code>;
 
           </code>
         </p>
@@ -1342,7 +1342,7 @@ While DMD itself does not support cross-compilation, GDC and LDC do.
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="Target.FPTypeProperties.mant_dig"></span>d_int64 <code class="code">mant_dig</code>;
+            <span class="ddoc_anchor" id="Target.FPTypeProperties.mant_dig"></span>long <code class="code">mant_dig</code>;
 
           </code>
         </p>
@@ -1374,7 +1374,7 @@ While DMD itself does not support cross-compilation, GDC and LDC do.
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="Target.FPTypeProperties.max_exp"></span>d_int64 <code class="code">max_exp</code>;
+            <span class="ddoc_anchor" id="Target.FPTypeProperties.max_exp"></span>long <code class="code">max_exp</code>;
 
           </code>
         </p>
@@ -1406,7 +1406,7 @@ While DMD itself does not support cross-compilation, GDC and LDC do.
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="Target.FPTypeProperties.min_exp"></span>d_int64 <code class="code">min_exp</code>;
+            <span class="ddoc_anchor" id="Target.FPTypeProperties.min_exp"></span>long <code class="code">min_exp</code>;
 
           </code>
         </p>
@@ -1438,7 +1438,7 @@ While DMD itself does not support cross-compilation, GDC and LDC do.
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="Target.FPTypeProperties.max_10_exp"></span>d_int64 <code class="code">max_10_exp</code>;
+            <span class="ddoc_anchor" id="Target.FPTypeProperties.max_10_exp"></span>long <code class="code">max_10_exp</code>;
 
           </code>
         </p>
@@ -1470,7 +1470,7 @@ While DMD itself does not support cross-compilation, GDC and LDC do.
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="Target.FPTypeProperties.min_10_exp"></span>d_int64 <code class="code">min_10_exp</code>;
+            <span class="ddoc_anchor" id="Target.FPTypeProperties.min_10_exp"></span>long <code class="code">min_10_exp</code>;
 
           </code>
         </p>
@@ -1605,6 +1605,38 @@ While DMD itself does not support cross-compilation, GDC and LDC do.
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#Target.objectFormat" id="Target.objectFormat"><code class="code">objectFormat</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Target.objectFormat"></span>Target.ObjectFormat <code class="code">objectFormat</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Determine the object format to be used
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#Target.setCPU" id="Target.setCPU"><code class="code">setCPU</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -1627,38 +1659,6 @@ While DMD itself does not support cross-compilation, GDC and LDC do.
   <div class="ddoc_summary">
   <p class="para">
     Determine the instruction set to be used
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#Target.addPredefinedGlobalIdentifiers" id="Target.addPredefinedGlobalIdentifiers"><code class="code">addPredefinedGlobalIdentifiers</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="Target.addPredefinedGlobalIdentifiers"></span>const void <code class="code">addPredefinedGlobalIdentifiers</code>();
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Add predefined global identifiers that are determied by the target
   </p>
 </div>
 
@@ -1966,7 +1966,7 @@ For Posix/x86_64 this returns the type which will really
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="Target.isVectorOpSupported"></span>bool <code class="code">isVectorOpSupported</code>(Type <code class="code">type</code>, uint <code class="code">op</code>, Type <code class="code">t2</code> = null);
+            <span class="ddoc_anchor" id="Target.isVectorOpSupported"></span>bool <code class="code">isVectorOpSupported</code>(Type <code class="code">type</code>, EXP <code class="code">op</code>, Type <code class="code">t2</code> = null);
 
           </code>
         </p>
@@ -2003,7 +2003,7 @@ For Posix/x86_64 this returns the type which will really
 <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">uint <code class="code">op</code></em>
+    <em class="term">EXP <code class="code">op</code></em>
   </code>
 </td>
 <td>
@@ -2214,82 +2214,6 @@ For Posix/x86_64 this returns the type which will really
   <h4>Return Value</h4>
   <p class="para">
     <code class="code">true</code> if return value from function is on the stack
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#Target.parameterSize" id="Target.parameterSize"><code class="code">parameterSize</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="Target.parameterSize"></span>ulong <code class="code">parameterSize</code>(const ref Loc <code class="code">loc</code>, Type <code class="code">t</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Determine the size a value of type <code class="code"><code class="code">t</code></code> will be when it
- is passed on the function parameter stack.
-
-  </p>
-</div>
-<div class="ddoc_params">
-  <h4>Parameters</h4>
-  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
-    <tbody>
-      <tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">Loc <code class="code">loc</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      location to use for error messages
-    </p>
-  </div>
-</td>
-</tr>
-<tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">Type <code class="code">t</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      type of parameter
-    </p>
-  </div>
-</td>
-</tr>
-
-    </tbody>
-  </table>
-</div>
-<div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    size used on parameter stack
   </p>
 </div>
 
@@ -2568,6 +2492,45 @@ For Posix/x86_64 this returns the type which will really
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#Target.supportsLinkerDirective" id="Target.supportsLinkerDirective"><code class="code">supportsLinkerDirective</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="Target.supportsLinkerDirective"></span>const bool <code class="code">supportsLinkerDirective</code>();
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Returns <code class="code">true</code> if the target supports <code class="code">pragma(linkerDirective)</code>.
+
+  </p>
+</div>
+<div class="ddoc_returns">
+  <h4>Return Value</h4>
+  <p class="para">
+    <code class="code">false</code> if the target does not support <code class="code">pragma(linkerDirective)</code>.
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#Target.isXmmSupported" id="Target.isXmmSupported"><code class="code">isXmmSupported</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -2669,6 +2632,134 @@ For Posix/x86_64 this returns the type which will really
   <li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
+  <a href="#TargetC.crtDestructorsSupported" id="TargetC.crtDestructorsSupported"><code class="code">crtDestructorsSupported</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="TargetC.crtDestructorsSupported"></span>bool <code class="code">crtDestructorsSupported</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    Not all platforms support crt_destructor
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#TargetC.boolsize" id="TargetC.boolsize"><code class="code">boolsize</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="TargetC.boolsize"></span>ubyte <code class="code">boolsize</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    size of a C <code class="code">_Bool</code> type
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#TargetC.shortsize" id="TargetC.shortsize"><code class="code">shortsize</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="TargetC.shortsize"></span>ubyte <code class="code">shortsize</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    size of a C <code class="code">short</code> or <code class="code">unsigned short</code> type
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#TargetC.intsize" id="TargetC.intsize"><code class="code">intsize</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="TargetC.intsize"></span>ubyte <code class="code">intsize</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    size of a C <code class="code">int</code> or <code class="code">unsigned int</code> type
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
   <a href="#TargetC.longsize" id="TargetC.longsize"><code class="code">longsize</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -2691,6 +2782,38 @@ For Posix/x86_64 this returns the type which will really
   <div class="ddoc_summary">
   <p class="para">
     size of a C <code class="code">long</code> or <code class="code">unsigned long</code> type
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#TargetC.long_longsize" id="TargetC.long_longsize"><code class="code">long_longsize</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="TargetC.long_longsize"></span>ubyte <code class="code">long_longsize</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    size of a C <code class="code">long long</code> or <code class="code">unsigned long long</code> type
   </p>
 </div>
 
@@ -2950,6 +3073,38 @@ For Posix/x86_64 this returns the type which will really
   <div class="ddoc_summary">
   <p class="para">
     target C++ ABI puts deleting and non-deleting destructor into vtable
+  </p>
+</div>
+
+</section>
+
+</div>
+
+</li><li class="ddoc_member">
+  <div class="ddoc_member_header">
+  <div class="ddoc_header_anchor">
+  <a href="#TargetCPP.splitVBasetable" id="TargetCPP.splitVBasetable"><code class="code">splitVBasetable</code></a>
+</div>
+</div><div class="ddoc_decl">
+  <section class="section">
+    <div class="declaration">
+      <h4>Declaration</h4>
+      <div class="dlang">
+        <p class="para">
+          <code class="code">
+            <span class="ddoc_anchor" id="TargetCPP.splitVBasetable"></span>bool <code class="code">splitVBasetable</code>;
+
+          </code>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="ddoc_decl">
+  <section class="section ddoc_sections">
+  <div class="ddoc_summary">
+  <p class="para">
+    set if C++ ABI uses separate tables for virtual functions and virtual bases
   </p>
 </div>
 
@@ -3293,7 +3448,7 @@ For Posix/x86_64 this returns the type which will really
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="TargetCPP.parameterType"></span>Type <code class="code">parameterType</code>(Parameter <code class="code">p</code>);
+            <span class="ddoc_anchor" id="TargetCPP.parameterType"></span>Type <code class="code">parameterType</code>(Type <code class="code">t</code>);
 
           </code>
         </p>
@@ -3306,7 +3461,7 @@ For Posix/x86_64 this returns the type which will really
   <div class="ddoc_summary">
   <p class="para">
     Get the type that will really be used for passing the given argument
- to an <code class="code">extern(C++)</code> function.
+ to an <code class="code">extern(C++)</code> function, or <code class="code">null</code> if unhandled.
 
   </p>
 </div>
@@ -3317,13 +3472,13 @@ For Posix/x86_64 this returns the type which will really
       <tr class="ddoc_param_row">
   <td scope="ddoc_param_id">
   <code class="code">
-    <em class="term">Parameter <code class="code">p</code></em>
+    <em class="term">Type <code class="code">t</code></em>
   </code>
 </td>
 <td>
   <div class="ddoc_param_desc">
     <p class="para">
-      parameter to be passed.
+      type to be passed.
     </p>
   </div>
 </td>
@@ -3335,7 +3490,7 @@ For Posix/x86_64 this returns the type which will really
 <div class="ddoc_returns">
   <h4>Return Value</h4>
   <p class="para">
-    <code class="code">Type</code> to use for parameter <code class="code"><code class="code">p</code></code>.
+    <code class="code">Type</code> to use for type <code class="code"><code class="code">t</code></code>.
   </p>
 </div>
 
@@ -3549,43 +3704,6 @@ For Posix/x86_64 this returns the type which will really
 
 </li>
 </ul>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#Triple" id="Triple"><code class="code">Triple</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="Triple"></span>struct <code class="code">Triple</code>;
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Sets CPU Operating System, and optionally C/C++ runtime environment from the given triple
- e.g.
-    x86_64+avx2-apple-darwin20.3.0
-    x86-unknown-linux-musl-clang
-    x64-windows-msvc
-    x64-pc-windows-msvc
-  </p>
-</div>
-
-</section>
 
 </div>
 

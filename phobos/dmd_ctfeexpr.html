@@ -519,14 +519,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    <a href="http://www.digitalmars.com">Walter Bright</a>
+    <a href="https://www.digitalmars.com">Walter Bright</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -1092,7 +1092,7 @@ with &gt;,is, ==, etc, using ctfeCmp, ctfeEqual, ctfeIdentity
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="specificCmp"></span>bool <code class="code">specificCmp</code>(TOK <code class="code">op</code>, int <code class="code">rawCmp</code>);
+            <span class="ddoc_anchor" id="specificCmp"></span>bool <code class="code">specificCmp</code>(EXP <code class="code">op</code>, int <code class="code">rawCmp</code>);
 
           </code>
         </p>
@@ -1124,7 +1124,7 @@ with &gt;,is, ==, etc, using ctfeCmp, ctfeEqual, ctfeIdentity
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="intUnsignedCmp"></span>bool <code class="code">intUnsignedCmp</code>(TOK <code class="code">op</code>, dinteger_t <code class="code">n1</code>, dinteger_t <code class="code">n2</code>);
+            <span class="ddoc_anchor" id="intUnsignedCmp"></span>bool <code class="code">intUnsignedCmp</code>(EXP <code class="code">op</code>, dinteger_t <code class="code">n1</code>, dinteger_t <code class="code">n2</code>);
 
           </code>
         </p>
@@ -1156,7 +1156,7 @@ with &gt;,is, ==, etc, using ctfeCmp, ctfeEqual, ctfeIdentity
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="intSignedCmp"></span>bool <code class="code">intSignedCmp</code>(TOK <code class="code">op</code>, sinteger_t <code class="code">n1</code>, sinteger_t <code class="code">n2</code>);
+            <span class="ddoc_anchor" id="intSignedCmp"></span>bool <code class="code">intSignedCmp</code>(EXP <code class="code">op</code>, sinteger_t <code class="code">n1</code>, sinteger_t <code class="code">n2</code>);
 
           </code>
         </p>
@@ -1188,7 +1188,7 @@ with &gt;,is, ==, etc, using ctfeCmp, ctfeEqual, ctfeIdentity
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="realCmp"></span>bool <code class="code">realCmp</code>(TOK <code class="code">op</code>, real_t <code class="code">r1</code>, real_t <code class="code">r2</code>);
+            <span class="ddoc_anchor" id="realCmp"></span>bool <code class="code">realCmp</code>(EXP <code class="code">op</code>, real_t <code class="code">r1</code>, real_t <code class="code">r2</code>);
 
           </code>
         </p>
@@ -1220,7 +1220,7 @@ with &gt;,is, ==, etc, using ctfeCmp, ctfeEqual, ctfeIdentity
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="ctfeEqual"></span>bool <code class="code">ctfeEqual</code>(const ref Loc <code class="code">loc</code>, TOK <code class="code">op</code>, Expression <code class="code">e1</code>, Expression <code class="code">e2</code>);
+            <span class="ddoc_anchor" id="ctfeEqual"></span>bool <code class="code">ctfeEqual</code>(const ref Loc <code class="code">loc</code>, EXP <code class="code">op</code>, Expression <code class="code">e1</code>, Expression <code class="code">e2</code>);
 
           </code>
         </p>
@@ -1252,7 +1252,7 @@ with &gt;,is, ==, etc, using ctfeCmp, ctfeEqual, ctfeIdentity
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="ctfeIdentity"></span>bool <code class="code">ctfeIdentity</code>(const ref Loc <code class="code">loc</code>, TOK <code class="code">op</code>, Expression <code class="code">e1</code>, Expression <code class="code">e2</code>);
+            <span class="ddoc_anchor" id="ctfeIdentity"></span>bool <code class="code">ctfeIdentity</code>(const ref Loc <code class="code">loc</code>, EXP <code class="code">op</code>, Expression <code class="code">e1</code>, Expression <code class="code">e2</code>);
 
           </code>
         </p>
@@ -1284,7 +1284,7 @@ with &gt;,is, ==, etc, using ctfeCmp, ctfeEqual, ctfeIdentity
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="ctfeCmp"></span>bool <code class="code">ctfeCmp</code>(const ref Loc <code class="code">loc</code>, TOK <code class="code">op</code>, Expression <code class="code">e1</code>, Expression <code class="code">e2</code>);
+            <span class="ddoc_anchor" id="ctfeCmp"></span>bool <code class="code">ctfeCmp</code>(const ref Loc <code class="code">loc</code>, EXP <code class="code">op</code>, Expression <code class="code">e1</code>, Expression <code class="code">e2</code>);
 
           </code>
         </p>
@@ -1348,7 +1348,7 @@ with &gt;,is, ==, etc, using ctfeCmp, ctfeEqual, ctfeIdentity
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="changeArrayLiteralLength"></span>UnionExp <code class="code">changeArrayLiteralLength</code>(const ref Loc <code class="code">loc</code>, TypeArray <code class="code">arrayType</code>, Expression <code class="code">oldval</code>, size_t <code class="code">oldlen</code>, size_t <code class="code">newlen</code>);
+            <span class="ddoc_anchor" id="changeArrayLiteralLength"></span>Expression <code class="code">changeArrayLiteralLength</code>(UnionExp* <code class="code">pue</code>, const ref Loc <code class="code">loc</code>, TypeArray <code class="code">arrayType</code>, Expression <code class="code">oldval</code>, size_t <code class="code">oldlen</code>, size_t <code class="code">newlen</code>);
 
           </code>
         </p>

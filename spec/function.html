@@ -148,7 +148,9 @@
     </div>
     <ol>    <li><a href="#grammar">文法</a><ol>        <li><a href="#function-declarations">Functions without Bodies</a></li>
     </ol></li>
-    <li><a href="#contracts">関数の契約</a><ol>        <li><a href="#in_out_inheritance">In, Out, 継承</a></li>
+    <li><a href="#contracts">関数の契約</a><ol>        <li><a href="#preconditions">前提条件</a></li>
+        <li><a href="#postconditions">事後条件</a></li>
+        <li><a href="#in_out_inheritance">In, Out, 継承</a></li>
     </ol></li>
     <li><a href="#function-return-values">関数の戻り値</a></li>
     <li><a href="#pure-functions">Pure 関数</a><ol>        <li><a href="#pure-special-cases">特殊なケース</a></li>
@@ -159,9 +161,8 @@
     <li><a href="#ref-functions">Ref 関数</a></li>
     <li><a href="#auto-functions">Auto 関数</a></li>
     <li><a href="#auto-ref-functions">Auto Ref 関数</a></li>
-    <li><a href="#inout-functions">Inout 関数</a><ol>        <li><a href="#matching-an-inout-parameter"><span class="d_inlinecode donthyphenate notranslate">inout</span> 引数の照合</a></li>
-    </ol></li>
-    <li><a href="#optional-parenthesis">括弧付けが任意の場合</a></li>
+    <li><a href="#inout-functions">Inout 関数</a></li>
+    <li><a href="#optional-parenthesis">オプションの括弧</a></li>
     <li><a href="#property-functions">Property 関数</a></li>
     <li><a href="#virtual-functions">Virtual 関数</a><ol>        <li><a href="#covariance">共変性</a></li>
         <li><a href="#base-methods">基本クラスのメソッド呼び出し</a></li>
@@ -191,7 +192,10 @@
     </ol></li>
     <li><a href="#nested">関数のネスト</a><ol>        <li><a href="#nested-declaration-order">Declaration Order</a></li>
     </ol></li>
-    <li><a href="#closures">デリゲート, 関数ポインタ, クロージャ</a><ol>        <li><a href="#anonymous">無名関数、無名デリゲート</a></li>
+    <li><a href="#function-pointers-delegates">関数ポインタ, デリゲート and クロージャ</a><ol>        <li><a href="#function-pointers">関数ポインタ</a></li>
+        <li><a href="#closures">Delegates &amp; Closures</a></li>
+        <li><a href="#function-delegate-init">初期化</a></li>
+        <li><a href="#anonymous">無名関数、無名デリゲート</a></li>
     </ol></li>
     <li><a href="#main"><span class="d_inlinecode donthyphenate notranslate">main()</span> 関数</a><ol>        <li><a href="#betterc-main"><span class="d_inlinecode donthyphenate notranslate">extern(C) main()</span> 関数</a></li>
     </ol></li>
@@ -278,6 +282,10 @@
     <span class="d_inlinecode donthyphenate notranslate">shared</span>
 </pre>
 <div class="blankline"></div>
+<div class="spec-boxes note"><b>Note:</b> In D2, declaring a parameter <span class="d_inlinecode donthyphenate notranslate">final</span> is a semantic error, but not a parse error.</div>
+<div class="blankline"></div>
+<p>See also: <a href="#param-storage">parameter storage classes</a>.</p>
+<div class="blankline"></div>
 <h3>関数の属性</h3>
 <div class="blankline"></div>
 <pre class="bnf notranslate"><a id="FunctionAttributes"><span class="gname">FunctionAttributes</span></a>:
@@ -310,9 +318,6 @@
     <a href="#ShortenedFunctionBody"><i>ShortenedFunctionBody</i></a>
     <a href="#MissingFunctionBody"><i>MissingFunctionBody</i></a>
 <div class="blankline"></div>
-<a id="FunctionLiteralBody"><span class="gname">FunctionLiteralBody</span></a>:
-    <a href="#SpecifiedFunctionBody"><i>SpecifiedFunctionBody</i></a>
-<div class="blankline"></div>
 <a id="SpecifiedFunctionBody"><span class="gname">SpecifiedFunctionBody</span></a>:
     <span class="d_inlinecode donthyphenate notranslate">do</span><sub>opt</sub> <a href="../spec/statement.html#BlockStatement"><i>BlockStatement</i></a>
     <a href="#FunctionContracts"><i>FunctionContracts</i></a><sub>opt</sub> <a href="#InOutContractExpression"><i>InOutContractExpression</i></a> <span class="d_inlinecode donthyphenate notranslate">do</span><sub>opt</sub> <a href="../spec/statement.html#BlockStatement"><i>BlockStatement</i></a>
@@ -328,6 +333,7 @@
 <span class="d_keyword">int</span> hasShortenedBody() =&gt; 1; <span class="d_comment">// equivalent
 </span></pre>
 <div class="blankline"></div>
+<span id="FunctionLiteralBody"><a class="anchor" title="Permalink to this section" id="" href="#"></a></span>
         <p>The <em>ShortenedFunctionBody</em> form implies a
         <a href="../spec/statement.html#ReturnStatement">return statement</a>.
         This syntax also applies for <a href="../spec/expression.html#function_literals">function literals</a>.</p>
@@ -398,7 +404,7 @@
 <div class="blankline"></div>
         <p>Preconditions and postconditions do not affect the type of the function.</p>
 <div class="blankline"></div>
-    <h3>前提条件</h3>
+    <h3><a class="anchor" title="Permalink to this section" id="preconditions" href="#preconditions">前提条件</a></h3>
 <div class="blankline"></div>
         <p>An <a href="#InContractExpression"><i>InContractExpression</i></a> is a precondition.</p>
 <div class="blankline"></div>
@@ -457,7 +463,7 @@
 </pre>
 <div class="blankline"></div>
 <div class="blankline"></div>
-    <h3>事後条件</h3>
+    <h3><a class="anchor" title="Permalink to this section" id="postconditions" href="#postconditions">事後条件</a></h3>
 <div class="blankline"></div>
         <p>An <a href="#OutContractExpression"><i>OutContractExpression</i></a> is a postcondition.</p>
 <div class="blankline"></div>
@@ -582,7 +588,18 @@
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="function-return-values" href="#function-return-values">関数の戻り値</a></h2>
 <div class="blankline"></div>
-        <p>Function return values not marked as <span class="d_inlinecode donthyphenate notranslate">ref</span> are considered to be rvalues.
+        <p>At least one <a href="../spec/statement.html#return-statement">return statement</a>
+        is required if the function specifies a return type that is not void,
+        unless:</p>
+        <ul>        <li>the function executes an infinite loop</li>
+        <li>the function executes an <span class="d_inlinecode donthyphenate notranslate">assert(0)</span> statement</li>
+        <li>the function evaluates an expression of type
+            <a href="../spec/type.html#noreturn"><span class="d_inlinecode donthyphenate notranslate">noreturn</span></a></li>
+        <li>the function contains inline assembler code</li>
+        </ul>
+<div class="blankline"></div>
+        <p>Function return values not marked as <a href="#ref-functions"><span class="d_inlinecode donthyphenate notranslate">ref</span></a>
+        are considered to be rvalues.
         This means they cannot be passed by reference to other functions.
         </p>
 <div class="blankline"></div>
@@ -684,7 +701,7 @@ foo(a);
 }
 </pre>
 <div class="blankline"></div>
-        <p><a href="#variadicnested">Nested functions</a> inside a pure function are implicitly marked as pure.</p>
+        <p><a href="#nested">Nested functions</a> inside a pure function are implicitly marked as pure.</p>
 <div class="blankline"></div>
 <pre class="d_code notranslate"><span class="d_keyword">pure</span> <span class="d_keyword">int</span> foo(<span class="d_keyword">int</span> x, <span class="d_keyword">immutable</span> <span class="d_keyword">int</span> y)
 {
@@ -888,138 +905,9 @@ foo(a);
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="inout-functions" href="#inout-functions">Inout 関数</a></h2>
 <div class="blankline"></div>
-    <p>Functions that differ only in whether the parameters are mutable, <span class="d_inlinecode donthyphenate notranslate">const</span> or <span class="d_inlinecode donthyphenate notranslate">immutable</span>,
-        and have corresponding mutable, <span class="d_inlinecode donthyphenate notranslate">const</span> or <span class="d_inlinecode donthyphenate notranslate">immutable</span> return types, can be combined
-        into one function using the <span class="d_inlinecode donthyphenate notranslate">inout</span> type constructor. Consider the following
-        overload set:
-     </p>
-<pre class="d_code notranslate"><span class="d_keyword">int</span>[] slice(<span class="d_keyword">int</span>[] a, <span class="d_keyword">int</span> x, <span class="d_keyword">int</span> y) { <span class="d_keyword">return</span> a[x .. y]; }
-
-<span class="d_keyword">const</span>(<span class="d_keyword">int</span>)[] slice(<span class="d_keyword">const</span>(<span class="d_keyword">int</span>)[] a, <span class="d_keyword">int</span> x, <span class="d_keyword">int</span> y) { <span class="d_keyword">return</span> a[x .. y]; }
-
-<span class="d_keyword">immutable</span>(<span class="d_keyword">int</span>)[] slice(<span class="d_keyword">immutable</span>(<span class="d_keyword">int</span>)[] a, <span class="d_keyword">int</span> x, <span class="d_keyword">int</span> y) { <span class="d_keyword">return</span> a[x .. y]; }
-</pre>
+    <p>For extensive information see <a href="../spec/const3.html#inout"><span class="d_inlinecode donthyphenate notranslate">inout</span> type qualifier</a>.</p>
 <div class="blankline"></div>
-    <p>The code generated by each of these functions is identical.
-        The <span class="d_keyword">inout</span> type constructor can combine them into one function:</p>
-<div class="blankline"></div>
-        <div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">inout</span>(<span class="d_keyword">int</span>)[] slice(<span class="d_keyword">inout</span>(<span class="d_keyword">int</span>)[] a, <span class="d_keyword">int</span> x, <span class="d_keyword">int</span> y) { <span class="d_keyword">return</span> a[x .. y]; }
-</pre>
-        
-</div>
-<div class="blankline"></div>
-    <p>The <span class="d_keyword">inout</span> keyword forms a wildcard that stands in for
-        mutable, <span class="d_inlinecode donthyphenate notranslate">const</span>, <span class="d_inlinecode donthyphenate notranslate">immutable</span>, <span class="d_inlinecode donthyphenate notranslate">inout</span>, or <span class="d_inlinecode donthyphenate notranslate">inout const</span>.
-        When calling the function, the <span class="d_inlinecode donthyphenate notranslate">inout</span> state of the return type is changed to
-        match that of the argument type passed to the <span class="d_inlinecode donthyphenate notranslate">inout</span> parameter.
-    </p>
-<div class="blankline"></div>
-    <p><span class="d_inlinecode donthyphenate notranslate">inout</span> can also be used as a type constructor inside a function that has a
-        parameter declared with <span class="d_inlinecode donthyphenate notranslate">inout</span>. The <span class="d_inlinecode donthyphenate notranslate">inout</span> state of a type declared with
-        <span class="d_inlinecode donthyphenate notranslate">inout</span> is changed to match that of the argument type passed to the <span class="d_inlinecode donthyphenate notranslate">inout</span>
-        parameter:
-    </p>
-<div class="blankline"></div>
-        <div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">inout</span>(<span class="d_keyword">int</span>)[] asymmetric(<span class="d_keyword">inout</span>(<span class="d_keyword">int</span>)[] input_data)
-{
-    <span class="d_keyword">inout</span>(<span class="d_keyword">int</span>)[] r = input_data;
-    <span class="d_keyword">while</span> (r.length &gt; 1 &amp;&amp; r[0] == r[$-1])
-        r = r[1..$-1];
-    <span class="d_keyword">return</span> r;
-}
-</pre>
-        
-</div>
-<div class="blankline"></div>
-    <p>Inout types can be implicitly converted to <span class="d_inlinecode donthyphenate notranslate">const</span> or <span class="d_inlinecode donthyphenate notranslate">inout const</span>,
-        but to nothing else. Other types cannot be implicitly converted to <span class="d_inlinecode donthyphenate notranslate">inout</span>.
-        Casting to or from <span class="d_inlinecode donthyphenate notranslate">inout</span> is not allowed in <span class="d_inlinecode donthyphenate notranslate">@safe</span> functions.
-    </p>
-<div class="blankline"></div>
-        <div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">void</span> f(<span class="d_keyword">inout</span> <span class="d_keyword">int</span>* ptr)
-{
-    <span class="d_keyword">const</span> <span class="d_keyword">int</span>* p = ptr;
-    <span class="d_keyword">int</span>* q = ptr; <span class="d_comment">// error
-</span>    <span class="d_keyword">immutable</span> <span class="d_keyword">int</span>* r = ptr; <span class="d_comment">// error
-</span>}
-</pre>
-        
-</div>
-<div class="blankline"></div>
-    <h3><a class="anchor" title="Permalink to this section" id="matching-an-inout-parameter" href="#matching-an-inout-parameter"><span class="d_inlinecode donthyphenate notranslate">inout</span> 引数の照合</a></h3>
-<div class="blankline"></div>
-    <p>A set of arguments to a function with <span class="d_inlinecode donthyphenate notranslate">inout</span> parameters is considered
-        a match if any <span class="d_inlinecode donthyphenate notranslate">inout</span> argument types match exactly, or:</p>
-<div class="blankline"></div>
-    <ol>        <li>No argument types are composed of <span class="d_inlinecode donthyphenate notranslate">inout</span> types.</li>
-        <li>A mutable, <span class="d_inlinecode donthyphenate notranslate">const</span> or <span class="d_inlinecode donthyphenate notranslate">immutable</span> argument type can be matched against each
-        corresponding parameter <span class="d_inlinecode donthyphenate notranslate">inout</span> type.</li>
-    </ol>
-<div class="blankline"></div>
-    <p>If such a match occurs, <span class="d_inlinecode donthyphenate notranslate">inout</span> is considered the common qualifier of
-        the matched qualifiers. If more than two parameters exist, the common
-        qualifier calculation is recursively applied.
-    </p>
-<div class="blankline"></div>
-    <center><table><caption>Common qualifier of the two type qualifiers</caption>        <tr><td></td><td><i>mutable</i></td><td><span class="d_inlinecode donthyphenate notranslate">const</span></td><td><span class="d_inlinecode donthyphenate notranslate">immutable</span></td><td><span class="d_inlinecode donthyphenate notranslate">inout</span></td><td><span class="d_inlinecode donthyphenate notranslate">inout const</span></td></tr>
-        <tr><td><i>mutable</i> (= m)</td><td>m</td><td>c</td><td>c</td><td>c</td><td>c</td></tr>
-        <tr><td><span class="d_inlinecode donthyphenate notranslate">const</span> (= c)</td><td>c</td><td>c</td><td>c</td><td>c</td><td>c</td></tr>
-        <tr><td><span class="d_inlinecode donthyphenate notranslate">immutable</span> (= i)</td><td>c</td><td>c</td><td>i</td><td>wc</td><td>wc</td></tr>
-        <tr><td><span class="d_inlinecode donthyphenate notranslate">inout</span> (= w)</td><td>c</td><td>c</td><td>wc</td><td>w</td><td>wc</td></tr>
-        <tr><td><span class="d_inlinecode donthyphenate notranslate">inout const</span> (= wc)</td><td>c</td><td>c</td><td>wc</td><td>wc</td><td>wc</td></tr>
-    </table></center>
-<div class="blankline"></div>
-    <p>The <span class="d_inlinecode donthyphenate notranslate">inout</span> in the return type is then rewritten to match the <span class="d_inlinecode donthyphenate notranslate">inout</span>
-        qualifiers:</p>
-<div class="blankline"></div>
-        <div class="runnable-examples">
-<pre class="d_code notranslate"><span class="d_keyword">int</span>[] ma;
-<span class="d_keyword">const</span>(<span class="d_keyword">int</span>)[] ca;
-<span class="d_keyword">immutable</span>(<span class="d_keyword">int</span>)[] ia;
-
-<span class="d_keyword">inout</span>(<span class="d_keyword">int</span>)[] foo(<span class="d_keyword">inout</span>(<span class="d_keyword">int</span>)[] a) { <span class="d_keyword">return</span> a; }
-<span class="d_keyword">void</span> test1()
-{
-    <span class="d_comment">// inout matches to mutable, so inout(int)[] is
-</span>    <span class="d_comment">// rewritten to int[]
-</span>    <span class="d_keyword">int</span>[] x = foo(ma);
-
-    <span class="d_comment">// inout matches to const, so inout(int)[] is
-</span>    <span class="d_comment">// rewritten to const(int)[]
-</span>    <span class="d_keyword">const</span>(<span class="d_keyword">int</span>)[] y = foo(ca);
-
-    <span class="d_comment">// inout matches to immutable, so inout(int)[] is
-</span>    <span class="d_comment">// rewritten to immutable(int)[]
-</span>    <span class="d_keyword">immutable</span>(<span class="d_keyword">int</span>)[] z = foo(ia);
-}
-
-<span class="d_keyword">inout</span>(<span class="d_keyword">const</span>(<span class="d_keyword">int</span>))[] bar(<span class="d_keyword">inout</span>(<span class="d_keyword">int</span>)[] a) { <span class="d_keyword">return</span> a; }
-<span class="d_keyword">void</span> test2()
-{
-    <span class="d_comment">// inout matches to mutable, so inout(const(int))[] is
-</span>    <span class="d_comment">// rewritten to const(int)[]
-</span>    <span class="d_keyword">const</span>(<span class="d_keyword">int</span>)[] x = bar(ma);
-
-    <span class="d_comment">// inout matches to const, so inout(const(int))[] is
-</span>    <span class="d_comment">// rewritten to const(int)[]
-</span>    <span class="d_keyword">const</span>(<span class="d_keyword">int</span>)[] y = bar(ca);
-
-    <span class="d_comment">// inout matches to immutable, so inout(int)[] is
-</span>    <span class="d_comment">// rewritten to immutable(int)[]
-</span>    <span class="d_keyword">immutable</span>(<span class="d_keyword">int</span>)[] z = bar(ia);
-}
-</pre>
-        
-</div>
-<div class="blankline"></div>
-    <p><b>Note:</b> Shared types cannot
-        be matched with <span class="d_inlinecode donthyphenate notranslate">inout</span>.
-    </p>
-<div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="optional-parenthesis" href="#optional-parenthesis">括弧付けが任意の場合</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="optional-parenthesis" href="#optional-parenthesis">オプションの括弧</a></h2>
 <div class="blankline"></div>
     <p>If a function call passes no explicit argument, i.e. it would syntactically use <span class="d_inlinecode donthyphenate notranslate">()</span>, then these parentheses
     may be omitted, similar to a getter invocation of a
@@ -3004,7 +2892,9 @@ Bar
 <div class="blankline"></div>
     <p>Nested functions cannot be overloaded.</p>
 <div class="blankline"></div>
-<h2><a class="anchor" title="Permalink to this section" id="closures" href="#closures">デリゲート, 関数ポインタ, クロージャ</a></h2>
+<h2><a class="anchor" title="Permalink to this section" id="function-pointers-delegates" href="#function-pointers-delegates">関数ポインタ, デリゲート and クロージャ</a></h2>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="function-pointers" href="#function-pointers">関数ポインタ</a></h3>
 <div class="blankline"></div>
         <p>A function pointer can point to a static nested function:</p>
 <div class="blankline"></div>
@@ -3039,13 +2929,17 @@ Bar
 <pre class="d_code notranslate"><span class="d_keyword">int</span> abc(<span class="d_keyword">int</span> x)   { <span class="d_keyword">return</span> x + 1; }
 <span class="d_keyword">uint</span> def(<span class="d_keyword">uint</span> y) { <span class="d_keyword">return</span> y + 1; }
 
-<span class="d_keyword">int</span> <span class="d_keyword">delegate</span>(<span class="d_keyword">int</span>)   fp1 = &amp;abc;
-<span class="d_keyword">uint</span> <span class="d_keyword">delegate</span>(<span class="d_keyword">uint</span>) fp2 = &amp;def;
+<span class="d_keyword">int</span> <span class="d_keyword">function</span>(<span class="d_keyword">int</span>)   fp1 = &amp;abc;
+<span class="d_keyword">uint</span> <span class="d_keyword">function</span>(<span class="d_keyword">uint</span>) fp2 = &amp;def;
 <span class="d_comment">// Do not rely on fp1 and fp2 being different values; the compiler may merge
 </span><span class="d_comment">// them.
-</span></pre>
+</span>
+<span class="d_keyword">void</span> main() {}
+</pre>
 
 </div>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="closures" href="#closures">Delegates &amp; Closures</a></h3>
 <div class="blankline"></div>
         <p>A delegate can be set to a non-static nested function:</p>
 <div class="blankline"></div>
@@ -3060,6 +2954,13 @@ Bar
     dg = &amp;foo;
     <span class="d_keyword">int</span> i = dg(); <span class="d_comment">// i is set to 10
 </span>}
+
+<span class="d_keyword">void</span> main()
+{
+    test();
+    <span class="d_keyword">int</span> i = dg(); <span class="d_comment">// ok, test.a is in a closure and still exists
+</span>    <span class="d_keyword">assert</span>(i == 10);
+}
 </pre>
 
 </div>
@@ -3076,14 +2977,6 @@ Bar
         <div class="spec-boxes note"><b>Note:</b> Returning addresses of stack variables, however, is not
         a closure and is an error.
         </div>
-<div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">void</span> bar()
-{
-    <span class="d_keyword">int</span> b;
-    test();
-    <span class="d_keyword">int</span> i = dg(); <span class="d_comment">// ok, test.a is in a closure and still exists
-</span>}
-</pre>
 <div class="blankline"></div>
         <p>Delegates to non-static nested functions contain two pieces of
         data: the pointer to the stack frame of the lexically enclosing
@@ -3107,16 +3000,18 @@ Bar
     <span class="d_keyword">return</span> dg() + 1;
 }
 
-<span class="d_keyword">void</span> test()
+<span class="d_keyword">void</span> main()
 {
+    Foo f;
+    <span class="d_keyword">int</span> i = foo(&amp;f.bar);
+    <span class="d_keyword">assert</span>(i == 8);
+
     <span class="d_keyword">int</span> x = 27;
     <span class="d_keyword">int</span> abc() { <span class="d_keyword">return</span> x; }
-    Foo f;
-    <span class="d_keyword">int</span> i;
 
-    i = foo(&amp;abc);   <span class="d_comment">// i is set to 28
-</span>    i = foo(&amp;f.bar); <span class="d_comment">// i is set to 8
-</span>}
+    i = foo(&amp;abc);
+    <span class="d_keyword">assert</span>(i == 28);
+}
 </pre>
 
 </div>
@@ -3132,6 +3027,8 @@ Bar
         <p>The <span class="d_inlinecode donthyphenate notranslate">.funcptr</span> property of a delegate will return the
         <i>function pointer</i> value as a function type.
         </p>
+<div class="blankline"></div>
+<h3><a class="anchor" title="Permalink to this section" id="function-delegate-init" href="#function-delegate-init">初期化</a></h3>
 <div class="blankline"></div>
         <p>Function pointers are zero-initialized by default.
         They can be initialized to the address of any function (including a function literal).
@@ -3177,6 +3074,7 @@ Bar
         a static member function, or a static nested function.
         </p>
 <div class="blankline"></div>
+        <div class="runnable-examples">
 <pre class="d_code notranslate"><span class="d_keyword">struct</span> S
 {
     <span class="d_keyword">static</span> <span class="d_keyword">int</span> sfunc();
@@ -3189,20 +3087,25 @@ Bar
     <span class="d_keyword">int</span> <span class="d_keyword">delegate</span>() dg = &amp;s.member; <span class="d_comment">// Ok, s supplies context pointer
 </span>    <span class="d_keyword">assert</span>(dg() == 1);
 
-    dg = &amp;S.sfunc;  <span class="d_comment">// error
-</span>    dg = &amp;S.member; <span class="d_comment">// error
+    <span class="d_comment">//dg = &amp;S.sfunc;  // error
+</span>    <span class="d_comment">//dg = &amp;S.member; // error
 </span>
     <span class="d_keyword">int</span> moon() { <span class="d_keyword">return</span> 2; }
     dg = &amp;moon;     <span class="d_comment">// Ok
 </span>    <span class="d_keyword">assert</span>(dg() == 2);
 
     <span class="d_keyword">static</span> <span class="d_keyword">int</span> mars() { <span class="d_keyword">return</span> 3; }
-    dg = &amp;mars;     <span class="d_comment">// error
+    <span class="d_comment">//dg = &amp;mars;     // error
 </span>
     dg = () { <span class="d_keyword">return</span> 4; }; <span class="d_comment">// Ok
 </span>    <span class="d_keyword">assert</span>(dg() == 4);
 }
 </pre>
+        
+</div>
+        <p>The last assignment uses a <a href="../spec/expression.html#FunctionLiteral"><i>FunctionLiteral</i></a>, which
+        <a href="../spec/expression.html#lambda-type-inference">implicitly converts</a>
+        to a delegate.</p>
 <div class="blankline"></div>
         <div class="spec-boxes note"><b>Note:</b> Function pointers can be passed to functions taking a delegate argument by passing
         them through the <a href="../phobos/std_functional.html#.toDelegate"><span class="d_inlinecode donthyphenate notranslate">std.functional.toDelegate</span></a> template, which converts any callable
@@ -4075,7 +3978,7 @@ obj.prop;      <span class="d_comment">// if X does not have member prop, reinte
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sun Nov 20 02:56:49 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 03:03:57 2022
 </div>
     </div>
 </div>

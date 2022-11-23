@@ -519,14 +519,14 @@
 <div class="ddoc_authors">
   <h4>Authors</h4>
   <p class="para">
-    Walter Bright, <a href="http://www.digitalmars.com">http://www.digitalmars.com</a>
+    Walter Bright, <a href="https://www.digitalmars.com">https://www.digitalmars.com</a>
 
   </p>
 </div>
 <div class="ddoc_license">
   <h4>License</h4>
   <p class="para">
-    <a href="http://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
+    <a href="https://www.boost.org/LICENSE_1_0.txt">Boost License 1.0</a>
 
   </p>
 </div>
@@ -558,7 +558,7 @@
   <li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#FileMapping" id="FileMapping"><code class="code">FileMapping</code></a>
+  <a href="#Buffer" id="Buffer"><code class="code">Buffer</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -567,7 +567,7 @@
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="FileMapping"></span>struct <code class="code">FileMapping</code>(Datum);
+            <span class="ddoc_anchor" id="Buffer"></span>struct <code class="code">Buffer</code>;
 
           </code>
         </p>
@@ -579,490 +579,7 @@
   <section class="section ddoc_sections">
   <div class="ddoc_summary">
   <p class="para">
-    Encapsulated management of a memory-mapped file.
-
-  </p>
-</div>
-<div class="ddoc_params">
-  <h4>Parameters</h4>
-  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
-    <tbody>
-      <tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">Datum</em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      the mapped data type: Use a POD of size 1 for read/write mapping
-and a <code class="code">const</code> version thereof for read-only mapping. Other primitive types
-should work, but have not been yet tested.
-    </p>
-  </div>
-</td>
-</tr>
-
-    </tbody>
-  </table>
-</div>
-
-</section>
-<ul class="ddoc_members">
-  <li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#FileMapping.this" id="FileMapping.this"><code class="code">this</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="FileMapping.this"></span>this(const char* <code class="code">filename</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Open <code class="code"><code class="code">filename</code></code> and map it in memory. If <code class="code">Datum</code> is <code class="code">const</code>, opens for
-    read-only and maps the content in memory; no error is issued if the file
-    does not exist. This makes it easy to treat a non-existing file as empty.
-
-  </p>
-</div>
-<div class="ddoc_description">
-  <h4>Discussion</h4>
-  <p class="para">
-    If <code class="code">Datum</code> is mutable, opens for read/write (creates file if it does not
-    exist) and fails fatally on any error.
-<br><br>
-    Due to quirks in <code class="code">mmap</code>, if the file is empty, <code class="code">handle</code> is valid but <code class="code">data</code>
-    is <code class="code">null</code>. This state is valid and accounted for.
-
-
-  </p>
-</div>
-<div class="ddoc_params">
-  <h4>Parameters</h4>
-  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
-    <tbody>
-      <tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">char* <code class="code">filename</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      the name of the file to be mapped in memory
-    </p>
-  </div>
-</td>
-</tr>
-
-    </tbody>
-  </table>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#FileMapping.filename" id="FileMapping.filename"><code class="code">filename</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="FileMapping.filename"></span>const pure nothrow @nogc @safe const(char)* <code class="code">filename</code>();
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Returns the zero-terminated file name associated with the mapping. Can
-    be saved beyond the lifetime of <code class="code">this</code>.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#FileMapping.close" id="FileMapping.close"><code class="code">close</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="FileMapping.close"></span>void <code class="code">close</code>();
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Frees resources associated with this mapping. However, it does not deallocate the name.
-    Reinitializes <code class="code">this</code> as a fresh object that can be reused.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#FileMapping.discard" id="FileMapping.discard"><code class="code">discard</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="FileMapping.discard"></span>bool <code class="code">discard</code>();
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Deletes the underlying file and frees all resources associated.
-    Reinitializes <code class="code">this</code> as a fresh object that can be reused.
-
-  </p>
-</div>
-<div class="ddoc_description">
-  <h4>Discussion</h4>
-  <p class="para">
-    This function does not abort if the file cannot be deleted, but does print
-    a message on <code class="code">stderr</code> and returns <code class="code">false</code> to the caller. The underlying
-    rationale is to give the caller the option to continue execution if
-    deleting the file is not important.
-
-
-  </p>
-</div>
-<div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    <code class="code">true</code> iff the file was successfully deleted. If the file was not
-    deleted, prints a message to <code class="code">stderr</code> and returns <code class="code">false</code>.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#FileMapping.active" id="FileMapping.active"><code class="code">active</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="FileMapping.active"></span>const pure nothrow @nogc bool <code class="code">active</code>();
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Queries whether <code class="code">this</code> is currently associated with a file.
-
-  </p>
-</div>
-<div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    <code class="code">true</code> iff there is an <code class="code">active</code> mapping.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#FileMapping.length" id="FileMapping.length"><code class="code">length</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="FileMapping.length"></span>const pure nothrow @nogc @safe size_t <code class="code">length</code>();
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Queries the <code class="code">length</code> of the file associated with this mapping.  If not
-    active, returns 0.
-
-  </p>
-</div>
-<div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    the <code class="code">length</code> of the file, or 0 if no file associated.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#FileMapping.opSlice" id="FileMapping.opSlice"><code class="code">opSlice</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="FileMapping.opSlice"></span>pure nothrow @nogc @safe auto <code class="code">opSlice</code>();
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Get a slice to the contents of the entire file.
-
-  </p>
-</div>
-<div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    the contents of the file. If not active, returns the <code class="code">null</code> slice.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#FileMapping.resize" id="FileMapping.resize"><code class="code">resize</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="FileMapping.resize"></span>pure void <code class="code">resize</code>(size_t <code class="code">size</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Resizes the file and mapping to the specified <code class="code"><code class="code">size</code></code>.
-
-  </p>
-</div>
-<div class="ddoc_params">
-  <h4>Parameters</h4>
-  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
-    <tbody>
-      <tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">size_t <code class="code">size</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      new length requested
-    </p>
-  </div>
-</td>
-</tr>
-
-    </tbody>
-  </table>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#FileMapping.moveToFile" id="FileMapping.moveToFile"><code class="code">moveToFile</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="FileMapping.moveToFile"></span>bool <code class="code">moveToFile</code>(const char* <code class="code">filename</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Unconditionally and destructively moves the underlying file to <code class="code"><code class="code">filename</code></code>.
-    If the operation succeds, returns <code class="code">true</code>. Upon failure, prints a message to
-    <code class="code">stderr</code> and returns <code class="code">false</code>.
-
-  </p>
-</div>
-<div class="ddoc_params">
-  <h4>Parameters</h4>
-  <table cellspacing="0" cellpadding="5" border="0" class="graybox">
-    <tbody>
-      <tr class="ddoc_param_row">
-  <td scope="ddoc_param_id">
-  <code class="code">
-    <em class="term">char* <code class="code">filename</code></em>
-  </code>
-</td>
-<td>
-  <div class="ddoc_param_desc">
-    <p class="para">
-      zero-terminated name of the file to move to.
-    </p>
-  </div>
-</td>
-</tr>
-
-    </tbody>
-  </table>
-</div>
-<div class="ddoc_returns">
-  <h4>Return Value</h4>
-  <p class="para">
-    <code class="code">true</code> iff the operation was successful.
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li>
-</ul>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
-  <a href="#FileBuffer" id="FileBuffer"><code class="code">FileBuffer</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="FileBuffer"></span>struct <code class="code">FileBuffer</code>;
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Owns a (rmem-managed) file buffer.
+    Owns a (rmem-managed) buffer.
   </p>
 </div>
 
@@ -1071,7 +588,7 @@ should work, but have not been yet tested.
   <li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#FileBuffer.extractSlice" id="FileBuffer.extractSlice"><code class="code">extractSlice</code></a>
+  <a href="#Buffer.extractSlice" id="Buffer.extractSlice"><code class="code">extractSlice</code></a>
 </div>
 </div><div class="ddoc_decl">
   <section class="section">
@@ -1080,7 +597,7 @@ should work, but have not been yet tested.
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="FileBuffer.extractSlice"></span>pure nothrow @nogc @safe ubyte[] <code class="code">extractSlice</code>();
+            <span class="ddoc_anchor" id="Buffer.extractSlice"></span>pure nothrow @nogc @safe ubyte[] <code class="code">extractSlice</code>();
 
           </code>
         </p>
@@ -1233,9 +750,7 @@ Include the <code class="code">null</code>-terminator at the end of the buffer i
       <div class="dlang">
         <p class="para">
           <code class="code">
-            <span class="ddoc_anchor" id="File.read"></span>static nothrow ReadResult <code class="code">read</code>(const(char)* <code class="code">name</code>);
-<br>
-static nothrow ReadResult <code class="code">read</code>(const(char)[] <code class="code">name</code>);
+            <span class="ddoc_anchor" id="File.read"></span>static nothrow ReadResult <code class="code">read</code>(const(char)[] <code class="code">name</code>);
 
           </code>
         </p>
@@ -1270,8 +785,6 @@ static nothrow ReadResult <code class="code">read</code>(const(char)[] <code cla
             <span class="ddoc_anchor" id="File.write"></span>static nothrow bool <code class="code">write</code>(const(char)* <code class="code">name</code>, const void[] <code class="code">data</code>);
 <br>
 static nothrow bool <code class="code">write</code>(const(char)[] <code class="code">name</code>, const void[] <code class="code">data</code>);
-<br>
-static nothrow bool <code class="code">write</code>(const(char)* <code class="code">name</code>, const(void)* <code class="code">data</code>, size_t <code class="code">size</code>);
 
           </code>
         </p>
@@ -1338,8 +851,6 @@ static nothrow bool <code class="code">write</code>(const(char)* <code class="co
             <span class="ddoc_anchor" id="File.update"></span>static nothrow bool <code class="code">update</code>(const(char)* <code class="code">namez</code>, const void[] <code class="code">data</code>);
 <br>
 static nothrow bool <code class="code">update</code>(const(char)[] <code class="code">name</code>, const void[] <code class="code">data</code>);
-<br>
-static nothrow bool <code class="code">update</code>(const(char)* <code class="code">name</code>, const(void)* <code class="code">data</code>, size_t <code class="code">size</code>);
 
           </code>
         </p>
@@ -1417,38 +928,6 @@ static nothrow bool <code class="code">update</code>(const(char)* <code class="c
 </li><li class="ddoc_member">
   <div class="ddoc_member_header">
   <div class="ddoc_header_anchor">
-  <a href="#File.touch" id="File.touch"><code class="code">touch</code></a>
-</div>
-</div><div class="ddoc_decl">
-  <section class="section">
-    <div class="declaration">
-      <h4>Declaration</h4>
-      <div class="dlang">
-        <p class="para">
-          <code class="code">
-            <span class="ddoc_anchor" id="File.touch"></span>static nothrow bool <code class="code">touch</code>(const char* <code class="code">namez</code>);
-
-          </code>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-<div class="ddoc_decl">
-  <section class="section ddoc_sections">
-  <div class="ddoc_summary">
-  <p class="para">
-    Touch a file to current date
-  </p>
-</div>
-
-</section>
-
-</div>
-
-</li><li class="ddoc_member">
-  <div class="ddoc_member_header">
-  <div class="ddoc_header_anchor">
   <a href="#File.size" id="File.size"><code class="code">size</code></a>
 </div>
 </div><div class="ddoc_decl">
@@ -1459,8 +938,6 @@ static nothrow bool <code class="code">update</code>(const(char)* <code class="c
         <p class="para">
           <code class="code">
             <span class="ddoc_anchor" id="File.size"></span>static nothrow ulong <code class="code">size</code>(const char* <code class="code">namez</code>);
-<br>
-static nothrow ulong <code class="code">size</code>(int <code class="code">fd</code>);
 
           </code>
         </p>

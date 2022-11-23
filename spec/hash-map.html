@@ -158,7 +158,7 @@
     <li><a href="#runtime_initialization">immutableな連想配列の実行時初期化</a></li>
     <li><a href="#construction_and_ref_semantic">構築および参照の扱い</a></li>
     <li><a href="#properties">プロパティ</a><ol>        <li><a href="#aa_example">連想配列の例: 単語のカウント</a></li>
-        <li><a href="#aa_example_iteration">連想配列の例: Tupleのカウント</a></li>
+        <li><a href="#aa_example_iteration">連想配列の例: ペアを数える</a></li>
     </ol></li>
 </ol>
 </div>
@@ -480,23 +480,28 @@ aa[<span class="d_string">"a"</span>] = 3;  <span class="d_comment">// set value
         delegate. The <span class="d_inlinecode donthyphenate notranslate">update</span> operation avoids the need to perform multiple
         key lookups.</p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">class</span> C{}
-C[string] aa;
+<div class="runnable-examples">
+<pre class="d_code notranslate"><span class="d_keyword">int</span>[string] aa;
 
-C older;
-C newer;
-aa.update(<span class="d_string">"a"</span>,
-{
-    newer = <span class="d_keyword">new</span> C;
-    <span class="d_keyword">return</span> newer;
-},
-(<span class="d_keyword">ref</span> C c)
-{
-    older = c;
-    newer = <span class="d_keyword">new</span> C;
-    <span class="d_keyword">return</span> newer;
-});
+<span class="d_comment">// create
+</span>aa.update(<span class="d_string">"key"</span>,
+    () =&gt; 1,
+    (<span class="d_keyword">int</span>) {} <span class="d_comment">// not executed
+</span>    );
+<span class="d_keyword">assert</span>(aa[<span class="d_string">"key"</span>] == 1);
+
+<span class="d_comment">// update value by ref
+</span>aa.update(<span class="d_string">"key"</span>,
+    () =&gt; 0, <span class="d_comment">// not executed
+</span>    (<span class="d_keyword">ref</span> <span class="d_keyword">int</span> v) {
+        v += 1;
+    });
+<span class="d_keyword">assert</span>(aa[<span class="d_string">"key"</span>] == 2);
 </pre>
+
+</div>
+<div class="blankline"></div>
+    <p>For details, see <a href="../phobos/object.html#.update""><span class="d_inlinecode donthyphenate notranslate">update</span></a>.</p>
 <div class="blankline"></div>
 <h2><a class="anchor" title="Permalink to this section" id="static_initialization" href="#static_initialization">連想配列の静的初期化</a></h2>
 <div class="blankline"></div>
@@ -622,7 +627,7 @@ aa2[2] = 2;
 </span><span class="d_keyword">import</span> std.stdio;
 <span class="d_keyword">import</span> std.ascii;
 
-<span class="d_keyword">void</span> main (string[] args)
+<span class="d_keyword">void</span> main(string[] args)
 {
     <span class="d_keyword">ulong</span> totalWords, totalLines, totalChars;
     <span class="d_keyword">ulong</span>[string] dictionary;
@@ -691,43 +696,42 @@ aa2[2] = 2;
 }
 </pre>
 <div class="blankline"></div>
-<h3><a class="anchor" title="Permalink to this section" id="aa_example_iteration" href="#aa_example_iteration">連想配列の例: Tupleのカウント</a></h3>
+<h3><a class="anchor" title="Permalink to this section" id="aa_example_iteration" href="#aa_example_iteration">連想配列の例: ペアを数える</a></h3>
 <div class="blankline"></div>
     <p>An Associative Array can be iterated in key/value fashion using a
         <a href="../spec/statement.html#ForeachStatement">foreach statement</a>. As
         an example, the number of occurrences of all possible substrings of
         length 2 (aka 2-mers) in a string will be counted:</p>
 <div class="blankline"></div>
-<pre class="d_code notranslate"><span class="d_keyword">import</span> std.range : dropOne, only, save, zip;
+<pre class="d_code notranslate"><span class="d_keyword">import</span> std.range : slide;
 <span class="d_keyword">import</span> std.stdio : writefln;
-<span class="d_keyword">import</span> std.typecons : Tuple;
 <span class="d_keyword">import</span> std.utf : byCodeUnit; <span class="d_comment">// avoids UTF-8 auto-decoding
 </span>
-<span class="d_keyword">int</span>[Tuple!(<span class="d_keyword">immutable</span> <span class="d_keyword">char</span>, <span class="d_keyword">immutable</span> <span class="d_keyword">char</span>)] aa;
+<span class="d_keyword">int</span>[string] aa;
 
 <span class="d_comment">// The string `arr` has a limited alphabet: {A, C, G, T}
 </span><span class="d_comment">// Thus, for better performance, iteration can be done _without_ decoding
 </span><span class="d_keyword">auto</span> arr = <span class="d_string">"AGATAGA"</span>.byCodeUnit;
 
-<span class="d_comment">// iterate over all pairs in the string and observe each pair
+<span class="d_comment">// iterate over all pairs in the string and count each pair
 </span><span class="d_comment">// ('A', 'G'), ('G', 'A'), ('A', 'T'), ...
-</span><span class="d_keyword">foreach</span> (window; arr.zip(arr.save.dropOne))
-    aa[window]++;
-
+</span><span class="d_keyword">foreach</span> (window; arr.slide(2))
+    aa[window.source]++; <span class="d_comment">// source unwraps the code unit range
+</span>
 <span class="d_comment">// iterate over all key/value pairs of the Associative Array
 </span><span class="d_keyword">foreach</span> (key, value; aa)
 {
-    <span class="d_comment">// the second parameter uses tuple-expansion
-</span>    writefln(<span class="d_string">"key: %s [%s], value: %d"</span>, key, key.expand.only, value);
+    writefln(<span class="d_string">"key: %s, value: %d"</span>, key, value);
 }
 </pre>
-<pre class="console notranslate">% rdmd count.d
-key: Tuple!(immutable(char), immutable(char))('A', 'G') [AG], value: 2
-key: Tuple!(immutable(char), immutable(char))('G', 'A') [GA], value: 2
-key: Tuple!(immutable(char), immutable(char))('A', 'T') [AT], value: 1
-key: Tuple!(immutable(char), immutable(char))('T', 'A') [TA], value: 1
-</pre>
 
+<pre class="console notranslate">&gt; rdmd count.d
+key: AT, value: 1
+key: GA, value: 2
+key: TA, value: 1
+key: AG, value: 2
+</pre>
+)
 <div class="blankline"></div>
 
 <div style="float: left"><i class="fa fa-angle-left" aria-hidden="true"></i> <a href="../spec/arrays.html">配列[Arrays]</a></div>
@@ -736,7 +740,7 @@ key: Tuple!(immutable(char), immutable(char))('T', 'A') [TA], value: 1
 
 
         <div class="smallprint" id="copyright">Copyright &copy; 1999-2022 by the <a href="../foundation_overview.html">D Language Foundation</a> | Page generated by
-<a href="../spec/ddoc.html">Ddoc</a> on Sun Nov 20 02:56:49 2022
+<a href="../spec/ddoc.html">Ddoc</a> on Wed Nov 23 03:03:57 2022
 </div>
     </div>
 </div>
