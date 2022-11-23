@@ -45,12 +45,12 @@ $(GNAME Parameter):
     $(GLINK ParameterAttributes)$(OPT) $(GLINK2 type, Type) $(D =) $(ASSIGNEXPRESSION)
 
 $(GNAME ParameterAttributes):
-    $(GLINK InOut)
+    $(GLINK ParameterStorageClass)
     $(GLINK2 attribute, UserDefinedAttribute)
-    $(GSELF ParameterAttributes) $(GLINK InOut)
+    $(GSELF ParameterAttributes) $(GLINK ParameterStorageClass)
     $(GSELF ParameterAttributes) $(GLINK2 attribute, UserDefinedAttribute)
 
-$(GNAME InOut):
+$(GNAME ParameterStorageClass):
     $(D auto)
     $(GLINK2 type, TypeCtor)
     $(D final)
@@ -135,7 +135,7 @@ $(LEGACY_LNAME2 FunctionLiteralBody)
         $(P $(B Note:) The *ShortenedFunctionBody* form requires the `-preview=shortenedMethods`
         command-line switch, which is available starting in v2.096.0.)
 
-$(H3 $(LNAME2 function-declarations, Functions without Bodies))
+$(H3 $(LNAME2 function-declarations, 本文なし関数))
 
 $(GRAMMAR
 $(GNAME MissingFunctionBody):
@@ -1019,6 +1019,8 @@ void main()
 }
 ------
 )
+        $(P Base class methods can also be called through the
+        $(DDSUBLINK spec/expression, super, `super`) reference.)
 
         $(IMPLEMENTATION_DEFINED Normally calling a virtual function implies getting the
         address of the function at runtime by indexing into the class's `vtbl[]`.
@@ -2382,18 +2384,291 @@ $(H4 $(LNAME2 lazy_variadic_functions, Lazy な可変長引数関数))
         parameter. This will prevent a closure being generated for the delegate,
         as `scope` means the delegate will not escape the function.)
 
-$(H3 $(LNAME2 this-reference, `this` の参照))
+$(LEGACY_LNAME2 this-reference)
+$(H3 $(LNAME2 hidden-parameters, 隠しパラメータ))
 
-        $(P
+        $(UL
+        $(LI
             Non-static member functions all have a hidden parameter called the
-            `this` reference, which refers to the object for which
+            $(DDSUBLINK spec/expression, this, `this` reference), which refers to the object for which
             the function is called.
         )
-
-        $(P
+        $(LI D-style variadic functions have
+            $(RELATIVE_LINK2 d_style_variadic_functions, hidden parameters).)
+        $(LI
             Functions with `Objective-C` linkage have an additional hidden,
             unnamed, parameter which is the selector it was called with.
         )
+        )
+
+
+
+$(H2 $(LNAME2 refscopereturn, Ref Scope Return のケース))
+
+
+$(H3 $(LNAME2 rsr_definitions, 定義))
+
+    $(TABLE2 Definitions,
+    $(THEAD Term, Description)
+    $(TROW I, type that contains no indirections)
+    $(TROW P, type that contains indirections)
+    $(TROW X, type that may or may not contain indirections)
+    $(TROW p, parameter of type P)
+    $(TROW i, parameter of type I)
+    $(TROW ref, `ref` or `out` parameter)
+
+    $(TROW returned, returned via the `return` statement)
+    $(TROW escaped, stored in a global or other memory not in the function$(RSQUO)s stack frame)
+    )
+
+$(H3 $(LNAME2 rsr_classification, 分類))
+
+$(P A parameter must be in one of the following states:)
+
+    $(TABLE2 Classification,
+    $(THEAD Term, Description)
+    $(TROW None,
+        `p` may be returned or escaped)
+
+    $(TROW ReturnScope,
+        `p` may be returned but not escaped)
+
+    $(TROW Scope,
+        `p` may be neither returned nor escaped)
+
+    $(TROW Ref,
+        `p` may be returned or escaped$(COMMA)
+        `ref` may not be returned nor escaped)
+
+    $(TROW ReturnRef,
+        `p` may be returned or escaped$(COMMA)
+        `ref` may be returned but not escaped)
+
+    $(TROW RefScope,
+        `p` may be neither returned nor escaped$(COMMA)
+        `ref` may not be returned nor escaped)
+
+    $(TROW ReturnRef-Scope,
+        `p` may be neither returned nor escaped$(COMMA)
+        `ref` may be returned but not escaped)
+
+    $(TROW Ref-ReturnScope,
+        `p` may be returned but not escaped$(COMMA)
+        `ref` may not be returned nor escaped)
+
+    $(TROW ReturnRef-ReturnScope,
+        `p` may be returned but not escaped$(COMMA)
+        `ref` may be returned but not escaped.
+        This isn't expressible with the current syntax
+        and so is not allowed.)
+    )
+
+$(H3 $(LNAME2 rsr_mapping, 構文と分類の対応付け))
+
+    $(P The juxtaposition of `return` immediately preceding `scope` means ReturnScope.
+    Otherwise, `return` and `ref` in any position means ReturnRef.)
+
+    $(TABLE2 Mapping,
+    $(THEAD Example, Classification, Comments)
+    $(TROW `X foo(P p)`,
+            None,)
+
+    $(TROW `X foo(scope P p)`,
+        Scope,)
+
+    $(TROW `P foo(return scope P p)`,
+        ReturnScope,)
+
+    $(TROW `I foo(return scope P p)`,
+        Scope,
+        The `return` is dropped because the return type `I` contains no pointers.)
+
+    $(TROW `P foo(return P p)`,
+        ReturnScope,
+        Makes no sense to have `return` without `scope`.)
+
+    $(TROW `I foo(return P p)`,
+        Scope,
+        The `return` is dropped because the return type `I` contains no pointers.)
+
+
+    $(TROW `X foo(ref P p)`,
+        Ref,)
+
+    $(TROW `X foo(ref scope P p)`,
+        RefScope,)
+
+    $(TROW `P foo(ref return scope P p)`,
+        Ref-ReturnScope,)
+
+    $(TROW `P foo(return ref scope P p)`,
+        ReturnRef-Scope,)
+
+    $(TROW `I foo(ref return scope P p)`,
+        RefScope,)
+
+    $(TROW `P foo(ref return P p)`,
+        ReturnRef,)
+
+    $(TROW `I foo(ref return P p)`,
+        Ref,)
+
+
+    $(TROW `ref X foo(P p)`,
+        None,)
+
+    $(TROW `ref X foo(scope P p)`,
+        Scope,)
+
+    $(TROW `ref X foo(return scope P p)`,
+        ReturnScope,)
+
+    $(TROW `ref X foo(return P p)`,
+        ReturnScope,
+        Makes no sense to have `return` without `scope`.)
+
+
+    $(TROW `ref X foo(ref P p)`,
+        Ref,)
+
+    $(TROW `ref X foo(ref scope P p)`,
+        RefScope,)
+
+    $(TROW `ref X foo(ref return scope P p)`,
+        Ref-ReturnScope,)
+
+    $(TROW `ref X foo(return ref scope P p)`,
+        ReturnRef-Scope,)
+
+    $(TROW `ref X foo(ref return P p)`,
+        ReturnRef,)
+
+    $(TROW `X foo(I i)`,
+        None,)
+
+    $(TROW `X foo(scope I i)`,
+        None,)
+
+    $(TROW `X foo(return scope I i)`,
+        None,)
+
+    $(TROW `X foo(return I i)`,
+        None,)
+
+
+    $(TROW `X foo(ref I i)`,
+        Ref,)
+
+    $(TROW `X foo(ref scope I i)`,
+        Ref,)
+
+    $(TROW `X foo(ref return scope I i)`,
+        Ref,)
+
+    $(TROW `P foo(ref return I i)`,
+        ReturnRef,)
+
+    $(TROW `I foo(ref return I i)`,
+        Ref,)
+
+
+    $(TROW `ref X foo(I i)`,
+        None,)
+
+    $(TROW `ref X foo(scope I i)`,
+        None,)
+
+    $(TROW `ref X foo(return scope I i)`,
+        None,)
+
+    $(TROW `ref X foo(return I i)`,
+        None,)
+
+
+
+    $(TROW `ref X foo(ref I i)`,
+        Ref,)
+
+    $(TROW `ref X foo(ref scope I i)`,
+        Ref,)
+
+    $(TROW `ref X foo(ref return scope I i)`,
+        ReturnRef,)
+
+    $(TROW `ref X foo(ref return I i)`,
+        ReturnRef,)
+)
+
+$(H3 $(LNAME2 rsr_memberfunctions, Member 関数))
+
+    $(P Member functions are rewritten as if the `this` parameter is the first
+    parameter of a non-member function,
+    )
+
+---
+struct S {
+    X foo();
+}
+---
+
+    $(P is treated as:)
+
+---
+X foo(ref S);
+---
+
+    $(P and:)
+
+---
+class C {
+    X foo()
+}
+---
+
+    $(P is treated as:)
+
+---
+X foo(P)
+---
+
+$(H3 $(LNAME2 rsr_PandRef, P と ref))
+
+    $(P The rules account for switching between `ref` and P, such as:)
+
+---
+int* foo(return ref int i) { return &i; }
+ref int foo(int* p) { return *p; }
+---
+
+$(H3 $(LNAME2 rsr_covariance, 共分散))
+
+    $(P Covariance means a parameter with restrictions can be converted to a parameter with
+    fewer restrictions. This is deducible from the description of each state.
+    )
+
+    $(NOTE `ref` is not covariant with non-`ref`, so those entries are omitted from the
+    table for simplicity.
+    )
+
+    $(TABLE2 Covariance,
+    $(THEAD From\To,          None,     ReturnScope, Scope)
+    $(TROW None,              $(CHECK),            ,         )
+    $(TROW ReturnScope,       $(CHECK), $(CHECK)   ,         )
+    $(TROW Scope,             $(CHECK), $(CHECK)   , $(CHECK))
+    )
+
+    $(TABLE2 Ref Covariance,
+    $(THEAD From\To,          Ref     , ReturnRef, RefScope, ReturnRef-Scope, Ref-ReturnScope)
+    $(TROW Ref,               $(CHECK), $(CHECK) ,         ,                ,          )
+    $(TROW ReturnRef,                 , $(CHECK) ,         ,                ,          )
+    $(TROW RefScope,          $(CHECK), $(CHECK) , $(CHECK), $(CHECK)       ,  $(CHECK))
+    $(TROW ReturnRef-Scope,           , $(CHECK) ,         , $(CHECK)       ,          )
+    $(TROW Ref-ReturnScope,   $(CHECK), $(CHECK) ,         ,                ,  $(CHECK))
+    )
+
+    $(P For example, `scope` matches all non-ref parameters, and `ref scope` matches all
+    ref parameters.)
+
 
 
 $(H2 $(LEGACY_LNAME2 Local Variables, local-variables, ローカル変数))
@@ -2652,7 +2927,7 @@ struct Foo
         $(P Nested functions always have the D function linkage type.
         )
 
-$(H3 $(LNAME2 nested-declaration-order, Declaration Order))
+$(H3 $(LNAME2 nested-declaration-order, 宣言の順序))
 
         $(P Unlike module level declarations, declarations within function
         scope are processed in order. This means that two nested functions
@@ -2779,7 +3054,7 @@ void main() {}
 ------
 )
 
-$(H3 $(LNAME2 closures, Delegates & Closures))
+$(H3 $(LNAME2 closures, デリゲートとクロージャ))
 
         $(P A delegate can be set to a non-static nested function:)
 
@@ -2811,8 +3086,38 @@ void main()
         )
 
         $(P Those referenced stack variables that make up the closure
-        are allocated on the GC heap. Closures are not allowed for
-        `@nogc` functions.)
+        are allocated on the GC heap, unless:)
+
+        * The closure is passed to a `scope` parameter.
+        * The closure is an initializer for a `scope` variable.
+        * The closure is assigned to a `scope` variable.
+
+$(SPEC_RUNNABLE_EXAMPLE_COMPILE
+---
+@nogc:
+void f(scope int delegate());
+void g(int delegate());
+
+void main()
+{
+    int i;
+    int h() { return i; }
+    h(); // OK
+    scope x = &h; // OK
+    x(); // OK
+    //auto y = &h; // error, can't allocate closure in @nogc function
+    f(&h); // OK
+    //g(&h); // error
+
+    // delegate literals
+    f(() => i); // OK
+    scope d = () => i; // OK
+    d = () => i + 1; // OK
+    f(d);
+    //g(() => i); // error, can't allocate closure in @nogc function
+}
+---
+)
 
         $(NOTE Returning addresses of stack variables, however, is not
         a closure and is an error.
@@ -2943,8 +3248,8 @@ $(H3 $(LNAME2 function-delegate-init, 初期化))
         ---
         )
         $(P The last assignment uses a $(GLINK2 expression, FunctionLiteral), which
-        $(DDSUBLINK spec/expression, lambda-type-inference, implicitly converts)
-        to a delegate.)
+        $(DDSUBLINK spec/expression, lambda-type-inference, is inferred)
+        as a delegate.)
 
         $(NOTE Function pointers can be passed to functions taking a delegate argument by passing
         them through the $(REF toDelegate, std,functional) template, which converts any callable
@@ -3275,7 +3580,8 @@ $(H2 $(LNAME2 nogc-functions, No-GC 関数))
             void bar() { }
             ---
 
-        $(P No-GC functions cannot be closures.
+        $(P No-GC functions can only use a closure if it is `scope` -
+            see $(RELATIVE_LINK2 closures, Delegates & Closures).
         )
 
             ---
@@ -3670,16 +3976,16 @@ $(H2 $(LNAME2 function-attribute-inference, 関数属性インターフェース
         $(RELATIVE_LINK2 nested, nested functions) and
         $(DDSUBLINK spec/template, function-templates, function templates),
         since their function bodies are always present, infer the
-        $(RELATIVE_LINK2 pure-functions, $(D pure)),
-        $(RELATIVE_LINK2 nothrow-functions, $(D nothrow)),
-        $(RELATIVE_LINK2 safe-functions, $(D @safe)),
-        $(RELATIVE_LINK2 nogc-functions, $(D @nogc)),
-        $(RELATIVE_LINK2 return-ref-parameters, return ref parameters),
-        $(RELATIVE_LINK2 scope-parameters, scope parameters),
-        $(RELATIVE_LINK2 return-scope-parameters, return scope parameters) and
-        $(RELATIVE_LINK2 ref-return-scope-parameters, ref return scope parameters)
-        attributes unless specifically overridden.
+        following attributes unless specifically overridden:
         )
+        * $(RELATIVE_LINK2 pure-functions, $(D pure))
+        * $(RELATIVE_LINK2 nothrow-functions, $(D nothrow))
+        * $(RELATIVE_LINK2 safe-functions, $(D @safe))
+        * $(RELATIVE_LINK2 nogc-functions, $(D @nogc))
+        * $(RELATIVE_LINK2 return-ref-parameters, return ref parameters)
+        * $(RELATIVE_LINK2 scope-parameters, scope parameters)
+        * $(RELATIVE_LINK2 return-scope-parameters, return scope parameters)
+        * $(RELATIVE_LINK2 ref-return-scope-parameters, ref return scope parameters)
 
         $(P Attribute inference is not done for other functions, even if the function
         body is present.
@@ -3690,7 +3996,7 @@ $(H2 $(LNAME2 function-attribute-inference, 関数属性インターフェース
         )
 
         $(P Cyclic functions (i.e. functions that wind up directly or indirectly
-        calling themselves) are inferred as being impure, throwing, and @system.
+        calling themselves) are inferred as being impure, throwing, and `@system`.
         )
 
         $(P If a function attempts to test itself for those attributes, then
@@ -3841,3 +4147,4 @@ Macros:
         CHAPTER=19
         TITLE=関数
         ASSIGNEXPRESSION=$(GLINK2 expression, AssignExpression)
+        CHECK=&#10004;

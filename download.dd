@@ -9,7 +9,7 @@ $(TABLEC download-compilers,
   )
   $(TR
     $(TD $(LINK2 https://dlang.org/download.html#dmd,                $(IMG compiler-dmd.png)))
-    $(TD $(LINK2 http://gdcproject.org/downloads,                    $(IMG compiler-gdc.svg)))
+    $(TD $(LINK2 https://gdcproject.org/downloads,                   $(IMG compiler-gdc.svg)))
     $(TD $(LINK2 https://github.com/ldc-developers/ldc#installation, $(IMG compiler-ldc.png)))
   )
   $(TR
@@ -26,16 +26,16 @@ $(TABLEC download-compilers,
     $(TD
       $(H3 GDC)
       $(UL
-        $(LI $(LINK2 https://gcc.gnu.org/, GCC)ベースの Dコンパイラ)
-        $(LI 強力な最適化)
-        $(LI $(LINK2 https://www.gnu.org/software/gdb/,GDB) をサポート)
-        $(LI 対象アーキテクチャ: i386, amd64, x32, armel, armhf, $(LINK2 https://wiki.dlang.org/Compilers#Comparison,others))
+        $(LI $(LINK2 https://gcc.gnu.org/, GCC)-based D compiler)
+        $(LI Strong optimization)
+        $(LI Great $(LINK2 https://www.gnu.org/software/gdb/,GDB) support)
+        $(LI Architectures: i386, amd64, x32, armel, armhf, $(LINK2 https://wiki.dlang.org/Compilers#Comparison,others))
       )
     )
     $(TD
       $(H3 LDC)
       $(UL
-        $(LI $(LINK2 http://llvm.org/, LLVM)ベースの Dコンパイラ)
+        $(LI $(LINK2 https://llvm.org/, LLVM)ベースの Dコンパイラ)
         $(LI 強力な最適化)
         $(LI
           $(LINK2 https://wiki.dlang.org/Build_D_for_Android, Androidをサポート)
@@ -49,7 +49,7 @@ $(TABLEC download-compilers,
       $(DIVC download-link, $(LINK2 dmd-windows.html, About) &middot; $(LINK2 https://dlang.org/download.html#dmd, Download))
     )
     $(TD
-      $(DIVC download-link, $(LINK2 http://gdcproject.org/, About) &middot; $(LINK2 http://gdcproject.org/downloads, Download))
+      $(DIVC download-link, $(LINK2 https://gdcproject.org/, About) &middot; $(LINK2 https://gdcproject.org/downloads, Download))
     )
     $(TD
       $(DIVC download-link, $(LINK2 https://wiki.dlang.org/LDC, About) &middot; $(LINK2 https://github.com/ldc-developers/ldc#installation, Download))
@@ -64,12 +64,12 @@ $(TABLEC download-compilers,
 Macros:
         TITLE=ダウンロード
 
-    DMDV2=2.100.0
+    DMDV2=$(LATEST)
 
     BETA=$(COMMENT $0)
     _=BETA=$0
-    B_DMDV2=2.100.0
-    B_SUFFIX=beta.0
+    B_DMDV2=2.101.0
+    B_SUFFIX=rc.1
 
         DEB32=$(DLSITE dmd_$(DMDV2)-0_i386.deb)
         DEB64=$(DLSITE dmd_$(DMDV2)-0_amd64.deb)
@@ -114,8 +114,8 @@ Macros:
     SBTN=$(SPANC sig_btn,$(BTN $1,$+)<br>$(BTN $1.sig,sig))
     BTN=<a href="$1" class="btn">$+</a>
     H3I=<h3 class="download">$0</h3>
-    DLSITE=https://s3.us-west-2.amazonaws.com/downloads.dlang.org/releases/2022/$0
-    B_DLSITE=https://s3.us-west-2.amazonaws.com/downloads.dlang.org/pre-releases/2022/$0
+    DLSITE=https://downloads.dlang.org/releases/2022/$0
+    B_DLSITE=https://downloads.dlang.org/pre-releases/2022/$0
     DOWNLOAD =
     $(DIV,
         $(DIVC download_image, $2)

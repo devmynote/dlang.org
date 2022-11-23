@@ -264,10 +264,9 @@ $(SUBMENU_MANUAL
     $(SUBMENU_LINK https://dlang.org/blog, ブログ)
     $(SUBMENU_LINK $(ROOT_DIR)orgs-using-d.html, 利用実績)
     $(SUBMENU_LINK https://twitter.com/search?q=%23dlang, Twitter)
-    $(SUBMENU_LINK $(ROOT_DIR)calendar.html, カレンダー)
     $(SUBMENU_LINK_DIVIDER https://forum.dlang.org, フォーラム)
     $(SUBMENU_LINK irc://irc.libera.chat/d, IRC)
-    $(SUBMENU_LINK https://discord.gg/bMZk9Q4, Discord)
+    $(SUBMENU_LINK https://discord.gg/bMZk9Q4, Community Discord)
     $(SUBMENU_LINK https://wiki.dlang.org, Wiki)
     $(SUBMENU_LINK_DIVIDER https://github.com/dlang, GitHub)
     $(SUBMENU_LINK https://dlang.org/bugstats.html, Issues)
@@ -414,7 +413,7 @@ SEARCH_BOX=
         <form method="get" action="https://google.com/search">
             <input type="hidden" id="domains" name="domains" value="dlang.org">
             <input type="hidden" id="sourceid" name="sourceid" value="google-search">
-            $(SPANID search-query, <input id="q" name="q" placeholder="Search">)$(SPANID search-dropdown, $(SPANC helper,
+            $(SPANID search-query, <input id="q" name="q" placeholder="Google Search">)$(SPANID search-dropdown, $(SPANC helper,
                 <select id="sitesearch" name="sitesearch" size="1">
                     <option value="dlang.org">Entire Site</option>
                     <option $(SEARCHDEFAULT_SPEC) value="dlang.org/spec">Language</option>

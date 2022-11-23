@@ -17,8 +17,8 @@ $(DIVC intro, $(DIV, $(DIV,
         $(DIVC download,
             $(DIVC btn-group-vertical,
               <a href="download.html" class="btn">Downloads</a>
-              $(SPANC smallprint, 最新バージョンn: 2.100.0
-                  &ndash; $(LINK2 changelog/2.100.0.html, Changelog))
+              $(SPANC smallprint, 最新バージョン: $(LATEST)
+                  &ndash; $(LINK2 changelog/$(LATEST).html, Changelog))
             )
         )
     )
@@ -311,14 +311,6 @@ $(SCRIPT
     var selEl = document.getElementById("your-code-here-select-example");
     selEl.appendChild(sel);
     })();
-)
-
-$(DIVC dconf_22,
-    <p class="center" style="font-size:1.5em;padding:15px;"><a href="https://dconf.org/2022/"><img width="250" src="$(ROOT_DIR)images/dconf22-logo.png" /></a>
-    $(BR)
-    August 1&ndash;4, 2022
-    $(BR)
-    <a href="https://dconf.org/2022/index.html#register">Register Today!</a></p>
 )
 
 $(DIVC call_to_donate,
@@ -727,7 +719,7 @@ Macros:
     _=
     LAYOUT_PREFIX=
     LAYOUT_SUFFIX=
-    $(SCRIPTLOAD $(ROOT_DIR)js/platform-downloads.js,  data-latest="2.100.0")
+    $(SCRIPTLOAD $(ROOT_DIR)js/platform-downloads.js,  data-latest="$(LATEST)")
     LAYOUT_TITLE=
     TOUR=$(DIVC item, $(SECTION4 $(LINK2 $1, $(TC i, fa fa-$2 big-icon)$3), $4))
     TOUR=$(DIVC item, $(SECTION4 $(TC i, fa fa-$1 big-icon)$2, $3))
